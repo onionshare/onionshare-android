@@ -2,7 +2,7 @@ package org.onionshare.android.ui
 
 import android.app.Application
 import android.net.Uri
-import android.text.format.Formatter
+import android.text.format.Formatter.formatShortFileSize
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +19,7 @@ import org.onionshare.android.server.PORT
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
+import org.onionshare.android.tor.TorManager
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
 
@@ -27,6 +28,7 @@ private val LOG = LoggerFactory.getLogger(MainViewModel::class.java)
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val app: Application,
+    private val torManager: TorManager,
     private val webserverManager: WebserverManager,
     private val fileManager: FileManager,
 ) : AndroidViewModel(app) {
@@ -69,6 +71,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun onSheetButtonClicked() {
+        // TODO handle rapid double taps that e.g. can tear down things before they even came up
         when (shareState.value) {
             is ShareUiState.FilesAdded -> startSharing()
             is ShareUiState.Starting -> stopSharing()
@@ -90,15 +93,19 @@ class MainViewModel @Inject constructor(
             val sendPage = SendPage(
                 fileName = "download.zip",
                 fileSize = fileSize.toString(),
-                fileSizeHuman = Formatter.formatShortFileSize(app.applicationContext, fileSize),
+                fileSizeHuman = formatShortFileSize(app.applicationContext, fileSize),
                 zipFile = filesReady.zip,
             ).apply {
                 addFiles(filesReady.files)
             }
             ensureActive()
-            val url = "http://127.0.0.1:$PORT"
-//            val url = "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/"
+            // start tor and onion service // TODO catch exceptions, handle error
+            val onionAddress = torManager.start(PORT)
+            val url = "http://$onionAddress"
+            LOG.error("OnionShare URL: $url") // TODO remove before release
             val sharing = ShareUiState.Sharing(files, shareState.value.totalSize, url)
+            // TODO properly manage tor and webserver state
+            ensureActive()
             // collecting from StateFlow will only return when coroutine gets cancelled
             webserverManager.start(sendPage).collect { onWebserverStateChanged(it, sharing) }
         }
@@ -120,12 +127,14 @@ class MainViewModel @Inject constructor(
     }
 
     private fun stopSharing(complete: Boolean = false) {
+        LOG.info("Stopping sharing...")
         viewModelScope.launch(Dispatchers.IO) {
             if (startSharingJob?.isActive == true) {
                 // TODO check if this always works as expected
                 startSharingJob?.cancelAndJoin()
             }
 
+            torManager.stop()
             webserverManager.stop()
             val files = shareState.value.files
             val newState = when {
