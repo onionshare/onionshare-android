@@ -7,6 +7,8 @@ import io.ktor.application.ApplicationStopped
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CallLogging
+import io.ktor.features.StatusPages
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.pebble.Pebble
@@ -40,6 +42,7 @@ class WebserverManager @Inject constructor() {
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }
+            installStatusPages()
             addListener()
             routing {
                 defaultRoutes()
@@ -59,6 +62,20 @@ class WebserverManager @Inject constructor() {
         }
         environment.monitor.subscribe(ApplicationStopped) {
             _state.value = State.STOPPED
+        }
+    }
+
+    private fun Application.installStatusPages() {
+        install(StatusPages) {
+            status(HttpStatusCode.NotFound) {
+                call.respond(PebbleContent("404.html", mapOf("static_url_path" to "")))
+            }
+            status(HttpStatusCode.MethodNotAllowed) {
+                call.respond(PebbleContent("405.html", mapOf("static_url_path" to "")))
+            }
+            status(HttpStatusCode.InternalServerError) {
+                call.respond(PebbleContent("500.html", mapOf("static_url_path" to "")))
+            }
         }
     }
 
