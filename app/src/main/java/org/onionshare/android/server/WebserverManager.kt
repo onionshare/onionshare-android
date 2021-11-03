@@ -1,5 +1,8 @@
 package org.onionshare.android.server
 
+import android.util.Base64
+import android.util.Base64.NO_PADDING
+import android.util.Base64.URL_SAFE
 import com.mitchellbosecke.pebble.loader.ClasspathLoader
 import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
@@ -22,6 +25,7 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.security.SecureRandom
 import javax.inject.Inject
 
 internal const val PORT: Int = 17638
@@ -33,20 +37,22 @@ class WebserverManager @Inject constructor() {
     private val _state = MutableStateFlow(State.STOPPED)
     val state: StateFlow<State> = _state
 
+    private val secureRandom = SecureRandom()
     private var server: ApplicationEngine? = null
 
     fun start(sendPage: SendPage) {
         _state.value = State.STARTING
+        val staticPath = getStaticPath()
         server = embeddedServer(Netty, PORT, watchPaths = emptyList()) {
             install(CallLogging)
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }
-            installStatusPages()
+            installStatusPages(staticPath)
             addListener()
             routing {
-                defaultRoutes()
-                sendRoutes(sendPage)
+                defaultRoutes(staticPath)
+                sendRoutes(sendPage, staticPath)
             }
         }.also { it.start() }
     }
@@ -54,6 +60,13 @@ class WebserverManager @Inject constructor() {
     fun stop() {
         _state.value = State.STOPPING
         server?.stop(1_000, 2_000)
+    }
+
+    private fun getStaticPath(): String {
+        val staticSuffixBytes = ByteArray(16).apply { secureRandom.nextBytes(this) }
+        val staticSuffix =
+            Base64.encodeToString(staticSuffixBytes, NO_PADDING or URL_SAFE).trimEnd()
+        return "/static_$staticSuffix"
     }
 
     private fun Application.addListener() {
@@ -65,35 +78,36 @@ class WebserverManager @Inject constructor() {
         }
     }
 
-    private fun Application.installStatusPages() {
+    private fun Application.installStatusPages(staticPath: String) {
         install(StatusPages) {
             status(HttpStatusCode.NotFound) {
-                call.respond(PebbleContent("404.html", mapOf("static_url_path" to "")))
+                call.respond(PebbleContent("404.html", mapOf("static_url_path" to staticPath)))
             }
             status(HttpStatusCode.MethodNotAllowed) {
-                call.respond(PebbleContent("405.html", mapOf("static_url_path" to "")))
+                call.respond(PebbleContent("405.html", mapOf("static_url_path" to staticPath)))
             }
             status(HttpStatusCode.InternalServerError) {
-                call.respond(PebbleContent("500.html", mapOf("static_url_path" to "")))
+                call.respond(PebbleContent("500.html", mapOf("static_url_path" to staticPath)))
             }
         }
     }
 
-    private fun Route.defaultRoutes() {
-        static("css") {
+    private fun Route.defaultRoutes(staticPath: String) {
+        static("$staticPath/css") {
             resources("assets/static/css")
         }
-        static("img") {
+        static("$staticPath/img") {
             resources("assets/static/img")
         }
-        static("js") {
+        static("$staticPath/js") {
             resources("assets/static/js")
         }
     }
 
-    private fun Route.sendRoutes(sendPage: SendPage) {
+    private fun Route.sendRoutes(sendPage: SendPage, staticPath: String) {
         get("/") {
-            call.respond(PebbleContent("send.html", sendPage.model))
+            val model = sendPage.model + mapOf("static_url_path" to staticPath)
+            call.respond(PebbleContent("send.html", model))
         }
         get("/download") {
             call.respond("Not yet implemented")

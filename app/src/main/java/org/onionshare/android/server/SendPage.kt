@@ -10,7 +10,6 @@ data class SendPage(
     val model: Map<String, Any>
         get() {
             return mapOf(
-                "static_url_path" to "",
                 "filename" to fileName,
                 "filesize" to fileSize,
                 "title" to title,
