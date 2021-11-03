@@ -1,0 +1,16 @@
+<configuration>
+    <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
+        <tagEncoder>
+            <pattern>%logger{12}</pattern>
+        </tagEncoder>
+        <encoder>
+            <pattern>%msg</pattern>
+        </encoder>
+    </appender>
+    <root level="ALL">
+        <appender-ref ref="logcat" />
+    </root>
+    <!-- hide all Netty debug logs -->
+    <logger name="io.netty" level="INFO" />
+    <logger name="com.mitchellbosecke.pebble" level="INFO" />
+</configuration>
