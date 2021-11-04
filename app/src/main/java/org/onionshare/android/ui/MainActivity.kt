@@ -24,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -92,10 +93,10 @@ fun Greeting(
     webserverState: StateFlow<WebserverManager.State>,
     onFabClicked: () -> Unit,
 ) {
+    val state = webserverState.collectAsState()
     Scaffold(
         floatingActionButton = {
-            val fState = fileManagerState.collectAsState().value
-            if (fState !is FileManager.State.FilesReadyForDownload) {
+            if (state.value == STOPPED) {
                 val text = "Add files"
                 ExtendedFloatingActionButton(
                     onClick = onFabClicked,
@@ -106,7 +107,7 @@ fun Greeting(
             }
         }
     ) {
-        MainContent(name, fileManagerState, onButtonClicked, webserverState)
+        MainContent(name, fileManagerState, onButtonClicked, state)
     }
 }
 
@@ -115,7 +116,7 @@ fun MainContent(
     name: String,
     fileManagerState: StateFlow<FileManager.State>,
     onButtonClicked: (WebserverManager.State) -> Unit,
-    webserverState: StateFlow<WebserverManager.State>,
+    webserverState: State<WebserverManager.State>,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -131,7 +132,7 @@ fun MainContent(
                 modifier = Modifier.padding(16.dp)
             )
         } else {
-            val wState = webserverState.collectAsState().value
+            val wState = webserverState.value
             Button(
                 modifier = Modifier.padding(16.dp),
                 enabled = wState == STOPPED || wState == STARTED,

@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
 
         // not supporting selecting entire folders with sub-folders
         viewModelScope.launch(Dispatchers.IO) {
-            val filesAdded = fileManager.addFiles(uris)
+            val filesAdded = fileManager.addFiles(uris, fileManagerState.value)
             _fileManagerState.value = filesAdded
         }
     }

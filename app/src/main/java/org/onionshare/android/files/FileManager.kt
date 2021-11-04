@@ -30,8 +30,12 @@ class FileManager @Inject constructor(
 
     private val ctx = app.applicationContext
 
-    fun addFiles(uris: List<Uri>): FilesAdded {
-        val files = uris.map { uri ->
+    fun addFiles(uris: List<Uri>, state: State): FilesAdded {
+        val existingFiles = if (state is FilesAdded) state.files else emptyList()
+        val files = uris.mapNotNull { uri ->
+            // continue if we already have that file
+            if (existingFiles.any { it.uri == uri }) return@mapNotNull null
+
             val documentFile = DocumentFile.fromSingleUri(ctx, uri) ?: error("Only API < 19")
             val name = documentFile.name ?: uri.getFallBackName() ?: error("Uri has no path $uri")
             val size = documentFile.length()
@@ -40,7 +44,7 @@ class FileManager @Inject constructor(
             }
             SendFile(name, sizeHuman, uri)
         }
-        return FilesAdded(files)
+        return FilesAdded(existingFiles + files)
     }
 
     fun zipFiles(state: FilesAdded): FilesReadyForDownload {
