@@ -43,16 +43,17 @@ class WebserverManager @Inject constructor() {
     fun start(sendPage: SendPage) {
         _state.value = State.STARTING
         val staticPath = getStaticPath()
+        val staticPathMap = mapOf("static_url_path" to staticPath)
         server = embeddedServer(Netty, PORT, watchPaths = emptyList()) {
             install(CallLogging)
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }
-            installStatusPages(staticPath)
+            installStatusPages(staticPathMap)
             addListener()
             routing {
                 defaultRoutes(staticPath)
-                sendRoutes(sendPage, staticPath)
+                sendRoutes(sendPage, staticPathMap)
             }
         }.also { it.start() }
     }
@@ -78,16 +79,16 @@ class WebserverManager @Inject constructor() {
         }
     }
 
-    private fun Application.installStatusPages(staticPath: String) {
+    private fun Application.installStatusPages(staticPathMap: Map<String, String>) {
         install(StatusPages) {
             status(HttpStatusCode.NotFound) {
-                call.respond(PebbleContent("404.html", mapOf("static_url_path" to staticPath)))
+                call.respond(PebbleContent("404.html", staticPathMap))
             }
             status(HttpStatusCode.MethodNotAllowed) {
-                call.respond(PebbleContent("405.html", mapOf("static_url_path" to staticPath)))
+                call.respond(PebbleContent("405.html", staticPathMap))
             }
             status(HttpStatusCode.InternalServerError) {
-                call.respond(PebbleContent("500.html", mapOf("static_url_path" to staticPath)))
+                call.respond(PebbleContent("500.html", staticPathMap))
             }
         }
     }
@@ -104,9 +105,9 @@ class WebserverManager @Inject constructor() {
         }
     }
 
-    private fun Route.sendRoutes(sendPage: SendPage, staticPath: String) {
+    private fun Route.sendRoutes(sendPage: SendPage, staticPathMap: Map<String, String>) {
         get("/") {
-            val model = sendPage.model + mapOf("static_url_path" to staticPath)
+            val model = sendPage.model + staticPathMap
             call.respond(PebbleContent("send.html", model))
         }
         get("/download") {
