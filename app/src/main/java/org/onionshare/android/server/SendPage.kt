@@ -1,10 +1,14 @@
 package org.onionshare.android.server
 
+import android.net.Uri
+import java.io.File
+
 data class SendPage(
-    private val fileName: String,
+    val fileName: String,
     private val fileSize: String,
     private val fileSizeHuman: String,
     private val title: String = "OnionShare",
+    val zipFile: File,
 ) {
     private val files: ArrayList<SendFile> = ArrayList()
     val model: Map<String, Any>
@@ -27,6 +31,16 @@ data class SendPage(
 }
 
 data class SendFile(
+    /**
+     * Used by template.
+     */
     val basename: String,
+    /**
+     * Used by template.
+     */
     val size_human: String,
+    /**
+     * Used internally to retrieve the file content.
+     */
+    val uri: Uri,
 )

@@ -1,7 +1,8 @@
 package org.onionshare.android.ui
 
+import android.content.ActivityNotFoundException
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.ComponentActivity
@@ -23,22 +24,24 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.onionshare.android.server.WebserverManager.State
+import org.onionshare.android.R
+import org.onionshare.android.files.FileManager
+import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.server.WebserverManager.State.STARTED
 import org.onionshare.android.server.WebserverManager.State.STARTING
 import org.onionshare.android.server.WebserverManager.State.STOPPED
 import org.onionshare.android.server.WebserverManager.State.STOPPING
 import org.onionshare.android.ui.theme.OnionshareTheme
 import org.onionshare.android.ui.theme.PurpleOnionShare
-import org.slf4j.LoggerFactory.getLogger
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -55,6 +58,7 @@ class MainActivity : ComponentActivity() {
                         name = "OnionSharer",
                         webserverState = viewModel.webserverState,
                         onButtonClicked = this::onButtonClicked,
+                        fileManagerState = viewModel.fileManagerState,
                         onFabClicked = this::onFabClicked,
                     )
                 }
@@ -62,61 +66,82 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun onButtonClicked(currentState: State) = when (currentState) {
+    private fun onButtonClicked(currentState: WebserverManager.State) = when (currentState) {
         STOPPED -> viewModel.startServer()
         STARTED -> viewModel.stopServer()
         else -> error("Illegal click state: $currentState")
     }
 
     private val launcher = registerForActivityResult(GetMultipleContents()) { uris ->
-        // not supporting selecting entire folders with sub-folders
-        uris.forEach { uri ->
-            getLogger("TEST").error("$uri")
-        }
-        Toast.makeText(this, "Not implemented", LENGTH_SHORT).show()
+        viewModel.onUrisReceived(uris)
     }
 
     private fun onFabClicked() {
-        launcher.launch("*/*")
+        try {
+            launcher.launch("*/*")
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, R.string.add_files_not_supported, LENGTH_SHORT).show()
+        }
     }
 }
 
 @Composable
 fun Greeting(
     name: String,
-    webserverState: StateFlow<State>,
-    onButtonClicked: (State) -> Unit,
+    fileManagerState: StateFlow<FileManager.State>,
+    onButtonClicked: (WebserverManager.State) -> Unit,
+    webserverState: StateFlow<WebserverManager.State>,
     onFabClicked: () -> Unit,
 ) {
+    val state = webserverState.collectAsState()
     Scaffold(
         floatingActionButton = {
-            val text = "Add files"
-            ExtendedFloatingActionButton(
-                onClick = onFabClicked,
-                icon = { Icon(Icons.Filled.Add, contentDescription = text) },
-                text = { Text(text) },
-                backgroundColor = PurpleOnionShare,
-            )
-        },
+            if (state.value == STOPPED) {
+                val text = "Add files"
+                ExtendedFloatingActionButton(
+                    onClick = onFabClicked,
+                    icon = { Icon(Icons.Filled.Add, contentDescription = text) },
+                    text = { Text(text) },
+                    backgroundColor = PurpleOnionShare,
+                )
+            }
+        }
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-        ) {
+        MainContent(name, fileManagerState, onButtonClicked, state)
+    }
+}
+
+@Composable
+fun MainContent(
+    name: String,
+    fileManagerState: StateFlow<FileManager.State>,
+    onButtonClicked: (WebserverManager.State) -> Unit,
+    webserverState: State<WebserverManager.State>,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        val fState = fileManagerState.collectAsState()
+        if (fState.value == FileManager.State.NoFiles) {
             Text(
                 text = "Hello $name!",
-                modifier = Modifier.padding(all = Dp(16.0f))
+                modifier = Modifier.padding(16.dp)
             )
-            val state = webserverState.collectAsState().value
-            Log.e("TEST", "state: $state")
-            val isEnabled = state == STOPPED || state == STARTED
-            Button(onClick = { onButtonClicked(state) }, enabled = isEnabled) {
-                if (state == STOPPED || state == STARTING) Text("Start Webserver")
-                else if (state == STARTED || state == STOPPING) Text("Stop Webserver")
+        } else {
+            val wState = webserverState.value
+            Button(
+                modifier = Modifier.padding(16.dp),
+                enabled = wState == STOPPED || wState == STARTED,
+                onClick = { onButtonClicked(wState) },
+            ) {
+                if (wState == STOPPED || wState == STARTING) Text("Start Webserver")
+                else if (wState == STARTED || wState == STOPPING) Text("Stop Webserver")
             }
+            FileList(fState)
         }
     }
 }
@@ -125,6 +150,15 @@ fun Greeting(
 @Composable
 fun DefaultPreview() {
     OnionshareTheme {
-        Greeting("Android with a long name for a preview", MutableStateFlow(STOPPED), {}, {})
+        Greeting("Android with a long name for a preview",
+            MutableStateFlow(FileManager.State.NoFiles),
+            {},
+            MutableStateFlow(STOPPED),
+            {}
+        )
     }
 }
+
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun NightModePreview() = DefaultPreview()

@@ -11,12 +11,17 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.CallLogging
 import io.ktor.features.StatusPages
+import io.ktor.http.ContentDisposition.Companion.Attachment
+import io.ktor.http.ContentDisposition.Parameters.FileName
+import io.ktor.http.HttpHeaders.ContentDisposition
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.pebble.Pebble
 import io.ktor.pebble.PebbleContent
+import io.ktor.response.header
 import io.ktor.response.respond
+import io.ktor.response.respondFile
 import io.ktor.routing.Route
 import io.ktor.routing.get
 import io.ktor.routing.routing
@@ -40,8 +45,11 @@ class WebserverManager @Inject constructor() {
     private val secureRandom = SecureRandom()
     private var server: ApplicationEngine? = null
 
-    fun start(sendPage: SendPage) {
+    fun onFilesBeingZipped() {
         _state.value = State.STARTING
+    }
+
+    fun start(sendPage: SendPage) {
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
         server = embeddedServer(Netty, PORT, watchPaths = emptyList()) {
@@ -111,7 +119,11 @@ class WebserverManager @Inject constructor() {
             call.respond(PebbleContent("send.html", model))
         }
         get("/download") {
-            call.respond("Not yet implemented")
+            call.response.header(
+                ContentDisposition,
+                Attachment.withParameter(FileName, sendPage.fileName).toString()
+            )
+            call.respondFile(sendPage.zipFile)
         }
     }
 }
