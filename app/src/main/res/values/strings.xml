@@ -6,6 +6,13 @@
     <string name="remove">Remove</string>
     <string name="share_empty_state">Nothing here yet.</string>
     <string name="clear_all">Clear All</string>
+    <string name="share_files_add">Add files</string>
+    <string name="ready">Ready</string>
+    <string name="starting">Starting…</string>
+    <string name="share_button_start">Start Sharing</string>
+    <string name="share_button_starting">Starting… tap to cancel</string>
+    <string name="share_button_stop">Stop Sharing</string>
+    <string name="sharing">Sharing</string>
     <!-- The first placeholder is the number of items, the second one will be replaced with the size of all files -->
     <plurals name="share_file_list_summary">
         <item quantity="one">%1$d item, %2$s</item>

@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,9 +29,8 @@ class MainViewModel @Inject constructor(
     private val fileManager: FileManager,
 ) : AndroidViewModel(app) {
 
-    private val _fileManagerState = MutableStateFlow<FileManager.State>(FileManager.State.NoFiles)
-    val fileManagerState: StateFlow<FileManager.State> = _fileManagerState
-    val webserverState = webserverManager.state
+    private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.NoFiles)
+    val shareState: StateFlow<ShareUiState> = _shareState
 
     override fun onCleared() {
         super.onCleared()
@@ -43,23 +43,35 @@ class MainViewModel @Inject constructor(
 
         // not supporting selecting entire folders with sub-folders
         viewModelScope.launch(Dispatchers.IO) {
-            val filesAdded = fileManager.addFiles(uris, fileManagerState.value)
-            _fileManagerState.value = filesAdded
+            val filesAdded = fileManager.addFiles(uris, shareState.value.files)
+            val totalSize = filesAdded.files.sumOf { it.size }
+            _shareState.value = ShareUiState.FilesAdded(filesAdded.files, totalSize)
         }
     }
 
     fun removeFile(file: SendFile) {
-        val state = fileManagerState.value as FileManager.State.FilesAdded
-        val newList = state.files.filterNot { it == file }
-        _fileManagerState.value = if (newList.isEmpty()) {
-            FileManager.State.NoFiles
+        val newList = shareState.value.files.filterNot { it == file }
+        if (newList.isEmpty()) {
+            _shareState.value = ShareUiState.NoFiles
         } else {
-            FileManager.State.FilesAdded(newList)
+            val totalSize = newList.sumOf { it.size }
+            _shareState.value = ShareUiState.FilesAdded(newList, totalSize)
         }
     }
 
     fun removeAll() {
-        _fileManagerState.value = FileManager.State.NoFiles
+        _shareState.value = ShareUiState.NoFiles
+    }
+
+    fun onSheetButtonClicked() {
+        viewModelScope.launch {
+            _shareState.value =
+                ShareUiState.Starting(_shareState.value.files, _shareState.value.totalSize)
+            delay(1700)
+            _shareState.value = ShareUiState.Sharing(_shareState.value.files,
+                _shareState.value.totalSize,
+                "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/")
+        }
     }
 
     fun startServer() {
@@ -67,10 +79,7 @@ class MainViewModel @Inject constructor(
         webserverManager.onFilesBeingZipped()
 
         viewModelScope.launch(Dispatchers.IO) {
-            val filesAdded = fileManagerState.value as FileManager.State.FilesAdded
-            val filesReady = fileManager.zipFiles(filesAdded)
-            _fileManagerState.value = filesReady
-
+            val filesReady = fileManager.zipFiles(shareState.value.files)
             LOG.error("$filesReady")
             val fileSize = filesReady.zip.length()
             val sendPage = SendPage(

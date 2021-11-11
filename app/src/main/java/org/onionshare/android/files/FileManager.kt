@@ -30,8 +30,7 @@ class FileManager @Inject constructor(
 
     private val ctx = app.applicationContext
 
-    fun addFiles(uris: List<Uri>, state: State): FilesAdded {
-        val existingFiles = if (state is FilesAdded) state.files else emptyList()
+    fun addFiles(uris: List<Uri>, existingFiles: List<SendFile>): FilesAdded {
         val files = uris.mapNotNull { uri ->
             // continue if we already have that file
             if (existingFiles.any { it.uri == uri }) return@mapNotNull null
@@ -47,11 +46,11 @@ class FileManager @Inject constructor(
         return FilesAdded(existingFiles + files)
     }
 
-    fun zipFiles(state: FilesAdded): FilesReadyForDownload {
+    fun zipFiles(files: List<SendFile>): FilesReadyForDownload {
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
             ZipOutputStream(fileOutputStream).use { zipStream ->
-                state.files.forEach { file ->
+                files.forEach { file ->
                     ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                         zipStream.putNextEntry(ZipEntry(file.basename))
                         inputStream.copyTo(zipStream)
@@ -62,7 +61,7 @@ class FileManager @Inject constructor(
         val zipFile = ctx.getFileStreamPath(zipFileName)
         // TODO we should take better care to clean up old zip files properly
         zipFile.deleteOnExit()
-        return FilesReadyForDownload(state.files, zipFile)
+        return FilesReadyForDownload(files, zipFile)
     }
 
     private fun Uri.getFallBackName(): String? {

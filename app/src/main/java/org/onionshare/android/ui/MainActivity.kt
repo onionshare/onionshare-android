@@ -12,9 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import dagger.hilt.android.AndroidEntryPoint
 import org.onionshare.android.R
-import org.onionshare.android.server.WebserverManager
-import org.onionshare.android.server.WebserverManager.State.STARTED
-import org.onionshare.android.server.WebserverManager.State.STOPPED
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 @AndroidEntryPoint
@@ -28,22 +25,15 @@ class MainActivity : ComponentActivity() {
             OnionshareTheme {
                 Surface(color = MaterialTheme.colors.background) {
                     MainUi(
-                        webserverState = viewModel.webserverState,
-                        onButtonClicked = this::onButtonClicked,
-                        fileManagerState = viewModel.fileManagerState,
+                        stateFlow = viewModel.shareState,
                         onFabClicked = this::onFabClicked,
                         onFileRemove = viewModel::removeFile,
                         onRemoveAll = viewModel::removeAll,
+                        onSheetButtonClicked = viewModel::onSheetButtonClicked,
                     )
                 }
             }
         }
-    }
-
-    private fun onButtonClicked(currentState: WebserverManager.State) = when (currentState) {
-        STOPPED -> viewModel.startServer()
-        STARTED -> viewModel.stopServer()
-        else -> error("Illegal click state: $currentState")
     }
 
     private val launcher = registerForActivityResult(GetMultipleContents()) { uris ->

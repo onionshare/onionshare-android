@@ -40,41 +40,39 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.onionshare.android.R
-import org.onionshare.android.files.FileManager
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 @Composable
 fun FileList(
-    fileManagerState: State<FileManager.State>,
+    modifier: Modifier = Modifier,
+    state: State<ShareUiState>,
     onFileRemove: (SendFile) -> Unit,
     onRemoveAll: () -> Unit,
 ) {
-    val files = when (val state = fileManagerState.value) {
-        is FileManager.State.FilesAdded -> state.files
-        else -> error("Wrong state: $state")
-    }
+    val files = state.value.files
     val ctx = LocalContext.current
-    val totalSize = formatShortFileSize(ctx, files.sumOf { it.size })
+    val totalSize = formatShortFileSize(ctx, state.value.totalSize)
     val res = ctx.resources
     val text =
         res.getQuantityString(R.plurals.share_file_list_summary, files.size, files.size, totalSize)
-    Column {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Text(text, modifier = Modifier.weight(1f))
-            TextButton(onClick = onRemoveAll) {
-                Text(stringResource(R.string.clear_all))
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Text(text, modifier = Modifier.weight(1f))
+                TextButton(onClick = onRemoveAll) {
+                    Text(stringResource(R.string.clear_all))
+                }
             }
         }
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            items(files) { file ->
-                FileRow(file, onFileRemove)
-            }
+        items(files) { file ->
+            FileRow(file, onFileRemove)
         }
     }
 }
@@ -164,9 +162,10 @@ fun FileListPreview() {
             SendFile("bar", "42 MiB", 2, Uri.parse("/bar"), "video/mp4"),
             SendFile("foo bar", "23 MiB", 3, Uri.parse("/foo/bar"), null),
         )
+        val totalSize = files.sumOf { it.size }
         val mutableState = remember {
-            mutableStateOf(FileManager.State.FilesAdded(files))
+            mutableStateOf(ShareUiState.FilesAdded(files, totalSize))
         }
-        FileList(mutableState, {}) {}
+        FileList(Modifier, mutableState, {}) {}
     }
 }
