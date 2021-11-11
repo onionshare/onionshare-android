@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.onionshare.android.files.FileManager
+import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
 import org.slf4j.LoggerFactory
@@ -44,6 +45,16 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val filesAdded = fileManager.addFiles(uris, fileManagerState.value)
             _fileManagerState.value = filesAdded
+        }
+    }
+
+    fun removeFile(file: SendFile) {
+        val state = fileManagerState.value as FileManager.State.FilesAdded
+        val newList = state.files.filterNot { it == file }
+        _fileManagerState.value = if (newList.isEmpty()) {
+            FileManager.State.NoFiles
+        } else {
+            FileManager.State.FilesAdded(newList)
         }
     }
 

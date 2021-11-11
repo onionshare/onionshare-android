@@ -3,6 +3,7 @@ package org.onionshare.android.ui
 import android.content.ActivityNotFoundException
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.ComponentActivity
@@ -15,7 +16,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.ExtendedFloatingActionButton
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -35,6 +36,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.onionshare.android.R
 import org.onionshare.android.files.FileManager
+import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.server.WebserverManager.State.STARTED
 import org.onionshare.android.server.WebserverManager.State.STARTING
@@ -60,6 +62,7 @@ class MainActivity : ComponentActivity() {
                         onButtonClicked = this::onButtonClicked,
                         fileManagerState = viewModel.fileManagerState,
                         onFabClicked = this::onFabClicked,
+                        onFileRemove = this::onFileRemoved,
                     )
                 }
             }
@@ -83,6 +86,11 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, R.string.add_files_not_supported, LENGTH_SHORT).show()
         }
     }
+
+    private fun onFileRemoved(file: SendFile) {
+        Log.e("TEST", "REMOVE $file")
+        viewModel.removeFile(file)
+    }
 }
 
 @Composable
@@ -92,22 +100,21 @@ fun Greeting(
     onButtonClicked: (WebserverManager.State) -> Unit,
     webserverState: StateFlow<WebserverManager.State>,
     onFabClicked: () -> Unit,
+    onFileRemove: (SendFile) -> Unit,
 ) {
     val state = webserverState.collectAsState()
     Scaffold(
         floatingActionButton = {
             if (state.value == STOPPED) {
                 val text = "Add files"
-                ExtendedFloatingActionButton(
+                FloatingActionButton(
                     onClick = onFabClicked,
-                    icon = { Icon(Icons.Filled.Add, contentDescription = text) },
-                    text = { Text(text) },
                     backgroundColor = PurpleOnionShare,
-                )
+                ) { Icon(Icons.Filled.Add, contentDescription = text) }
             }
         }
     ) {
-        MainContent(name, fileManagerState, onButtonClicked, state)
+        MainContent(name, fileManagerState, onButtonClicked, state, onFileRemove)
     }
 }
 
@@ -117,6 +124,7 @@ fun MainContent(
     fileManagerState: StateFlow<FileManager.State>,
     onButtonClicked: (WebserverManager.State) -> Unit,
     webserverState: State<WebserverManager.State>,
+    onFileRemove: (SendFile) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -141,7 +149,7 @@ fun MainContent(
                 if (wState == STOPPED || wState == STARTING) Text("Start Webserver")
                 else if (wState == STARTED || wState == STOPPING) Text("Stop Webserver")
             }
-            FileList(fState)
+            FileList(fState, onFileRemove)
         }
     }
 }
@@ -154,6 +162,7 @@ fun DefaultPreview() {
             MutableStateFlow(FileManager.State.NoFiles),
             {},
             MutableStateFlow(STOPPED),
+            {},
             {}
         )
     }
