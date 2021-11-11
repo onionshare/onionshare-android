@@ -58,6 +58,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun removeAll() {
+        _fileManagerState.value = FileManager.State.NoFiles
+    }
+
     fun startServer() {
         // FIXME this is a mixing of concerns to get the right state in the UI
         webserverManager.onFilesBeingZipped()

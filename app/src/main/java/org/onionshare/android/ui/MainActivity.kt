@@ -2,7 +2,6 @@ package org.onionshare.android.ui
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.ComponentActivity
@@ -13,7 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import dagger.hilt.android.AndroidEntryPoint
 import org.onionshare.android.R
-import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.server.WebserverManager.State.STARTED
 import org.onionshare.android.server.WebserverManager.State.STOPPED
@@ -34,7 +32,8 @@ class MainActivity : ComponentActivity() {
                         onButtonClicked = this::onButtonClicked,
                         fileManagerState = viewModel.fileManagerState,
                         onFabClicked = this::onFabClicked,
-                        onFileRemove = this::onFileRemoved,
+                        onFileRemove = viewModel::removeFile,
+                        onRemoveAll = viewModel::removeAll,
                     )
                 }
             }
@@ -57,10 +56,5 @@ class MainActivity : ComponentActivity() {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, R.string.add_files_not_supported, LENGTH_SHORT).show()
         }
-    }
-
-    private fun onFileRemoved(file: SendFile) {
-        Log.e("TEST", "REMOVE $file")
-        viewModel.removeFile(file)
     }
 }

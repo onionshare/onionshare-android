@@ -1,6 +1,7 @@
 package org.onionshare.android.ui
 
 import android.net.Uri
+import android.text.format.Formatter.formatShortFileSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.InsertDriveFile
@@ -33,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,16 +45,36 @@ import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 @Composable
-fun FileList(fileManagerState: State<FileManager.State>, onFileRemove: (SendFile) -> Unit) {
+fun FileList(
+    fileManagerState: State<FileManager.State>,
+    onFileRemove: (SendFile) -> Unit,
+    onRemoveAll: () -> Unit,
+) {
     val files = when (val state = fileManagerState.value) {
         is FileManager.State.FilesAdded -> state.files
         else -> error("Wrong state: $state")
     }
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        items(files) { file ->
-            FileRow(file, onFileRemove)
+    val ctx = LocalContext.current
+    val totalSize = formatShortFileSize(ctx, files.sumOf { it.size })
+    val res = ctx.resources
+    val text =
+        res.getQuantityString(R.plurals.share_file_list_summary, files.size, files.size, totalSize)
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(text, modifier = Modifier.weight(1f))
+            TextButton(onClick = onRemoveAll) {
+                Text(stringResource(R.string.clear_all))
+            }
+        }
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            items(files) { file ->
+                FileRow(file, onFileRemove)
+            }
         }
     }
 }
@@ -127,7 +150,7 @@ private fun getIconFromMimeType(mimeType: String?): ImageVector = when {
 fun FileRowPreview() {
     OnionshareTheme {
         FileRow(
-            SendFile("foo", "1 KiB", Uri.parse("/foo"), null)
+            SendFile("foo", "1 KiB", 1, Uri.parse("/foo"), null)
         ) { }
     }
 }
@@ -137,13 +160,13 @@ fun FileRowPreview() {
 fun FileListPreview() {
     OnionshareTheme {
         val files = listOf(
-            SendFile("foo", "1 KiB", Uri.parse("/foo"), "image/jpeg"),
-            SendFile("bar", "42 MiB", Uri.parse("/bar"), "video/mp4"),
-            SendFile("foo bar", "23 MiB", Uri.parse("/foo/bar"), null),
+            SendFile("foo", "1 KiB", 1, Uri.parse("/foo"), "image/jpeg"),
+            SendFile("bar", "42 MiB", 2, Uri.parse("/bar"), "video/mp4"),
+            SendFile("foo bar", "23 MiB", 3, Uri.parse("/foo/bar"), null),
         )
         val mutableState = remember {
             mutableStateOf(FileManager.State.FilesAdded(files))
         }
-        FileList(mutableState) {}
+        FileList(mutableState, {}) {}
     }
 }

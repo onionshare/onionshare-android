@@ -44,6 +44,7 @@ fun MainUi(
     webserverState: StateFlow<WebserverManager.State>,
     onFabClicked: () -> Unit,
     onFileRemove: (SendFile) -> Unit,
+    onRemoveAll: () -> Unit,
 ) {
     val state = webserverState.collectAsState()
     Scaffold(
@@ -63,7 +64,7 @@ fun MainUi(
             }
         }
     ) {
-        MainContent(fileManagerState, onButtonClicked, state, onFileRemove)
+        MainContent(fileManagerState, onButtonClicked, state, onFileRemove, onRemoveAll)
     }
 }
 
@@ -73,15 +74,20 @@ fun MainContent(
     onButtonClicked: (WebserverManager.State) -> Unit,
     webserverState: State<WebserverManager.State>,
     onFileRemove: (SendFile) -> Unit,
+    onRemoveAll: () -> Unit,
 ) {
+    val fState = fileManagerState.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = if (fState.value == FileManager.State.NoFiles) {
+            Arrangement.Center
+        } else {
+            Arrangement.Top
+        },
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        val fState = fileManagerState.collectAsState()
         if (fState.value == FileManager.State.NoFiles) {
             Image(painterResource(R.drawable.ic_share_empty_state), contentDescription = null)
             Text(
@@ -98,7 +104,7 @@ fun MainContent(
                 if (wState == STOPPED || wState == STARTING) Text("Start Webserver")
                 else if (wState == STARTED || wState == STOPPING) Text("Stop Webserver")
             }
-            FileList(fState, onFileRemove)
+            FileList(fState, onFileRemove, onRemoveAll)
         }
     }
 }
@@ -112,7 +118,8 @@ fun DefaultPreview() {
             onButtonClicked = {},
             webserverState = MutableStateFlow(STOPPED),
             onFabClicked = {},
-            onFileRemove = {}
+            onFileRemove = {},
+            onRemoveAll = {},
         )
     }
 }
