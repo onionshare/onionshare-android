@@ -43,4 +43,8 @@ data class SendFile(
      * Used internally to retrieve the file content.
      */
     val uri: Uri,
+    /**
+     * Used internally to display different icons.
+     */
+    val mimeType: String?,
 )

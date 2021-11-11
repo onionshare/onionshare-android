@@ -42,7 +42,7 @@ class FileManager @Inject constructor(
             val sizeHuman = if (size == 0L) ctx.getString(R.string.unknown) else {
                 formatShortFileSize(ctx, size)
             }
-            SendFile(name, sizeHuman, uri)
+            SendFile(name, sizeHuman, uri, documentFile.type)
         }
         return FilesAdded(existingFiles + files)
     }
