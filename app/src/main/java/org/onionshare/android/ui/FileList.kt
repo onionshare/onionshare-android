@@ -1,5 +1,6 @@
 package org.onionshare.android.ui
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
 import android.text.format.Formatter.formatShortFileSize
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
@@ -66,19 +68,21 @@ fun FileList(
                 modifier = Modifier.padding(8.dp)
             ) {
                 Text(text, modifier = Modifier.weight(1f))
-                TextButton(onClick = onRemoveAll) {
-                    Text(stringResource(R.string.clear_all))
+                if (state.value.allowsModifyingFiles) {
+                    TextButton(onClick = onRemoveAll) {
+                        Text(stringResource(R.string.clear_all))
+                    }
                 }
             }
         }
         items(files) { file ->
-            FileRow(file, onFileRemove)
+            FileRow(file, state.value.allowsModifyingFiles, onFileRemove)
         }
     }
 }
 
 @Composable
-fun FileRow(file: SendFile, onFileRemove: (SendFile) -> Unit) {
+fun FileRow(file: SendFile, editAllowed: Boolean, onFileRemove: (SendFile) -> Unit) {
     Row(modifier = Modifier.padding(8.dp)) {
         Icon(
             imageVector = getIconFromMimeType(file.mimeType),
@@ -107,28 +111,30 @@ fun FileRow(file: SendFile, onFileRemove: (SendFile) -> Unit) {
                 )
             }
         }
-        var expanded by remember { mutableStateOf(false) }
-        IconButton(
-            onClick = { expanded = true },
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.MoreVert,
-                contentDescription = "test",
-                modifier = Modifier.alpha(0.54f)
-            )
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
+        if (editAllowed) {
+            var expanded by remember { mutableStateOf(false) }
+            IconButton(
+                onClick = { expanded = true },
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
             ) {
-                DropdownMenuItem(
-                    onClick = {
-                        onFileRemove(file)
-                        expanded = false
-                    }
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = "test",
+                    modifier = Modifier.alpha(0.54f)
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
                 ) {
-                    Text(stringResource(R.string.remove))
+                    DropdownMenuItem(
+                        onClick = {
+                            onFileRemove(file)
+                            expanded = false
+                        }
+                    ) {
+                        Text(stringResource(R.string.remove))
+                    }
                 }
             }
         }
@@ -143,14 +149,23 @@ private fun getIconFromMimeType(mimeType: String?): ImageVector = when {
     else -> Icons.Filled.InsertDriveFile
 }
 
-@Preview(showBackground = true/*, uiMode = UI_MODE_NIGHT_YES*/)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun FileRowPreview() {
+fun FileRowPreview(editAllowed: Boolean = true) {
     OnionshareTheme {
-        FileRow(
-            SendFile("foo", "1 KiB", 1, Uri.parse("/foo"), null)
-        ) { }
+        Surface(color = MaterialTheme.colors.background) {
+            FileRow(
+                SendFile("foo", "1 KiB", 1, Uri.parse("/foo"), null),
+                editAllowed,
+            ) { }
+        }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FileRowNoEditPreview() {
+    FileRowPreview(false)
 }
 
 @Preview(showBackground = true)

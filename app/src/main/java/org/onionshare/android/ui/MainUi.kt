@@ -111,7 +111,7 @@ fun ActionBar(@StringRes res: Int) {
 
 @Composable
 fun Fab(state: ShareUiState, offset: Dp, onFabClicked: () -> Unit) {
-    if (state.allowsAddingFiles) {
+    if (state.allowsModifyingFiles) {
         val color by animateColorAsState(
             targetValue = if (offset <= bottomSheetPeekHeight) {
                 MaterialTheme.colors.primary

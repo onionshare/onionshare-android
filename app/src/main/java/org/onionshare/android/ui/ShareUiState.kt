@@ -4,7 +4,7 @@ import org.onionshare.android.server.SendFile
 
 sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Long) {
 
-    open val allowsAddingFiles = true
+    open val allowsModifyingFiles = true
 
     object NoFiles : ShareUiState(emptyList(), 0L)
 
@@ -17,7 +17,7 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
         override val files: List<SendFile>,
         override val totalSize: Long,
     ) : ShareUiState(files, totalSize) {
-        override val allowsAddingFiles = false
+        override val allowsModifyingFiles = false
     }
 
     data class Sharing(
@@ -25,7 +25,7 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
         override val totalSize: Long,
         val onionAddress: String,
     ) : ShareUiState(files, totalSize) {
-        override val allowsAddingFiles = false
+        override val allowsModifyingFiles = false
     }
 
     data class Complete(
