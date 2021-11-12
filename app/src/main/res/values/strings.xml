@@ -7,12 +7,17 @@
     <string name="share_empty_state">Nothing here yet.</string>
     <string name="clear_all">Clear All</string>
     <string name="share_files_add">Add files</string>
-    <string name="ready">Ready</string>
-    <string name="starting">Starting…</string>
+    <string name="share_state_ready">Ready</string>
+    <string name="share_state_starting">Starting…</string>
+    <string name="share_state_sharing">Sharing</string>
+    <string name="share_state_transfer_complete">Transfer complete</string>
     <string name="share_button_start">Start Sharing</string>
     <string name="share_button_starting">Starting… tap to cancel</string>
     <string name="share_button_stop">Stop Sharing</string>
-    <string name="sharing">Sharing</string>
+    <string name="share_button_complete">Start Sharing Again</string>
+    <string name="share_onion_intro">Anyone with this OnionShare address can download your files using the OnionShare app or Tor Browser:</string>
+    <string name="clipboard_onion_service_label">OnionShare address</string>
+    <string name="clipboard_onion_service_copied">OnionShare address copied to clipboard.</string>
     <!-- The first placeholder is the number of items, the second one will be replaced with the size of all files -->
     <plurals name="share_file_list_summary">
         <item quantity="one">%1$d item, %2$s</item>

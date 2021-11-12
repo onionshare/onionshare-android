@@ -71,6 +71,9 @@ class MainViewModel @Inject constructor(
             _shareState.value = ShareUiState.Sharing(_shareState.value.files,
                 _shareState.value.totalSize,
                 "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/")
+            delay(5000)
+            _shareState.value =
+                ShareUiState.Complete(_shareState.value.files, _shareState.value.totalSize)
         }
     }
 
