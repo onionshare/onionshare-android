@@ -4,15 +4,17 @@ import android.app.Application
 import android.net.Uri
 import android.text.format.Formatter
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.onionshare.android.files.FileManager
+import org.onionshare.android.server.PORT
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
@@ -24,7 +26,6 @@ private val LOG = LoggerFactory.getLogger(MainViewModel::class.java)
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val app: Application,
-    handle: SavedStateHandle,
     private val webserverManager: WebserverManager,
     private val fileManager: FileManager,
 ) : AndroidViewModel(app) {
@@ -32,10 +33,13 @@ class MainViewModel @Inject constructor(
     private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.NoFiles)
     val shareState: StateFlow<ShareUiState> = _shareState
 
+    @Volatile
+    var startSharingJob: Job? = null
+
     override fun onCleared() {
         super.onCleared()
         // TODO later, we shouldn't stop the server when closing the activity
-        stopServer()
+        stopSharing()
     }
 
     fun onUrisReceived(uris: List<Uri>) {
@@ -64,26 +68,21 @@ class MainViewModel @Inject constructor(
     }
 
     fun onSheetButtonClicked() {
-        viewModelScope.launch {
-            _shareState.value =
-                ShareUiState.Starting(_shareState.value.files, _shareState.value.totalSize)
-            delay(1700)
-            _shareState.value = ShareUiState.Sharing(_shareState.value.files,
-                _shareState.value.totalSize,
-                "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/")
-            delay(5000)
-            _shareState.value =
-                ShareUiState.Complete(_shareState.value.files, _shareState.value.totalSize)
+        when (shareState.value) {
+            is ShareUiState.FilesAdded -> startSharing()
+            is ShareUiState.Starting -> stopSharing()
+            is ShareUiState.Sharing -> stopSharing()
+            is ShareUiState.Complete -> startSharing()
+            ShareUiState.NoFiles -> error("Sheet button should not be visible with no files")
         }
     }
 
-    fun startServer() {
-        // FIXME this is a mixing of concerns to get the right state in the UI
-        webserverManager.onFilesBeingZipped()
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val filesReady = fileManager.zipFiles(shareState.value.files)
-            LOG.error("$filesReady")
+    private fun startSharing() {
+        startSharingJob = viewModelScope.launch(Dispatchers.IO) {
+            val files = shareState.value.files
+            _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize)
+            ensureActive()
+            val filesReady = fileManager.zipFiles(files) { ensureActive() }
             val fileSize = filesReady.zip.length()
             val sendPage = SendPage(
                 fileName = "download.zip",
@@ -93,13 +92,32 @@ class MainViewModel @Inject constructor(
             ).apply {
                 addFiles(filesReady.files)
             }
-            webserverManager.start(sendPage)
+            ensureActive()
+            val webserverState = webserverManager.start(sendPage)
+            if (webserverState == WebserverManager.State.STOPPED) {
+                stopSharing()
+            }
+            val url = "http://127.0.0.1:$PORT"
+//        val url = "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/"
+            _shareState.value = ShareUiState.Sharing(files, shareState.value.totalSize, url)
         }
     }
 
-    fun stopServer() {
+    private fun stopSharing() {
         viewModelScope.launch(Dispatchers.IO) {
+            if (startSharingJob?.isActive == true) {
+                // TODO check if this always works as expected
+                startSharingJob?.cancelAndJoin()
+            }
+
             webserverManager.stop()
+            val files = shareState.value.files
+            val newState = if (files.isEmpty()) {
+                ShareUiState.NoFiles
+            } else {
+                ShareUiState.FilesAdded(files, files.sumOf { it.size })
+            }
+            _shareState.value = newState
         }
     }
 

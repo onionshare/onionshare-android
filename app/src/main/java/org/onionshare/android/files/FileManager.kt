@@ -8,6 +8,7 @@ import android.util.Base64.NO_PADDING
 import android.util.Base64.URL_SAFE
 import android.util.Base64.encodeToString
 import androidx.documentfile.provider.DocumentFile
+import kotlinx.coroutines.CancellationException
 import org.onionshare.android.R
 import org.onionshare.android.files.FileManager.State.FilesAdded
 import org.onionshare.android.files.FileManager.State.FilesReadyForDownload
@@ -23,7 +24,6 @@ class FileManager @Inject constructor(
 ) {
 
     sealed class State {
-        object NoFiles : State()
         open class FilesAdded(val files: List<SendFile>) : State()
         class FilesReadyForDownload(files: List<SendFile>, val zip: File) : FilesAdded(files)
     }
@@ -46,19 +46,25 @@ class FileManager @Inject constructor(
         return FilesAdded(existingFiles + files)
     }
 
-    fun zipFiles(files: List<SendFile>): FilesReadyForDownload {
+    fun zipFiles(files: List<SendFile>, ensureActive: () -> Unit): FilesReadyForDownload {
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
-        ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
-            ZipOutputStream(fileOutputStream).use { zipStream ->
-                files.forEach { file ->
-                    ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
-                        zipStream.putNextEntry(ZipEntry(file.basename))
-                        inputStream.copyTo(zipStream)
+        val zipFile = ctx.getFileStreamPath(zipFileName)
+        try {
+            ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
+                ZipOutputStream(fileOutputStream).use { zipStream ->
+                    files.forEach { file ->
+                        // check first if we got cancelled before adding another file to the zip
+                        ensureActive()
+                        ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
+                            zipStream.putNextEntry(ZipEntry(file.basename))
+                            inputStream.copyTo(zipStream)
+                        }
                     }
                 }
             }
+        } catch (e: CancellationException) {
+            zipFile.delete()
         }
-        val zipFile = ctx.getFileStreamPath(zipFileName)
         // TODO we should take better care to clean up old zip files properly
         zipFile.deleteOnExit()
         return FilesReadyForDownload(files, zipFile)

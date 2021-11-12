@@ -28,28 +28,23 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import java.security.SecureRandom
 import javax.inject.Inject
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 internal const val PORT: Int = 17638
 
 class WebserverManager @Inject constructor() {
 
-    enum class State { STARTING, STARTED, STOPPING, STOPPED }
-
-    private val _state = MutableStateFlow(State.STOPPED)
-    val state: StateFlow<State> = _state
+    enum class State { STARTED, STOPPED }
 
     private val secureRandom = SecureRandom()
     private var server: ApplicationEngine? = null
 
-    fun onFilesBeingZipped() {
-        _state.value = State.STARTING
-    }
-
-    fun start(sendPage: SendPage) {
+    suspend fun start(sendPage: SendPage) = suspendCoroutine<State> { continuation ->
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
         server = embeddedServer(Netty, PORT, watchPaths = emptyList()) {
@@ -58,7 +53,8 @@ class WebserverManager @Inject constructor() {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }
             installStatusPages(staticPathMap)
-            addListener()
+            // this method will not return until the continuation in that listener gets resumed
+            addListener(continuation)
             routing {
                 defaultRoutes(staticPath)
                 sendRoutes(sendPage, staticPathMap)
@@ -67,8 +63,7 @@ class WebserverManager @Inject constructor() {
     }
 
     fun stop() {
-        _state.value = State.STOPPING
-        server?.stop(1_000, 2_000)
+        server?.stop(500, 1_000)
     }
 
     private fun getStaticPath(): String {
@@ -78,12 +73,12 @@ class WebserverManager @Inject constructor() {
         return "/static_$staticSuffix"
     }
 
-    private fun Application.addListener() {
+    private fun Application.addListener(continuation: Continuation<State>) {
         environment.monitor.subscribe(ApplicationStarted) {
-            _state.value = State.STARTED
+            if (continuation.context.isActive) continuation.resume(State.STARTED)
         }
         environment.monitor.subscribe(ApplicationStopped) {
-            _state.value = State.STOPPED
+            if (continuation.context.isActive) continuation.resume(State.STOPPED)
         }
     }
 
