@@ -12,6 +12,7 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.onionshare.android.files.FileManager
 import org.onionshare.android.server.PORT
@@ -81,6 +82,7 @@ class MainViewModel @Inject constructor(
         startSharingJob = viewModelScope.launch(Dispatchers.IO) {
             val files = shareState.value.files
             _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize)
+            // call ensureActive() before any heavy work to ensure we don't continue when cancelled
             ensureActive()
             val filesReady = fileManager.zipFiles(files) { ensureActive() }
             val fileSize = filesReady.zip.length()
@@ -93,17 +95,30 @@ class MainViewModel @Inject constructor(
                 addFiles(filesReady.files)
             }
             ensureActive()
-            val webserverState = webserverManager.start(sendPage)
-            if (webserverState == WebserverManager.State.STOPPED) {
-                stopSharing()
-            }
             val url = "http://127.0.0.1:$PORT"
-//        val url = "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/"
-            _shareState.value = ShareUiState.Sharing(files, shareState.value.totalSize, url)
+//            val url = "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/"
+            val sharing = ShareUiState.Sharing(files, shareState.value.totalSize, url)
+            // collecting from StateFlow will only return when coroutine gets cancelled
+            webserverManager.start(sendPage).collect { onWebserverStateChanged(it, sharing) }
         }
     }
 
-    private fun stopSharing() {
+    private fun onWebserverStateChanged(
+        state: WebserverManager.State,
+        sharing: ShareUiState.Sharing,
+    ) {
+        when (state) {
+            WebserverManager.State.STARTED -> _shareState.value = sharing
+            WebserverManager.State.SHOULD_STOP -> stopSharing(true)
+            // Stopping again could cause a harmless double stop,
+            // but ensures state update when webserver stops unexpectedly.
+            // In practise, we cancel the coroutine of this collector when stopping the first time,
+            // so calling stopSharing() twice should actually not happen.
+            WebserverManager.State.STOPPED -> stopSharing()
+        }
+    }
+
+    private fun stopSharing(complete: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             if (startSharingJob?.isActive == true) {
                 // TODO check if this always works as expected
@@ -112,10 +127,10 @@ class MainViewModel @Inject constructor(
 
             webserverManager.stop()
             val files = shareState.value.files
-            val newState = if (files.isEmpty()) {
-                ShareUiState.NoFiles
-            } else {
-                ShareUiState.FilesAdded(files, files.sumOf { it.size })
+            val newState = when {
+                files.isEmpty() -> ShareUiState.NoFiles
+                complete -> ShareUiState.Complete(files, files.sumOf { it.size })
+                else -> ShareUiState.FilesAdded(files, files.sumOf { it.size })
             }
             _shareState.value = newState
         }
