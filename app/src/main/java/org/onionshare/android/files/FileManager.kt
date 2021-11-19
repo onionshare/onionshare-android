@@ -9,6 +9,8 @@ import android.util.Base64.URL_SAFE
 import android.util.Base64.encodeToString
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import org.onionshare.android.R
 import org.onionshare.android.files.FileManager.State.FilesAdded
 import org.onionshare.android.files.FileManager.State.FilesReadyForDownload
@@ -46,15 +48,16 @@ class FileManager @Inject constructor(
         return FilesAdded(existingFiles + files)
     }
 
-    fun zipFiles(files: List<SendFile>, ensureActive: () -> Unit): FilesReadyForDownload {
+    suspend fun zipFiles(files: List<SendFile>): FilesReadyForDownload {
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         val zipFile = ctx.getFileStreamPath(zipFileName)
         try {
+            @Suppress("BlockingMethodInNonBlockingContext")
             ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
                 ZipOutputStream(fileOutputStream).use { zipStream ->
                     files.forEach { file ->
                         // check first if we got cancelled before adding another file to the zip
-                        ensureActive()
+                        currentCoroutineContext().ensureActive()
                         ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                             zipStream.putNextEntry(ZipEntry(file.basename))
                             inputStream.copyTo(zipStream)

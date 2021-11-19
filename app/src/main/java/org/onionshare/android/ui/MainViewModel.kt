@@ -81,10 +81,11 @@ class MainViewModel @Inject constructor(
     private fun startSharing() {
         startSharingJob = viewModelScope.launch(Dispatchers.IO) {
             val files = shareState.value.files
-            _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize)
             // call ensureActive() before any heavy work to ensure we don't continue when cancelled
             ensureActive()
-            val filesReady = fileManager.zipFiles(files) { ensureActive() }
+            _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize)
+            ensureActive()
+            val filesReady = fileManager.zipFiles(files)
             val fileSize = filesReady.zip.length()
             val sendPage = SendPage(
                 fileName = "download.zip",

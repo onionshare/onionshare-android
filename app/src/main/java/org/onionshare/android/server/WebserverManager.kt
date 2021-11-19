@@ -46,7 +46,7 @@ class WebserverManager @Inject constructor() {
 
     private val secureRandom = SecureRandom()
     private var server: ApplicationEngine? = null
-    private var state = MutableStateFlow(STOPPED)
+    private val state = MutableStateFlow(STOPPED)
 
     fun start(sendPage: SendPage): StateFlow<State> {
         val staticPath = getStaticPath()
@@ -57,7 +57,6 @@ class WebserverManager @Inject constructor() {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }
             installStatusPages(staticPathMap)
-            // this method will not return until the continuation in that listener gets resumed
             addListener()
             routing {
                 defaultRoutes(staticPath)

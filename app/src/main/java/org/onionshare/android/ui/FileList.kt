@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -58,8 +59,10 @@ fun FileList(
     val res = ctx.resources
     val text =
         res.getQuantityString(R.plurals.share_file_list_summary, files.size, files.size, totalSize)
+    val scrollState = rememberLazyListState()
     LazyColumn(
         modifier = modifier,
+        state = scrollState,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         item {
@@ -84,15 +87,15 @@ fun FileList(
 @Composable
 fun FileRow(file: SendFile, editAllowed: Boolean, onFileRemove: (SendFile) -> Unit) {
     Row(modifier = Modifier.padding(8.dp)) {
-        Icon(
-            imageVector = getIconFromMimeType(file.mimeType),
-            contentDescription = "test",
-            tint = MaterialTheme.colors.onSurface,
-            modifier = Modifier
-                .size(48.dp)
-                .alpha(0.54f)
-                .align(Alignment.CenterVertically)
-        )
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Icon(
+                imageVector = getIconFromMimeType(file.mimeType),
+                contentDescription = "test",
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
         Column(
             modifier = Modifier
                 .weight(1f)
