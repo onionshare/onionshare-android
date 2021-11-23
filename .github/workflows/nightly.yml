@@ -1,16 +1,18 @@
-name: Build and test
+name: Publish nightly build
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
-    name: Build
+  nightly:
+    name: Publish nightly build
     runs-on: ubuntu-latest
+    environment: nightly
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1
       - name: Gradle dependency cache
         uses: actions/cache@v2
         with:
@@ -25,4 +27,9 @@ jobs:
           distribution: 'adopt'
           java-version: 11
       - name: Build
-        run: ./gradlew check assemble compileStableDebugAndroidTestSources
+        run: ./gradlew assembleNightly
+      - name: F-Droid nightly builds
+        uses: wardvl/f-droid-nightly-action@v2
+        with:
+          debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
+          fdroid_nightly_args: --archive-older 10
