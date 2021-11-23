@@ -6,6 +6,19 @@ plugins {
     id 'org.jlleitschuh.gradle.ktlint' version '10.2.0'
 }
 
+static def versionCodeEpoch() {
+    return (new Date().getTime() / 1000).toInteger()
+}
+
+def gitCommit = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short=7', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 android {
     compileSdk 31
 
@@ -27,6 +40,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "releaseType"
+    productFlavors {
+        stable {
+            dimension "releaseType"
+        }
+        nightly {
+            dimension "releaseType"
+            applicationIdSuffix ".nightly"
+            versionCode versionCodeEpoch()
+            versionNameSuffix " ($gitCommit)"
         }
     }
     compileOptions {
