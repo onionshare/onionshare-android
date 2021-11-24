@@ -32,4 +32,4 @@ jobs:
         uses: wardvl/f-droid-nightly-action@v2
         with:
           debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
-          fdroid_nightly_args: --archive-older 10
+          fdroid_nightly_args: --no-resign --archive-older 10
