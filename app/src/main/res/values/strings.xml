@@ -23,4 +23,6 @@
         <item quantity="one">%1$d item, %2$s</item>
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
+    <string name="sharing_channel_name">File sharing notification</string>
+    <string name="sharing_notification_title">Currently sharing files</string>
 </resources>

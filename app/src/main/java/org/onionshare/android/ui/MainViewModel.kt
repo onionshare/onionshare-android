@@ -33,6 +33,7 @@ class MainViewModel @Inject constructor(
     private val fileManager: FileManager,
 ) : AndroidViewModel(app) {
 
+    // FIXME move this in another class that survives ViewModels, then remove onCleared()
     private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.NoFiles)
     val shareState: StateFlow<ShareUiState> = _shareState
 
@@ -87,6 +88,7 @@ class MainViewModel @Inject constructor(
             // call ensureActive() before any heavy work to ensure we don't continue when cancelled
             ensureActive()
             _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize)
+            // TODO we might want to look into parallelizing what happens below (async {} ?)
             ensureActive()
             val filesReady = fileManager.zipFiles(files)
             val fileSize = filesReady.zip.length()
@@ -104,7 +106,7 @@ class MainViewModel @Inject constructor(
             val url = "http://$onionAddress"
             LOG.error("OnionShare URL: $url") // TODO remove before release
             val sharing = ShareUiState.Sharing(files, shareState.value.totalSize, url)
-            // TODO properly manage tor and webserver state
+            // TODO properly manage tor and webserver state together
             ensureActive()
             // collecting from StateFlow will only return when coroutine gets cancelled
             webserverManager.start(sendPage).collect { onWebserverStateChanged(it, sharing) }

@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.os.IBinder
+import androidx.core.content.ContextCompat.startForegroundService
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
 import net.freehaven.tor.control.TorControlCommands.EVENT_ERR_MSG
 import net.freehaven.tor.control.TorControlCommands.EVENT_HS_DESC
@@ -88,6 +89,7 @@ class TorManager @Inject constructor(
         app.registerReceiver(broadcastReceiver, IntentFilter(ACTION_STATUS))
 
         Intent(app, OnionService::class.java).also { intent ->
+            startForegroundService(app, intent)
             app.bindService(intent, serviceConnection, BIND_AUTO_CREATE)
         }
         // this method suspends here until it the continuation resumes it
@@ -98,6 +100,10 @@ class TorManager @Inject constructor(
         // FIXME TorService crashes us when getting destroyed a second time
         //  see: https://github.com/guardianproject/tor-android/issues/57
         app.unbindService(serviceConnection)
+        // simply unbinding doesn't seem sufficient for stopping a foreground service
+        Intent(app, OnionService::class.java).also { intent ->
+            app.stopService(intent)
+        }
         app.unregisterReceiver(broadcastReceiver)
         broadcastReceiver = null
         LOG.info("Stopped")
