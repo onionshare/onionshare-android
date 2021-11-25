@@ -40,7 +40,15 @@ data class SendFile(
      */
     val size_human: String,
     /**
+     * Used internally to calculate the total file size.
+     */
+    val size: Long,
+    /**
      * Used internally to retrieve the file content.
      */
     val uri: Uri,
+    /**
+     * Used internally to display different icons.
+     */
+    val mimeType: String?,
 )

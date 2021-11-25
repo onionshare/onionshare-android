@@ -30,26 +30,25 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import org.onionshare.android.server.WebserverManager.State.SHOULD_STOP
+import org.onionshare.android.server.WebserverManager.State.STARTED
+import org.onionshare.android.server.WebserverManager.State.STOPPED
+import org.slf4j.LoggerFactory
 import java.security.SecureRandom
 import javax.inject.Inject
 
+private val LOG = LoggerFactory.getLogger(WebserverManager::class.java)
 internal const val PORT: Int = 17638
 
 class WebserverManager @Inject constructor() {
 
-    enum class State { STARTING, STARTED, STOPPING, STOPPED }
-
-    private val _state = MutableStateFlow(State.STOPPED)
-    val state: StateFlow<State> = _state
+    enum class State { STARTED, SHOULD_STOP, STOPPED }
 
     private val secureRandom = SecureRandom()
     private var server: ApplicationEngine? = null
+    private val state = MutableStateFlow(STOPPED)
 
-    fun onFilesBeingZipped() {
-        _state.value = State.STARTING
-    }
-
-    fun start(sendPage: SendPage) {
+    fun start(sendPage: SendPage): StateFlow<State> {
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
         server = embeddedServer(Netty, PORT, watchPaths = emptyList()) {
@@ -64,11 +63,11 @@ class WebserverManager @Inject constructor() {
                 sendRoutes(sendPage, staticPathMap)
             }
         }.also { it.start() }
+        return state
     }
 
     fun stop() {
-        _state.value = State.STOPPING
-        server?.stop(1_000, 2_000)
+        server?.stop(500, 1_000)
     }
 
     private fun getStaticPath(): String {
@@ -80,10 +79,10 @@ class WebserverManager @Inject constructor() {
 
     private fun Application.addListener() {
         environment.monitor.subscribe(ApplicationStarted) {
-            _state.value = State.STARTED
+            state.value = STARTED
         }
         environment.monitor.subscribe(ApplicationStopped) {
-            _state.value = State.STOPPED
+            state.value = STOPPED
         }
     }
 
@@ -124,6 +123,8 @@ class WebserverManager @Inject constructor() {
                 Attachment.withParameter(FileName, sendPage.fileName).toString()
             )
             call.respondFile(sendPage.zipFile)
+            LOG.info("Download complete. Emitting SHOULD_STOP state...")
+            state.value = SHOULD_STOP
         }
     }
 }
