@@ -7,6 +7,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -66,7 +67,6 @@ class ShareManager @Inject constructor(
     }
 
     suspend fun onStateChangeRequested() {
-        // TODO handle rapid double taps that e.g. can tear down things before they even came up
         when (shareState.value) {
             is ShareUiState.FilesAdded -> startSharing()
             is ShareUiState.Starting -> stopSharing()
@@ -88,21 +88,29 @@ class ShareManager @Inject constructor(
             // call ensureActive() before any heavy work to ensure we don't continue when cancelled
             ensureActive()
             _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize)
-            ensureActive()
-            // TODO we might want to look into parallelizing what happens below (async {} ?)
-            // When the current scope gets cancelled, the async routine gets cancelled as well
-            val sendPage = getSendPage(files)
-            ensureActive()
-            // start tor and onion service // TODO catch exceptions, handle error
-            val onionAddress = torManager.start(PORT)
-            val url = "http://${onionAddress}"
-            LOG.error("OnionShare URL: $url") // TODO remove before release
-            val sharing = ShareUiState.Sharing(files, shareState.value.totalSize, url)
-            // TODO properly manage tor and webserver state together
-            ensureActive()
-            // collecting from StateFlow will only return when coroutine gets cancelled
-            webserverManager.start(sendPage).collect {
-                onWebserverStateChanged(it, sharing)
+            try {
+                // TODO we might want to look into parallelizing what happens below (async {} ?)
+                // When the current scope gets cancelled, the async routine gets cancelled as well
+                ensureActive()
+                val sendPage = getSendPage(files)
+                ensureActive()
+                // start tor and onion service
+                val onionAddress = torManager.start(PORT)
+                val url = "http://$onionAddress"
+                LOG.error("OnionShare URL: $url") // TODO remove before release
+                val sharing = ShareUiState.Sharing(files, shareState.value.totalSize, url)
+                // TODO properly manage tor and webserver state together
+                ensureActive()
+                // collecting from StateFlow will only return when coroutine gets cancelled
+                webserverManager.start(sendPage).collect {
+                    onWebserverStateChanged(it, sharing)
+                }
+            } catch (e: IOException) {
+                LOG.warn("Error while startSharing ", e)
+                // TODO set a new error state that gets reflected in the UI
+                // launching stop on global scope to prevent deadlock when it waits for current job
+                GlobalScope.launch { stopSharing() }
+                cancel("Error while startSharing", e)
             }
         }
     }
@@ -142,6 +150,7 @@ class ShareManager @Inject constructor(
             // TODO check if this always works as expected
             startSharingJob?.cancelAndJoin()
         }
+        startSharingJob = null
 
         torManager.stop()
         webserverManager.stop()

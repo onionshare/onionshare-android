@@ -73,11 +73,16 @@ class TorManager @Inject constructor(
                         // we are receiving a broadcast from the service, it must be set
                         val service = torService!!
                         LOG.debug("Started")
-                        // the control connection is only guaranteed to be available here
-                        // see: https://github.com/guardianproject/tor-android/issues/56
-                        service.torControlConnection.setEvents(EVENTS)
-                        service.torControlConnection.addRawEventListener { keyword, data ->
-                            LOG.debug("$keyword: $data")
+                        try {
+                            // the control connection is only guaranteed to be available here
+                            // see: https://github.com/guardianproject/tor-android/issues/56
+                            service.torControlConnection.setEvents(EVENTS)
+                            service.torControlConnection.addRawEventListener { keyword, data ->
+                                LOG.debug("$keyword: $data")
+                            }
+                        } catch (e: Exception) {
+                            // gets caught and logged by caller
+                            continuation.resumeWithException(e)
                         }
                         createOnionService(service.torControlConnection, continuation, port)
                     }
@@ -99,12 +104,13 @@ class TorManager @Inject constructor(
         LOG.info("Stopping...")
         // FIXME TorService crashes us when getting destroyed a second time
         //  see: https://github.com/guardianproject/tor-android/issues/57
-        app.unbindService(serviceConnection)
+        if (torService != null) app.unbindService(serviceConnection)
+        torService = null
         // simply unbinding doesn't seem sufficient for stopping a foreground service
         Intent(app, OnionService::class.java).also { intent ->
             app.stopService(intent)
         }
-        app.unregisterReceiver(broadcastReceiver)
+        broadcastReceiver?.let { app.unregisterReceiver(it) }
         broadcastReceiver = null
         LOG.info("Stopped")
     }
