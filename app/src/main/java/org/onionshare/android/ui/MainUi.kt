@@ -20,6 +20,8 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -76,6 +78,18 @@ fun MainUi(
         LaunchedEffect("showSheet") {
             delay(750)
             scaffoldState.bottomSheetState.expand()
+        }
+        if (state.value is ShareUiState.Error) {
+            val text = stringResource(R.string.share_error_snackbar_text)
+            val action = stringResource(R.string.share_error_snackbar_action)
+            LaunchedEffect("showSnackbar") {
+                val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+                    message = text,
+                    actionLabel = action,
+                    duration = SnackbarDuration.Long,
+                )
+                if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
+            }
         }
         BottomSheetScaffold(
             topBar = { ActionBar(R.string.app_name) },

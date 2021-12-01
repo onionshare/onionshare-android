@@ -78,6 +78,11 @@ private fun getBottomSheetUi(state: ShareUiState) = when (state) {
         stateText = R.string.share_state_transfer_complete,
         buttonText = R.string.share_button_complete,
     )
+    is ShareUiState.Error -> BottomSheetUi(
+        indicatorColor = IndicatorReady,
+        stateText = R.string.share_state_ready,
+        buttonText = R.string.share_button_start,
+    )
     is ShareUiState.NoFiles -> error("No bottom sheet in empty state.")
 }
 

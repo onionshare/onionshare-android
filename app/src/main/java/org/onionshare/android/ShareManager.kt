@@ -66,14 +66,13 @@ class ShareManager @Inject constructor(
         _shareState.value = ShareUiState.NoFiles
     }
 
-    suspend fun onStateChangeRequested() {
-        when (shareState.value) {
-            is ShareUiState.FilesAdded -> startSharing()
-            is ShareUiState.Starting -> stopSharing()
-            is ShareUiState.Sharing -> stopSharing()
-            is ShareUiState.Complete -> startSharing()
-            ShareUiState.NoFiles -> error("Sheet button should not be visible with no files")
-        }
+    suspend fun onStateChangeRequested() = when (shareState.value) {
+        is ShareUiState.FilesAdded -> startSharing()
+        is ShareUiState.Starting -> stopSharing()
+        is ShareUiState.Sharing -> stopSharing()
+        is ShareUiState.Complete -> startSharing()
+        is ShareUiState.Error -> startSharing()
+        ShareUiState.NoFiles -> error("Sheet button should not be visible with no files")
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -107,9 +106,8 @@ class ShareManager @Inject constructor(
                 }
             } catch (e: IOException) {
                 LOG.warn("Error while startSharing ", e)
-                // TODO set a new error state that gets reflected in the UI
                 // launching stop on global scope to prevent deadlock when it waits for current job
-                GlobalScope.launch { stopSharing() }
+                GlobalScope.launch { stopSharing(error = true) }
                 cancel("Error while startSharing", e)
             }
         }
@@ -135,7 +133,7 @@ class ShareManager @Inject constructor(
     ) = withContext(Dispatchers.IO) {
         when (state) {
             WebserverManager.State.STARTED -> _shareState.value = sharing
-            WebserverManager.State.SHOULD_STOP -> stopSharing(true)
+            WebserverManager.State.SHOULD_STOP -> stopSharing(complete = true)
             // Stopping again could cause a harmless double stop,
             // but ensures state update when webserver stops unexpectedly.
             // In practise, we cancel the coroutine of this collector when stopping the first time,
@@ -144,7 +142,10 @@ class ShareManager @Inject constructor(
         }
     }
 
-    private suspend fun stopSharing(complete: Boolean = false) = withContext(Dispatchers.IO) {
+    private suspend fun stopSharing(
+        complete: Boolean = false,
+        error: Boolean = false,
+    ) = withContext(Dispatchers.IO) {
         LOG.info("Stopping sharing...")
         if (startSharingJob?.isActive == true) {
             // TODO check if this always works as expected
@@ -157,8 +158,9 @@ class ShareManager @Inject constructor(
         val files = shareState.value.files
         val newState = when {
             files.isEmpty() -> ShareUiState.NoFiles
-            complete -> ShareUiState.Complete(files, files.sumOf { it.size })
-            else -> ShareUiState.FilesAdded(files, files.sumOf { it.size })
+            complete -> ShareUiState.Complete(files, shareState.value.totalSize)
+            error -> ShareUiState.Error(files, shareState.value.totalSize)
+            else -> ShareUiState.FilesAdded(files, shareState.value.totalSize)
         }
         _shareState.value = newState
     }

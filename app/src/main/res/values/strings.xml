@@ -25,4 +25,6 @@
     </plurals>
     <string name="sharing_channel_name">File sharing notification</string>
     <string name="sharing_notification_title">Currently sharing files</string>
+    <string name="share_error_snackbar_text">Could not start OnionShare</string>
+    <string name="share_error_snackbar_action">Retry</string>
 </resources>
