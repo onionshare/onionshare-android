@@ -68,11 +68,11 @@ class TorManager @Inject constructor(
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, i: Intent) {
                 when (i.getStringExtra(EXTRA_STATUS)) {
-                    TorService.STATUS_STARTING -> LOG.debug("Starting...")
+                    TorService.STATUS_STARTING -> LOG.debug("TorService: Starting...")
                     TorService.STATUS_ON -> {
                         // we are receiving a broadcast from the service, it must be set
                         val service = torService!!
-                        LOG.debug("Started")
+                        LOG.debug("TorService: Started")
                         try {
                             // the control connection is only guaranteed to be available here
                             // see: https://github.com/guardianproject/tor-android/issues/56
@@ -86,8 +86,10 @@ class TorManager @Inject constructor(
                         }
                         createOnionService(service.torControlConnection, continuation, port)
                     }
-                    TorService.STATUS_STOPPING -> LOG.debug("Stopping...")
-                    TorService.STATUS_OFF -> LOG.debug("Stopped")
+                    // FIXME When we stop unplanned, we need to inform the ShareManager
+                    //  that we stopped, so it can clear its state up, stopping webserver, etc.
+                    TorService.STATUS_STOPPING -> LOG.debug("TorService: Stopping...")
+                    TorService.STATUS_OFF -> LOG.debug("TorService: Stopped")
                 }
             }
         }
