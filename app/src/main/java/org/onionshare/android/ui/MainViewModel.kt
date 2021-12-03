@@ -1,7 +1,10 @@
 package org.onionshare.android.ui
 
 import android.app.Application
+import android.content.Context.POWER_SERVICE
 import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
+import android.os.PowerManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +34,13 @@ class MainViewModel @Inject constructor(
     fun removeAll() = shareManager.removeAll()
     fun onSheetButtonClicked() = viewModelScope.launch {
         shareManager.onStateChangeRequested()
+    }
+
+    fun isIgnoringBatteryOptimizations(): Boolean {
+        if (SDK_INT < 23) return true
+        val ctx = getApplication<Application>()
+        val pm = ctx.getSystemService(POWER_SERVICE) as PowerManager
+        return pm.isIgnoringBatteryOptimizations(ctx.packageName)
     }
 
 }
