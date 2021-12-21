@@ -15,12 +15,18 @@ import org.onionshare.android.R
 import org.onionshare.android.files.FileManager.State.FilesAdded
 import org.onionshare.android.files.FileManager.State.FilesReadyForDownload
 import org.onionshare.android.server.SendFile
+import org.slf4j.LoggerFactory.getLogger
 import java.io.File
+import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.random.Random
 
+private val LOG = getLogger(FileManager::class.java)
+
+@Singleton
 class FileManager @Inject constructor(
     app: Application,
 ) {
@@ -48,6 +54,7 @@ class FileManager @Inject constructor(
         return FilesAdded(existingFiles + files)
     }
 
+    @Throws(IOException::class)
     suspend fun zipFiles(files: List<SendFile>): FilesReadyForDownload {
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         val zipFile = ctx.getFileStreamPath(zipFileName)
@@ -58,6 +65,8 @@ class FileManager @Inject constructor(
                     files.forEach { file ->
                         // check first if we got cancelled before adding another file to the zip
                         currentCoroutineContext().ensureActive()
+                        // TODO remove before release
+                        LOG.debug("Zipping next file: ${file.basename}")
                         ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                             zipStream.putNextEntry(ZipEntry(file.basename))
                             inputStream.copyTo(zipStream)

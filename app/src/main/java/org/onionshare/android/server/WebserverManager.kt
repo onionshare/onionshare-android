@@ -36,10 +36,12 @@ import org.onionshare.android.server.WebserverManager.State.STOPPED
 import org.slf4j.LoggerFactory
 import java.security.SecureRandom
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private val LOG = LoggerFactory.getLogger(WebserverManager::class.java)
 internal const val PORT: Int = 17638
 
+@Singleton
 class WebserverManager @Inject constructor() {
 
     enum class State { STARTED, SHOULD_STOP, STOPPED }
@@ -67,7 +69,9 @@ class WebserverManager @Inject constructor() {
     }
 
     fun stop() {
+        LOG.info("Stopping...")
         server?.stop(500, 1_000)
+        LOG.info("Stopped")
     }
 
     private fun getStaticPath(): String {

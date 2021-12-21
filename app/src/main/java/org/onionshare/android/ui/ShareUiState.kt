@@ -33,4 +33,9 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
         override val totalSize: Long,
     ) : ShareUiState(files, totalSize)
 
+    data class Error(
+        override val files: List<SendFile>,
+        override val totalSize: Long,
+    ) : ShareUiState(files, totalSize)
+
 }
