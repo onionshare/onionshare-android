@@ -65,6 +65,7 @@ class FileManager @Inject constructor(
                     files.forEach { file ->
                         // check first if we got cancelled before adding another file to the zip
                         currentCoroutineContext().ensureActive()
+                        // TODO remove before release
                         LOG.debug("Zipping next file: ${file.basename}")
                         ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                             zipStream.putNextEntry(ZipEntry(file.basename))

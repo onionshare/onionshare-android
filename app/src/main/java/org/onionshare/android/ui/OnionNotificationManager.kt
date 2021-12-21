@@ -11,6 +11,7 @@ import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.CATEGORY_SERVICE
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getSystemService
 import org.onionshare.android.R
@@ -42,13 +43,16 @@ class OnionNotificationManager @Inject constructor(
             .setColor(getColor(app, R.color.purple_onion_share))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setCategory(CATEGORY_SERVICE)
             .build()
     }
 
     @RequiresApi(26)
     private fun createNotificationChannels() {
         val name = app.getString(R.string.sharing_channel_name)
-        val channel = NotificationChannel(CHANNEL_ID, name, IMPORTANCE_LOW)
+        val channel = NotificationChannel(CHANNEL_ID, name, IMPORTANCE_LOW).apply {
+            setShowBadge(false)
+        }
         nm.createNotificationChannel(channel)
     }
 }

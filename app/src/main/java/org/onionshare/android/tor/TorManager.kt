@@ -33,7 +33,7 @@ import kotlin.coroutines.suspendCoroutine
 
 private val LOG = getLogger(TorManager::class.java)
 private val EVENTS = listOf(
-    EVENT_CIRCUIT_STATUS, // this one is needed for TorService to function
+    EVENT_CIRCUIT_STATUS, // TODO only needed when using same control connection as TorService
     EVENT_OR_CONN_STATUS,
     EVENT_HS_DESC,
     EVENT_NEW_DESC,

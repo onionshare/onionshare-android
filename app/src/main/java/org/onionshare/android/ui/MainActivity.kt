@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
     private val batteryLauncher = registerForActivityResult(StartActivityForResult()) {
         // we just ignore the result and don't check for battery optimization again
         // assuming the user will understand if they didn't allow background
+        // TODO we might want to do user testing here to see if the assumption holds
         viewModel.onSheetButtonClicked()
     }
 
