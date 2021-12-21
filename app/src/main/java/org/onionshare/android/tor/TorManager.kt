@@ -9,7 +9,8 @@ import android.net.LocalSocket
 import android.net.LocalSocketAddress
 import android.net.LocalSocketAddress.Namespace.FILESYSTEM
 import androidx.core.content.ContextCompat.startForegroundService
-import kotlinx.coroutines.suspendCancellableCoroutine
+import net.freehaven.tor.control.RawEventListener
+import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
 import net.freehaven.tor.control.TorControlCommands.EVENT_ERR_MSG
 import net.freehaven.tor.control.TorControlCommands.EVENT_HS_DESC
 import net.freehaven.tor.control.TorControlCommands.EVENT_NEW_DESC
@@ -31,12 +32,14 @@ import javax.inject.Singleton
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 private val LOG = getLogger(TorManager::class.java)
 private val EVENTS = listOf(
-    EVENT_OR_CONN_STATUS,
+    EVENT_CIRCUIT_STATUS, // this one is needed for TorService to function
+    EVENT_OR_CONN_STATUS, // can be removed before release
     EVENT_HS_DESC,
-    EVENT_NEW_DESC,
+    EVENT_NEW_DESC, // can be removed before release
     EVENT_WARN_MSG,
     EVENT_ERR_MSG,
 )
@@ -51,7 +54,7 @@ class TorManager @Inject constructor(
      * Starts [TorService] and creates a new onion service.
      * Suspends until the address of the onion service is available.
      */
-    suspend fun start(port: Int): String = suspendCancellableCoroutine { continuation ->
+    suspend fun start(port: Int): String = suspendCoroutine { continuation ->
         LOG.info("Starting...")
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, i: Intent) {
@@ -59,27 +62,7 @@ class TorManager @Inject constructor(
                     TorService.STATUS_STARTING -> LOG.debug("TorService: Starting...")
                     TorService.STATUS_ON -> {
                         LOG.debug("TorService: Started")
-
-                        startControlConnection(context).apply {
-                            try {
-                                launchThread(true)
-                                authenticate(ByteArray(0))
-                                takeOwnership()
-                                setEvents(EVENTS)
-                            } catch (e: Exception) {
-                                // gets caught and logged by caller
-                                continuation.resumeWithException(e)
-                                return
-                            }
-                            val onion = createOnionService(this, continuation, port)
-                            // if onion is null, we resume with an exception in createOnionService()
-                            if (onion != null) addRawEventListener { keyword, data ->
-                                LOG.debug("$keyword: $data")
-                                if (keyword == "HS_DESC" && data.startsWith("UPLOADED ")) {
-                                    if (continuation.isActive) continuation.resume(onion)
-                                }
-                            }
-                        }
+                        onTorStarted(context, continuation, port)
                     }
                     // FIXME When we stop unplanned, we need to inform the ShareManager
                     //  that we stopped, so it can clear its state up, stopping webserver, etc.
@@ -106,30 +89,46 @@ class TorManager @Inject constructor(
         LOG.info("Stopped")
     }
 
+    private fun onTorStarted(context: Context, cont: Continuation<String>, port: Int) = try {
+        val controlConnection = startControlConnection(context).apply {
+            launchThread(true)
+            authenticate(ByteArray(0))
+            takeOwnership()
+            setEvents(EVENTS)
+            // TODO consider removing the logging below before release
+            addRawEventListener { keyword, data ->
+                if (keyword != EVENT_CIRCUIT_STATUS) LOG.debug("$keyword: $data")
+            }
+        }
+        val onion = createOnionService(controlConnection, port)
+        val onionListener = object : RawEventListener {
+            override fun onEvent(keyword: String, data: String) {
+                if (keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
+                    cont.resume("$onion.onion")
+                    controlConnection.removeRawEventListener(this)
+                }
+            }
+        }
+        controlConnection.addRawEventListener(onionListener)
+    } catch (e: Exception) {
+        // gets caught and logged by caller
+        cont.resumeWithException(e)
+    }
+
     /**
      * Creates a new onion service each time it is called
-     * and resumes the given [continuation] with its address.
+     * and returns its address (without the final .onion part).
      */
+    @Throws(IOException::class)
     private fun createOnionService(
         controlConnection: TorControlConnection,
-        continuation: Continuation<String>,
         port: Int,
-    ): String? {
+    ): String {
         LOG.error("Starting hidden service...")
         val portLines = Collections.singletonMap(80, "127.0.0.1:$port")
-        val response = try {
-            controlConnection.addOnion("NEW:ED25519-V3", portLines, null)
-        } catch (e: IOException) {
-            LOG.error("Error creation onion service", e)
-            continuation.resumeWithException(e)
-            return null
-        }
-        if (!response.containsKey(HS_ADDRESS)) {
-            LOG.error("Tor did not return a hidden service address")
-            continuation.resumeWithException(IOException("No HS_ADDRESS"))
-            return null
-        }
-        return "${response[HS_ADDRESS]}.onion"
+        val response = controlConnection.addOnion("NEW:ED25519-V3", portLines, null)
+        return response[HS_ADDRESS]
+            ?: throw IOException("Tor did not return a hidden service address")
     }
 
     private fun startControlConnection(context: Context): TorControlConnection {
