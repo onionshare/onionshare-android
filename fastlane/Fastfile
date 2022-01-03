@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+opt_out_usage
+
+default_platform(:android)
+
+platform :android do
+  desc "Deploy a new version to the Google Play beta track"
+  lane :deploy do
+    gradle(
+        task: "bundle",
+        build_type: "Release",
+        flavor: "stable",
+        properties: {
+            "android.injected.signing.store.file" => ENV["ONIONSHARE_KEYSTORE_PATH"],
+            "android.injected.signing.store.password" => ENV["ONIONSHARE_KEYSTORE_PASS"],
+            "android.injected.signing.key.alias" => ENV["ONIONSHARE_KEY_ALIAS"],
+            "android.injected.signing.key.password" => ENV["ONIONSHARE_KEY_PASS"],
+        }
+    )
+    upload_to_play_store(
+        track: 'beta',
+        skip_upload_images: 'true',
+        skip_upload_screenshots: 'true',
+        skip_upload_apk: 'true', # This is an app bundle, so APK is not possible
+        validate_only: 'false'
+    )
+  end
+end
