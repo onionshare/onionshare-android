@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export ONIONSHARE_JSON_KEY_FILE="/path/to/onionshare-private-key.json"
+
+export ONIONSHARE_KEYSTORE_PATH="/path/to/onionshare.jks"
+export ONIONSHARE_KEYSTORE_PASS="enter keystore pass here"
+export ONIONSHARE_KEY_ALIAS="org.onionshare.android"
+export ONIONSHARE_KEY_PASS="enter key pass here"
