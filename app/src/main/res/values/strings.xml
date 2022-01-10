@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">OnionShare</string>
+    <string name="app_name">OnionShare (alpha)</string>
 
     <string name="add_files_not_supported">Your device does not support adding files</string>
     <string name="unknown">unknown</string>
     <string name="remove">Remove</string>
     <string name="share_empty_state">Nothing here yet.</string>
+    <string name="warning_alpha">Warning: This is an early alpha release. It should only be used for testing. The code is not finished and has not been audited.</string>
     <string name="clear_all">Clear All</string>
     <string name="share_files_add">Add files</string>
     <string name="share_state_ready">Ready</string>

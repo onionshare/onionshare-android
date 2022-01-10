@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -164,6 +165,11 @@ fun MainContent(
             Image(painterResource(R.drawable.ic_share_empty_state), contentDescription = null)
             Text(
                 text = stringResource(R.string.share_empty_state),
+                modifier = Modifier.padding(16.dp),
+            )
+            Text(
+                text = stringResource(R.string.warning_alpha),
+                color = Color.Red,
                 modifier = Modifier.padding(16.dp),
             )
         } else {
