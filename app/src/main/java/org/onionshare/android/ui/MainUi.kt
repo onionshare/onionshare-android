@@ -7,8 +7,9 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Center
-import androidx.compose.foundation.layout.Arrangement.Top
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,12 +35,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -154,28 +160,46 @@ fun MainContent(
     onRemoveAll: () -> Unit,
 ) {
     val state = stateFlow.collectAsState()
-    Column(
-        horizontalAlignment = CenterHorizontally,
-        verticalArrangement = if (state.value is ShareUiState.NoFiles) Center else Top,
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-    ) {
-        if (state.value is ShareUiState.NoFiles) {
-            Image(painterResource(R.drawable.ic_share_empty_state), contentDescription = null)
-            Text(
-                text = stringResource(R.string.share_empty_state),
-                modifier = Modifier.padding(16.dp),
-            )
-            Text(
-                text = stringResource(R.string.warning_alpha),
-                color = Color.Red,
-                modifier = Modifier.padding(16.dp),
-            )
-        } else {
-            val modifier = Modifier.padding(bottom = bottomSheetPeekHeight)
-            FileList(modifier, state, onFileRemove, onRemoveAll)
+    if (state.value is ShareUiState.NoFiles) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+        ) {
+            Box(contentAlignment = TopCenter,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .background(Color.Red)
+            ) {
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(SpanStyle(fontWeight = Bold)) {
+                            append(stringResource(R.string.warning_alpha_intro))
+                        }
+                        append(" ")
+                        append(stringResource(R.string.warning_alpha))
+                    },
+                    color = Color.White,
+                    modifier = Modifier.padding(16.dp),
+                )
+            }
+            Column(
+                horizontalAlignment = CenterHorizontally,
+                verticalArrangement = Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            ) {
+                Image(painterResource(R.drawable.ic_share_empty_state), contentDescription = null)
+                Text(
+                    text = stringResource(R.string.share_empty_state),
+                    modifier = Modifier.padding(16.dp),
+                )
+            }
         }
+    } else {
+        val modifier = Modifier.padding(bottom = bottomSheetPeekHeight)
+        FileList(modifier, state, onFileRemove, onRemoveAll)
     }
 }
 
