@@ -5,6 +5,7 @@ import org.onionshare.android.server.SendFile
 sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Long) {
 
     open val allowsModifyingFiles = true
+    open val collapsableSheet = false
 
     object NoFiles : ShareUiState(emptyList(), 0L)
 
@@ -26,6 +27,7 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
         val onionAddress: String,
     ) : ShareUiState(files, totalSize) {
         override val allowsModifyingFiles = false
+        override val collapsableSheet = true
     }
 
     data class Complete(

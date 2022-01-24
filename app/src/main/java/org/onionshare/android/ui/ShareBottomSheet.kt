@@ -91,7 +91,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
     if (state is ShareUiState.NoFiles) return
     val sheetUi = getBottomSheetUi(state)
     Column {
-        Image(
+        if (state.collapsableSheet) Image(
             imageVector = Icons.Filled.DragHandle,
             contentDescription = null,
             colorFilter = ColorFilter.tint(Color.Gray),
@@ -101,9 +101,10 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 .padding(top = 4.dp)
                 .align(CenterHorizontally),
         )
+        val topPadding = if (state.collapsableSheet) 0.dp else 16.dp
         Row(
             verticalAlignment = CenterVertically,
-            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
+            modifier = Modifier.padding(start = 16.dp, top = topPadding, bottom = 16.dp),
         ) {
             Icon(
                 imageVector = sheetUi.indicatorIcon,

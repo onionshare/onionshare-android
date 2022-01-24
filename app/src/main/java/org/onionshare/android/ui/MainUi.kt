@@ -98,11 +98,18 @@ fun MainUi(
                 if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
             }
         }
+        if (!state.value.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
+            // ensure the bottom sheet is visible
+            LaunchedEffect(state.value) {
+                scaffoldState.bottomSheetState.expand()
+            }
+        }
         BottomSheetScaffold(
             topBar = { ActionBar(R.string.app_name) },
             floatingActionButton = { Fab(state.value, offset, onFabClicked) },
+            sheetGesturesEnabled = state.value.collapsableSheet,
             sheetPeekHeight = bottomSheetPeekHeight,
-            sheetShape = RoundedCornerShape(16.dp),
+            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
             sheetContent = { BottomSheet(state.value, onSheetButtonClicked) }
         ) {
