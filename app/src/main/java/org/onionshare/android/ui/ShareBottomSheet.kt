@@ -170,7 +170,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
             border = if (state is ShareUiState.Sharing) {
                 BorderStroke(1.dp, colorControlNormal)
             } else null,
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(32.dp),
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
