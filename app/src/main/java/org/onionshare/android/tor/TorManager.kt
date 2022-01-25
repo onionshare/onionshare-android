@@ -9,6 +9,8 @@ import android.net.LocalSocket
 import android.net.LocalSocketAddress
 import android.net.LocalSocketAddress.Namespace.FILESYSTEM
 import androidx.core.content.ContextCompat.startForegroundService
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.suspendCancellableCoroutine
 import net.freehaven.tor.control.RawEventListener
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
 import net.freehaven.tor.control.TorControlCommands.EVENT_ERR_MSG
@@ -29,10 +31,8 @@ import java.io.IOException
 import java.util.Collections
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 private val LOG = getLogger(TorManager::class.java)
 private val EVENTS = listOf(
@@ -54,7 +54,7 @@ class TorManager @Inject constructor(
      * Starts [TorService] and creates a new onion service.
      * Suspends until the address of the onion service is available.
      */
-    suspend fun start(port: Int): String = suspendCoroutine { continuation ->
+    suspend fun start(port: Int): String = suspendCancellableCoroutine { continuation ->
         LOG.info("Starting...")
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, i: Intent) {
@@ -89,7 +89,7 @@ class TorManager @Inject constructor(
         LOG.info("Stopped")
     }
 
-    private fun onTorStarted(context: Context, cont: Continuation<String>, port: Int) = try {
+    private fun onTorStarted(context: Context, cont: CancellableContinuation<String>, port: Int) = try {
         val controlConnection = startControlConnection(context).apply {
             launchThread(true)
             authenticate(ByteArray(0))
@@ -104,7 +104,7 @@ class TorManager @Inject constructor(
         val onionListener = object : RawEventListener {
             override fun onEvent(keyword: String, data: String) {
                 if (keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
-                    cont.resume("$onion.onion")
+                    if (cont.isActive) cont.resume("$onion.onion")
                     controlConnection.removeRawEventListener(this)
                 }
             }
@@ -112,7 +112,8 @@ class TorManager @Inject constructor(
         controlConnection.addRawEventListener(onionListener)
     } catch (e: Exception) {
         // gets caught and logged by caller
-        cont.resumeWithException(e)
+        if (cont.isActive) cont.resumeWithException(e)
+        else LOG.error("Error when starting Tor", e)
     }
 
     /**
