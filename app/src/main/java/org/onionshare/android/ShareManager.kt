@@ -1,6 +1,7 @@
 package org.onionshare.android
 
 import android.app.Application
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.net.Uri
 import android.text.format.Formatter
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -43,8 +44,17 @@ class ShareManager @Inject constructor(
     @Volatile
     private var startSharingJob: Job? = null
 
-    suspend fun addFiles(uris: List<Uri>) = withContext(Dispatchers.IO) {
+    suspend fun addFiles(uris: List<Uri>, takePermission: Boolean) = withContext(Dispatchers.IO) {
         if (uris.isEmpty()) return@withContext // user backed out of select activity
+
+        // taking persistable permissions only works with OPEN_DOCUMENT, not GET_CONTENT
+        if (takePermission) {
+            // take persistable Uri permission to prevent SecurityException in same cases/devices
+            val contentResolver = app.applicationContext.contentResolver
+            uris.forEach { uri ->
+                contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+            }
+        }
 
         // not supporting selecting entire folders with sub-folders
         val filesAdded = fileManager.addFiles(uris, shareState.value.files)
@@ -53,6 +63,9 @@ class ShareManager @Inject constructor(
     }
 
     fun removeFile(file: SendFile) {
+        // release persistable Uri permission again
+        file.releaseUriPermission()
+
         val newList = shareState.value.files.filterNot { it == file }
         if (newList.isEmpty()) {
             _shareState.value = ShareUiState.NoFiles
@@ -63,6 +76,10 @@ class ShareManager @Inject constructor(
     }
 
     fun removeAll() {
+        // release persistable Uri permissions again
+        shareState.value.files.forEach { file ->
+            file.releaseUriPermission()
+        }
         _shareState.value = ShareUiState.NoFiles
     }
 
@@ -163,6 +180,11 @@ class ShareManager @Inject constructor(
             else -> ShareUiState.FilesAdded(files, shareState.value.totalSize)
         }
         _shareState.value = newState
+    }
+
+    private fun SendFile.releaseUriPermission() {
+        val contentResolver = app.applicationContext.contentResolver
+        contentResolver.releasePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
     }
 
 }
