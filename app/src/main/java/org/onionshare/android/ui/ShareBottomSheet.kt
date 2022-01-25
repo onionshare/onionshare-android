@@ -43,10 +43,13 @@ import androidx.compose.ui.text.font.FontFamily.Companion.Monospace
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.onionshare.android.R
 import org.onionshare.android.ui.theme.IndicatorReady
 import org.onionshare.android.ui.theme.IndicatorSharing
 import org.onionshare.android.ui.theme.IndicatorStarting
+import org.onionshare.android.ui.theme.OnionBlue
+import org.onionshare.android.ui.theme.OnionRed
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 private data class BottomSheetUi(
@@ -121,8 +124,8 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
         Divider(thickness = 2.dp)
         val colorControlNormal = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
         if (state is ShareUiState.Sharing) {
-            Text(
-                text = stringResource(R.string.share_onion_intro),
+            StyledLegacyText(
+                id = R.string.share_onion_intro,
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
             )
             Row(modifier = Modifier.padding(16.dp)) {
@@ -145,7 +148,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                     },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.surface,
-                        contentColor = MaterialTheme.colors.secondary,
+                        contentColor = MaterialTheme.colors.OnionBlue,
                     ),
                     border = BorderStroke(1.dp, colorControlNormal),
                     shape = RoundedCornerShape(32.dp),
@@ -165,8 +168,8 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
         Button(
             onClick = onSheetButtonClicked,
             colors = if (state is ShareUiState.Sharing) {
-                ButtonDefaults.buttonColors(contentColor = Color.Red,
-                    backgroundColor = MaterialTheme.colors.background)
+                ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.OnionRed,
+                    backgroundColor = MaterialTheme.colors.surface)
             } else ButtonDefaults.buttonColors(),
             border = if (state is ShareUiState.Sharing) {
                 BorderStroke(1.dp, colorControlNormal)
@@ -178,6 +181,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
         ) {
             Text(
                 text = stringResource(sheetUi.buttonText),
+                fontSize = 16.sp,
                 fontStyle = if (state is ShareUiState.Starting) Italic else null,
                 modifier = Modifier.padding(8.dp)
             )

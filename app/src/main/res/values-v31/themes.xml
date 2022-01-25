@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.BaseTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:windowSplashScreenBackground">@color/purple_onion_share</item>
+        <item name="android:windowSplashScreenBackground">@color/purple_onion_light</item>
     </style>
 </resources>

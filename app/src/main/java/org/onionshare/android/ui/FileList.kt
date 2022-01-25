@@ -44,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.ui.theme.OnionAccent
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 @Composable
@@ -74,7 +75,7 @@ fun FileList(
                     TextButton(onClick = onRemoveAll, Modifier.padding(end = 8.dp)) {
                         Text(
                             text = stringResource(R.string.clear_all),
-                            color = MaterialTheme.colors.secondary,
+                            color = MaterialTheme.colors.OnionAccent,
                         )
                     }
                 }

@@ -17,7 +17,7 @@
     <string name="share_button_starting">Starting… tap to cancel</string>
     <string name="share_button_stop">Stop Sharing</string>
     <string name="share_button_complete">Start Sharing Again</string>
-    <string name="share_onion_intro">Anyone with this OnionShare address can download your files using the OnionShare app or Tor Browser:</string>
+    <string name="share_onion_intro"><b>Anyone</b> with this OnionShare address can <b>download</b> your files using <b>Tor Browser</b>:</string>
     <string name="clipboard_onion_service_label">OnionShare address</string>
     <string name="clipboard_onion_service_copied">OnionShare address copied to clipboard.</string>
     <!-- The first placeholder is the number of items, the second one will be replaced with the size of all files -->
