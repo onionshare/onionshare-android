@@ -90,26 +90,23 @@ class TorManager @Inject constructor(
     }
 
     private fun onTorStarted(context: Context, cont: CancellableContinuation<String>, port: Int) = try {
+        var onion: String? = null
         val controlConnection = startControlConnection(context).apply {
+            val onionListener = RawEventListener { keyword, data ->
+                if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
+                    if (cont.isActive) cont.resume("$onion.onion")
+                }
+                // TODO consider removing the logging below before release
+                LOG.debug("$keyword: $data")
+            }
+            addRawEventListener(onionListener)
+            // create listeners as the first thing to prevent modification while already receiving events
             launchThread(true)
             authenticate(ByteArray(0))
             takeOwnership()
             setEvents(EVENTS)
-            // TODO consider removing the logging below before release
-            addRawEventListener { keyword, data ->
-                if (keyword != EVENT_CIRCUIT_STATUS) LOG.debug("$keyword: $data")
-            }
         }
-        val onion = createOnionService(controlConnection, port)
-        val onionListener = object : RawEventListener {
-            override fun onEvent(keyword: String, data: String) {
-                if (keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
-                    if (cont.isActive) cont.resume("$onion.onion")
-                    controlConnection.removeRawEventListener(this)
-                }
-            }
-        }
-        controlConnection.addRawEventListener(onionListener)
+        onion = createOnionService(controlConnection, port)
     } catch (e: Exception) {
         // gets caught and logged by caller
         if (cont.isActive) cont.resumeWithException(e)
