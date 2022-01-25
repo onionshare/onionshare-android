@@ -9,7 +9,6 @@ import android.net.LocalSocket
 import android.net.LocalSocketAddress
 import android.net.LocalSocketAddress.Namespace.FILESYSTEM
 import androidx.core.content.ContextCompat.startForegroundService
-import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 import net.freehaven.tor.control.RawEventListener
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
@@ -54,15 +53,33 @@ class TorManager @Inject constructor(
      * Starts [TorService] and creates a new onion service.
      * Suspends until the address of the onion service is available.
      */
-    suspend fun start(port: Int): String = suspendCancellableCoroutine { continuation ->
+    suspend fun start(port: Int): String {
+        startAndGetPath()
+        return onTorStarted(port)
+    }
+
+    fun stop() {
+        LOG.info("Stopping...")
+        Intent(app, ShareService::class.java).also { intent ->
+            app.stopService(intent)
+        }
+        broadcastReceiver?.let { app.unregisterReceiver(it) }
+        broadcastReceiver = null
+        LOG.info("Stopped")
+    }
+
+    private suspend fun startAndGetPath(): Unit = suspendCancellableCoroutine { continuation ->
         LOG.info("Starting...")
         broadcastReceiver = object : BroadcastReceiver() {
+            /**
+             * Attention: This gets executes on UI Thread
+             */
             override fun onReceive(context: Context, i: Intent) {
                 when (i.getStringExtra(EXTRA_STATUS)) {
                     TorService.STATUS_STARTING -> LOG.debug("TorService: Starting...")
                     TorService.STATUS_ON -> {
                         LOG.debug("TorService: Started")
-                        onTorStarted(context, continuation, port)
+                        if (continuation.isActive) continuation.resume(Unit)
                     }
                     // FIXME When we stop unplanned, we need to inform the ShareManager
                     //  that we stopped, so it can clear its state up, stopping webserver, etc.
@@ -76,41 +93,34 @@ class TorManager @Inject constructor(
         Intent(app, ShareService::class.java).also { intent ->
             startForegroundService(app, intent)
         }
-        // this method suspends here until it the continuation resumes it
+        // this method suspends here until it the continuation in the broadcastReceiver resumes it
     }
 
-    fun stop() {
-        LOG.info("Stopping...")
-        Intent(app, ShareService::class.java).also { intent ->
-            app.stopService(intent)
-        }
-        broadcastReceiver?.let { app.unregisterReceiver(it) }
-        broadcastReceiver = null
-        LOG.info("Stopped")
-    }
-
-    private fun onTorStarted(context: Context, cont: CancellableContinuation<String>, port: Int) = try {
-        var onion: String? = null
-        val controlConnection = startControlConnection(context).apply {
-            val onionListener = RawEventListener { keyword, data ->
-                if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
-                    if (cont.isActive) cont.resume("$onion.onion")
+    private suspend fun onTorStarted(port: Int): String = suspendCancellableCoroutine { cont ->
+        try {
+            var onion: String? = null
+            val controlConnection = startControlConnection().apply {
+                val onionListener = RawEventListener { keyword, data ->
+                    if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
+                        if (cont.isActive) cont.resume("$onion.onion")
+                    }
+                    // TODO consider removing the logging below before release
+                    LOG.debug("$keyword: $data")
                 }
-                // TODO consider removing the logging below before release
-                LOG.debug("$keyword: $data")
+                addRawEventListener(onionListener)
+                // create listeners as the first thing to prevent modification while already receiving events
+                launchThread(true)
+                authenticate(ByteArray(0))
+                takeOwnership()
+                setEvents(EVENTS)
             }
-            addRawEventListener(onionListener)
-            // create listeners as the first thing to prevent modification while already receiving events
-            launchThread(true)
-            authenticate(ByteArray(0))
-            takeOwnership()
-            setEvents(EVENTS)
+            onion = createOnionService(controlConnection, port)
+        } catch (e: Exception) {
+            // gets caught and logged by caller
+            if (cont.isActive) cont.resumeWithException(e)
+            else LOG.error("Error when starting Tor", e)
         }
-        onion = createOnionService(controlConnection, port)
-    } catch (e: Exception) {
-        // gets caught and logged by caller
-        if (cont.isActive) cont.resumeWithException(e)
-        else LOG.error("Error when starting Tor", e)
+        // this method suspends here until it the continuation in onionListener resumes it
     }
 
     /**
@@ -129,9 +139,8 @@ class TorManager @Inject constructor(
             ?: throw IOException("Tor did not return a hidden service address")
     }
 
-    private fun startControlConnection(context: Context): TorControlConnection {
-        val pathname = getControlPath(context)
-        val localSocketAddress = LocalSocketAddress(pathname, FILESYSTEM)
+    private fun startControlConnection(): TorControlConnection {
+        val localSocketAddress = LocalSocketAddress(getControlPath(), FILESYSTEM)
         val client = LocalSocket()
         client.connect(localSocketAddress)
         client.receiveBufferSize = 1024
@@ -149,8 +158,8 @@ class TorManager @Inject constructor(
      * Note: Exposing this through TorService was rejected by upstream.
      *       https://github.com/guardianproject/tor-android/pull/61
      */
-    private fun getControlPath(context: Context): String {
-        val serviceDir = context.getDir(TorService::class.java.simpleName, 0)
+    private fun getControlPath(): String {
+        val serviceDir = app.applicationContext.getDir(TorService::class.java.simpleName, 0)
         val dataDir = File(serviceDir, "data")
         return File(dataDir, "ControlSocket").absolutePath
     }

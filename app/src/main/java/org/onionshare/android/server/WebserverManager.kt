@@ -1,5 +1,6 @@
 package org.onionshare.android.server
 
+import android.net.TrafficStats
 import android.util.Base64
 import android.util.Base64.NO_PADDING
 import android.util.Base64.URL_SAFE
@@ -53,6 +54,7 @@ class WebserverManager @Inject constructor() {
     fun start(sendPage: SendPage): StateFlow<State> {
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
+        TrafficStats.setThreadStatsTag(0x42)
         server = embeddedServer(Netty, PORT, watchPaths = emptyList()) {
             install(CallLogging)
             install(Pebble) {
