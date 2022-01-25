@@ -26,8 +26,11 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 11
+      # This and --no-resign is only needed due to https://github.com/wardvl/f-droid-nightly-action/issues/3
+      - name: Nightly Keystore
+        run: ./nightly-keystore.py
       - name: Build
-        run: ./gradlew assembleNightly
+        run: ./gradlew assembleNightlyDebug
       - name: F-Droid nightly builds
         uses: wardvl/f-droid-nightly-action@v2
         with:
