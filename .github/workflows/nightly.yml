@@ -29,6 +29,8 @@ jobs:
       # This and --no-resign is only needed due to https://github.com/wardvl/f-droid-nightly-action/issues/3
       - name: Nightly Keystore
         run: ./nightly-keystore.py
+        env:
+          DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
       - name: Build
         run: ./gradlew assembleNightlyDebug
       - name: F-Droid nightly builds
