@@ -11,9 +11,9 @@ import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.onionshare.android.R
-import org.onionshare.android.files.FileManager.State.FilesAdded
-import org.onionshare.android.files.FileManager.State.FilesReadyForDownload
 import org.onionshare.android.server.SendFile
 import org.slf4j.LoggerFactory.getLogger
 import java.io.File
@@ -22,20 +22,18 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 private val LOG = getLogger(FileManager::class.java)
+
+data class FilesAdded(val files: List<SendFile>)
+data class FilesZipping(val files: List<SendFile>, val zip: File, val progress: Int, val complete: Boolean = false)
 
 @Singleton
 class FileManager @Inject constructor(
     app: Application,
 ) {
-
-    sealed class State {
-        open class FilesAdded(val files: List<SendFile>) : State()
-        class FilesReadyForDownload(files: List<SendFile>, val zip: File) : FilesAdded(files)
-    }
-
     private val ctx = app.applicationContext
 
     fun addFiles(uris: List<Uri>, existingFiles: List<SendFile>): FilesAdded {
@@ -55,22 +53,26 @@ class FileManager @Inject constructor(
     }
 
     @Throws(IOException::class)
-    suspend fun zipFiles(files: List<SendFile>): FilesReadyForDownload {
+    suspend fun zipFiles(files: List<SendFile>): Flow<FilesZipping> = flow {
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         val zipFile = ctx.getFileStreamPath(zipFileName)
+        emit(FilesZipping(files, zipFile, 0))
         try {
             @Suppress("BlockingMethodInNonBlockingContext")
             ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
                 ZipOutputStream(fileOutputStream).use { zipStream ->
-                    files.forEach { file ->
+                    files.forEachIndexed { i, file ->
                         // check first if we got cancelled before adding another file to the zip
                         currentCoroutineContext().ensureActive()
+                        val progress = ((i + 1) / files.size.toFloat() * 100).roundToInt()
                         // TODO remove before release
-                        LOG.debug("Zipping next file: ${file.basename}")
+                        LOG.debug("Zipping next file $progress/100: ${file.basename}")
+                        // TODO handle FileNotFoundException and tell user about problem / remove file
                         ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                             zipStream.putNextEntry(ZipEntry(file.basename))
                             inputStream.copyTo(zipStream)
                         }
+                        emit(FilesZipping(files, zipFile, progress))
                     }
                 }
             }
@@ -79,7 +81,7 @@ class FileManager @Inject constructor(
         }
         // TODO we should take better care to clean up old zip files properly
         zipFile.deleteOnExit()
-        return FilesReadyForDownload(files, zipFile)
+        emit(FilesZipping(files, zipFile, 100, true))
     }
 
     private fun Uri.getFallBackName(): String? {

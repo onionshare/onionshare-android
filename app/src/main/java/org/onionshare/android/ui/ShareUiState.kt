@@ -16,8 +16,20 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
     data class Starting(
         override val files: List<SendFile>,
         override val totalSize: Long,
+        val zipPercent: Int,
+        val torPercent: Int,
     ) : ShareUiState(files, totalSize) {
         override val allowsModifyingFiles = false
+        val totalProgress: Float
+            get() {
+                val sum = zipPercent.toFloat() / 2 + torPercent.toFloat() / 2
+                return sum / 100
+            }
+
+        init {
+            require(zipPercent in 0..100)
+            require(torPercent in 0..100)
+        }
     }
 
     data class Sharing(
