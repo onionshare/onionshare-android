@@ -3,9 +3,6 @@ package org.onionshare.android.ui
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
 import androidx.annotation.StringRes
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Center
@@ -16,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -54,7 +52,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.ui.theme.Fab
 import org.onionshare.android.ui.theme.OnionshareTheme
+import org.onionshare.android.ui.theme.topBar
 
 private val bottomSheetPeekHeight = 60.dp
 
@@ -73,9 +73,11 @@ fun MainUi(
     if (state.value == ShareUiState.NoFiles) {
         Scaffold(
             topBar = { ActionBar(R.string.app_name) },
-            floatingActionButton = { Fab(state.value, offset, onFabClicked) },
+            floatingActionButton = {
+                Fab(state.value, scaffoldState.bottomSheetState, onFabClicked)
+            },
         ) {
-            MainContent(stateFlow, onFileRemove, onRemoveAll)
+            MainContent(stateFlow, offset, onFileRemove, onRemoveAll)
         }
         LaunchedEffect("hideSheet") {
             // This ensures the FAB color can animate back when we transition to NoFiles state
@@ -98,15 +100,24 @@ fun MainUi(
                 if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
             }
         }
+        if (!state.value.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
+            // ensure the bottom sheet is visible
+            LaunchedEffect(state.value) {
+                scaffoldState.bottomSheetState.expand()
+            }
+        }
         BottomSheetScaffold(
             topBar = { ActionBar(R.string.app_name) },
-            floatingActionButton = { Fab(state.value, offset, onFabClicked) },
+            floatingActionButton = {
+                Fab(state.value, scaffoldState.bottomSheetState, onFabClicked)
+            },
+            sheetGesturesEnabled = state.value.collapsableSheet,
             sheetPeekHeight = bottomSheetPeekHeight,
-            sheetShape = RoundedCornerShape(16.dp),
+            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
             sheetContent = { BottomSheet(state.value, onSheetButtonClicked) }
         ) {
-            MainContent(stateFlow, onFileRemove, onRemoveAll)
+            MainContent(stateFlow, offset, onFileRemove, onRemoveAll)
         }
     }
 }
@@ -123,24 +134,20 @@ private fun getOffsetInDp(offset: State<Float>): Dp {
 }
 
 @Composable
-fun ActionBar(@StringRes res: Int) {
-    TopAppBar(
-        backgroundColor = MaterialTheme.colors.primary,
-        title = { Text(stringResource(res)) },
-    )
-}
+fun ActionBar(@StringRes res: Int) = TopAppBar(
+    backgroundColor = MaterialTheme.colors.topBar,
+    title = { Text(stringResource(res)) },
+)
 
 @Composable
-fun Fab(state: ShareUiState, offset: Dp, onFabClicked: () -> Unit) {
+@OptIn(ExperimentalMaterialApi::class)
+fun Fab(state: ShareUiState, scaffoldState: BottomSheetState, onFabClicked: () -> Unit) {
     if (state.allowsModifyingFiles) {
-        val color by animateColorAsState(
-            targetValue = if (offset <= bottomSheetPeekHeight) {
-                MaterialTheme.colors.primary
-            } else {
-                MaterialTheme.colors.surface
-            },
-            animationSpec = tween(durationMillis = 500, easing = LinearEasing),
-        )
+        val color = if (scaffoldState.isCollapsed) {
+            MaterialTheme.colors.primary
+        } else {
+            MaterialTheme.colors.Fab
+        }
         FloatingActionButton(
             onClick = onFabClicked,
             backgroundColor = color,
@@ -156,6 +163,7 @@ fun Fab(state: ShareUiState, offset: Dp, onFabClicked: () -> Unit) {
 @Composable
 fun MainContent(
     stateFlow: StateFlow<ShareUiState>,
+    offset: Dp,
     onFileRemove: (SendFile) -> Unit,
     onRemoveAll: () -> Unit,
 ) {
@@ -169,7 +177,7 @@ fun MainContent(
             Box(contentAlignment = TopCenter,
                 modifier = Modifier
                     .padding(16.dp)
-                    .background(Color.Red)
+                    .background(MaterialTheme.colors.error)
             ) {
                 Text(
                     text = buildAnnotatedString {
@@ -198,7 +206,7 @@ fun MainContent(
             }
         }
     } else {
-        val modifier = Modifier.padding(bottom = bottomSheetPeekHeight)
+        val modifier = Modifier.padding(bottom = offset)
         FileList(modifier, state, onFileRemove, onRemoveAll)
     }
 }

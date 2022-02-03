@@ -40,7 +40,7 @@ class OnionNotificationManager @Inject constructor(
         return NotificationCompat.Builder(app, CHANNEL_ID)
             .setContentTitle(app.getText(R.string.sharing_notification_title))
             .setSmallIcon(R.drawable.ic_notification)
-            .setColor(getColor(app, R.color.purple_onion_share))
+            .setColor(getColor(app, R.color.purple_onion_light))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setCategory(CATEGORY_SERVICE)

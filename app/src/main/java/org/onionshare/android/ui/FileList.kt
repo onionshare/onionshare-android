@@ -44,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.ui.theme.OnionAccent
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 @Composable
@@ -66,14 +67,16 @@ fun FileList(
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(8.dp)
-            ) {
-                Text(text, modifier = Modifier.weight(1f))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text, modifier = Modifier
+                    .weight(1f)
+                    .padding(16.dp))
                 if (state.value.allowsModifyingFiles) {
-                    TextButton(onClick = onRemoveAll) {
-                        Text(stringResource(R.string.clear_all))
+                    TextButton(onClick = onRemoveAll, Modifier.padding(end = 8.dp)) {
+                        Text(
+                            text = stringResource(R.string.clear_all),
+                            color = MaterialTheme.colors.OnionAccent,
+                        )
                     }
                 }
             }
@@ -169,6 +172,22 @@ fun FileRowPreview(editAllowed: Boolean = true) {
 @Composable
 fun FileRowNoEditPreview() {
     FileRowPreview(false)
+}
+
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun FileListPreviewDark() {
+    OnionshareTheme {
+        Surface {
+            val files = listOf(
+                SendFile("foo bar file", "1337 KiB", 1, Uri.parse("/foo"), null),
+            )
+            val mutableState = remember {
+                mutableStateOf(ShareUiState.FilesAdded(files, files.sumOf { it.size }))
+            }
+            FileList(Modifier, mutableState, {}) {}
+        }
+    }
 }
 
 @Preview(showBackground = true)
