@@ -1,5 +1,6 @@
 package org.onionshare.android.ui
 
+import org.onionshare.android.files.totalSize
 import org.onionshare.android.server.SendFile
 
 sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Long) {
@@ -12,7 +13,9 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
     data class FilesAdded(
         override val files: List<SendFile>,
         override val totalSize: Long,
-    ) : ShareUiState(files, totalSize)
+    ) : ShareUiState(files, totalSize) {
+        constructor(files: List<SendFile>) : this(files, files.totalSize)
+    }
 
     data class Starting(
         override val files: List<SendFile>,
@@ -50,6 +53,7 @@ sealed class ShareUiState(open val files: List<SendFile>, open val totalSize: Lo
     data class Error(
         override val files: List<SendFile>,
         override val totalSize: Long,
+        val errorFile: SendFile? = null,
     ) : ShareUiState(files, totalSize)
 
 }

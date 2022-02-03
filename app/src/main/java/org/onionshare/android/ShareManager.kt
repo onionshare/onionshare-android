@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +18,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.onionshare.android.files.FileErrorException
 import org.onionshare.android.files.FileManager
 import org.onionshare.android.files.FilesZipping
+import org.onionshare.android.files.totalSize
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
@@ -61,8 +64,7 @@ class ShareManager @Inject constructor(
 
         // not supporting selecting entire folders with sub-folders
         val filesAdded = fileManager.addFiles(uris, shareState.value.files)
-        val totalSize = filesAdded.files.sumOf { it.size }
-        _shareState.value = ShareUiState.FilesAdded(filesAdded.files, totalSize)
+        _shareState.value = ShareUiState.FilesAdded(filesAdded.files, filesAdded.files.totalSize)
     }
 
     fun removeFile(file: SendFile) {
@@ -73,8 +75,7 @@ class ShareManager @Inject constructor(
         if (newList.isEmpty()) {
             _shareState.value = ShareUiState.NoFiles
         } else {
-            val totalSize = newList.sumOf { it.size }
-            _shareState.value = ShareUiState.FilesAdded(newList, totalSize)
+            _shareState.value = ShareUiState.FilesAdded(newList)
         }
     }
 
@@ -96,6 +97,7 @@ class ShareManager @Inject constructor(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
+    @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun startSharing() {
         if (startSharingJob?.isActive == true) {
             // TODO check if this always works as expected
@@ -143,7 +145,7 @@ class ShareManager @Inject constructor(
             } catch (e: IOException) {
                 LOG.warn("Error while startSharing ", e)
                 // launching stop on global scope to prevent deadlock when it waits for current job
-                GlobalScope.launch { stopSharing(error = true) }
+                GlobalScope.launch { stopSharing(exception = e) }
                 cancel("Error while startSharing", e)
             }
         }
@@ -179,7 +181,7 @@ class ShareManager @Inject constructor(
 
     private suspend fun stopSharing(
         complete: Boolean = false,
-        error: Boolean = false,
+        exception: Exception? = null,
     ) = withContext(Dispatchers.IO) {
         LOG.info("Stopping sharing...")
         if (startSharingJob?.isActive == true) {
@@ -194,10 +196,20 @@ class ShareManager @Inject constructor(
         val newState = when {
             files.isEmpty() -> ShareUiState.NoFiles
             complete -> ShareUiState.Complete(files, shareState.value.totalSize)
-            error -> ShareUiState.Error(files, shareState.value.totalSize)
+            exception is FileErrorException -> {
+                // remove errorFile from list of files, so user can try again
+                val newFiles = files.toMutableList().apply { remove(exception.file) }
+                ShareUiState.Error(newFiles, newFiles.totalSize, exception.file)
+            }
+            exception != null -> ShareUiState.Error(files, shareState.value.totalSize)
             else -> ShareUiState.FilesAdded(files, shareState.value.totalSize)
         }
         _shareState.value = newState
+        // special case handling for error state without file left
+        if (newState is ShareUiState.Error && newState.files.isEmpty()) {
+            delay(1000)
+            _shareState.value = ShareUiState.NoFiles
+        }
     }
 
     private fun SendFile.releaseUriPermission() {

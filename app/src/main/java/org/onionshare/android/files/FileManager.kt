@@ -17,6 +17,7 @@ import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
 import org.slf4j.LoggerFactory.getLogger
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
@@ -29,6 +30,8 @@ private val LOG = getLogger(FileManager::class.java)
 
 data class FilesAdded(val files: List<SendFile>)
 data class FilesZipping(val files: List<SendFile>, val zip: File, val progress: Int, val complete: Boolean = false)
+
+class FileErrorException(val file: SendFile) : IOException()
 
 @Singleton
 class FileManager @Inject constructor(
@@ -67,12 +70,16 @@ class FileManager @Inject constructor(
                         val progress = ((i + 1) / files.size.toFloat() * 100).roundToInt()
                         // TODO remove before release
                         LOG.debug("Zipping next file $progress/100: ${file.basename}")
-                        // TODO handle FileNotFoundException and tell user about problem / remove file
-                        ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
-                            zipStream.putNextEntry(ZipEntry(file.basename))
-                            inputStream.copyTo(zipStream)
+                        try {
+                            ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
+                                zipStream.putNextEntry(ZipEntry(file.basename))
+                                inputStream.copyTo(zipStream)
+                            }
+                            emit(FilesZipping(files, zipFile, progress))
+                        } catch (e: FileNotFoundException) {
+                            LOG.warn("Error while opening file: ", e)
+                            throw FileErrorException(file)
                         }
-                        emit(FilesZipping(files, zipFile, progress))
                     }
                 }
             }
@@ -89,3 +96,5 @@ class FileManager @Inject constructor(
     }
 
 }
+
+val List<SendFile>.totalSize get() = sumOf { it.size }
