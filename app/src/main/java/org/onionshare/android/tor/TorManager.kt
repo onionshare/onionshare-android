@@ -94,8 +94,10 @@ class TorManager @Inject constructor(
         }
         val onion = (state.value as? TorState.Starting)?.onion
         // descriptor upload counts as 90%
-        if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOAD $onion")) {
-            _state.value = TorState.Starting(90, onion)
+        if (state.value !is TorState.Started) {
+            if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOAD $onion")) {
+                _state.value = TorState.Starting(90, onion)
+            }
         }
         // We consider already the first upload of the onion descriptor as started (100%).
         // In practice, more uploads are needed for the onion service to be reachable.
