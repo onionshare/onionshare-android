@@ -125,7 +125,7 @@ class TorManager @Inject constructor(
         }
         startLatch?.await() ?: error("startLatch was null")
         startLatch = null
-        onTorStarted()
+        onTorServiceStarted()
     }
 
     fun stop() {
@@ -144,7 +144,7 @@ class TorManager @Inject constructor(
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    private suspend fun onTorStarted() = withContext(Dispatchers.IO) {
+    private suspend fun onTorServiceStarted() = withContext(Dispatchers.IO) {
         _state.value = TorState.Starting(5)
         controlConnection = startControlConnection().apply {
             addRawEventListener(onionListener)
