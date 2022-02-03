@@ -20,6 +20,20 @@ default_platform(:android)
 platform :android do
   desc "Deploy a new version to the Google Play beta track"
   lane :deploy do
+	# Gather data
+	package_name = CredentialsManager::AppfileConfig.try_fetch_value(:package_name)
+  	version_name = get_version_name(app_project_dir: '**/app')
+  	UI.message("version_name: " + version_name)
+  	version_code = get_version_code(app_project_dir: '**/app')
+  	UI.message("version_code: " + version_code)
+
+	# Tag release
+	add_git_tag(
+		tag: version_name,
+		message: version_name,
+		sign: true
+    )
+
     gradle(
         task: "bundle",
         build_type: "Release",
@@ -31,6 +45,13 @@ platform :android do
             "android.injected.signing.key.password" => ENV["ONIONSHARE_KEY_PASS"],
         }
     )
+	aab = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
+	puts "AAB: " + aab
+
+	# Github: Ensure that tag exists and push it
+	git_tag_exists(tag: version_name)
+	push_git_tags(tag: version_name)
+
     upload_to_play_store(
         track: 'beta',
         skip_upload_images: 'true',
