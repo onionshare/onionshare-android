@@ -47,8 +47,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private val contentLauncher = registerForActivityResult(OpenDocuments()) { uris ->
-        // TODO we might need to set this to true, or removing code that takes permissions
-        viewModel.onUrisReceived(uris, false)
+        viewModel.onUrisReceived(uris, true)
     }
 
     /**
@@ -96,8 +95,9 @@ class MainActivity : ComponentActivity() {
 
 private class OpenDocuments : OpenMultipleDocuments() {
     override fun createIntent(context: Context, input: Array<String>): Intent {
-        val intent = super.createIntent(context, input)
-        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-        return intent
+        return super.createIntent(context, input).apply {
+            addFlags(FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        }
     }
 }

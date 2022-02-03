@@ -51,7 +51,8 @@ class ShareManager @Inject constructor(
 
         // taking persistable permissions only works with OPEN_DOCUMENT, not GET_CONTENT
         if (takePermission) {
-            // take persistable Uri permission to prevent SecurityException in same cases/devices
+            // take persistable Uri permission to prevent SecurityException
+            // when activity got killed before we use the Uri
             val contentResolver = app.applicationContext.contentResolver
             uris.forEach { uri ->
                 contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
