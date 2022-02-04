@@ -217,7 +217,7 @@ fun ShareBottomSheetReadyPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.FilesAdded(emptyList(), 0L),
+                state = ShareUiState.FilesAdded(emptyList()),
                 onSheetButtonClicked = {},
             )
         }
@@ -230,7 +230,7 @@ fun ShareBottomSheetStartingPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Starting(emptyList(), 0L, 25, 50),
+                state = ShareUiState.Starting(emptyList(), 25, 50),
                 onSheetButtonClicked = {},
             )
         }
@@ -245,7 +245,6 @@ fun ShareBottomSheetSharingPreview() {
             BottomSheet(
                 state = ShareUiState.Sharing(
                     emptyList(),
-                    0L,
                     "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/",
                 ),
                 onSheetButtonClicked = {},
@@ -266,7 +265,7 @@ fun ShareBottomSheetCompletePreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Complete(emptyList(), 0L),
+                state = ShareUiState.Complete(emptyList()),
                 onSheetButtonClicked = {},
             )
         }

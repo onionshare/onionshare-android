@@ -225,7 +225,7 @@ fun DefaultPreview() {
     )
     OnionshareTheme {
         MainUi(
-            stateFlow = MutableStateFlow(ShareUiState.FilesAdded(files, 1337L)),
+            stateFlow = MutableStateFlow(ShareUiState.FilesAdded(files)),
             onFabClicked = {},
             onFileRemove = {},
             onRemoveAll = {},

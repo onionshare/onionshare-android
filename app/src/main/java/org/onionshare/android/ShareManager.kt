@@ -21,7 +21,6 @@ import kotlinx.coroutines.withContext
 import org.onionshare.android.files.FileErrorException
 import org.onionshare.android.files.FileManager
 import org.onionshare.android.files.FilesZipping
-import org.onionshare.android.files.totalSize
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
@@ -64,7 +63,7 @@ class ShareManager @Inject constructor(
 
         // not supporting selecting entire folders with sub-folders
         val filesAdded = fileManager.addFiles(uris, shareState.value.files)
-        _shareState.value = ShareUiState.FilesAdded(filesAdded.files, filesAdded.files.totalSize)
+        _shareState.value = ShareUiState.FilesAdded(filesAdded.files)
     }
 
     fun removeFile(file: SendFile) {
@@ -108,7 +107,7 @@ class ShareManager @Inject constructor(
             val files = shareState.value.files
             // call ensureActive() before any heavy work to ensure we don't continue when cancelled
             ensureActive()
-            _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize, 0, 0)
+            _shareState.value = ShareUiState.Starting(files, 0, 0)
             try {
                 // TODO we might want to look into parallelizing what happens below (async {} ?)
                 // When the current scope gets cancelled, the async routine gets cancelled as well
@@ -116,7 +115,7 @@ class ShareManager @Inject constructor(
                 var sendPage: SendPage? = null
                 fileManager.zipFiles(files).collect { state ->
                     ensureActive()
-                    _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize, state.progress, 0)
+                    _shareState.value = ShareUiState.Starting(files, state.progress, 0)
                     if (state.complete) sendPage = getSendPage(state)
                 }
                 val page = sendPage ?: error("SendPage was null")
@@ -127,15 +126,15 @@ class ShareManager @Inject constructor(
                 torManager.state.takeWhile { it !is TorState.Started }.collect { state ->
                     if (state is TorState.Starting) {
                         _shareState.value =
-                            ShareUiState.Starting(files, shareState.value.totalSize, 100, state.progress)
+                            ShareUiState.Starting(files, 100, state.progress)
                         onion = state.onion
                     }
                 }
-                _shareState.value = ShareUiState.Starting(files, shareState.value.totalSize, 100, 100)
+                _shareState.value = ShareUiState.Starting(files, 100, 100)
                 val onionAddress = onion ?: error("onion was null")
                 val url = "http://$onionAddress"
                 LOG.error("OnionShare URL: $url") // TODO remove before release
-                val sharing = ShareUiState.Sharing(files, shareState.value.totalSize, url)
+                val sharing = ShareUiState.Sharing(files, url)
                 // TODO properly manage tor and webserver state together
                 ensureActive()
                 // collecting from StateFlow will only return when coroutine gets cancelled
@@ -195,14 +194,14 @@ class ShareManager @Inject constructor(
         val files = shareState.value.files
         val newState = when {
             files.isEmpty() -> ShareUiState.NoFiles
-            complete -> ShareUiState.Complete(files, shareState.value.totalSize)
+            complete -> ShareUiState.Complete(files)
             exception is FileErrorException -> {
                 // remove errorFile from list of files, so user can try again
                 val newFiles = files.toMutableList().apply { remove(exception.file) }
-                ShareUiState.Error(newFiles, newFiles.totalSize, exception.file)
+                ShareUiState.Error(newFiles, exception.file)
             }
-            exception != null -> ShareUiState.Error(files, shareState.value.totalSize)
-            else -> ShareUiState.FilesAdded(files, shareState.value.totalSize)
+            exception != null -> ShareUiState.Error(files)
+            else -> ShareUiState.FilesAdded(files)
         }
         _shareState.value = newState
         // special case handling for error state without file left
