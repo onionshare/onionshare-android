@@ -183,7 +183,7 @@ fun FileListPreviewDark() {
                 SendFile("foo bar file", "1337 KiB", 1, Uri.parse("/foo"), null),
             )
             val mutableState = remember {
-                mutableStateOf(ShareUiState.FilesAdded(files, files.sumOf { it.size }))
+                mutableStateOf(ShareUiState.FilesAdded(files))
             }
             FileList(Modifier, mutableState, {}) {}
         }
@@ -199,9 +199,8 @@ fun FileListPreview() {
             SendFile("bar", "42 MiB", 2, Uri.parse("/bar"), "video/mp4"),
             SendFile("foo bar", "23 MiB", 3, Uri.parse("/foo/bar"), null),
         )
-        val totalSize = files.sumOf { it.size }
         val mutableState = remember {
-            mutableStateOf(ShareUiState.FilesAdded(files, totalSize))
+            mutableStateOf(ShareUiState.FilesAdded(files))
         }
         FileList(Modifier, mutableState, {}) {}
     }

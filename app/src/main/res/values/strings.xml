@@ -28,5 +28,6 @@
     <string name="sharing_channel_name">File sharing notification</string>
     <string name="sharing_notification_title">Currently sharing files</string>
     <string name="share_error_snackbar_text">Could not start OnionShare</string>
+    <string name="share_error_file_snackbar_text">Could not open %s. Removed.</string>
     <string name="share_error_snackbar_action">Retry</string>
 </resources>

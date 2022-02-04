@@ -88,9 +88,15 @@ fun MainUi(
             delay(750)
             scaffoldState.bottomSheetState.expand()
         }
-        if (state.value is ShareUiState.Error) {
-            val text = stringResource(R.string.share_error_snackbar_text)
-            val action = stringResource(R.string.share_error_snackbar_action)
+        val uiState = state.value
+        if (uiState is ShareUiState.Error) {
+            val errorFile = uiState.errorFile
+            val text = if (errorFile != null) {
+                stringResource(R.string.share_error_file_snackbar_text, errorFile.basename)
+            } else {
+                stringResource(R.string.share_error_snackbar_text)
+            }
+            val action = if (uiState.files.isEmpty()) null else stringResource(R.string.share_error_snackbar_action)
             LaunchedEffect("showSnackbar") {
                 val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
                     message = text,
@@ -100,22 +106,22 @@ fun MainUi(
                 if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
             }
         }
-        if (!state.value.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
+        if (!uiState.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
             // ensure the bottom sheet is visible
-            LaunchedEffect(state.value) {
+            LaunchedEffect(uiState) {
                 scaffoldState.bottomSheetState.expand()
             }
         }
         BottomSheetScaffold(
             topBar = { ActionBar(R.string.app_name) },
             floatingActionButton = {
-                Fab(state.value, scaffoldState.bottomSheetState, onFabClicked)
+                Fab(uiState, scaffoldState.bottomSheetState, onFabClicked)
             },
-            sheetGesturesEnabled = state.value.collapsableSheet,
+            sheetGesturesEnabled = uiState.collapsableSheet,
             sheetPeekHeight = bottomSheetPeekHeight,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
-            sheetContent = { BottomSheet(state.value, onSheetButtonClicked) }
+            sheetContent = { BottomSheet(uiState, onSheetButtonClicked) }
         ) {
             MainContent(stateFlow, offset, onFileRemove, onRemoveAll)
         }
@@ -219,7 +225,7 @@ fun DefaultPreview() {
     )
     OnionshareTheme {
         MainUi(
-            stateFlow = MutableStateFlow(ShareUiState.FilesAdded(files, 1337L)),
+            stateFlow = MutableStateFlow(ShareUiState.FilesAdded(files)),
             onFabClicked = {},
             onFileRemove = {},
             onRemoveAll = {},

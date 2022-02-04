@@ -50,7 +50,7 @@ platform :android do
 
 	# Github: Ensure that tag exists and push it
 	git_tag_exists(tag: version_name)
-	push_git_tags(tag: version_name)
+	push_git_tags(remote: "upstream", tag: version_name)
 
     upload_to_play_store(
         track: 'beta',
