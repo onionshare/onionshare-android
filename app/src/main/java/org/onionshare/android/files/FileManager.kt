@@ -79,6 +79,9 @@ class FileManager @Inject constructor(
                         } catch (e: FileNotFoundException) {
                             LOG.warn("Error while opening file: ", e)
                             throw FileErrorException(file)
+                        } catch (e: SecurityException) {
+                            LOG.warn("Error while opening file: SecurityException")
+                            throw FileErrorException(file)
                         }
                     }
                 }
