@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.onionshare.android.ShareManager
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.ui.share.ShareUiState
 import javax.inject.Inject
 
 @HiltViewModel

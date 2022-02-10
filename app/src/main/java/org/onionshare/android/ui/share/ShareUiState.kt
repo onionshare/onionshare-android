@@ -1,4 +1,4 @@
-package org.onionshare.android.ui
+package org.onionshare.android.ui.share
 
 import org.onionshare.android.files.totalSize
 import org.onionshare.android.server.SendFile
@@ -17,8 +17,8 @@ sealed class ShareUiState(val files: List<SendFile>) {
 
     class Starting(
         files: List<SendFile>,
-        val zipPercent: Int,
-        val torPercent: Int,
+        private val zipPercent: Int,
+        private val torPercent: Int,
     ) : ShareUiState(files) {
         override val allowsModifyingFiles = false
         val totalProgress: Float

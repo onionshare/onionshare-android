@@ -6,31 +6,23 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import org.onionshare.android.ui.share.ShareUiSetup
 import org.onionshare.android.ui.theme.OnionshareTheme
 
 const val ROUTE_SHARE = "share"
 const val ROUTE_ABOUT = "about"
 
 @Composable
-fun MainUi(
-    viewModel: MainViewModel,
-    onFabClicked: () -> Unit,
-    onSheetButtonClicked: () -> Unit,
-) = OnionshareTheme {
+fun MainUi(viewModel: MainViewModel) = OnionshareTheme {
     Surface(color = MaterialTheme.colors.background) {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = ROUTE_SHARE) {
             composable(ROUTE_SHARE) {
-                ShareUi(
-                    navController = navController,
-                    stateFlow = viewModel.shareState,
-                    onFabClicked = onFabClicked,
-                    onFileRemove = viewModel::removeFile,
-                    onRemoveAll = viewModel::removeAll,
-                    onSheetButtonClicked = onSheetButtonClicked,
-                )
+                ShareUiSetup(navController, viewModel)
             }
-            composable(ROUTE_ABOUT) { AboutUi(navController) }
+            composable(ROUTE_ABOUT) {
+                AboutUi(navController)
+            }
         }
     }
 }

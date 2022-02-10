@@ -1,4 +1,4 @@
-package org.onionshare.android.ui
+package org.onionshare.android.ui.share
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -50,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.onionshare.android.R
+import org.onionshare.android.ui.StyledLegacyText
 import org.onionshare.android.ui.theme.IndicatorReady
 import org.onionshare.android.ui.theme.IndicatorSharing
 import org.onionshare.android.ui.theme.IndicatorStarting

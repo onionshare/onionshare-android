@@ -1,4 +1,4 @@
-package org.onionshare.android.ui
+package org.onionshare.android.ui.share
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
@@ -56,6 +56,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.ui.ROUTE_ABOUT
 import org.onionshare.android.ui.theme.Fab
 import org.onionshare.android.ui.theme.OnionshareTheme
 import org.onionshare.android.ui.theme.topBar
