@@ -30,4 +30,14 @@
     <string name="share_error_snackbar_text">Could not start OnionShare</string>
     <string name="share_error_file_snackbar_text">Could not open %s. Removed.</string>
     <string name="share_error_snackbar_action">Retry</string>
+
+    <string name="about_title">About</string>
+    <string name="about_app_version">App Version %s</string>
+    <string name="about_text">OnionShare was developed by Micah Lee, et al. and is open source, released under GPLv3.\n
+    \nLike all software, OnionShare may contain bugs or vulnerabilities.</string>
+    <string name="about_contributors">Contributors</string>
+    <string name="about_contributor_creator">%s, Creator</string>
+    <string name="about_contributor_android">%s, Android Engineer</string>
+    <string name="about_contributor_pm">%s, Technical Project Management</string>
+    <string name="about_contributor_design">%s, Product Design</string>
 </resources>

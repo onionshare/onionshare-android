@@ -17,12 +17,9 @@ import androidx.activity.result.contract.ActivityResultContracts.GetMultipleCont
 import androidx.activity.result.contract.ActivityResultContracts.OpenMultipleDocuments
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import dagger.hilt.android.AndroidEntryPoint
 import org.onionshare.android.R
 import org.onionshare.android.ui.ShareUiState.FilesAdded
-import org.onionshare.android.ui.theme.OnionshareTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -32,17 +29,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            OnionshareTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    MainUi(
-                        stateFlow = viewModel.shareState,
-                        onFabClicked = this::onFabClicked,
-                        onFileRemove = viewModel::removeFile,
-                        onRemoveAll = viewModel::removeAll,
-                        onSheetButtonClicked = this::onSheetButtonClicked,
-                    )
-                }
-            }
+            MainUi(viewModel, this::onFabClicked, this::onSheetButtonClicked)
         }
     }
 
