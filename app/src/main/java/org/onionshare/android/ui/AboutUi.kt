@@ -40,7 +40,7 @@ fun AboutUi(navController: NavHostController) {
     }) {
         val scrollableState = rememberScrollState()
         Column(modifier = Modifier
-            .padding(top = 48.dp, start = 16.dp, end = 16.dp)
+            .padding(top = 32.dp, start = 16.dp, end = 16.dp)
             .verticalScroll(scrollableState)
         ) {
             AboutHeader()
@@ -49,7 +49,19 @@ fun AboutUi(navController: NavHostController) {
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier.padding(top = 24.dp),
             )
-            Contributors()
+            TextList(headline = stringResource(R.string.about_contributors), items = listOf(
+                stringResource(R.string.about_contributor_creator, "Micah Lee"),
+                stringResource(R.string.about_contributor_android, "Torsten Grote"),
+                stringResource(R.string.about_contributor_android, "Michael Rogers"),
+                stringResource(R.string.about_contributor_pm, "Nathan Freitas"),
+                stringResource(R.string.about_contributor_design, "Glenn Sorrentino"),
+            ))
+            TextList(headline = stringResource(R.string.about_contributing_orgs), items = listOf(
+                "Guardian Project",
+                "The Calyx Institute",
+                "Tor Project",
+                "Briar Project",
+            ))
         }
     }
 }
@@ -92,38 +104,20 @@ fun AboutHeader() {
 }
 
 @Composable
-fun Contributors() {
+fun TextList(headline: String, items: List<String>) {
     Column(modifier = Modifier.padding(top = 24.dp)) {
         Text(
-            text = stringResource(R.string.about_contributors),
+            text = headline,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.body1,
         )
-        Text(
-            text = stringResource(R.string.about_contributor_creator, "Micah Lee"),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        Text(
-            text = stringResource(R.string.about_contributor_android, "Torsten Grote"),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        Text(
-            text = stringResource(R.string.about_contributor_android, "Michael Rogers"),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        Text(
-            text = stringResource(R.string.about_contributor_pm, "Nathan Freitas"),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        Text(
-            text = stringResource(R.string.about_contributor_design, "Glenn Sorrentino"),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier.padding(top = 4.dp)
-        )
+        items.forEach { text ->
+            Text(
+                text = text,
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
     }
 }
 
