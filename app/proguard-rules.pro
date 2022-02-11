@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontobfuscate
+-keep class org.onionshare.android.** { *; }
+-keep class org.torproject.jni.** { *; }
+
+-keep class ch.qos.** { *; }
+-keep class org.slf4j.** { *; }
