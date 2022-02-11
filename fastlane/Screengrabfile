@@ -1,0 +1,5 @@
+locales ['en-US']
+app_apk_path "app/build/outputs/apk/stable/debug/app-stable-debug.apk"
+tests_apk_path "app/build/outputs/apk/androidTest/stable/debug/app-stable-debug-androidTest.apk"
+clear_previous_screenshots true
+use_timestamp_suffix false

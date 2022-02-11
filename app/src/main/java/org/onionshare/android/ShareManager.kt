@@ -131,8 +131,8 @@ class ShareManager @Inject constructor(
                     }
                 }
                 _shareState.value = ShareUiState.Starting(files, 100, 100)
-                val onionAddress = onion ?: error("onion was null")
-                val url = "http://$onionAddress"
+                val onionHost = onion ?: error("onion was null")
+                val url = "http://$onionHost.onion"
                 LOG.error("OnionShare URL: $url") // TODO remove before release
                 val sharing = ShareUiState.Sharing(files, url)
                 // TODO properly manage tor and webserver state together

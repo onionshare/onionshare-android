@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.onionshare.android.benchmark">
+
+    <uses-sdk tools:overrideLibrary="androidx.benchmark.macro.junit4" />
+
+    <queries>
+        <package android:name="org.onionshare.android" />
+    </queries>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+</manifest>
