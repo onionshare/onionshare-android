@@ -26,7 +26,7 @@ import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.tor.TorManager
 import org.onionshare.android.tor.TorState
-import org.onionshare.android.ui.ShareUiState
+import org.onionshare.android.ui.share.ShareUiState
 import org.slf4j.LoggerFactory.getLogger
 import java.io.IOException
 import javax.inject.Inject

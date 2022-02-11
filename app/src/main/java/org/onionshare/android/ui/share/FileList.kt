@@ -1,4 +1,4 @@
-package org.onionshare.android.ui
+package org.onionshare.android.ui.share
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
