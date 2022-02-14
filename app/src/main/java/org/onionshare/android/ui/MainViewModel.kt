@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
     val shareState: StateFlow<ShareUiState> = shareManager.shareState
 
     fun onUrisReceived(uris: List<Uri>, takePermission: Boolean) {
-        if (uris.isEmpty()) return // user backed out of select activity
+        require(uris.isNotEmpty()) { "Call this only for non-empty list of Uris" }
 
         viewModelScope.launch {
             shareManager.addFiles(uris, takePermission)

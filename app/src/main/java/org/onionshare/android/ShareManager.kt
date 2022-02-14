@@ -49,8 +49,6 @@ class ShareManager @Inject constructor(
     private var startSharingJob: Job? = null
 
     suspend fun addFiles(uris: List<Uri>, takePermission: Boolean) = withContext(Dispatchers.IO) {
-        if (uris.isEmpty()) return@withContext // user backed out of select activity
-
         // taking persistable permissions only works with OPEN_DOCUMENT, not GET_CONTENT
         if (takePermission) {
             // take persistable Uri permission to prevent SecurityException
