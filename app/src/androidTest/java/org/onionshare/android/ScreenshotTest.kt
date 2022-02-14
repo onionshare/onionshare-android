@@ -12,6 +12,7 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
@@ -74,6 +75,14 @@ class ScreenshotTest {
         }
         screenshot("4_en-US")
 
+        val about = context.getString(R.string.about_title)
+        composeTestRule.onNodeWithContentDescription(about).performClick()
+
+        screenshot("5_en-US")
+
+        val back = context.getString(R.string.back)
+        composeTestRule.onNodeWithContentDescription(back).performClick()
+
         uiModeManager.setApplicationNightMode(MODE_NIGHT_YES)
 
         composeTestRule.onNodeWithText(stopSharing).performClick()
@@ -84,11 +93,11 @@ class ScreenshotTest {
         composeTestRule.waitUntilAsserted {
             onNodeWithText(clearAll).assertIsDisplayed()
         }
-        screenshot("6_en-US")
+        screenshot("7_en-US")
 
         composeTestRule.onNodeWithText(clearAll).performClick()
 
-        screenshot("5_en-US")
+        screenshot("6_en-US")
 
         // need to reset this, otherwise the app gets stuck in this mode
         uiModeManager.setApplicationNightMode(MODE_NIGHT_CUSTOM)

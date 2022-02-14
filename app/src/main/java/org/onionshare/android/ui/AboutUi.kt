@@ -76,7 +76,7 @@ fun AboutActionBar(
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.about_title),
+                contentDescription = stringResource(R.string.back),
             )
         }
     },

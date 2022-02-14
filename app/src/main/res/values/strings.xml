@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">OnionShare (alpha)</string>
 
+    <string name="back">Back</string>
     <string name="add_files_not_supported">Your device does not support adding files</string>
     <string name="unknown">unknown</string>
     <string name="remove">Remove</string>
