@@ -61,7 +61,10 @@ class TorManager @Inject constructor(
                 TorService.STATUS_STARTING -> LOG.debug("TorService: Starting...")
                 TorService.STATUS_ON -> {
                     LOG.debug("TorService: Started")
-                    startLatch?.countDown() ?: error("startLatch was null when Tor started.")
+                    // TODO remove if condition and replace LOG.error with error() once #29 is resolved
+                    if (File(getControlPath()).exists()) {
+                        startLatch?.countDown() ?: LOG.error("startLatch was null when Tor started.")
+                    }
                 }
                 // FIXME When we stop unplanned, we need to inform the ShareManager
                 //  that we stopped, so it can clear its state up, stopping webserver, etc.
@@ -193,10 +196,10 @@ class TorManager @Inject constructor(
      * Note: Exposing this through TorService was rejected by upstream.
      *       https://github.com/guardianproject/tor-android/pull/61
      */
-    private suspend fun getControlPath(): String = withContext(Dispatchers.IO) {
+    private fun getControlPath(): String {
         val serviceDir = app.applicationContext.getDir(TorService::class.java.simpleName, 0)
         val dataDir = File(serviceDir, "data")
-        File(dataDir, "ControlSocket").absolutePath
+        return File(dataDir, "ControlSocket").absolutePath
     }
 
 }
