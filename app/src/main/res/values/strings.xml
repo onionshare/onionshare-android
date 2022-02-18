@@ -7,6 +7,7 @@
     <string name="share_empty_state">Nothing here yet.</string>
     <string name="warning_alpha_intro">Warning:</string>
     <string name="warning_alpha">This is an early alpha release. It should only be used for testing. The code is not finished and has not been audited.</string>
+    <string name="warning_no_files_added">No files selected.</string>
     <string name="clear_all">Clear All</string>
     <string name="share_files_add">Add files</string>
     <string name="share_state_ready">Ready</string>

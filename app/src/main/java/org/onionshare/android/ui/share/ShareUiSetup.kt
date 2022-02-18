@@ -21,13 +21,14 @@ import org.onionshare.android.ui.MainViewModel
 
 @Composable
 internal fun ShareUiSetup(navController: NavHostController, viewModel: MainViewModel) {
+    val context = LocalContext.current
     val contentLauncher = rememberLauncherForActivityResult(OpenDocuments()) { uris ->
-        viewModel.onUrisReceived(uris, true)
+        onUrisReceived(context, viewModel, uris, true)
     }
     // Some phones seem to have a messed up Storage Access Framework and do not support OPEN_DOCUMENT.
     // This uses GET_CONTENT as a fall-back.
     val contentFallbackLauncher = rememberLauncherForActivityResult(GetMultipleContents()) { uris ->
-        viewModel.onUrisReceived(uris, false)
+        onUrisReceived(context, viewModel, uris, false)
     }
     val batteryLauncher = rememberLauncherForActivityResult(StartActivityForResult()) {
         // we just ignore the result and don't check for battery optimization again
@@ -35,7 +36,6 @@ internal fun ShareUiSetup(navController: NavHostController, viewModel: MainViewM
         // TODO we might want to do user testing here to see if the assumption holds
         viewModel.onSheetButtonClicked()
     }
-    val context = LocalContext.current
     ShareUi(
         navController = navController,
         stateFlow = viewModel.shareState,
@@ -44,6 +44,20 @@ internal fun ShareUiSetup(navController: NavHostController, viewModel: MainViewM
         onRemoveAll = viewModel::removeAll,
         onSheetButtonClicked = { onSheetButtonClicked(context, viewModel, batteryLauncher) }
     )
+}
+
+private fun onUrisReceived(
+    context: Context,
+    viewModel: MainViewModel,
+    uris: List<Uri>,
+    takePermission: Boolean,
+) {
+    if (uris.isEmpty()) {
+        // user backed out of select activity
+        Toast.makeText(context, R.string.warning_no_files_added, Toast.LENGTH_LONG).show()
+    } else {
+        viewModel.onUrisReceived(uris, takePermission)
+    }
 }
 
 private fun onFabClicked(
