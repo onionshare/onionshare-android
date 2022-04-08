@@ -12,6 +12,7 @@ val RedLight = Color(0xFFFF0000)
 val RedDark = Color(0xFFF17165)
 val Grey = Color(0xFF626262)
 val Error = Color(0xFFD24141)
+val DarkShadow = Color(0x32000000)
 
 val IndicatorReady = Color.Gray
 val IndicatorStarting = Color(0xFFEE9A38)

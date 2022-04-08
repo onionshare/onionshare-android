@@ -10,24 +10,10 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProgressIndicatorDefaults
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Circle
@@ -38,8 +24,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -51,12 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.onionshare.android.R
 import org.onionshare.android.ui.StyledLegacyText
-import org.onionshare.android.ui.theme.IndicatorReady
-import org.onionshare.android.ui.theme.IndicatorSharing
-import org.onionshare.android.ui.theme.IndicatorStarting
-import org.onionshare.android.ui.theme.OnionBlue
-import org.onionshare.android.ui.theme.OnionRed
-import org.onionshare.android.ui.theme.OnionshareTheme
+import org.onionshare.android.ui.shadow
+import org.onionshare.android.ui.theme.*
 
 private data class BottomSheetUi(
     val indicatorIcon: ImageVector = Icons.Filled.Circle,
@@ -99,98 +83,114 @@ private fun getBottomSheetUi(state: ShareUiState) = when (state) {
 fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
     if (state is ShareUiState.NoFiles) return
     val sheetUi = getBottomSheetUi(state)
-    Column {
-        if (state.collapsableSheet) Image(
-            imageVector = Icons.Filled.DragHandle,
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(Color.Gray),
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(24.dp, 14.dp)
-                .padding(top = 4.dp)
-                .align(CenterHorizontally),
-        )
-        val topPadding = if (state.collapsableSheet) 0.dp else 16.dp
-        Row(
-            verticalAlignment = CenterVertically,
-            modifier = Modifier.padding(start = 16.dp, top = topPadding, bottom = 16.dp),
+    Surface(
+        color = Color.White,
+        elevation = 8.dp,
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .shadow(
+                shadow = Shadow(
+                    color = DarkShadow,
+                    offset = Offset(0f, -20f),
+                    blurRadius = 15f
+                )
+            )
         ) {
-            Icon(
-                imageVector = sheetUi.indicatorIcon,
-                tint = sheetUi.indicatorColor,
+        Column(
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            if (state.collapsableSheet) Image(
+                imageVector = Icons.Filled.DragHandle,
                 contentDescription = null,
-                modifier = Modifier.size(16.dp),
+                colorFilter = ColorFilter.tint(Color.Gray),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(24.dp, 14.dp)
+                    .padding(top = 4.dp)
+                    .align(CenterHorizontally),
             )
-            Text(
-                text = stringResource(sheetUi.stateText),
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(start = 16.dp),
-            )
-        }
-        ProgressDivider(state)
-        val colorControlNormal = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
-        if (state is ShareUiState.Sharing) {
-            StyledLegacyText(
-                id = R.string.share_onion_intro,
-                modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
-            )
-            Row(modifier = Modifier.padding(16.dp)) {
-                SelectionContainer(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
-                ) {
-                    Text(state.onionAddress, fontFamily = Monospace)
-                }
-                val clipBoardLabel = stringResource(R.string.clipboard_onion_service_label)
-                val ctx = LocalContext.current
-                val clipboard = ctx.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                Button(
-                    onClick = {
-                        val clip = ClipData.newPlainText(clipBoardLabel, state.onionAddress)
-                        clipboard.setPrimaryClip(clip)
-                        Toast.makeText(ctx, R.string.clipboard_onion_service_copied, LENGTH_SHORT)
-                            .show()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.surface,
-                        contentColor = MaterialTheme.colors.OnionBlue,
-                    ),
-                    border = BorderStroke(1.dp, colorControlNormal),
-                    shape = RoundedCornerShape(32.dp),
-                    modifier = Modifier
-                        .align(CenterVertically)
-                        .size(48.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.ContentCopy,
-                        contentDescription = null,
-                        modifier = Modifier.requiredSize(24.dp),
-                    )
-                }
+            val topPadding = if (state.collapsableSheet) 0.dp else 16.dp
+            Row(
+                verticalAlignment = CenterVertically,
+                modifier = Modifier.padding(start = 16.dp, top = topPadding, bottom = 16.dp),
+            ) {
+                Icon(
+                    imageVector = sheetUi.indicatorIcon,
+                    tint = sheetUi.indicatorColor,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                )
+                Text(
+                    text = stringResource(sheetUi.stateText),
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(start = 16.dp),
+                )
             }
-            Divider(thickness = 2.dp)
-        }
-        Button(
-            onClick = onSheetButtonClicked,
-            colors = if (state is ShareUiState.Sharing) {
-                ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.OnionRed,
-                    backgroundColor = MaterialTheme.colors.surface)
-            } else ButtonDefaults.buttonColors(),
-            border = if (state is ShareUiState.Sharing) {
-                BorderStroke(1.dp, colorControlNormal)
-            } else null,
-            shape = RoundedCornerShape(32.dp),
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(sheetUi.buttonText),
-                fontSize = 16.sp,
-                fontStyle = if (state is ShareUiState.Starting) Italic else null,
-                modifier = Modifier.padding(8.dp)
-            )
+            ProgressDivider(state)
+            val colorControlNormal = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+            if (state is ShareUiState.Sharing) {
+                StyledLegacyText(
+                    id = R.string.share_onion_intro,
+                    modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                )
+                Row(modifier = Modifier.padding(16.dp)) {
+                    SelectionContainer(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp),
+                    ) {
+                        Text(state.onionAddress, fontFamily = Monospace)
+                    }
+                    val clipBoardLabel = stringResource(R.string.clipboard_onion_service_label)
+                    val ctx = LocalContext.current
+                    val clipboard = ctx.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                    Button(
+                        onClick = {
+                            val clip = ClipData.newPlainText(clipBoardLabel, state.onionAddress)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(ctx, R.string.clipboard_onion_service_copied, LENGTH_SHORT)
+                                .show()
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = MaterialTheme.colors.surface,
+                            contentColor = MaterialTheme.colors.OnionBlue,
+                        ),
+                        border = BorderStroke(1.dp, colorControlNormal),
+                        shape = RoundedCornerShape(32.dp),
+                        modifier = Modifier
+                            .align(CenterVertically)
+                            .size(48.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.ContentCopy,
+                            contentDescription = null,
+                            modifier = Modifier.requiredSize(24.dp),
+                        )
+                    }
+                }
+                Divider(thickness = 2.dp)
+            }
+            Button(
+                onClick = onSheetButtonClicked,
+                colors = if (state is ShareUiState.Sharing) {
+                    ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.OnionRed,
+                        backgroundColor = MaterialTheme.colors.surface)
+                } else ButtonDefaults.buttonColors(),
+                border = if (state is ShareUiState.Sharing) {
+                    BorderStroke(1.dp, colorControlNormal)
+                } else null,
+                shape = RoundedCornerShape(32.dp),
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(sheetUi.buttonText),
+                    fontSize = 16.sp,
+                    fontStyle = if (state is ShareUiState.Starting) Italic else null,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
     }
 }
