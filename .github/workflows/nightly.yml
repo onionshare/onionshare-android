@@ -29,7 +29,7 @@ jobs:
       - name: Build
         run: ./gradlew assembleNightlyDebug
       - name: F-Droid nightly builds
-        uses: grote/f-droid-nightly-action@v2.1
+        uses: wardvl/f-droid-nightly-action@v2
         with:
           debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
           fdroid_nightly_args: --archive-older 10
