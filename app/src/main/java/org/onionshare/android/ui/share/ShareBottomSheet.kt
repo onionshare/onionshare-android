@@ -158,6 +158,9 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                     ),
                     border = BorderStroke(1.dp, colorControlNormal),
                     shape = RoundedCornerShape(32.dp),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 0.dp,
+                    ),
                     modifier = Modifier
                         .align(CenterVertically)
                         .size(48.dp)
@@ -181,6 +184,9 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 BorderStroke(1.dp, colorControlNormal)
             } else null,
             shape = RoundedCornerShape(32.dp),
+            elevation = ButtonDefaults.elevation(
+                defaultElevation = 0.dp,
+            ),
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
