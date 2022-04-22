@@ -34,3 +34,5 @@ jobs:
         with:
           debug_keystore: ${{ secrets.DEBUG_KEYSTORE }}
           fdroid_nightly_args: --archive-older 10
+      - name: F-Droid repo permission clean-up # https://github.com/actions/cache/issues/753
+        run: sudo chown -R runner:docker fdroid
