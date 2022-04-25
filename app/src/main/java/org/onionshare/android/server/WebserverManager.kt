@@ -36,6 +36,7 @@ import org.onionshare.android.server.WebserverManager.State.STARTED
 import org.onionshare.android.server.WebserverManager.State.STOPPED
 import org.slf4j.LoggerFactory
 import java.security.SecureRandom
+import java.util.concurrent.RejectedExecutionException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -72,7 +73,13 @@ class WebserverManager @Inject constructor() {
 
     fun stop() {
         LOG.info("Stopping...")
-        server?.stop(500, 1_000)
+        try {
+            server?.stop(500, 1_000)
+        } catch (e: RejectedExecutionException) {
+            LOG.warn("Error while stopping webserver", e)
+        } finally {
+            server = null
+        }
         LOG.info("Stopped")
     }
 
