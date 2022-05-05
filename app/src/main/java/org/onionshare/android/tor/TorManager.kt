@@ -25,6 +25,7 @@ import org.onionshare.android.server.PORT
 import org.slf4j.LoggerFactory.getLogger
 import org.torproject.jni.TorService
 import org.torproject.jni.TorService.ACTION_STATUS
+import org.torproject.jni.TorService.EXTRA_SERVICE_PACKAGE_NAME
 import org.torproject.jni.TorService.EXTRA_STATUS
 import java.io.File
 import java.io.FileInputStream
@@ -57,14 +58,13 @@ class TorManager @Inject constructor(
          * Attention: This gets executes on UI Thread
          */
         override fun onReceive(context: Context, i: Intent) {
+            val intentPackageName = i.getStringExtra(EXTRA_SERVICE_PACKAGE_NAME)
+            if (intentPackageName != context.packageName) return // this intent was not for us
             when (i.getStringExtra(EXTRA_STATUS)) {
                 TorService.STATUS_STARTING -> LOG.debug("TorService: Starting...")
                 TorService.STATUS_ON -> {
                     LOG.debug("TorService: Started")
-                    // TODO remove if condition and replace LOG.error with error() once #29 is resolved
-                    if (File(getControlPath()).exists()) {
-                        startLatch?.countDown() ?: LOG.error("startLatch was null when Tor started.")
-                    }
+                    startLatch?.countDown() ?: LOG.error("startLatch was null when Tor started.")
                 }
                 // FIXME When we stop unplanned, we need to inform the ShareManager
                 //  that we stopped, so it can clear its state up, stopping webserver, etc.
