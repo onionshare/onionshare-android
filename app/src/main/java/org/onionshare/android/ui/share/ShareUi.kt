@@ -127,6 +127,7 @@ fun ShareUi(
             sheetPeekHeight = bottomSheetPeekHeight,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
+            sheetElevation = 16.dp,
             sheetContent = { BottomSheet(uiState, onSheetButtonClicked) }
         ) {
             MainContent(stateFlow, offset, onFileRemove, onRemoveAll)
