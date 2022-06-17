@@ -1,11 +1,9 @@
 package org.onionshare.android.ui.share
 
-import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -16,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import org.briarproject.android.dontkillmelib.DozeUtils.getDozeWhitelistingIntent
 import org.onionshare.android.R
 import org.onionshare.android.ui.MainViewModel
 
@@ -81,15 +80,14 @@ private fun onSheetButtonClicked(
     viewModel: MainViewModel,
     batteryLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
 ) {
-    if (viewModel.shareState.value is ShareUiState.FilesAdded &&
-        !viewModel.isIgnoringBatteryOptimizations()
+    if (viewModel.shareState.value is ShareUiState.FilesAdded && viewModel.needsDozeWhitelisting
     ) {
-        @SuppressLint("BatteryLife", "InlinedApi")
-        val i = Intent().apply {
-            action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-            data = Uri.parse("package:${context.packageName}")
+        try {
+            batteryLauncher.launch(getDozeWhitelistingIntent(context))
+        } catch (e: ActivityNotFoundException) {
+            // this is really unusual (happened once on a Samsung Galaxy A5 with SDK 23), just pray and proceed
+            viewModel.onSheetButtonClicked()
         }
-        batteryLauncher.launch(i)
     } else {
         viewModel.onSheetButtonClicked()
     }
