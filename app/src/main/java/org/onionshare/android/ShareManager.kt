@@ -126,12 +126,15 @@ class ShareManager @Inject constructor(
                         _shareState.value =
                             ShareUiState.Starting(files, 100, state.progress)
                         onion = state.onion
+                    } else if (state is TorState.Stopping || state is TorState.Stopped) {
+                        // FIXME When Tor stops unplanned *after* starting,
+                        //  we also need to clear up our state, stopping webserver, etc.
+                        throw IOException("Tor has stopped unexpectedly")
                     }
                 }
                 _shareState.value = ShareUiState.Starting(files, 100, 100)
                 val onionHost = onion ?: error("onion was null")
                 val url = "http://$onionHost.onion"
-                LOG.error("OnionShare URL: $url") // TODO remove before release
                 val sharing = ShareUiState.Sharing(files, url)
                 // TODO properly manage tor and webserver state together
                 ensureActive()
