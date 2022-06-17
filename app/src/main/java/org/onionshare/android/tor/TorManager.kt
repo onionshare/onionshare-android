@@ -66,10 +66,14 @@ class TorManager @Inject constructor(
                     LOG.debug("TorService: Started")
                     startLatch?.countDown() ?: LOG.error("startLatch was null when Tor started.")
                 }
-                // FIXME When we stop unplanned, we need to inform the ShareManager
-                //  that we stopped, so it can clear its state up, stopping webserver, etc.
-                TorService.STATUS_STOPPING -> LOG.debug("TorService: Stopping...")
-                TorService.STATUS_OFF -> LOG.debug("TorService: Stopped")
+                TorService.STATUS_STOPPING -> {
+                    LOG.debug("TorService: Stopping...")
+                    _state.value = TorState.Stopping
+                }
+                TorService.STATUS_OFF -> {
+                    LOG.debug("TorService: Stopped")
+                    _state.value = TorState.Stopped
+                }
             }
         }
     }
