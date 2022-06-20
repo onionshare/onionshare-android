@@ -24,6 +24,7 @@ import org.onionshare.android.server.WebServerState
 import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.tor.TorManager
 import org.onionshare.android.tor.TorState
+import org.onionshare.android.ui.OnionNotificationManager
 import org.onionshare.android.ui.share.ShareUiState
 import org.slf4j.LoggerFactory.getLogger
 import javax.inject.Inject
@@ -36,6 +37,7 @@ class ShareManager @Inject constructor(
     private val fileManager: FileManager,
     private val torManager: TorManager,
     private val webserverManager: WebserverManager,
+    private val notificationManager: OnionNotificationManager,
 ) {
 
     @Volatile
@@ -83,6 +85,7 @@ class ShareManager @Inject constructor(
         else if (f is FilesState.Zipped && t is TorState.Started && w is WebServerState.Started) {
             val url = "http://${t.onion}.onion"
             emit(ShareUiState.Sharing(f.files, url))
+            notificationManager.onSharing()
         } // if webserver says download is complete, report that back
         else if (w is WebServerState.DownloadComplete) {
             stopSharing()

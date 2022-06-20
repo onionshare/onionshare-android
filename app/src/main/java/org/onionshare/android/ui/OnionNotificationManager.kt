@@ -33,12 +33,24 @@ class OnionNotificationManager @Inject constructor(
     }
 
     fun getForegroundNotification(): Notification {
+        val title = app.getText(R.string.starting_notification_title)
+        val text = app.getText(R.string.starting_notification_text)
+        return getNotification(title, text)
+    }
+
+    fun onSharing() {
+        val n = getNotification(app.getText(R.string.sharing_notification_title))
+        nm.notify(NOTIFICATION_ID, n)
+    }
+
+    private fun getNotification(title: CharSequence, text: CharSequence? = null): Notification {
         val pendingIntent: PendingIntent = Intent(app, MainActivity::class.java).let { i ->
             val pendingFlags = if (SDK_INT < 23) 0 else FLAG_IMMUTABLE
             PendingIntent.getActivity(app, 0, i, pendingFlags)
         }
         return NotificationCompat.Builder(app, CHANNEL_ID)
-            .setContentTitle(app.getText(R.string.sharing_notification_title))
+            .setContentTitle(title)
+            .apply { if (!text.isNullOrBlank()) setContentText(text) }
             .setSmallIcon(R.drawable.ic_notification)
             .setColor(getColor(app, R.color.purple_onion_light))
             .setContentIntent(pendingIntent)
