@@ -26,6 +26,7 @@ import org.onionshare.android.server.SendPage
 import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.tor.TorManager
 import org.onionshare.android.tor.TorState
+import org.onionshare.android.ui.OnionNotificationManager
 import org.onionshare.android.ui.share.ShareUiState
 import org.slf4j.LoggerFactory.getLogger
 import java.io.IOException
@@ -40,6 +41,7 @@ class ShareManager @Inject constructor(
     private val torManager: TorManager,
     private val webserverManager: WebserverManager,
     private val fileManager: FileManager,
+    private val notificationManager: OnionNotificationManager,
 ) {
 
     private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.NoFiles)
@@ -166,7 +168,10 @@ class ShareManager @Inject constructor(
         sharing: ShareUiState.Sharing,
     ) = withContext(Dispatchers.IO) {
         when (state) {
-            WebserverManager.State.STARTED -> _shareState.value = sharing
+            WebserverManager.State.STARTED -> {
+                _shareState.value = sharing
+                notificationManager.onSharing()
+            }
             WebserverManager.State.SHOULD_STOP -> stopSharing(complete = true)
             // Stopping again could cause a harmless double stop,
             // but ensures state update when webserver stops unexpectedly.
