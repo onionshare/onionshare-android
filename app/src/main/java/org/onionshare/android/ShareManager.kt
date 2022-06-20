@@ -211,7 +211,11 @@ class ShareManager @Inject constructor(
 
     private fun SendFile.releaseUriPermission() {
         val contentResolver = app.applicationContext.contentResolver
-        contentResolver.releasePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+        try {
+            contentResolver.releasePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+        } catch (e: SecurityException) {
+            LOG.warn("Error releasing PersistableUriPermission", e)
+        }
     }
 
 }
