@@ -35,6 +35,9 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -174,8 +177,12 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
             }
             Divider(thickness = 2.dp)
         }
+        var buttonEnabled by remember(state) { mutableStateOf(true) }
         Button(
-            onClick = onSheetButtonClicked,
+            onClick = {
+                buttonEnabled = false
+                onSheetButtonClicked()
+            },
             colors = if (state is ShareUiState.Sharing) {
                 ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.OnionRed,
                     backgroundColor = MaterialTheme.colors.surface)
@@ -187,6 +194,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
             elevation = ButtonDefaults.elevation(
                 defaultElevation = 0.dp,
             ),
+            enabled = buttonEnabled,
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
