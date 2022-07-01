@@ -4,14 +4,16 @@ import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.EXTRA_TEXT
 import android.content.IntentFilter
 import android.net.LocalSocket
 import android.net.LocalSocketAddress
 import android.net.LocalSocketAddress.Namespace.FILESYSTEM
+import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat.startForegroundService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import net.freehaven.tor.control.RawEventListener
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
@@ -24,6 +26,7 @@ import net.freehaven.tor.control.TorControlConnection
 import org.onionshare.android.server.PORT
 import org.slf4j.LoggerFactory.getLogger
 import org.torproject.jni.TorService
+import org.torproject.jni.TorService.ACTION_ERROR
 import org.torproject.jni.TorService.ACTION_STATUS
 import org.torproject.jni.TorService.EXTRA_SERVICE_PACKAGE_NAME
 import org.torproject.jni.TorService.EXTRA_STATUS
@@ -52,8 +55,8 @@ class TorManager @Inject constructor(
     private val app: Application,
 ) {
     private val _state = MutableStateFlow<TorState>(TorState.Stopped)
-    internal val state: StateFlow<TorState> = _state
-    private var broadcastReceiver = object : BroadcastReceiver() {
+    internal val state = _state.asStateFlow()
+    private val broadcastReceiver = object : BroadcastReceiver() {
         /**
          * Attention: This gets executes on UI Thread
          */
@@ -72,9 +75,15 @@ class TorManager @Inject constructor(
                 }
                 TorService.STATUS_OFF -> {
                     LOG.debug("TorService: Stopped")
-                    _state.value = TorState.Stopped
+                    onStopped()
                 }
             }
+        }
+    }
+    private val errorReceiver = object : BroadcastReceiver() {
+        @UiThread
+        override fun onReceive(context: Context, i: Intent) {
+            LOG.error("TorService Error: ${i.getStringExtra(EXTRA_TEXT)}")
         }
     }
 
@@ -125,14 +134,20 @@ class TorManager @Inject constructor(
         _state.value = TorState.Starting(0)
         startLatch = CountDownLatch(1)
         app.registerReceiver(broadcastReceiver, IntentFilter(ACTION_STATUS))
+        app.registerReceiver(errorReceiver, IntentFilter(ACTION_ERROR))
         broadcastReceiverRegistered = true
 
         Intent(app, ShareService::class.java).also { intent ->
             startForegroundService(app, intent)
         }
-        startLatch?.await() ?: error("startLatch was null")
-        startLatch = null
-        onTorServiceStarted()
+        try {
+            startLatch?.await() ?: error("startLatch was null")
+            startLatch = null
+            onTorServiceStarted()
+        } catch (e: Exception) {
+            LOG.warn("Error while starting Tor", e)
+            stop()
+        }
     }
 
     fun stop() {
@@ -142,14 +157,21 @@ class TorManager @Inject constructor(
         Intent(app, ShareService::class.java).also { intent ->
             app.stopService(intent)
         }
+        // wait for service to stop and broadcast when it gets destroyed
+    }
+
+    @UiThread
+    fun onStopped() {
         if (broadcastReceiverRegistered) {
             app.unregisterReceiver(broadcastReceiver)
+            app.unregisterReceiver(errorReceiver)
             broadcastReceiverRegistered = false
         }
         LOG.info("Stopped")
         _state.value = TorState.Stopped
     }
 
+    @Throws(IOException::class, IllegalArgumentException::class)
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun onTorServiceStarted() = withContext(Dispatchers.IO) {
         _state.value = TorState.Starting(5)
@@ -185,8 +207,9 @@ class TorManager @Inject constructor(
         val localSocketAddress = LocalSocketAddress(getControlPath(), FILESYSTEM)
         val client = LocalSocket()
         client.connect(localSocketAddress)
-        client.receiveBufferSize = 1024
-        client.soTimeout = 3000
+        client.receiveBufferSize = 1024 * 8
+        client.sendBufferSize = 1024 * 8
+        client.soTimeout = 0 // if we time out, the control connection gets closed and Tor will stop since we own it
 
         val controlFileDescriptor = client.fileDescriptor
         val inputStream = FileInputStream(controlFileDescriptor)

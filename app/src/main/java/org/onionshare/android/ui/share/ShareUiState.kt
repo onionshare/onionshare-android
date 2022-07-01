@@ -3,23 +3,26 @@ package org.onionshare.android.ui.share
 import org.onionshare.android.files.totalSize
 import org.onionshare.android.server.SendFile
 
-sealed class ShareUiState(val files: List<SendFile>) {
+sealed class ShareUiState {
 
+    abstract val files: List<SendFile>
     open val allowsModifyingFiles = true
     open val collapsableSheet = false
-    val totalSize: Long = files.totalSize
+    val totalSize: Long get() = files.totalSize
 
-    object NoFiles : ShareUiState(emptyList())
+    object NoFiles : ShareUiState() {
+        override val files = emptyList<SendFile>()
+    }
 
-    class FilesAdded(
-        files: List<SendFile>,
-    ) : ShareUiState(files)
+    data class FilesAdded(
+        override val files: List<SendFile>,
+    ) : ShareUiState()
 
-    class Starting(
-        files: List<SendFile>,
+    data class Starting(
+        override val files: List<SendFile>,
         private val zipPercent: Int,
         private val torPercent: Int,
-    ) : ShareUiState(files) {
+    ) : ShareUiState() {
         override val allowsModifyingFiles = false
         val totalProgress: Float
             get() {
@@ -33,21 +36,29 @@ sealed class ShareUiState(val files: List<SendFile>) {
         }
     }
 
-    class Sharing(
-        files: List<SendFile>,
+    data class Sharing(
+        override val files: List<SendFile>,
         val onionAddress: String,
-    ) : ShareUiState(files) {
+    ) : ShareUiState() {
         override val allowsModifyingFiles = false
         override val collapsableSheet = true
     }
 
-    class Complete(
-        files: List<SendFile>,
-    ) : ShareUiState(files)
+    data class Complete(
+        override val files: List<SendFile>,
+    ) : ShareUiState()
 
-    class Error(
-        files: List<SendFile>,
+    data class Stopping(
+        override val files: List<SendFile>,
+    ) : ShareUiState()
+
+    data class ErrorAddingFile(
+        override val files: List<SendFile>,
         val errorFile: SendFile? = null,
-    ) : ShareUiState(files)
+    ) : ShareUiState()
+
+    data class Error(
+        override val files: List<SendFile>,
+    ) : ShareUiState()
 
 }
