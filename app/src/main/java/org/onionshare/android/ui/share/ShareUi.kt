@@ -95,7 +95,7 @@ fun ShareUi(
             scaffoldState.bottomSheetState.expand()
         }
         val uiState = state.value
-        if (uiState is ShareUiState.Error) {
+        if (uiState is ShareUiState.ErrorAddingFile) {
             val errorFile = uiState.errorFile
             val text = if (errorFile != null) {
                 stringResource(R.string.share_error_file_snackbar_text, errorFile.basename)

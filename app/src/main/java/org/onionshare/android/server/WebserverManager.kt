@@ -30,10 +30,7 @@ import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import org.onionshare.android.server.WebserverManager.State.SHOULD_STOP
-import org.onionshare.android.server.WebserverManager.State.STARTED
-import org.onionshare.android.server.WebserverManager.State.STOPPED
+import kotlinx.coroutines.flow.asStateFlow
 import org.slf4j.LoggerFactory
 import java.security.SecureRandom
 import java.util.concurrent.RejectedExecutionException
@@ -43,16 +40,23 @@ import javax.inject.Singleton
 private val LOG = LoggerFactory.getLogger(WebserverManager::class.java)
 internal const val PORT: Int = 17638
 
+sealed class WebServerState {
+    object Starting : WebServerState()
+    object Started : WebServerState()
+    object DownloadComplete : WebServerState()
+    object Stopped : WebServerState()
+}
+
 @Singleton
 class WebserverManager @Inject constructor() {
 
-    enum class State { STARTED, SHOULD_STOP, STOPPED }
-
     private val secureRandom = SecureRandom()
     private var server: ApplicationEngine? = null
-    private val state = MutableStateFlow(STOPPED)
+    private val _state = MutableStateFlow<WebServerState>(WebServerState.Stopped)
+    val state = _state.asStateFlow()
 
-    fun start(sendPage: SendPage): StateFlow<State> {
+    fun start(sendPage: SendPage) {
+        _state.value = WebServerState.Starting
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
         TrafficStats.setThreadStatsTag(0x42)
@@ -68,7 +72,6 @@ class WebserverManager @Inject constructor() {
                 sendRoutes(sendPage, staticPathMap)
             }
         }.also { it.start() }
-        return state
     }
 
     fun stop() {
@@ -92,10 +95,10 @@ class WebserverManager @Inject constructor() {
 
     private fun Application.addListener() {
         environment.monitor.subscribe(ApplicationStarted) {
-            state.value = STARTED
+            _state.value = WebServerState.Started
         }
         environment.monitor.subscribe(ApplicationStopped) {
-            state.value = STOPPED
+            _state.value = WebServerState.Stopped
         }
     }
 
@@ -137,7 +140,7 @@ class WebserverManager @Inject constructor() {
             )
             call.respondFile(sendPage.zipFile)
             LOG.info("Download complete. Emitting SHOULD_STOP state...")
-            state.value = SHOULD_STOP
+            _state.value = WebServerState.DownloadComplete
         }
     }
 }

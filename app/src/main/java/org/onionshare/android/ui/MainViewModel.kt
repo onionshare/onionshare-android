@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.briarproject.android.dontkillmelib.DozeUtils.needsDozeWhitelisting
 import org.onionshare.android.ShareManager
+import org.onionshare.android.files.FileManager
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.share.ShareUiState
 import javax.inject.Inject
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     app: Application,
     private val shareManager: ShareManager,
+    private val fileManager: FileManager,
 ) : AndroidViewModel(app) {
 
     val shareState: StateFlow<ShareUiState> = shareManager.shareState
@@ -27,12 +29,12 @@ class MainViewModel @Inject constructor(
         require(uris.isNotEmpty()) { "Call this only for non-empty list of Uris" }
 
         viewModelScope.launch {
-            shareManager.addFiles(uris, takePermission)
+            fileManager.addFiles(uris, takePermission)
         }
     }
 
-    fun removeFile(file: SendFile) = shareManager.removeFile(file)
-    fun removeAll() = shareManager.removeAll()
+    fun removeFile(file: SendFile) = fileManager.removeFile(file)
+    fun removeAll() = fileManager.removeAll()
     fun onSheetButtonClicked() = viewModelScope.launch {
         shareManager.onStateChangeRequested()
     }
