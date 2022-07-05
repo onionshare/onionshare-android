@@ -174,7 +174,7 @@ class TorManager @Inject constructor(
     private suspend fun TorControlConnection.createOnionService(): String = withContext(Dispatchers.IO) {
         LOG.error("Starting hidden service...")
         val portLines = Collections.singletonMap(80, "127.0.0.1:$PORT")
-        val response = addOnion("NEW:ED25519-V3", portLines, null)
+        val response = addOnion("NEW:ED25519-V3", portLines, listOf("DiscardPK"))
         response[HS_ADDRESS]
             ?: throw IOException("Tor did not return a hidden service address")
     }
