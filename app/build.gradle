@@ -103,6 +103,8 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+    implementation 'org.briarproject:dont-kill-me-lib:0.2.5'
+
     implementation 'info.guardianproject:tor-android:0.4.6.10'
     implementation 'info.guardianproject:jtorctl:0.4.5.7'
 
