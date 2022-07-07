@@ -5,30 +5,30 @@ import android.util.Base64
 import android.util.Base64.NO_PADDING
 import android.util.Base64.URL_SAFE
 import com.mitchellbosecke.pebble.loader.ClasspathLoader
-import io.ktor.application.Application
-import io.ktor.application.ApplicationStarted
-import io.ktor.application.ApplicationStopped
-import io.ktor.application.call
-import io.ktor.application.install
-import io.ktor.features.CallLogging
-import io.ktor.features.StatusPages
 import io.ktor.http.ContentDisposition.Companion.Attachment
 import io.ktor.http.ContentDisposition.Parameters.FileName
 import io.ktor.http.HttpHeaders.ContentDisposition
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
-import io.ktor.pebble.Pebble
-import io.ktor.pebble.PebbleContent
-import io.ktor.response.header
-import io.ktor.response.respond
-import io.ktor.response.respondFile
-import io.ktor.routing.Route
-import io.ktor.routing.get
-import io.ktor.routing.routing
+import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationStarted
+import io.ktor.server.application.ApplicationStopped
+import io.ktor.server.application.call
+import io.ktor.server.application.install
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.http.content.resources
+import io.ktor.server.http.content.static
 import io.ktor.server.netty.Netty
+import io.ktor.server.pebble.Pebble
+import io.ktor.server.pebble.PebbleContent
+import io.ktor.server.plugins.callloging.CallLogging
+import io.ktor.server.plugins.statuspages.StatusPages
+import io.ktor.server.response.header
+import io.ktor.server.response.respond
+import io.ktor.server.response.respondFile
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.slf4j.LoggerFactory
@@ -104,13 +104,13 @@ class WebserverManager @Inject constructor() {
 
     private fun Application.installStatusPages(staticPathMap: Map<String, String>) {
         install(StatusPages) {
-            status(HttpStatusCode.NotFound) {
+            status(HttpStatusCode.NotFound) { call, _ ->
                 call.respond(PebbleContent("404.html", staticPathMap))
             }
-            status(HttpStatusCode.MethodNotAllowed) {
+            status(HttpStatusCode.MethodNotAllowed) { call, _ ->
                 call.respond(PebbleContent("405.html", staticPathMap))
             }
-            status(HttpStatusCode.InternalServerError) {
+            status(HttpStatusCode.InternalServerError) { call, _ ->
                 call.respond(PebbleContent("500.html", staticPathMap))
             }
         }
