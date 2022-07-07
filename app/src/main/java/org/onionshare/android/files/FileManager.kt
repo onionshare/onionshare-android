@@ -57,7 +57,7 @@ class FileManager @Inject constructor(
             // take persistable Uri permission to prevent SecurityException
             // when activity got killed before we use the Uri
             val contentResolver = ctx.contentResolver
-            uris.forEach { uri ->
+            uris.iterator().forEach { uri ->
                 contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
             }
         }
@@ -99,7 +99,7 @@ class FileManager @Inject constructor(
         check(state.value is Added) { "Unexpected state: ${state.value::class.simpleName}" }
 
         // release persistable Uri permissions again
-        state.value.files.forEach { file ->
+        state.value.files.iterator().forEach { file ->
             file.releaseUriPermission()
         }
         _state.value = Added(emptyList())

@@ -80,10 +80,10 @@ fun ShareUi(
         Scaffold(
             topBar = { ActionBar(navController, R.string.app_name) },
             floatingActionButton = {
-                Fab(state.value, scaffoldState.bottomSheetState, onFabClicked)
+                Fab(scaffoldState.bottomSheetState, onFabClicked)
             },
-        ) {
-            MainContent(stateFlow, offset, onFileRemove, onRemoveAll)
+        ) { innerPadding ->
+            MainContent(stateFlow, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
         }
         LaunchedEffect("hideSheet") {
             // This ensures the FAB color can animate back when we transition to NoFiles state
@@ -120,17 +120,17 @@ fun ShareUi(
         }
         BottomSheetScaffold(
             topBar = { ActionBar(navController, R.string.app_name) },
-            floatingActionButton = {
-                Fab(uiState, scaffoldState.bottomSheetState, onFabClicked)
-            },
+            floatingActionButton = if (uiState.allowsModifyingFiles) {
+                { Fab(scaffoldState.bottomSheetState, onFabClicked) }
+            } else null,
             sheetGesturesEnabled = uiState.collapsableSheet,
             sheetPeekHeight = bottomSheetPeekHeight,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
             sheetElevation = 16.dp,
             sheetContent = { BottomSheet(uiState, onSheetButtonClicked) }
-        ) {
-            MainContent(stateFlow, offset, onFileRemove, onRemoveAll)
+        ) { innerPadding ->
+            MainContent(stateFlow, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
         }
     }
 }
@@ -165,22 +165,20 @@ fun ActionBar(
 
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
-fun Fab(state: ShareUiState, scaffoldState: BottomSheetState, onFabClicked: () -> Unit) {
-    if (state.allowsModifyingFiles) {
-        val color = if (scaffoldState.isCollapsed) {
-            MaterialTheme.colors.primary
-        } else {
-            MaterialTheme.colors.Fab
-        }
-        FloatingActionButton(
-            onClick = onFabClicked,
-            backgroundColor = color,
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(R.string.share_files_add),
-            )
-        }
+fun Fab(scaffoldState: BottomSheetState, onFabClicked: () -> Unit) {
+    val color = if (scaffoldState.isCollapsed) {
+        MaterialTheme.colors.primary
+    } else {
+        MaterialTheme.colors.Fab
+    }
+    FloatingActionButton(
+        onClick = onFabClicked,
+        backgroundColor = color,
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription = stringResource(R.string.share_files_add),
+        )
     }
 }
 
@@ -190,11 +188,12 @@ fun MainContent(
     offset: Dp,
     onFileRemove: (SendFile) -> Unit,
     onRemoveAll: () -> Unit,
+    modifier: Modifier,
 ) {
     val state = stateFlow.collectAsState()
     if (state.value is ShareUiState.NoFiles) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
@@ -230,8 +229,7 @@ fun MainContent(
             }
         }
     } else {
-        val modifier = Modifier.padding(bottom = offset)
-        FileList(modifier, state, onFileRemove, onRemoveAll)
+        FileList(Modifier.padding(bottom = offset), state, onFileRemove, onRemoveAll)
     }
 }
 
