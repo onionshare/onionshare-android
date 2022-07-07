@@ -56,7 +56,7 @@ class ShareManager @Inject constructor(
             LOG.info("New state from: f-${f::class.simpleName} t-${t::class.simpleName} w-${w::class.simpleName} $s")
         }
         // initial state: Adding file and services stopped
-        if (f is FilesState.Added && t is TorState.Stopped && w is WebServerState.Stopped) {
+        if (f is FilesState.Added && t is TorState.Stopped && w is WebServerState.Stopped && !w.downloadComplete) {
             if (f.files.isEmpty()) emit(ShareUiState.NoFiles)
             else emit(ShareUiState.FilesAdded(f.files))
         } // handle error while adding files
@@ -87,7 +87,10 @@ class ShareManager @Inject constructor(
             emit(ShareUiState.Sharing(f.files, url))
             notificationManager.onSharing()
         } // if webserver says download is complete, report that back
-        else if (w is WebServerState.DownloadComplete) {
+        else if (w is WebServerState.Stopping && w.downloadComplete) {
+            this@ShareManager.shouldStop.value = true
+        } // wait with stopping Tor until download has really completed
+        else if (w is WebServerState.Stopped && w.downloadComplete) {
             stopSharing()
             emit(ShareUiState.Complete(f.files))
         } // handle stopping state
