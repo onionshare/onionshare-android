@@ -148,7 +148,7 @@ class TorManager @Inject constructor(
             startLatch = null
             onTorServiceStarted()
         } catch (e: Exception) {
-            LOG.warn("Error while starting Tor", e)
+            LOG.warn("Error while starting Tor: ", e)
             stop()
         }
     }
