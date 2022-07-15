@@ -76,6 +76,9 @@ class TorManager @Inject constructor(
 
     @Volatile
     private var broadcastReceiverRegistered = false
+
+    @Volatile
+    private var localSocket: LocalSocket? = null
     private var startLatch: CountDownLatch? = null
 
     @Volatile
@@ -142,6 +145,7 @@ class TorManager @Inject constructor(
             app.unregisterReceiver(broadcastReceiver)
             broadcastReceiverRegistered = false
         }
+        localSocket = null
         LOG.info("Stopped")
         _state.value = TorState.Stopped
     }
@@ -180,9 +184,8 @@ class TorManager @Inject constructor(
     private suspend fun startControlConnection(): TorControlConnection = withContext(Dispatchers.IO) {
         val localSocketAddress = LocalSocketAddress(getControlPath(), FILESYSTEM)
         val client = LocalSocket()
+        localSocket = client
         client.connect(localSocketAddress)
-        client.receiveBufferSize = 1024
-        client.soTimeout = 3000
 
         val controlFileDescriptor = client.fileDescriptor
         val inputStream = FileInputStream(controlFileDescriptor)
