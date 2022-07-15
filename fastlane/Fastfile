@@ -40,13 +40,7 @@ platform :android do
   	version_code = get_version_code(app_project_dir: '**/app')
   	UI.message("version_code: " + version_code)
 
-	# Tag release
-	add_git_tag(
-		tag: version_name,
-		message: version_name,
-		sign: true
-    )
-
+    # Build before tagging
     gradle(
         task: "bundle",
         build_type: "Release",
@@ -60,6 +54,13 @@ platform :android do
     )
 	aab = lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]
 	puts "AAB: " + aab
+
+	# Tag release
+	add_git_tag(
+		tag: version_name,
+		message: version_name,
+		sign: true
+    )
 
 	# Github: Ensure that tag exists and push it
 	git_tag_exists(tag: version_name)
