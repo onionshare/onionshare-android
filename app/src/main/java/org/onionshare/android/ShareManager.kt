@@ -123,9 +123,11 @@ class ShareManager @Inject constructor(
             startSharingJob?.cancelAndJoin()
         }
         shouldStop.value = false
-        // Attention: We'll launch sharing in Global scope, so it survives ViewModel death
-        startSharingJob = coroutineScope {
-            launch(Dispatchers.IO) {
+        // Attention: We'll launch sharing in Global scope, so it survives ViewModel death,
+        // because this gets called implicitly by the ViewModel in ViewModelScope
+        @Suppress("OPT_IN_USAGE")
+        startSharingJob = GlobalScope.launch(Dispatchers.IO) {
+            coroutineScope {
                 // call ensureActive() before any heavy work to ensure we don't continue when cancelled
                 ensureActive()
                 // When the current scope gets cancelled, the async routine gets cancelled as well
