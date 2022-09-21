@@ -2,6 +2,12 @@
     <string name="app_name">OnionShare (alpha)</string>
 
     <string name="back">Back</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="paste">Paste</string>
     <string name="add_files_not_supported">Your device does not support adding files</string>
     <string name="unknown">unknown</string>
     <string name="remove">Remove</string>
@@ -53,4 +59,18 @@
     <string name="about_contributor_pm">%s, Project Manager</string>
     <string name="about_contributor_design">%s, Product Designer</string>
     <string name="about_contributing_orgs">Contributing Organizations</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_tor_title">Connecting to Tor</string>
+    <string name="settings_tor_automatic">Automatic based on location</string>
+    <string name="settings_tor_intro">A bridge is a dedicated uncensored route into the Tor network.</string>
+    <string name="settings_tor_automatic_info">Even if Automatic is selected, OnionShare may try to use bridges to connect.</string>
+    <string name="settings_tor_bridges_title">Custom Bridges</string>
+    <string name="settings_tor_bridges_none">None added</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d bridge added</item>
+        <item quantity="other">%d bridges added</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Tap the link below to get bridges. Then paste one or more bridge lines into the field below.</string>
+    <string name="settings_tor_my_bridges_title">My Bridges</string>
 </resources>
