@@ -15,10 +15,15 @@
     <string name="share_state_starting">Starting…</string>
     <string name="share_state_sharing">Sharing</string>
     <string name="share_state_transfer_complete">Transfer complete</string>
+    <string name="share_state_stopping">Stopping…</string>
+    <string name="share_state_error">Error</string>
+    <string name="share_state_error_text">An unexpected problem has occurred.</string>
     <string name="share_button_start">Start Sharing</string>
     <string name="share_button_starting">Starting… tap to cancel</string>
     <string name="share_button_stop">Stop Sharing</string>
     <string name="share_button_complete">Start Sharing Again</string>
+    <string name="share_button_stopping">Stopping… wait until stopped</string>
+    <string name="share_button_error">Try again</string>
     <string name="share_onion_intro"><b>Anyone</b> with this OnionShare address can <b>download</b> your files using <b>Tor Browser</b>:</string>
     <string name="clipboard_onion_service_label">OnionShare address</string>
     <string name="clipboard_onion_service_copied">OnionShare address copied to clipboard.</string>
@@ -28,6 +33,8 @@
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
     <string name="sharing_channel_name">File sharing notification</string>
+    <string name="starting_notification_title">Publishing files…</string>
+    <string name="starting_notification_text">This may take some time.</string>
     <string name="sharing_notification_title">Currently sharing files</string>
     <string name="share_error_snackbar_text">Could not start OnionShare</string>
     <string name="share_error_file_snackbar_text">Could not open %s. Removed.</string>

@@ -20,7 +20,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.OnionShare">
             <intent-filter>
@@ -31,9 +30,6 @@
 
         <service
             android:name="org.onionshare.android.tor.ShareService"
-            android:exported="false" />
-        <service
-            android:name="org.onionshare.android.tor.OnionService"
             android:exported="false"
             android:process=":tor" />
         <!-- Added TorService from upstream to ensure that it isn't exported. -->

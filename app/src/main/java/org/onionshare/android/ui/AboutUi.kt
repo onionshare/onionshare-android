@@ -28,18 +28,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import org.onionshare.android.BuildConfig.VERSION_NAME
 import org.onionshare.android.R
 import org.onionshare.android.ui.theme.OnionshareTheme
 import org.onionshare.android.ui.theme.topBar
+import org.torproject.jni.BuildConfig.VERSION_NAME
 
 @Composable
 fun AboutUi(navController: NavHostController) {
     Scaffold(topBar = {
         AboutActionBar(navController, R.string.about_title)
-    }) {
+    }) { innerPadding ->
         val scrollableState = rememberScrollState()
         Column(modifier = Modifier
+            .padding(innerPadding)
             .padding(top = 32.dp, start = 16.dp, end = 16.dp)
             .verticalScroll(scrollableState)
         ) {
@@ -111,7 +112,7 @@ fun TextList(headline: String, items: List<String>) {
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.body1,
         )
-        items.forEach { text ->
+        items.iterator().forEach { text ->
             Text(
                 text = text,
                 style = MaterialTheme.typography.body1,

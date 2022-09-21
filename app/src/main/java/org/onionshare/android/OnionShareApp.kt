@@ -38,7 +38,7 @@ class OnionShareApp @Inject constructor() : Application() {
      */
     private fun releaseUriPermissions() {
         val contentResolver = applicationContext.contentResolver
-        contentResolver.persistedUriPermissions.forEach { uriPermission ->
+        contentResolver.persistedUriPermissions.iterator().forEach { uriPermission ->
             contentResolver.releasePersistableUriPermission(uriPermission.uri, FLAG_GRANT_READ_URI_PERMISSION)
         }
     }

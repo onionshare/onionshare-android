@@ -2,6 +2,7 @@ package org.onionshare.android.files
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.net.Uri
 import android.text.format.Formatter.formatShortFileSize
 import android.util.Base64.NO_PADDING
@@ -9,12 +10,21 @@ import android.util.Base64.URL_SAFE
 import android.util.Base64.encodeToString
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.onionshare.android.R
+import org.onionshare.android.files.FilesState.Added
+import org.onionshare.android.files.FilesState.Zipped
+import org.onionshare.android.files.FilesState.Zipping
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.server.SendPage
 import org.slf4j.LoggerFactory.getLogger
 import java.io.File
 import java.io.FileNotFoundException
@@ -28,9 +38,6 @@ import kotlin.random.Random
 
 private val LOG = getLogger(FileManager::class.java)
 
-data class FilesAdded(val files: List<SendFile>)
-data class FilesZipping(val files: List<SendFile>, val zip: File, val progress: Int, val complete: Boolean = false)
-
 class FileErrorException(val file: SendFile) : IOException()
 
 @Singleton
@@ -38,8 +45,31 @@ class FileManager @Inject constructor(
     app: Application,
 ) {
     private val ctx = app.applicationContext
+    private val _state = MutableStateFlow<FilesState>(Added(emptyList()))
+    val state = _state.asStateFlow()
 
-    fun addFiles(uris: List<Uri>, existingFiles: List<SendFile>): FilesAdded {
+    @Volatile
+    private var zipJob: Job? = null
+
+    suspend fun addFiles(uris: List<Uri>, takePermission: Boolean) = withContext(Dispatchers.IO) {
+        // taking persistable permissions only works with OPEN_DOCUMENT, not GET_CONTENT
+        if (takePermission) {
+            // take persistable Uri permission to prevent SecurityException
+            // when activity got killed before we use the Uri
+            val contentResolver = ctx.contentResolver
+            uris.iterator().forEach { uri ->
+                contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+            }
+        }
+
+        // not supporting selecting entire folders with sub-folders
+        addFiles(uris)
+    }
+
+    private fun addFiles(uris: List<Uri>) {
+        val currentState = state.value
+        check(currentState is Added) { "Unexpected state: ${currentState::class.simpleName}" }
+        val existingFiles = currentState.files
         val files = uris.mapNotNull { uri ->
             // continue if we already have that file
             if (existingFiles.any { it.uri == uri }) return@mapNotNull null
@@ -52,14 +82,53 @@ class FileManager @Inject constructor(
             }
             SendFile(name, sizeHuman, size, uri, documentFile.type)
         }
-        return FilesAdded(existingFiles + files)
+        _state.value = Added(existingFiles + files)
     }
 
-    @Throws(IOException::class)
-    suspend fun zipFiles(files: List<SendFile>): Flow<FilesZipping> = flow {
+    fun removeFile(file: SendFile) {
+        check(state.value is Added) { "Unexpected state: ${state.value::class.simpleName}" }
+
+        // release persistable Uri permission again
+        file.releaseUriPermission()
+
+        val newList = state.value.files.filterNot { it == file }
+        _state.value = Added(newList)
+    }
+
+    fun removeAll() {
+        check(state.value is Added) { "Unexpected state: ${state.value::class.simpleName}" }
+
+        // release persistable Uri permissions again
+        state.value.files.iterator().forEach { file ->
+            file.releaseUriPermission()
+        }
+        _state.value = Added(emptyList())
+    }
+
+    suspend fun zipFiles() = withContext(Dispatchers.IO) {
+        if (state.value is Zipped) return@withContext
+        zipJob?.cancelAndJoin()
+        try {
+            @Suppress("BlockingMethodInNonBlockingContext")
+            zipJob = launch { zipFilesInternal() }
+        } catch (e: FileErrorException) {
+            // remove errorFile from list of files, so user can try again
+            val newFiles = state.value.files.toMutableList().apply { remove(e.file) }
+            _state.value = FilesState.Error(newFiles, e.file)
+        } catch (e: IOException) {
+            _state.value = FilesState.Error(state.value.files)
+        }
+    }
+
+    @Throws(IOException::class, FileErrorException::class)
+    private suspend fun zipFilesInternal() {
+        val currentState = state.value
+        check(currentState is Added) { "Unexpected state: ${currentState::class.simpleName}" }
+        val files = currentState.files
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         val zipFile = ctx.getFileStreamPath(zipFileName)
-        emit(FilesZipping(files, zipFile, 0))
+        currentCoroutineContext().ensureActive()
+        _state.value = Zipping(files, zipFile, 0)
         try {
             @Suppress("BlockingMethodInNonBlockingContext")
             ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
@@ -75,7 +144,8 @@ class FileManager @Inject constructor(
                                 zipStream.putNextEntry(ZipEntry(file.basename))
                                 inputStream.copyTo(zipStream)
                             }
-                            emit(FilesZipping(files, zipFile, progress))
+                            currentCoroutineContext().ensureActive()
+                            _state.value = Zipping(files, zipFile, progress)
                         } catch (e: FileNotFoundException) {
                             LOG.warn("Error while opening file: ", e)
                             throw FileErrorException(file)
@@ -88,14 +158,52 @@ class FileManager @Inject constructor(
             }
         } catch (e: CancellationException) {
             zipFile.delete()
+            throw e
         }
-        // TODO we should take better care to clean up old zip files properly
+        currentCoroutineContext().ensureActive()
+        _state.value = Zipping(files, zipFile, 100)
         zipFile.deleteOnExit()
-        emit(FilesZipping(files, zipFile, 100, true))
+
+        // get SendPage for updating to final state
+        @Suppress("BlockingMethodInNonBlockingContext")
+        val sendPage = getSendPage(files, zipFile)
+        currentCoroutineContext().ensureActive()
+        _state.value = Zipped(files, sendPage)
+    }
+
+    @Throws(IOException::class)
+    private fun getSendPage(files: List<SendFile>, zipFile: File): SendPage {
+        val fileSize = zipFile.length()
+        return SendPage(
+            fileName = "download.zip",
+            fileSize = fileSize.toString(),
+            fileSizeHuman = formatShortFileSize(ctx, fileSize),
+            zipFile = zipFile,
+        ).apply {
+            addFiles(files)
+        }
+    }
+
+    suspend fun stop() {
+        // cancel running zipJob and wait here until cancelled
+        zipJob?.cancelAndJoin()
+        val currentState = state.value
+        if (currentState is Zipping) currentState.zip.delete()
+        if (currentState is Zipped) currentState.sendPage.zipFile.delete()
+        _state.value = Added(currentState.files)
     }
 
     private fun Uri.getFallBackName(): String? {
         return lastPathSegment?.split("/")?.last()
+    }
+
+    private fun SendFile.releaseUriPermission() {
+        val contentResolver = ctx.contentResolver
+        try {
+            contentResolver.releasePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+        } catch (e: SecurityException) {
+            LOG.warn("Error releasing PersistableUriPermission", e)
+        }
     }
 
 }
