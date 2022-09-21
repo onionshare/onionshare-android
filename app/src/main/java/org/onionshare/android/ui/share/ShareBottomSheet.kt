@@ -1,11 +1,6 @@
 package org.onionshare.android.ui.share
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context.CLIPBOARD_SERVICE
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
@@ -15,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -31,7 +25,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Circle
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily.Companion.Monospace
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
@@ -53,12 +45,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.onionshare.android.R
+import org.onionshare.android.ui.CopyButton
 import org.onionshare.android.ui.StyledLegacyText
 import org.onionshare.android.ui.theme.Error
 import org.onionshare.android.ui.theme.IndicatorReady
 import org.onionshare.android.ui.theme.IndicatorSharing
 import org.onionshare.android.ui.theme.IndicatorStarting
-import org.onionshare.android.ui.theme.OnionBlue
 import org.onionshare.android.ui.theme.OnionRed
 import org.onionshare.android.ui.theme.OnionshareTheme
 
@@ -148,7 +140,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 id = R.string.share_onion_intro,
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
             )
-            Row(modifier = Modifier.padding(16.dp)) {
+            Row(modifier = Modifier.padding(16.dp), verticalAlignment = CenterVertically) {
                 SelectionContainer(
                     modifier = Modifier
                         .weight(1f)
@@ -156,35 +148,10 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 ) {
                     Text(state.onionAddress, fontFamily = Monospace)
                 }
-                val clipBoardLabel = stringResource(R.string.clipboard_onion_service_label)
-                val ctx = LocalContext.current
-                val clipboard = ctx.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                Button(
-                    onClick = {
-                        val clip = ClipData.newPlainText(clipBoardLabel, state.onionAddress)
-                        clipboard.setPrimaryClip(clip)
-                        Toast.makeText(ctx, R.string.clipboard_onion_service_copied, LENGTH_SHORT)
-                            .show()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.surface,
-                        contentColor = MaterialTheme.colors.OnionBlue,
-                    ),
-                    border = BorderStroke(1.dp, colorControlNormal),
-                    shape = RoundedCornerShape(32.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                    ),
-                    modifier = Modifier
-                        .align(CenterVertically)
-                        .size(48.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.ContentCopy,
-                        contentDescription = null,
-                        modifier = Modifier.requiredSize(24.dp),
-                    )
-                }
+                CopyButton(
+                    toCopy = state.onionAddress,
+                    clipBoardLabel = stringResource(R.string.clipboard_onion_service_label),
+                )
             }
             Divider(thickness = 2.dp)
         } else if (state is ShareUiState.Error) {
