@@ -1,23 +1,31 @@
 package org.onionshare.android
 
+import android.app.Activity
 import android.app.ActivityManager
 import android.app.Application
+import android.app.Application.ActivityLifecycleCallbacks
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.UriPermission
 import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
 import android.os.Process
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import dagger.hilt.android.HiltAndroidApp
+import org.onionshare.android.ui.MainActivity
 import javax.inject.Inject
 
 @HiltAndroidApp
-class OnionShareApp @Inject constructor() : Application() {
+class OnionShareApp @Inject constructor() : Application(), ActivityLifecycleCallbacks {
+
+    var isActivityStarted: Boolean = false
+        private set
 
     override fun onCreate() {
         if (BuildConfig.DEBUG) enableStrictMode()
         super.onCreate()
+        registerActivityLifecycleCallbacks(this)
         if (!isTorProcess()) releaseUriPermissions()
     }
 
@@ -55,6 +63,29 @@ class OnionShareApp @Inject constructor() : Application() {
         }
         StrictMode.setThreadPolicy(threadPolicy.build())
         StrictMode.setVmPolicy(vmPolicy.build())
+    }
+
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+    }
+
+    override fun onActivityStarted(activity: Activity) {
+        if (activity is MainActivity) isActivityStarted = true
+    }
+
+    override fun onActivityResumed(activity: Activity) {
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+    }
+
+    override fun onActivityStopped(activity: Activity) {
+        if (activity is MainActivity) isActivityStarted = false
+    }
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+    }
+
+    override fun onActivityDestroyed(activity: Activity) {
     }
 
 }

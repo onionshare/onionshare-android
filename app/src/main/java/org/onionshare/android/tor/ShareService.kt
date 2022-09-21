@@ -3,7 +3,7 @@ package org.onionshare.android.tor
 import android.content.Intent
 import android.os.IBinder
 import dagger.hilt.android.AndroidEntryPoint
-import org.onionshare.android.ui.NOTIFICATION_ID
+import org.onionshare.android.ui.NOTIFICATION_ID_FOREGROUND
 import org.onionshare.android.ui.OnionNotificationManager
 import org.slf4j.LoggerFactory.getLogger
 import org.torproject.jni.TorService
@@ -20,7 +20,7 @@ class ShareService : TorService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         LOG.debug("onStartCommand $intent")
-        startForeground(NOTIFICATION_ID, nm.getForegroundNotification())
+        startForeground(NOTIFICATION_ID_FOREGROUND, nm.getForegroundNotification())
         super.onStartCommand(intent, flags, startId)
         return START_NOT_STICKY
     }

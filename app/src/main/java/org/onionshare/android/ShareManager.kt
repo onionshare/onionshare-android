@@ -155,6 +155,7 @@ class ShareManager @Inject constructor(
         if (torManager.state.value !is TorState.Stopped) torManager.stop()
         if (webserverManager.state.value !is WebServerState.Stopped) webserverManager.stop()
         fileManager.stop()
+        notificationManager.onStopped()
     }
 
 }
