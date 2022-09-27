@@ -110,8 +110,7 @@ fun SettingsTorUiContent(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 8.dp),
-            text = stringResource(R.string.settings_tor_intro) + " " +
-                stringResource(R.string.settings_tor_automatic_info),
+            text = stringResource(R.string.settings_tor_intro),
             style = MaterialTheme.typography.body2,
         )
         RadioPreference(

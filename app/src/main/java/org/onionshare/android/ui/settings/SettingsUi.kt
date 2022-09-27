@@ -61,7 +61,7 @@ fun Preference(
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .clickable { onClick() }
+        .clickable(onClick = onClick)
         .padding(16.dp)
     ) {
         Column {

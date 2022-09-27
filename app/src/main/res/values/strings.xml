@@ -63,8 +63,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_tor_title">Connecting to Tor</string>
     <string name="settings_tor_automatic">Automatic based on location</string>
-    <string name="settings_tor_intro">A bridge is a dedicated uncensored route into the Tor network.</string>
-    <string name="settings_tor_automatic_info">Even if Automatic is selected, OnionShare may try to use bridges to connect.</string>
+    <string name="settings_tor_intro">A bridge is a dedicated uncensored route into the Tor network. Even if Automatic is selected, OnionShare may try to use bridges to connect.</string>
     <string name="settings_tor_bridges_title">Custom Bridges</string>
     <string name="settings_tor_bridges_none">None added</string>
     <plurals name="settings_tor_bridges_number">
