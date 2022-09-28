@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetState
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -26,14 +28,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
@@ -54,9 +58,11 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import org.onionshare.android.BuildConfig
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.ROUTE_ABOUT
+import org.onionshare.android.ui.ROUTE_SETTINGS
 import org.onionshare.android.ui.theme.Fab
 import org.onionshare.android.ui.theme.OnionshareTheme
 import org.onionshare.android.ui.theme.topBar
@@ -150,18 +156,35 @@ private fun getOffsetInDp(offset: State<Float>): Dp {
 fun ActionBar(
     navController: NavHostController,
     @StringRes res: Int,
-) = TopAppBar(
-    backgroundColor = MaterialTheme.colors.topBar,
-    title = { Text(stringResource(res)) },
-    actions = {
-        IconButton(onClick = { navController.navigate(ROUTE_ABOUT) }) {
-            Icon(
-                imageVector = Icons.Filled.Info,
-                contentDescription = stringResource(R.string.about_title),
-            )
-        }
-    },
-)
+) {
+    var showMenu by remember { mutableStateOf(false) }
+    TopAppBar(
+        backgroundColor = MaterialTheme.colors.topBar,
+        title = { Text(stringResource(res)) },
+        actions = {
+            IconButton(onClick = { showMenu = !showMenu }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = stringResource(R.string.menu)
+                )
+            }
+            DropdownMenu(
+                expanded = showMenu,
+                onDismissRequest = { showMenu = false }
+            ) {
+                // TODO remove when bridges work
+                if (BuildConfig.DEBUG) {
+                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
+                        Text(stringResource(R.string.settings_title))
+                    }
+                }
+                DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }) {
+                    Text(stringResource(R.string.about_title))
+                }
+            }
+        },
+    )
+}
 
 @Composable
 @OptIn(ExperimentalMaterialApi::class)

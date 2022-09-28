@@ -11,12 +11,14 @@ import org.briarproject.android.dontkillmelib.DozeUtils.needsDozeWhitelisting
 import org.onionshare.android.ShareManager
 import org.onionshare.android.files.FileManager
 import org.onionshare.android.server.SendFile
+import org.onionshare.android.ui.settings.SettingsManager
 import org.onionshare.android.ui.share.ShareUiState
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     app: Application,
+    val settingsManager: SettingsManager,
     private val shareManager: ShareManager,
     private val fileManager: FileManager,
 ) : AndroidViewModel(app) {
