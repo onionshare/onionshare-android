@@ -24,7 +24,7 @@ class ExecutableManager @Inject constructor(
     private val app: Application,
 ) {
     val obfs4Executable get() = File(app.applicationInfo.nativeLibraryDir, OBFS4_LIB_NAME)
-    val snowflakeExecutableFile get() = File(app.applicationInfo.nativeLibraryDir, SNOWFLAKE_LIB_NAME)
+    val snowflakeExecutable get() = File(app.applicationInfo.nativeLibraryDir, SNOWFLAKE_LIB_NAME)
 
     @Throws(IOException::class)
     fun installObfs4Executable() {
@@ -33,10 +33,11 @@ class ExecutableManager @Inject constructor(
 
     @Throws(IOException::class)
     fun installSnowflakeExecutable() {
-        installExecutable(snowflakeExecutableFile, snowflakeExecutableFile, SNOWFLAKE_LIB_NAME)
+        installExecutable(snowflakeExecutable, snowflakeExecutable, SNOWFLAKE_LIB_NAME)
     }
 
     @Throws(IOException::class)
+    // TODO check different location for self-extracted file
     private fun installExecutable(extracted: File, lib: File, libName: String) {
         if (lib.exists()) {
             // If an older version left behind a binary, delete it

@@ -3,13 +3,14 @@ package org.onionshare.android.tor
 import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.Intent.EXTRA_TEXT
 import android.content.IntentFilter
 import android.net.LocalSocket
 import android.net.LocalSocketAddress
 import android.net.LocalSocketAddress.Namespace.FILESYSTEM
-import android.os.Build.VERSION.SDK_INT
+import androidx.annotation.RawRes
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat.startForegroundService
 import kotlinx.coroutines.Dispatchers
@@ -20,10 +21,14 @@ import net.freehaven.tor.control.RawEventListener
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
 import net.freehaven.tor.control.TorControlCommands.EVENT_ERR_MSG
 import net.freehaven.tor.control.TorControlCommands.EVENT_HS_DESC
+import net.freehaven.tor.control.TorControlCommands.EVENT_NOTICE_MSG
 import net.freehaven.tor.control.TorControlCommands.EVENT_STATUS_CLIENT
 import net.freehaven.tor.control.TorControlCommands.EVENT_WARN_MSG
 import net.freehaven.tor.control.TorControlCommands.HS_ADDRESS
 import net.freehaven.tor.control.TorControlConnection
+import org.briarproject.moat.MoatApi
+import org.onionshare.android.BuildConfig
+import org.onionshare.android.R
 import org.onionshare.android.server.PORT
 import org.slf4j.LoggerFactory.getLogger
 import org.torproject.jni.TorService
@@ -50,11 +55,14 @@ private val EVENTS = listOf(
     EVENT_ERR_MSG,
 )
 private val BOOTSTRAP_REGEX = Regex("^NOTICE BOOTSTRAP PROGRESS=([0-9]{1,3}) .*$")
+private val DEBUG_PARAMS_OBFS4 = if (BuildConfig.DEBUG) " -enableLogging -logLevel INFO" else ""
+private val DEBUG_PARAMS_SNOWFLAKE = if (BuildConfig.DEBUG) " -log-to-state-dir -log snowlog" else ""
 
 @Singleton
 class TorManager @Inject constructor(
     private val app: Application,
     private val executableManager: ExecutableManager,
+    private val locationUtils: AndroidLocationUtils,
 ) {
     private val _state = MutableStateFlow<TorState>(TorState.Stopped)
     internal val state = _state.asStateFlow()
@@ -89,6 +97,16 @@ class TorManager @Inject constructor(
         }
     }
 
+    private val obfs4Bridges: List<String> = getResourceLines(R.raw.obfs4)
+    private val meekBridges: List<String> = getResourceLines(R.raw.meek)
+    private val snowflakeBridges: List<String>
+        get() = getResourceLines(R.raw.snowflake).map { "$it $snowflakeParams" }
+    private val snowflakeParams: String by lazy {
+        app.resources.openRawResource(R.raw.snowflake_params).reader().useLines {
+            return@lazy it.first()
+        }
+    }
+
     @Volatile
     private var broadcastReceiverRegistered = false
 
@@ -112,6 +130,10 @@ class TorManager @Inject constructor(
                 _state.value = newState
             }
             return@RawEventListener
+        } else if (keyword == EVENT_WARN_MSG) {
+            if (data.startsWith("Pluggable Transport process terminated ")) {
+                stop()
+            }
         }
         val onion = (state.value as? TorState.Starting)?.onion
         // descriptor upload counts as 90%
@@ -190,10 +212,12 @@ class TorManager @Inject constructor(
             authenticate(ByteArray(0))
             takeOwnership()
             setEvents(EVENTS)
+            val obfs4Executable = executableManager.obfs4Executable.absolutePath
+            val snowflakeExecutable = executableManager.snowflakeExecutable.absolutePath
             val conf = listOf(
-                "ClientTransportPlugin obfs4 exec ${executableManager.obfs4Executable.absolutePath}",
-                "ClientTransportPlugin meek_lite exec ${executableManager.obfs4Executable.absolutePath}",
-                "ClientTransportPlugin snowflake exec ${executableManager.snowflakeExecutableFile.absolutePath}",
+                "ClientTransportPlugin obfs4 exec ${obfs4Executable}$DEBUG_PARAMS_OBFS4",
+                "ClientTransportPlugin meek_lite exec ${obfs4Executable}$DEBUG_PARAMS_OBFS4",
+                "ClientTransportPlugin snowflake exec ${snowflakeExecutable}$DEBUG_PARAMS_SNOWFLAKE",
             )
             setConf(conf)
             val onion = createOnionService()
@@ -241,32 +265,42 @@ class TorManager @Inject constructor(
         return File(dataDir, "ControlSocket").absolutePath
     }
 
-    private fun useBridges() {
+    private fun getBridgesFromMoat(): List<String> {
+        val stateDir = app.getDir("state", MODE_PRIVATE)
+        val url = "https://onion.azureedge.net/"
+        val front = "ajax.aspnetcdn.com"
+        val moat = MoatApi(executableManager.obfs4Executable, stateDir, url, front)
+        val bridges = moat.get().let {
+            // if response was empty, try it again with what we think the country should be
+            if (it.isEmpty()) moat.getWithCountry(locationUtils.currentCountryIso)
+            else it
+        }
+        return bridges.flatMap { bridge ->
+            bridge.bridgeStrings.map {
+                // add snowflake params manually, if they are missing
+                val line = if (bridge.type == "snowflake" && !it.contains("url=")) {
+                    "$it $snowflakeParams"
+                } else it
+                "Bridge $line"
+            }
+        }
+    }
+
+    private fun useBridges(bridges: List<String>) {
+        if (LOG.isInfoEnabled) {
+            LOG.info("Using bridges:")
+            bridges.forEach { LOG.info("  $it") }
+        }
         val conf = listOf(
             "UseBridges 1",
-        ) + getObfs4Bridges() + getMeekBridges() + getSnowflakeBridges()
+        ) + bridges
         controlConnection?.setConf(conf)
     }
 
-    private fun getObfs4Bridges(): List<String> = listOf(
-        "Bridge obfs4 192.95.36.142:443 CDF2E852BF539B82BD10E27E9115A31734E378C2 cert=qUVQ0srL1JI/vO6V6m/24anYXiJD3QP2HgzUKQtQ7GRqqUvs7P+tG43RtAqdhLOALP7DJQ iat-mode=1",
-        "Bridge obfs4 38.229.1.78:80 C8CBDB2464FC9804A69531437BCF2BE31FDD2EE4 cert=Hmyfd2ev46gGY7NoVxA9ngrPF2zCZtzskRTzoWXbxNkzeVnGFPWmrTtILRyqCTjHR+s9dg iat-mode=1",
-        "Bridge obfs4 38.229.33.83:80 0BAC39417268B96B9F514E7F63FA6FBA1A788955 cert=VwEFpk9F/UN9JED7XpG1XOjm/O8ZCXK80oPecgWnNDZDv5pdkhq1OpbAH0wNqOT6H6BmRQ iat-mode=1",
-        "Bridge obfs4 37.218.245.14:38224 D9A82D2F9C2F65A18407B1D2B764F130847F8B5D cert=bjRaMrr1BRiAW8IE9U5z27fQaYgOhX1UCmOpg2pFpoMvo6ZgQMzLsaTzzQNTlm7hNcb+Sg iat-mode=0",
-        "Bridge obfs4 85.31.186.98:443 011F2599C0E9B27EE74B353155E244813763C3E5 cert=ayq0XzCwhpdysn5o0EyDUbmSOx3X/oTEbzDMvczHOdBJKlvIdHHLJGkZARtT4dcBFArPPg iat-mode=0",
-        "Bridge obfs4 85.31.186.26:443 91A6354697E6B02A386312F68D82CF86824D3606 cert=PBwr+S8JTVZo6MPdHnkTwXJPILWADLqfMGoVvhZClMq/Urndyd42BwX9YFJHZnBB3H0XCw iat-mode=0",
-    )
-
-    private fun getMeekBridges(): List<String> = listOf(
-        "Bridge meek_lite 192.0.2.2:80 97700DFE9F483596DDA6264C4D7DF7641E1E39CE url=https://meek.azureedge.net/ front=ajax.aspnetcdn.com",
-    )
-
-    private fun getSnowflakeBridges(): List<String> = listOf(
-        if (SDK_INT >= 25) {
-            "Bridge snowflake 192.0.2.3:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478"
-        } else {
-            "Bridge snowflake 192.0.2.3:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.azureedge.net/ front=ajax.aspnetcdn.com ice=stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478"
+    private fun getResourceLines(@RawRes res: Int): List<String> {
+        return app.resources.openRawResource(res).reader().use { reader ->
+            reader.readLines()
         }
-    )
+    }
 
 }
