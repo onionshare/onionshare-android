@@ -1,2 +1,4 @@
 /build
 /stable/release/app-stable-release.aab
+/src/main/jniLibs/*/libobfs4proxy.so
+/src/main/jniLibs/*/libsnowflake.so

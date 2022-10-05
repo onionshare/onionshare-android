@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.net.LocalSocket
 import android.net.LocalSocketAddress
 import android.net.LocalSocketAddress.Namespace.FILESYSTEM
+import android.os.Build.VERSION.SDK_INT
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat.startForegroundService
 import kotlinx.coroutines.Dispatchers
@@ -53,6 +54,7 @@ private val BOOTSTRAP_REGEX = Regex("^NOTICE BOOTSTRAP PROGRESS=([0-9]{1,3}) .*$
 @Singleton
 class TorManager @Inject constructor(
     private val app: Application,
+    private val executableManager: ExecutableManager,
 ) {
     private val _state = MutableStateFlow<TorState>(TorState.Stopped)
     internal val state = _state.asStateFlow()
@@ -144,6 +146,8 @@ class TorManager @Inject constructor(
             startForegroundService(app, intent)
         }
         try {
+            executableManager.installObfs4Executable()
+            executableManager.installSnowflakeExecutable()
             startLatch?.await() ?: error("startLatch was null")
             startLatch = null
             onTorServiceStarted()
@@ -186,6 +190,12 @@ class TorManager @Inject constructor(
             authenticate(ByteArray(0))
             takeOwnership()
             setEvents(EVENTS)
+            val conf = listOf(
+                "ClientTransportPlugin obfs4 exec ${executableManager.obfs4Executable.absolutePath}",
+                "ClientTransportPlugin meek_lite exec ${executableManager.obfs4Executable.absolutePath}",
+                "ClientTransportPlugin snowflake exec ${executableManager.snowflakeExecutableFile.absolutePath}",
+            )
+            setConf(conf)
             val onion = createOnionService()
             _state.value = TorState.Starting(10, onion)
         }
@@ -230,5 +240,33 @@ class TorManager @Inject constructor(
         val dataDir = File(serviceDir, "data")
         return File(dataDir, "ControlSocket").absolutePath
     }
+
+    private fun useBridges() {
+        val conf = listOf(
+            "UseBridges 1",
+        ) + getObfs4Bridges() + getMeekBridges() + getSnowflakeBridges()
+        controlConnection?.setConf(conf)
+    }
+
+    private fun getObfs4Bridges(): List<String> = listOf(
+        "Bridge obfs4 192.95.36.142:443 CDF2E852BF539B82BD10E27E9115A31734E378C2 cert=qUVQ0srL1JI/vO6V6m/24anYXiJD3QP2HgzUKQtQ7GRqqUvs7P+tG43RtAqdhLOALP7DJQ iat-mode=1",
+        "Bridge obfs4 38.229.1.78:80 C8CBDB2464FC9804A69531437BCF2BE31FDD2EE4 cert=Hmyfd2ev46gGY7NoVxA9ngrPF2zCZtzskRTzoWXbxNkzeVnGFPWmrTtILRyqCTjHR+s9dg iat-mode=1",
+        "Bridge obfs4 38.229.33.83:80 0BAC39417268B96B9F514E7F63FA6FBA1A788955 cert=VwEFpk9F/UN9JED7XpG1XOjm/O8ZCXK80oPecgWnNDZDv5pdkhq1OpbAH0wNqOT6H6BmRQ iat-mode=1",
+        "Bridge obfs4 37.218.245.14:38224 D9A82D2F9C2F65A18407B1D2B764F130847F8B5D cert=bjRaMrr1BRiAW8IE9U5z27fQaYgOhX1UCmOpg2pFpoMvo6ZgQMzLsaTzzQNTlm7hNcb+Sg iat-mode=0",
+        "Bridge obfs4 85.31.186.98:443 011F2599C0E9B27EE74B353155E244813763C3E5 cert=ayq0XzCwhpdysn5o0EyDUbmSOx3X/oTEbzDMvczHOdBJKlvIdHHLJGkZARtT4dcBFArPPg iat-mode=0",
+        "Bridge obfs4 85.31.186.26:443 91A6354697E6B02A386312F68D82CF86824D3606 cert=PBwr+S8JTVZo6MPdHnkTwXJPILWADLqfMGoVvhZClMq/Urndyd42BwX9YFJHZnBB3H0XCw iat-mode=0",
+    )
+
+    private fun getMeekBridges(): List<String> = listOf(
+        "Bridge meek_lite 192.0.2.2:80 97700DFE9F483596DDA6264C4D7DF7641E1E39CE url=https://meek.azureedge.net/ front=ajax.aspnetcdn.com",
+    )
+
+    private fun getSnowflakeBridges(): List<String> = listOf(
+        if (SDK_INT >= 25) {
+            "Bridge snowflake 192.0.2.3:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478"
+        } else {
+            "Bridge snowflake 192.0.2.3:1 2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.azureedge.net/ front=ajax.aspnetcdn.com ice=stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478"
+        }
+    )
 
 }
