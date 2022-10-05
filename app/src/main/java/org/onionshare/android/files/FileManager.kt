@@ -58,7 +58,12 @@ class FileManager @Inject constructor(
             // when activity got killed before we use the Uri
             val contentResolver = ctx.contentResolver
             uris.iterator().forEach { uri ->
-                contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+                try {
+                    contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+                } catch (e: SecurityException) {
+                    // we've seen this happening on SDK_INT 22, but don't know why
+                    LOG.error("Error taking persistable Uri permission ", e)
+                }
             }
         }
 
