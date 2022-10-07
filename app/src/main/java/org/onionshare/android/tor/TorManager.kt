@@ -21,7 +21,6 @@ import net.freehaven.tor.control.RawEventListener
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
 import net.freehaven.tor.control.TorControlCommands.EVENT_ERR_MSG
 import net.freehaven.tor.control.TorControlCommands.EVENT_HS_DESC
-import net.freehaven.tor.control.TorControlCommands.EVENT_NOTICE_MSG
 import net.freehaven.tor.control.TorControlCommands.EVENT_STATUS_CLIENT
 import net.freehaven.tor.control.TorControlCommands.EVENT_WARN_MSG
 import net.freehaven.tor.control.TorControlCommands.HS_ADDRESS
@@ -125,9 +124,7 @@ class TorManager @Inject constructor(
             val percent = matchResult?.groupValues?.get(1)?.toIntOrNull()
             if (percent != null) {
                 val progress = (percent * 0.7).roundToInt()
-                val newState = (state.value as? TorState.Starting)?.copy(progress = progress)
-                    ?: TorState.Starting(progress)
-                _state.value = newState
+                changeStartingState(progress)
             }
             return@RawEventListener
         } else if (keyword == EVENT_WARN_MSG) {
@@ -139,7 +136,7 @@ class TorManager @Inject constructor(
         // descriptor upload counts as 90%
         if (state.value !is TorState.Started) {
             if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOAD $onion")) {
-                _state.value = TorState.Starting(90, onion)
+                changeStartingState(90, onion)
             }
         }
         // We consider already the first upload of the onion descriptor as started (100%).
@@ -158,7 +155,8 @@ class TorManager @Inject constructor(
         if (state.value !is TorState.Stopped) stop()
 
         LOG.info("Starting...")
-        _state.value = TorState.Starting(0)
+        val now = System.currentTimeMillis()
+        _state.value = TorState.Starting(progress = 0, startTime = now, lastProgressTime = now)
         startLatch = CountDownLatch(1)
         app.registerReceiver(broadcastReceiver, IntentFilter(ACTION_STATUS))
         app.registerReceiver(errorReceiver, IntentFilter(ACTION_ERROR))
@@ -204,7 +202,7 @@ class TorManager @Inject constructor(
     @Throws(IOException::class, IllegalArgumentException::class)
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun onTorServiceStarted() = withContext(Dispatchers.IO) {
-        _state.value = TorState.Starting(5)
+        changeStartingState(5)
         controlConnection = startControlConnection().apply {
             addRawEventListener(onionListener)
             // create listeners as the first thing to prevent modification while already receiving events
@@ -221,7 +219,7 @@ class TorManager @Inject constructor(
             )
             setConf(conf)
             val onion = createOnionService()
-            _state.value = TorState.Starting(10, onion)
+            changeStartingState(10, onion)
         }
     }
 
@@ -251,6 +249,20 @@ class TorManager @Inject constructor(
         val inputStream = FileInputStream(controlFileDescriptor)
         val outputStream = FileOutputStream(controlFileDescriptor)
         TorControlConnection(inputStream, outputStream)
+    }
+
+    private fun changeStartingState(progress: Int, onion: String? = null) {
+        val oldStartingState = state.value as? TorState.Starting
+        if (oldStartingState == null) LOG.warn("Old state was not Starting, but ${state.value}")
+        val now = System.currentTimeMillis()
+        val newState = if (onion == null) oldStartingState?.copy(progress = progress, lastProgressTime = now)
+        else oldStartingState?.copy(progress = progress, onion = onion, lastProgressTime = now)
+        _state.value = newState ?: TorState.Starting(
+            progress = progress,
+            startTime = now,
+            lastProgressTime = now,
+            onion = onion,
+        )
     }
 
     /**
