@@ -14,8 +14,11 @@ import androidx.annotation.RawRes
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat.startForegroundService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.freehaven.tor.control.RawEventListener
 import net.freehaven.tor.control.TorControlCommands.EVENT_CIRCUIT_STATUS
@@ -41,6 +44,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Collections
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.roundToInt
@@ -56,6 +60,8 @@ private val EVENTS = listOf(
 private val BOOTSTRAP_REGEX = Regex("^NOTICE BOOTSTRAP PROGRESS=([0-9]{1,3}) .*$")
 private val DEBUG_PARAMS_OBFS4 = if (BuildConfig.DEBUG) " -enableLogging -logLevel INFO" else ""
 private val DEBUG_PARAMS_SNOWFLAKE = if (BuildConfig.DEBUG) " -log-to-state-dir -log snowlog" else ""
+private val MOAT_TIME_SINCE_START = MINUTES.toMillis(5)
+private val MOAT_TIME_SINCE_LAST_PROGRESS = MINUTES.toMillis(2)
 
 @Singleton
 class TorManager @Inject constructor(
@@ -112,6 +118,7 @@ class TorManager @Inject constructor(
     @Volatile
     private var localSocket: LocalSocket? = null
     private var startLatch: CountDownLatch? = null
+    private var startCheckJob: Job? = null
 
     @Volatile
     private var controlConnection: TorControlConnection? = null
@@ -142,7 +149,7 @@ class TorManager @Inject constructor(
         // We consider already the first upload of the onion descriptor as started (100%).
         // In practice, more uploads are needed for the onion service to be reachable.
         if (onion != null && keyword == EVENT_HS_DESC && data.startsWith("UPLOADED $onion")) {
-            _state.value = TorState.Started(onion)
+            onDescriptorUploaded(onion)
         }
     }
 
@@ -179,6 +186,8 @@ class TorManager @Inject constructor(
 
     fun stop() {
         LOG.info("Stopping...")
+        startCheckJob?.cancel()
+        startCheckJob = null
         _state.value = TorState.Stopping
         controlConnection = null
         Intent(app, ShareService::class.java).also { intent ->
@@ -220,6 +229,9 @@ class TorManager @Inject constructor(
             setConf(conf)
             val onion = createOnionService()
             changeStartingState(10, onion)
+        }
+        startCheckJob = launch {
+            checkStartupProgress()
         }
     }
 
@@ -265,6 +277,12 @@ class TorManager @Inject constructor(
         )
     }
 
+    private fun onDescriptorUploaded(onion: String) {
+        _state.value = TorState.Started(onion)
+        startCheckJob?.cancel()
+        startCheckJob = null
+    }
+
     /**
      * Returns the absolute path to the control socket on the local filesystem.
      *
@@ -275,6 +293,64 @@ class TorManager @Inject constructor(
         val serviceDir = app.applicationContext.getDir(TorService::class.java.simpleName, 0)
         val dataDir = File(serviceDir, "data")
         return File(dataDir, "ControlSocket").absolutePath
+    }
+
+    private suspend fun checkStartupProgress() {
+        LOG.info("Starting check job")
+
+        var usedBuiltInBridges = false
+        runWhenMoatTimeIsUp {
+            val bridges = try {
+                getBridgesFromMoat()
+            } catch (e: IOException) {
+                LOG.warn("Error getting bridges from moat: ", e)
+                null
+            }
+            if (bridges.isNullOrEmpty()) {
+                // fallback to built-in bridges if moat doesn't return anything
+                useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
+                usedBuiltInBridges = true
+            } else {
+                useBridges(bridges)
+            }
+        }
+        // give moat some more time to succeed
+        delay(MOAT_TIME_SINCE_START)
+        // moat can give us slow bridges, so try harder
+        delay(MOAT_TIME_SINCE_START)
+        if (usedBuiltInBridges) {
+            // let's try with without bridges again, just in case
+            val conf = listOf(
+                "UseBridges 0",
+            )
+            controlConnection?.setConf(conf)
+        } else {
+            // try built-in bridges if we haven't already
+            useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
+            // give this some time and then try without bridges
+            delay(MOAT_TIME_SINCE_START * 2)
+            val conf = listOf(
+                "UseBridges 0",
+            )
+            controlConnection?.setConf(conf)
+        }
+    }
+
+    private suspend fun runWhenMoatTimeIsUp(block: (TorState.Starting) -> Unit) {
+        while (true) {
+            delay(MOAT_TIME_SINCE_LAST_PROGRESS)
+            val s = state.value as? TorState.Starting ?: run {
+                LOG.warn("Expected Starting state when checking moat, but was: ${state.value}")
+                return
+            }
+            val now = System.currentTimeMillis()
+            if (now - s.lastProgressTime > MOAT_TIME_SINCE_LAST_PROGRESS ||
+                now - s.startTime > MOAT_TIME_SINCE_START
+            ) {
+                block(s)
+                break
+            }
+        }
     }
 
     private fun getBridgesFromMoat(): List<String> {
