@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- will not be able to decrypt this, causing crash -->
+    <exclude
+        domain="sharedpref"
+        path="secret_shared_prefs.xml" />
+</full-backup-content>

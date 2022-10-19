@@ -2,6 +2,12 @@
     <string name="app_name">OnionShare (alpha)</string>
 
     <string name="back">Back</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="paste">Paste</string>
     <string name="add_files_not_supported">Your device does not support adding files</string>
     <string name="unknown">unknown</string>
     <string name="remove">Remove</string>
@@ -15,10 +21,15 @@
     <string name="share_state_starting">Starting…</string>
     <string name="share_state_sharing">Sharing</string>
     <string name="share_state_transfer_complete">Transfer complete</string>
+    <string name="share_state_stopping">Stopping…</string>
+    <string name="share_state_error">Error</string>
+    <string name="share_state_error_text">An unexpected problem has occurred.</string>
     <string name="share_button_start">Start Sharing</string>
     <string name="share_button_starting">Starting… tap to cancel</string>
     <string name="share_button_stop">Stop Sharing</string>
     <string name="share_button_complete">Start Sharing Again</string>
+    <string name="share_button_stopping">Stopping… wait until stopped</string>
+    <string name="share_button_error">Try again</string>
     <string name="share_onion_intro"><b>Anyone</b> with this OnionShare address can <b>download</b> your files using <b>Tor Browser</b>:</string>
     <string name="clipboard_onion_service_label">OnionShare address</string>
     <string name="clipboard_onion_service_copied">OnionShare address copied to clipboard.</string>
@@ -27,7 +38,12 @@
         <item quantity="one">%1$d item, %2$s</item>
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
-    <string name="sharing_channel_name">File sharing notification</string>
+    <string name="notification_channel_name_foreground">File sharing notification</string>
+    <string name="notification_channel_name_sharing">Sharing address available</string>
+    <string name="notification_sharing_title">OnionShare available</string>
+    <string name="notification_sharing_text">Tap to access the address to share your files.</string>
+    <string name="starting_notification_title">Publishing files…</string>
+    <string name="starting_notification_text">This may take some time.</string>
     <string name="sharing_notification_title">Currently sharing files</string>
     <string name="share_error_snackbar_text">Could not start OnionShare</string>
     <string name="share_error_file_snackbar_text">Could not open %s. Removed.</string>
@@ -43,4 +59,17 @@
     <string name="about_contributor_pm">%s, Project Manager</string>
     <string name="about_contributor_design">%s, Product Designer</string>
     <string name="about_contributing_orgs">Contributing Organizations</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_tor_title">Connecting to Tor</string>
+    <string name="settings_tor_automatic">Automatic based on location</string>
+    <string name="settings_tor_intro">A bridge is a dedicated uncensored route into the Tor network. Even if Automatic is selected, OnionShare may try to use bridges to connect.</string>
+    <string name="settings_tor_bridges_title">Custom Bridges</string>
+    <string name="settings_tor_bridges_none">None added</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d bridge added</item>
+        <item quantity="other">%d bridges added</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Tap the link below to get bridges. Then paste one or more bridge lines into the field below.</string>
+    <string name="settings_tor_my_bridges_title">My Bridges</string>
 </resources>

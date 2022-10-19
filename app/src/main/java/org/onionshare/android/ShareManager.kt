@@ -1,34 +1,32 @@
 package org.onionshare.android
 
-import android.app.Application
-import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
-import android.net.Uri
-import android.text.format.Formatter
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.takeWhile
+import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.onionshare.android.files.FileErrorException
 import org.onionshare.android.files.FileManager
-import org.onionshare.android.files.FilesZipping
-import org.onionshare.android.server.SendFile
-import org.onionshare.android.server.SendPage
+import org.onionshare.android.files.FilesState
+import org.onionshare.android.server.WebServerState
 import org.onionshare.android.server.WebserverManager
 import org.onionshare.android.tor.TorManager
 import org.onionshare.android.tor.TorState
+import org.onionshare.android.ui.OnionNotificationManager
 import org.onionshare.android.ui.share.ShareUiState
 import org.slf4j.LoggerFactory.getLogger
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,150 +34,117 @@ private val LOG = getLogger(ShareManager::class.java)
 
 @Singleton
 class ShareManager @Inject constructor(
-    private val app: Application,
+    private val fileManager: FileManager,
     private val torManager: TorManager,
     private val webserverManager: WebserverManager,
-    private val fileManager: FileManager,
+    private val notificationManager: OnionNotificationManager,
 ) {
-
-    private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.NoFiles)
-    val shareState: StateFlow<ShareUiState> = _shareState
 
     @Volatile
     private var startSharingJob: Job? = null
+    private val shouldStop = MutableStateFlow(false)
 
-    suspend fun addFiles(uris: List<Uri>, takePermission: Boolean) = withContext(Dispatchers.IO) {
-        // taking persistable permissions only works with OPEN_DOCUMENT, not GET_CONTENT
-        if (takePermission) {
-            // take persistable Uri permission to prevent SecurityException
-            // when activity got killed before we use the Uri
-            val contentResolver = app.applicationContext.contentResolver
-            uris.forEach { uri ->
-                contentResolver.takePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+    @OptIn(DelicateCoroutinesApi::class)
+    val shareState: StateFlow<ShareUiState> = combineTransform(
+        flow = fileManager.state,
+        flow2 = torManager.state,
+        flow3 = webserverManager.state,
+        flow4 = shouldStop,
+    ) { f, t, w, shouldStop ->
+        if (LOG.isInfoEnabled) {
+            val s = if (shouldStop) "stop!" else ""
+            LOG.info("New state from: f-${f::class.simpleName} t-${t::class.simpleName} w-${w::class.simpleName} $s")
+        }
+        // initial state: Adding file and services stopped
+        if (f is FilesState.Added && t is TorState.Stopped && w is WebServerState.Stopped && !w.downloadComplete) {
+            if (f.files.isEmpty()) emit(ShareUiState.NoFiles)
+            else emit(ShareUiState.FilesAdded(f.files))
+        } // handle error while adding files
+        else if (f is FilesState.Error) {
+            emit(ShareUiState.ErrorAddingFile(f.files, f.errorFile))
+            // special case handling for error state without file left
+            if (f.files.isEmpty()) {
+                delay(1000)
+                emit(ShareUiState.NoFiles)
             }
-        }
-
-        // not supporting selecting entire folders with sub-folders
-        val filesAdded = fileManager.addFiles(uris, shareState.value.files)
-        _shareState.value = ShareUiState.FilesAdded(filesAdded.files)
-    }
-
-    fun removeFile(file: SendFile) {
-        // release persistable Uri permission again
-        file.releaseUriPermission()
-
-        val newList = shareState.value.files.filterNot { it == file }
-        if (newList.isEmpty()) {
-            _shareState.value = ShareUiState.NoFiles
+        } // continue with zipping and report state while doing it
+        else if (f is FilesState.Zipping && t is TorState.Starting) {
+            val torPercent = (t as? TorState.Starting)?.progress ?: 0
+            emit(ShareUiState.Starting(f.files, f.progress, torPercent))
+        } // after zipping is complete, and webserver still stopped, start it
+        else if (f is FilesState.Zipped && !shouldStop &&
+            (t is TorState.Starting || t is TorState.Started) && w is WebServerState.Stopped
+        ) {
+            webserverManager.start(f.sendPage)
+            val torPercent = (t as? TorState.Starting)?.progress ?: 0
+            emit(ShareUiState.Starting(f.files, 100, torPercent))
+        } // continue to report Tor progress after files are zipped
+        else if (f is FilesState.Zipped && t is TorState.Starting) {
+            emit(ShareUiState.Starting(f.files, 100, t.progress))
+        } // everything is done, show sharing state with onion address
+        else if (f is FilesState.Zipped && t is TorState.Started && w is WebServerState.Started) {
+            val url = "http://${t.onion}.onion"
+            emit(ShareUiState.Sharing(f.files, url))
+            notificationManager.onSharing()
+        } // if webserver says download is complete, report that back
+        else if (w is WebServerState.Stopping && w.downloadComplete) {
+            this@ShareManager.shouldStop.value = true
+        } // wait with stopping Tor until download has really completed
+        else if (w is WebServerState.Stopped && w.downloadComplete) {
+            stopSharing()
+            emit(ShareUiState.Complete(f.files))
+        } // handle stopping state
+        else if (t is TorState.Stopping) {
+            emit(ShareUiState.Stopping(f.files))
+        } // handle unexpected stopping/stopped only after zipped, because we start webserver only when that happens
+        else if (!shouldStop && f is FilesState.Zipped &&
+            (t is TorState.Stopping || t is TorState.Stopped || w is WebServerState.Stopped)
+        ) {
+            emit(ShareUiState.Error(f.files))
         } else {
-            _shareState.value = ShareUiState.FilesAdded(newList)
+            LOG.error("Unhandled state: ↑")
         }
-    }
-
-    fun removeAll() {
-        // release persistable Uri permissions again
-        shareState.value.files.forEach { file ->
-            file.releaseUriPermission()
-        }
-        _shareState.value = ShareUiState.NoFiles
-    }
+    }.distinctUntilChanged().onEach {
+        LOG.debug("New state: ${it::class.simpleName}")
+    }.stateIn(GlobalScope, SharingStarted.Lazily, ShareUiState.NoFiles)
 
     suspend fun onStateChangeRequested() = when (shareState.value) {
         is ShareUiState.FilesAdded -> startSharing()
         is ShareUiState.Starting -> stopSharing()
         is ShareUiState.Sharing -> stopSharing()
         is ShareUiState.Complete -> startSharing()
+        is ShareUiState.ErrorAddingFile -> startSharing()
         is ShareUiState.Error -> startSharing()
-        ShareUiState.NoFiles -> error("Sheet button should not be visible with no files")
+        is ShareUiState.Stopping -> error("Pressing sheet button while stopping should not be possible")
+        is ShareUiState.NoFiles -> error("Sheet button should not be visible with no files")
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun startSharing() {
         if (startSharingJob?.isActive == true) {
             // TODO check if this always works as expected
             startSharingJob?.cancelAndJoin()
         }
-        // Attention: We'll launch sharing in Global scope, so it survives ViewModel death
+        shouldStop.value = false
+        // Attention: We'll launch sharing in Global scope, so it survives ViewModel death,
+        // because this gets called implicitly by the ViewModel in ViewModelScope
+        @Suppress("OPT_IN_USAGE")
         startSharingJob = GlobalScope.launch(Dispatchers.IO) {
-            val files = shareState.value.files
-            // call ensureActive() before any heavy work to ensure we don't continue when cancelled
-            ensureActive()
-            _shareState.value = ShareUiState.Starting(files, 0, 0)
-            try {
-                // TODO we might want to look into parallelizing what happens below (async {} ?)
+            coroutineScope {
+                // call ensureActive() before any heavy work to ensure we don't continue when cancelled
+                ensureActive()
                 // When the current scope gets cancelled, the async routine gets cancelled as well
-                ensureActive()
-                var sendPage: SendPage? = null
-                fileManager.zipFiles(files).collect { state ->
-                    ensureActive()
-                    _shareState.value = ShareUiState.Starting(files, state.progress, 0)
-                    if (state.complete) sendPage = getSendPage(state)
-                }
-                val page = sendPage ?: error("SendPage was null")
-                ensureActive()
+                val fileTask = async { fileManager.zipFiles() }
                 // start tor and onion service
-                torManager.start()
-                var onion: String? = null
-                torManager.state.takeWhile { it !is TorState.Started }.collect { state ->
-                    if (state is TorState.Starting) {
-                        _shareState.value =
-                            ShareUiState.Starting(files, 100, state.progress)
-                        onion = state.onion
-                    }
-                }
-                _shareState.value = ShareUiState.Starting(files, 100, 100)
-                val onionHost = onion ?: error("onion was null")
-                val url = "http://$onionHost.onion"
-                LOG.error("OnionShare URL: $url") // TODO remove before release
-                val sharing = ShareUiState.Sharing(files, url)
-                // TODO properly manage tor and webserver state together
-                ensureActive()
-                // collecting from StateFlow will only return when coroutine gets cancelled
-                webserverManager.start(page).collect {
-                    onWebserverStateChanged(it, sharing)
-                }
-            } catch (e: IOException) {
-                LOG.warn("Error while startSharing ", e)
-                // launching stop on global scope to prevent deadlock when it waits for current job
-                GlobalScope.launch { stopSharing(exception = e) }
-                cancel("Error while startSharing", e)
+                val torTask = async { torManager.start() }
+                fileTask.await()
+                torTask.await()
             }
         }
     }
 
-    @Throws(IOException::class)
-    private fun getSendPage(filesZipping: FilesZipping): SendPage {
-        val fileSize = filesZipping.zip.length()
-        return SendPage(
-            fileName = "download.zip",
-            fileSize = fileSize.toString(),
-            fileSizeHuman = Formatter.formatShortFileSize(app.applicationContext, fileSize),
-            zipFile = filesZipping.zip,
-        ).apply {
-            addFiles(filesZipping.files)
-        }
-    }
-
-    private suspend fun onWebserverStateChanged(
-        state: WebserverManager.State,
-        sharing: ShareUiState.Sharing,
-    ) = withContext(Dispatchers.IO) {
-        when (state) {
-            WebserverManager.State.STARTED -> _shareState.value = sharing
-            WebserverManager.State.SHOULD_STOP -> stopSharing(complete = true)
-            // Stopping again could cause a harmless double stop,
-            // but ensures state update when webserver stops unexpectedly.
-            // In practise, we cancel the coroutine of this collector when stopping the first time,
-            // so calling stopSharing() twice should actually not happen.
-            WebserverManager.State.STOPPED -> stopSharing()
-        }
-    }
-
-    private suspend fun stopSharing(
-        complete: Boolean = false,
-        exception: Exception? = null,
-    ) = withContext(Dispatchers.IO) {
+    private suspend fun stopSharing() = withContext(Dispatchers.IO) {
+        shouldStop.value = true
         LOG.info("Stopping sharing...")
         if (startSharingJob?.isActive == true) {
             // TODO check if this always works as expected
@@ -187,31 +152,10 @@ class ShareManager @Inject constructor(
         }
         startSharingJob = null
 
-        torManager.stop()
-        webserverManager.stop()
-        val files = shareState.value.files
-        val newState = when {
-            files.isEmpty() -> ShareUiState.NoFiles
-            complete -> ShareUiState.Complete(files)
-            exception is FileErrorException -> {
-                // remove errorFile from list of files, so user can try again
-                val newFiles = files.toMutableList().apply { remove(exception.file) }
-                ShareUiState.Error(newFiles, exception.file)
-            }
-            exception != null -> ShareUiState.Error(files)
-            else -> ShareUiState.FilesAdded(files)
-        }
-        _shareState.value = newState
-        // special case handling for error state without file left
-        if (newState is ShareUiState.Error && newState.files.isEmpty()) {
-            delay(1000)
-            _shareState.value = ShareUiState.NoFiles
-        }
-    }
-
-    private fun SendFile.releaseUriPermission() {
-        val contentResolver = app.applicationContext.contentResolver
-        contentResolver.releasePersistableUriPermission(uri, FLAG_GRANT_READ_URI_PERMISSION)
+        if (torManager.state.value !is TorState.Stopped) torManager.stop()
+        if (webserverManager.state.value !is WebServerState.Stopped) webserverManager.stop()
+        fileManager.stop()
+        notificationManager.onStopped()
     }
 
 }
