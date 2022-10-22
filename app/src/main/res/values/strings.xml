@@ -13,7 +13,7 @@
     <string name="remove">Remove</string>
     <string name="share_empty_state">Nothing here yet.</string>
     <string name="warning_alpha_intro">Warning:</string>
-    <string name="warning_alpha">This is an early alpha release. It should only be used for testing. The code is not finished and has not been audited.</string>
+    <string name="warning_alpha">This early alpha release should only be used for testing. The code is unfinished and not audited.</string>
     <string name="warning_no_files_added">No files selected.</string>
     <string name="clear_all">Clear All</string>
     <string name="share_files_add">Add files</string>
@@ -23,13 +23,13 @@
     <string name="share_state_transfer_complete">Transfer complete</string>
     <string name="share_state_stopping">Stopping…</string>
     <string name="share_state_error">Error</string>
-    <string name="share_state_error_text">An unexpected problem has occurred.</string>
+    <string name="share_state_error_text">Unexpected problem.</string>
     <string name="share_button_start">Start Sharing</string>
-    <string name="share_button_starting">Starting… tap to cancel</string>
+    <string name="share_button_starting">Starting… Tap to cancel.</string>
     <string name="share_button_stop">Stop Sharing</string>
     <string name="share_button_complete">Start Sharing Again</string>
-    <string name="share_button_stopping">Stopping… wait until stopped</string>
-    <string name="share_button_error">Try again</string>
+    <string name="share_button_stopping">Stopping… (Wait till it has stopped.)</string>
+    <string name="share_button_error">Retry</string>
     <string name="share_onion_intro"><b>Anyone</b> with this OnionShare address can <b>download</b> your files using <b>Tor Browser</b>:</string>
     <string name="clipboard_onion_service_label">OnionShare address</string>
     <string name="clipboard_onion_service_copied">OnionShare address copied to clipboard.</string>
@@ -38,32 +38,32 @@
         <item quantity="one">%1$d item, %2$s</item>
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">File sharing notification</string>
-    <string name="notification_channel_name_sharing">Sharing address available</string>
+    <string name="notification_channel_name_foreground">File-sharing notification</string>
+    <string name="notification_channel_name_sharing">OnionShare address available</string>
     <string name="notification_sharing_title">OnionShare available</string>
-    <string name="notification_sharing_text">Tap to access the address to share your files.</string>
-    <string name="starting_notification_title">Publishing files…</string>
-    <string name="starting_notification_text">This may take some time.</string>
-    <string name="sharing_notification_title">Currently sharing files</string>
+    <string name="notification_sharing_text">Tap to get the OnionShare address to share your files.</string>
+    <string name="starting_notification_title">Publishing…</string>
+    <string name="starting_notification_text">(May take a while.)</string>
+    <string name="sharing_notification_title">Sharing…</string>
     <string name="share_error_snackbar_text">Could not start OnionShare</string>
     <string name="share_error_file_snackbar_text">Could not open %s. Removed.</string>
     <string name="share_error_snackbar_action">Retry</string>
 
     <string name="about_title">About</string>
-    <string name="about_app_version">App Version %s</string>
-    <string name="about_text">OnionShare was developed by Micah Lee, et al. and is open source, released under GPLv3.\n
-    \nLike all software, OnionShare may contain bugs or vulnerabilities.</string>
+    <string name="about_app_version">Version %s</string>
+    <string name="about_text">OnionShare is developed by Micah Lee, and others.\nIt is copylefted libre software, licensed GPLv3+.\n
+    \nLike all software, it may contain bugs or vulnerabilities.</string>
     <string name="about_contributors">Contributors</string>
     <string name="about_contributor_creator">%s, Creator</string>
     <string name="about_contributor_android">%s, Android Engineer</string>
     <string name="about_contributor_pm">%s, Project Manager</string>
     <string name="about_contributor_design">%s, Product Designer</string>
-    <string name="about_contributing_orgs">Contributing Organizations</string>
+    <string name="about_contributing_orgs">Organizations</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_tor_title">Connecting to Tor</string>
-    <string name="settings_tor_automatic">Automatic based on location</string>
-    <string name="settings_tor_intro">A bridge is a dedicated uncensored route into the Tor network. Even if Automatic is selected, OnionShare may try to use bridges to connect.</string>
+    <string name="settings_tor_automatic">Automatic, based on location</string>
+    <string name="settings_tor_intro">A bridge is a different route into the Tor network, also as an \"Automatic\" last option.</string>
     <string name="settings_tor_bridges_title">Custom Bridges</string>
     <string name="settings_tor_bridges_none">None added</string>
     <plurals name="settings_tor_bridges_number">
