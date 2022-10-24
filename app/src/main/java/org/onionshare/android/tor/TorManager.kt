@@ -60,8 +60,10 @@ private val EVENTS = listOf(
 private val BOOTSTRAP_REGEX = Regex("^NOTICE BOOTSTRAP PROGRESS=([0-9]{1,3}) .*$")
 private val DEBUG_PARAMS_OBFS4 = if (BuildConfig.DEBUG) " -enableLogging -logLevel INFO" else ""
 private val DEBUG_PARAMS_SNOWFLAKE = if (BuildConfig.DEBUG) " -log-to-state-dir -log snowlog" else ""
-private val MOAT_TIME_SINCE_START = MINUTES.toMillis(5)
-private val MOAT_TIME_SINCE_LAST_PROGRESS = MINUTES.toMillis(2)
+private val TOR_START_TIMEOUT_SINCE_START = MINUTES.toMillis(5)
+private val TOR_START_TIMEOUT_SINCE_LAST_PROGRESS = MINUTES.toMillis(2)
+private const val MOAT_URL = "https://onion.azureedge.net/"
+private const val MOAT_FRONT = "ajax.aspnetcdn.com"
 
 @Singleton
 class TorManager @Inject constructor(
@@ -136,6 +138,7 @@ class TorManager @Inject constructor(
             return@RawEventListener
         } else if (keyword == EVENT_WARN_MSG) {
             if (data.startsWith("Pluggable Transport process terminated ")) {
+                LOG.error("Pluggable Transport process terminated unexpectedly. Stopping Tor...")
                 stop()
             }
         }
@@ -298,37 +301,27 @@ class TorManager @Inject constructor(
     private suspend fun checkStartupProgress() {
         LOG.info("Starting check job")
 
-        var usedBuiltInBridges = false
-        runWhenMoatTimeIsUp {
-            val bridges = try {
-                getBridgesFromMoat()
+        runWhenStartingTimedOut {
+            LOG.info("Getting bridges from Moat...")
+            try {
+                getBridgesFromMoat().takeIf { it.isNotEmpty() }
             } catch (e: IOException) {
                 LOG.warn("Error getting bridges from moat: ", e)
                 null
-            }
-            if (bridges.isNullOrEmpty()) {
-                // fallback to built-in bridges if moat doesn't return anything
-                useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
-                usedBuiltInBridges = true
-            } else {
+            }?.let { bridges ->
+                // try bridges we got from Moat, if any
+                LOG.info("Using bridges from Moat...")
                 useBridges(bridges)
             }
         }
-        // give moat some more time to succeed
-        delay(MOAT_TIME_SINCE_START)
-        // moat can give us slow bridges, so try harder
-        delay(MOAT_TIME_SINCE_START)
-        if (usedBuiltInBridges) {
-            // let's try with without bridges again, just in case
-            val conf = listOf(
-                "UseBridges 0",
-            )
-            controlConnection?.setConf(conf)
-        } else {
+        runWhenStartingTimedOut {
             // try built-in bridges if we haven't already
+            LOG.info("Using built-in bridges...")
             useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
-            // give this some time and then try without bridges
-            delay(MOAT_TIME_SINCE_START * 2)
+        }
+        runWhenStartingTimedOut {
+            // let's try with without bridges again, just in case
+            LOG.info("Using no bridges...")
             val conf = listOf(
                 "UseBridges 0",
             )
@@ -336,18 +329,20 @@ class TorManager @Inject constructor(
         }
     }
 
-    private suspend fun runWhenMoatTimeIsUp(block: (TorState.Starting) -> Unit) {
+    private suspend fun runWhenStartingTimedOut(block: () -> Unit) {
+        if (state.value !is TorState.Starting) return
         while (true) {
-            delay(MOAT_TIME_SINCE_LAST_PROGRESS)
+            LOG.info("Waiting for Tor to start...")
+            delay(TOR_START_TIMEOUT_SINCE_LAST_PROGRESS)
             val s = state.value as? TorState.Starting ?: run {
-                LOG.warn("Expected Starting state when checking moat, but was: ${state.value}")
+                LOG.info("Expected Starting state when waiting for timeout, but was: ${state.value}")
                 return
             }
             val now = System.currentTimeMillis()
-            if (now - s.lastProgressTime > MOAT_TIME_SINCE_LAST_PROGRESS ||
-                now - s.startTime > MOAT_TIME_SINCE_START
+            if (now - s.lastProgressTime > TOR_START_TIMEOUT_SINCE_LAST_PROGRESS ||
+                now - s.startTime > TOR_START_TIMEOUT_SINCE_START
             ) {
-                block(s)
+                block()
                 break
             }
         }
@@ -355,9 +350,7 @@ class TorManager @Inject constructor(
 
     private fun getBridgesFromMoat(): List<String> {
         val stateDir = app.getDir("state", MODE_PRIVATE)
-        val url = "https://onion.azureedge.net/"
-        val front = "ajax.aspnetcdn.com"
-        val moat = MoatApi(executableManager.obfs4Executable, stateDir, url, front)
+        val moat = MoatApi(executableManager.obfs4Executable, stateDir, MOAT_URL, MOAT_FRONT)
         val bridges = moat.get().let {
             // if response was empty, try it again with what we think the country should be
             if (it.isEmpty()) moat.getWithCountry(locationUtils.currentCountryIso)
