@@ -1,6 +1,8 @@
 package org.onionshare.android.tor
 
 import android.app.Application
+import android.content.Context.MODE_PRIVATE
+import android.content.pm.ApplicationInfo
 import android.os.Build
 import android.os.Build.SUPPORTED_ABIS
 import org.slf4j.LoggerFactory.getLogger
@@ -23,22 +25,31 @@ private const val SNOWFLAKE_LIB_NAME = "libsnowflake.so"
 class ExecutableManager @Inject constructor(
     private val app: Application,
 ) {
-    val obfs4Executable get() = File(app.applicationInfo.nativeLibraryDir, OBFS4_LIB_NAME)
-    val snowflakeExecutable get() = File(app.applicationInfo.nativeLibraryDir, SNOWFLAKE_LIB_NAME)
+    val obfs4Executable get() = if (obfs4Lib.exists()) obfs4Lib else obfs4FallbackExecutable
+    val snowflakeExecutable get() = if (snowflakeLib.exists()) snowflakeLib else snowflakeFallbackExecutable
+
+    private val obfs4Lib get() = File(app.applicationInfo.nativeLibraryDir, OBFS4_LIB_NAME)
+    private val snowflakeLib get() = File(app.applicationInfo.nativeLibraryDir, SNOWFLAKE_LIB_NAME)
+    private val fallbackDir get() = app.getDir("libs", MODE_PRIVATE).also { it.mkdirs() }
+    private val obfs4FallbackExecutable get() = File(fallbackDir, OBFS4_LIB_NAME)
+    private val snowflakeFallbackExecutable get() = File(fallbackDir, SNOWFLAKE_LIB_NAME)
 
     @Throws(IOException::class)
     fun installObfs4Executable() {
-        installExecutable(obfs4Executable, obfs4Executable, OBFS4_LIB_NAME)
+        installExecutable(obfs4Lib, obfs4FallbackExecutable, OBFS4_LIB_NAME)
     }
 
     @Throws(IOException::class)
     fun installSnowflakeExecutable() {
-        installExecutable(snowflakeExecutable, snowflakeExecutable, SNOWFLAKE_LIB_NAME)
+        installExecutable(snowflakeLib, snowflakeFallbackExecutable, SNOWFLAKE_LIB_NAME)
     }
 
+    /**
+     * In some rare cases, the library doesn't get extracted to [ApplicationInfo.nativeLibraryDir] properly.
+     * This method manually extracts it to [fallbackDir], if that has happened.
+     */
     @Throws(IOException::class)
-    // TODO check different location for self-extracted file
-    private fun installExecutable(extracted: File, lib: File, libName: String) {
+    private fun installExecutable(lib: File, extracted: File, libName: String) {
         if (lib.exists()) {
             // If an older version left behind a binary, delete it
             if (extracted.exists()) {
