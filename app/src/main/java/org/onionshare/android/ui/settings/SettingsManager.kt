@@ -14,6 +14,7 @@ import javax.inject.Singleton
 
 private const val PREF_AUTO_BRIDGES = "autoBridges"
 private const val PREF_CUSTOM_BRIDGES = "customBridges"
+private val VALID_BRIDGE_PREFIXES = listOf("obfs4", "meek_lite", "snowflake")
 
 @Singleton
 class SettingsManager @Inject constructor(
@@ -39,10 +40,12 @@ class SettingsManager @Inject constructor(
     }
 
     fun addCustomBridges(text: String): Int {
-        // TODO validate
-        val set = customBridges.value.toSet() + text.split('\n').filter { it.isNotBlank() }
-        updateCustomBridges(set)
-        return set.size
+        val newBridges = text.split('\n').filter { bridgeLine ->
+            // TODO validate more?
+            bridgeLine.isNotBlank() && VALID_BRIDGE_PREFIXES.any { bridgeLine.startsWith(it) }
+        }
+        updateCustomBridges(customBridges.value.toSet() + newBridges)
+        return newBridges.size
     }
 
     fun removeCustomBridge(bridge: String) {
