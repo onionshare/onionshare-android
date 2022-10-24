@@ -58,7 +58,6 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.onionshare.android.BuildConfig
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.ROUTE_ABOUT
@@ -162,21 +161,19 @@ fun ActionBar(
         backgroundColor = MaterialTheme.colors.topBar,
         title = { Text(stringResource(res)) },
         actions = {
-            IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(R.string.menu)
-                )
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
-                // TODO remove when bridges work
-                if (BuildConfig.DEBUG) {
+
+                IconButton(onClick = { showMenu = !showMenu }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = stringResource(R.string.menu)
+                    )
+                }
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
                     DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
                         Text(stringResource(R.string.settings_title))
-                    }
                 }
                 DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }) {
                     Text(stringResource(R.string.about_title))

@@ -32,6 +32,7 @@ import org.briarproject.moat.MoatApi
 import org.onionshare.android.BuildConfig
 import org.onionshare.android.R
 import org.onionshare.android.server.PORT
+import org.onionshare.android.ui.settings.SettingsManager
 import org.slf4j.LoggerFactory.getLogger
 import org.torproject.jni.TorService
 import org.torproject.jni.TorService.ACTION_ERROR
@@ -68,6 +69,7 @@ private const val MOAT_FRONT = "ajax.aspnetcdn.com"
 @Singleton
 class TorManager @Inject constructor(
     private val app: Application,
+    private val settingsManager: SettingsManager,
     private val executableManager: ExecutableManager,
     private val locationUtils: AndroidLocationUtils,
 ) {
@@ -215,6 +217,7 @@ class TorManager @Inject constructor(
     @Suppress("BlockingMethodInNonBlockingContext")
     private suspend fun onTorServiceStarted() = withContext(Dispatchers.IO) {
         changeStartingState(5)
+        val autoMode = settingsManager.automaticBridges.value
         controlConnection = startControlConnection().apply {
             addRawEventListener(onionListener)
             // create listeners as the first thing to prevent modification while already receiving events
@@ -224,17 +227,26 @@ class TorManager @Inject constructor(
             setEvents(EVENTS)
             val obfs4Executable = executableManager.obfs4Executable.absolutePath
             val snowflakeExecutable = executableManager.snowflakeExecutable.absolutePath
-            val conf = listOf(
+            val conf = mutableListOf(
                 "ClientTransportPlugin obfs4 exec ${obfs4Executable}$DEBUG_PARAMS_OBFS4",
                 "ClientTransportPlugin meek_lite exec ${obfs4Executable}$DEBUG_PARAMS_OBFS4",
                 "ClientTransportPlugin snowflake exec ${snowflakeExecutable}$DEBUG_PARAMS_SNOWFLAKE",
             )
+            if (!autoMode) {
+                val customBridges = settingsManager.customBridges.value
+                if (customBridges.isNotEmpty()) {
+                    LOG.info("Using ${customBridges.size} custom bridges...")
+                    conf += listOf("UseBridges 1") + customBridges.map { "Bridge $it" }
+                }
+            }
             setConf(conf)
             val onion = createOnionService()
             changeStartingState(10, onion)
         }
-        startCheckJob = launch {
-            checkStartupProgress()
+        if (autoMode) {
+            startCheckJob = launch {
+                checkStartupProgress()
+            }
         }
     }
 
