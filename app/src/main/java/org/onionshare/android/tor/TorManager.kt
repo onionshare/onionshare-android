@@ -313,23 +313,32 @@ class TorManager @Inject constructor(
     private suspend fun checkStartupProgress() {
         LOG.info("Starting check job")
 
+        var moatBridges: List<String>? = null
         runWhenStartingTimedOut {
             LOG.info("Getting bridges from Moat...")
-            try {
-                getBridgesFromMoat().takeIf { it.isNotEmpty() }
+            moatBridges = try {
+                getBridgesFromMoat()
             } catch (e: IOException) {
                 LOG.warn("Error getting bridges from moat: ", e)
                 null
-            }?.let { bridges ->
-                // try bridges we got from Moat, if any
-                LOG.info("Using bridges from Moat...")
-                useBridges(bridges)
             }
         }
-        runWhenStartingTimedOut {
-            // try built-in bridges if we haven't already
+        val bridges = moatBridges
+        val useBuiltInBridges = {
             LOG.info("Using built-in bridges...")
             useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
+        }
+        if (bridges.isNullOrEmpty()) {
+            // use built-in bridges right away, as we didn't get any from moat
+            useBuiltInBridges()
+        } else {
+            // try bridges we got from Moat, if any
+            LOG.info("Using bridges from Moat...")
+            useBridges(bridges)
+            runWhenStartingTimedOut {
+                // use built-in bridges only after we gave moat a change to succeed
+                useBuiltInBridges()
+            }
         }
         runWhenStartingTimedOut {
             // let's try with without bridges again, just in case
