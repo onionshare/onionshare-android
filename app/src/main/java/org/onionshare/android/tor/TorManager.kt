@@ -245,7 +245,9 @@ class TorManager @Inject constructor(
         }
         if (autoMode) {
             startCheckJob = launch {
+                LOG.info("Starting check job")
                 checkStartupProgress()
+                LOG.info("Check job finished")
             }
         }
     }
@@ -311,61 +313,60 @@ class TorManager @Inject constructor(
     }
 
     private suspend fun checkStartupProgress() {
-        LOG.info("Starting check job")
-
-        var moatBridges: List<String>? = null
-        runWhenStartingTimedOut {
-            LOG.info("Getting bridges from Moat...")
-            moatBridges = try {
-                getBridgesFromMoat()
-            } catch (e: IOException) {
-                LOG.warn("Error getting bridges from moat: ", e)
-                null
-            }
+        // first we try to start Tor without bridges
+        if (waitForTorToStart()) return
+        LOG.info("Getting bridges from Moat...")
+        val bridges: List<String>? = try {
+            getBridgesFromMoat()
+        } catch (e: IOException) {
+            LOG.warn("Error getting bridges from moat: ", e)
+            null
         }
-        val bridges = moatBridges
-        val useBuiltInBridges = {
-            LOG.info("Using built-in bridges...")
-            useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
-        }
-        if (bridges.isNullOrEmpty()) {
-            // use built-in bridges right away, as we didn't get any from moat
-            useBuiltInBridges()
-        } else {
-            // try bridges we got from Moat, if any
+        // if Tor finished starting while we were getting bridges from Moat then we don't need them
+        if (state.value !is TorState.Starting) return
+        // try bridges we got from Moat, if any
+        if (!bridges.isNullOrEmpty()) {
             LOG.info("Using bridges from Moat...")
             useBridges(bridges)
-            runWhenStartingTimedOut {
-                // use built-in bridges only after we gave moat a change to succeed
-                useBuiltInBridges()
-            }
+            if (waitForTorToStart()) return
         }
-        runWhenStartingTimedOut {
-            // let's try with without bridges again, just in case
-            LOG.info("Using no bridges...")
-            val conf = listOf(
-                "UseBridges 0",
-            )
-            controlConnection?.setConf(conf)
-        }
+        // use built-in bridges
+        LOG.info("Using built-in bridges...")
+        useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
+        if (waitForTorToStart()) return
+        // TODO: let the user know that we can't connect and they need to get some custom bridges
+        // let's try without bridges again, just in case
+        LOG.info("Using no bridges...")
+        controlConnection?.setConf(listOf("UseBridges 0"))
+        controlConnection?.resetConf(listOf("Bridges"))
     }
 
-    private suspend fun runWhenStartingTimedOut(block: () -> Unit) {
-        if (state.value !is TorState.Starting) return
+    /**
+     * Waits for [state] to become something other than [TorState.Starting].
+     *
+     * @return True if [state] became something other than [TorState.Starting], or false if startup took more than
+     * [TOR_START_TIMEOUT_SINCE_START] ms or failed to make progress for more than
+     * [TOR_START_TIMEOUT_SINCE_LAST_PROGRESS] ms.
+     */
+    private suspend fun waitForTorToStart(): Boolean {
+        LOG.info("Waiting for Tor to start...")
+        // Measure TOR_START_TIMEOUT_SINCE_START from the time when this method was called, rather than the time
+        // when Tor was started, otherwise if one connection method times out then all subsequent methods will be
+        // considered to have timed out too
+        val start = System.currentTimeMillis()
         while (true) {
-            LOG.info("Waiting for Tor to start...")
-            delay(TOR_START_TIMEOUT_SINCE_LAST_PROGRESS)
-            val s = state.value as? TorState.Starting ?: run {
-                LOG.info("Expected Starting state when waiting for timeout, but was: ${state.value}")
-                return
-            }
+            val s = state.value
+            if (s !is TorState.Starting) return true
             val now = System.currentTimeMillis()
-            if (now - s.lastProgressTime > TOR_START_TIMEOUT_SINCE_LAST_PROGRESS ||
-                now - s.startTime > TOR_START_TIMEOUT_SINCE_START
-            ) {
-                block()
-                break
+            if (now - start > TOR_START_TIMEOUT_SINCE_START) {
+                LOG.info("Tor is taking too long to start")
+                return false
             }
+            if (now - s.lastProgressTime > TOR_START_TIMEOUT_SINCE_LAST_PROGRESS) {
+                LOG.info("Tor startup is not making progress")
+                return false
+            }
+            delay(1_000)
         }
     }
 
