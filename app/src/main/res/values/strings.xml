@@ -38,7 +38,7 @@
         <item quantity="one">%1$d item, %2$s</item>
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">File sharing notification</string>
+    <string name="notification_channel_name_foreground">File sharing status</string>
     <string name="notification_channel_name_sharing">Sharing address available</string>
     <string name="notification_sharing_title">OnionShare available</string>
     <string name="notification_sharing_text">Tap to access the address to share your files.</string>
