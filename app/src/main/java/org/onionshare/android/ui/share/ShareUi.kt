@@ -58,7 +58,6 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.onionshare.android.BuildConfig
 import org.onionshare.android.R
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.ROUTE_ABOUT
@@ -84,7 +83,7 @@ fun ShareUi(
     val offset = getOffsetInDp(scaffoldState.bottomSheetState.offset)
     if (state.value == ShareUiState.NoFiles) {
         Scaffold(
-            topBar = { ActionBar(navController, R.string.app_name) },
+            topBar = { ActionBar(navController, R.string.app_name, state.value.allowsModifyingFiles) },
             floatingActionButton = {
                 Fab(scaffoldState.bottomSheetState, onFabClicked)
             },
@@ -125,7 +124,7 @@ fun ShareUi(
             }
         }
         BottomSheetScaffold(
-            topBar = { ActionBar(navController, R.string.app_name) },
+            topBar = { ActionBar(navController, R.string.app_name, uiState.allowsModifyingFiles) },
             floatingActionButton = if (uiState.allowsModifyingFiles) {
                 { Fab(scaffoldState.bottomSheetState, onFabClicked) }
             } else null,
@@ -156,30 +155,32 @@ private fun getOffsetInDp(offset: State<Float>): Dp {
 fun ActionBar(
     navController: NavHostController,
     @StringRes res: Int,
+    showOverflowMenu: Boolean,
 ) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
         backgroundColor = MaterialTheme.colors.topBar,
         title = { Text(stringResource(res)) },
         actions = {
-            IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(R.string.menu)
-                )
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
-                // TODO remove when bridges work
-                if (BuildConfig.DEBUG) {
-                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
-                        Text(stringResource(R.string.settings_title))
-                    }
+            if (showOverflowMenu) {
+                IconButton(onClick = { showMenu = !showMenu }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = stringResource(R.string.menu)
+                    )
                 }
-                DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }) {
-                    Text(stringResource(R.string.about_title))
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
+
+                        DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
+                            Text(stringResource(R.string.settings_title))
+
+                    }
+                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }) {
+                        Text(stringResource(R.string.about_title))
+                    }
                 }
             }
         },
