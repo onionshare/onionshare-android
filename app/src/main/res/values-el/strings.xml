@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="back">Πίσω</string>
+    <string name="menu">Μενού</string>
+    <string name="delete">Διαγραφή</string>
+    <string name="cancel">Άκυρο</string>
+    <string name="add">Προσθήκη</string>
+    <string name="share">Κοινή χρήση</string>
+    <string name="paste">Επικόλληση</string>
+    <string name="add_files_not_supported">Η συσκευή σας δεν υποστηρίζει την προσθήκη αρχείων</string>
+    <string name="unknown">άγνωστο</string>
+    <string name="remove">Αφαίρεση</string>
+    <string name="warning_no_files_added">Δεν επιλέχθηκαν αρχεία.</string>
+    <string name="clear_all">Εκκαθάριση όλων</string>
+    <string name="share_files_add">Προσθήκη αρχείων</string>
+    <string name="share_state_ready">Έτοιμο</string>
+    <string name="share_state_starting">Έναρξη…</string>
+    <string name="share_state_sharing">Κοινή χρήση</string>
+    <string name="share_empty_state">Τίποτα εδώ ακόμα.</string>
+    <string name="warning_alpha_intro">Προειδοποίηση:</string>
+    <string name="warning_alpha">Αυτή είναι μια πρώτη έκδοση άλφα. Θα πρέπει να χρησιμοποιείται μόνο για δοκιμές. Ο κώδικας δεν έχει ολοκληρωθεί και δεν έχει ελεγχθεί.</string>
+    <string name="share_state_transfer_complete">Η μεταβίβαση ολοκληρώθηκε</string>
+    <string name="share_button_start">Έναρξη διαμοιρασμού</string>
+    <string name="share_button_stop">Τερματισμός διαμοιρασμού</string>
+    <string name="share_button_complete">Επανέναρξη διαμοιρασμού</string>
+    <string name="share_button_stopping">Τερματισμός... περιμένετε μέχρι να τερματιστεί</string>
+    <string name="share_button_error">Δοκιμάστε ξανά</string>
+    <string name="share_onion_intro"><b>Οποιοσδήποτε</b> με αυτή τη διεύθυνση OnionShare μπορεί να γίνει <b>λήψη</b> των αρχείων σας με χρήση του <b>Tor Browser</b>:</string>
+    <string name="clipboard_onion_service_label">Διευθύνσεις OnionShare</string>
+    <string name="clipboard_onion_service_copied">Οι διευθύνσεις OnionShare αντιγράφηκαν στο πρόχειρο.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d αντικείμενο, %2$s</item>
+        <item quantity="other">%1$d αντικείμενα, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Ειδοποίηση διαμοιρασμού αρχείου</string>
+    <string name="notification_channel_name_sharing">Η διεύθυνση διαμοιρασμού είναι διαθέσιμη</string>
+    <string name="notification_sharing_title">Το OnionShare είναι διαθέσιμο</string>
+    <string name="notification_sharing_text">Πατήστε για διαμοιρασμό της διεύθυνσης διαμοιρασμού των αρχείων σας.</string>
+    <string name="starting_notification_title">Δημοσίευση αρχείων…</string>
+    <string name="starting_notification_text">Αυτό χρειάζεται χρόνο.</string>
+    <string name="sharing_notification_title">Αρχεία σε κοινή χρήση</string>
+    <string name="share_error_snackbar_text">Το OnionShare δεν μπορεί να εκκινηθεί</string>
+    <string name="share_error_file_snackbar_text">Δεν μπορεί να ανοίξει το %s. Αφαιρέθηκε.</string>
+    <string name="about_text">Το OnionShare αναπτύχθηκε από τον Micah Lee, et al., είναι ανοιχτό λογισμικό και παρέχεται υπό την άδεια GPLv3.
+\n
+\nΌπως όλα τα λογισμικά, το OnionShare μπορεί να περιέχει σφάλματα ή τρωτά σημεία.</string>
+    <string name="about_contributor_design">%s, σχεδιαστής προϊόντος</string>
+    <string name="about_contributor_pm">%s, επικεφαλής έργου</string>
+    <string name="about_contributing_orgs">Συνεισφέροντες Οργανισμοί</string>
+    <string name="settings_title">Ρυθμίσεις</string>
+    <string name="settings_tor_title">Σύνδεση στο Tor</string>
+    <string name="settings_tor_automatic">Αυτόματη επιλογή τοποθεσίας</string>
+    <string name="settings_tor_bridges_title">Προσαρμοσμένες γέφυρες</string>
+    <string name="settings_tor_bridges_none">Καμία δεν προστέθηκε</string>
+    <string name="share_state_stopping">Τερματισμός…</string>
+    <string name="settings_tor_intro">Η γέφυρα είναι μια ξεχωριστή διαδρομή προς το δίκτυο Tor. Ακόμη και με την αυτόματη επιλογή, το OnionShare μπορεί να χρησιμοποιήσει γέφυρες για να συνδεθεί.</string>
+    <string name="share_state_error">Σφάλμα</string>
+    <string name="share_state_error_text">Ένα απροσδόκητο σφάλμα προέκυψε.</string>
+    <string name="share_button_starting">Έναρξη... πατήστε για ακύρωση</string>
+    <string name="about_contributor_creator">%s, δημιουργός</string>
+    <string name="share_error_snackbar_action">Προσπάθεια ξανά</string>
+    <string name="about_title">Σχετικά</string>
+    <string name="about_app_version">Έκδοση εφαρμογής %s</string>
+    <string name="about_contributors">Συνεισφέροντες</string>
+    <string name="about_contributor_android">%s, μηχανικός android</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d η γέφυρα προστέθηκε</item>
+        <item quantity="other">%d οι γέφυρες προστέθηκαν</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Οι γέφυρές μου</string>
+    <string name="settings_tor_bridges_intro">Πατήστε στον παρακάτω σύνδεσμο για να λάβετε γέφυρες. Επικολλήστε μία ή περισσότερες στο παρακάτω πεδίο.</string>
+</resources>

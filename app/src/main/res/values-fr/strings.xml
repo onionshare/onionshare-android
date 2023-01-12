@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="back">Retour</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Annuler</string>
+    <string name="add">Ajouter</string>
+    <string name="share">Partager</string>
+    <string name="delete">Supprimer</string>
+    <string name="paste">Coller</string>
+    <string name="unknown">inconnu</string>
+    <string name="share_state_error">Erreur</string>
+    <string name="share_state_error_text">Un problème inattendu s\'est produit.</string>
+    <string name="share_button_start">Commencer à partager</string>
+    <string name="starting_notification_text">Ceci peut prendre un certain temps.</string>
+    <string name="sharing_notification_title">Partage de fichiers en cours</string>
+    <string name="share_error_snackbar_text">Impossible de démarrer OnionShare</string>
+    <string name="share_error_file_snackbar_text">Impossible d\'ouvrir %s. Retiré.</string>
+    <string name="share_error_snackbar_action">Réessayer</string>
+    <string name="about_title">À propos</string>
+    <string name="about_app_version">Version de l\'application %s</string>
+    <string name="about_contributors">Contributeurs</string>
+    <string name="about_contributor_creator">%s, créateur</string>
+    <string name="about_contributor_android">%s, ingénieur Android</string>
+    <string name="about_contributor_pm">%s, chef de projet</string>
+    <string name="about_contributor_design">%s, concepteur produit</string>
+    <string name="about_contributing_orgs">Organisations contributrices</string>
+    <string name="settings_tor_intro">Un pont est une route dédiée non censurée vers le réseau Tor. Même si Automatique est sélectionné, OnionShare peut essayer d\'utiliser des ponts pour se connecter.</string>
+    <string name="settings_tor_bridges_title">Ponts personnalisés</string>
+    <string name="settings_tor_bridges_none">Aucun ajouté</string>
+    <string name="settings_tor_my_bridges_title">Mes ponts</string>
+    <string name="share_button_starting">Démarrage… appuyez pour annuler</string>
+    <string name="add_files_not_supported">Votre appareil ne prend pas en charge l\'ajout de fichiers</string>
+    <string name="share_files_add">Ajouter des fichiers</string>
+    <string name="remove">Retirer</string>
+    <string name="share_empty_state">Encore rien ici.</string>
+    <string name="warning_alpha_intro">Avertissement :</string>
+    <string name="warning_alpha">Ceci est une version alpha précoce. Elle ne doit être utilisée qu\'à des fins de test. Le code n\'est pas terminé et n\'a pas été vérifié.</string>
+    <string name="clear_all">Tout effacer</string>
+    <string name="share_state_ready">Prêt</string>
+    <string name="share_state_transfer_complete">Transfert terminé</string>
+    <string name="share_state_stopping">Arrêt…</string>
+    <string name="warning_no_files_added">Aucun fichier sélectionné.</string>
+    <string name="share_state_starting">Démarrage…</string>
+    <string name="share_state_sharing">Partage</string>
+    <string name="share_button_stopping">Arrêt en cours… attendre jusqu\'à l\'arrêt</string>
+    <string name="share_button_error">Réessayer</string>
+    <string name="clipboard_onion_service_copied">Adresse OnionShare copiée dans le presse-papiers.</string>
+    <string name="share_button_stop">Arrêter de partager</string>
+    <string name="share_button_complete">Recommencer à partager</string>
+    <string name="share_onion_intro"><b>Toute personne</b> possédant cette adresse OnionShare peut <b>télécharger</b> vos fichiers en utilisant <b>le navigateur Tor</b> :</string>
+    <string name="notification_channel_name_foreground">Notification de partage de fichiers</string>
+    <string name="clipboard_onion_service_label">Adresse OnionShare</string>
+    <string name="starting_notification_title">Publication des fichiers…</string>
+    <string name="about_text">OnionShare a été conçu par Micah Lee, et al. et son code source est ouvert, publié sous GPLv3.
+\n
+\nComme tout logiciel, OnionShare peut contenir des erreurs ou des vulnérabilités.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d élément, %2$s</item>
+        <item quantity="many">%1$d éléments, %2$s</item>
+        <item quantity="other">%1$d éléments, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_sharing">Adresse de partage disponible</string>
+    <string name="notification_sharing_title">OnionShare disponible</string>
+    <string name="notification_sharing_text">Touchez pour accéder à l\'adresse pour partager vos fichiers.</string>
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_tor_automatic">Automatique en fonction de la localisation</string>
+    <string name="settings_tor_bridges_intro">Appuyez sur le lien ci-dessous pour obtenir des ponts. Collez ensuite une ou plusieurs lignes de ponts dans le champ ci-dessous.</string>
+    <string name="settings_tor_title">Connexion à Tor</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d pont ajouté</item>
+        <item quantity="many">%d ponts ajoutés</item>
+        <item quantity="other">%d ponts ajoutés</item>
+    </plurals>
+</resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starting_notification_text">Bu biraz zaman alabilir.</string>
+    <string name="share_button_starting">Başlatılıyor… iptal etmek için dokunun</string>
+    <string name="share_button_error">Tekrar deneyin</string>
+    <string name="share_button_stop">Paylaşımı durdur</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="about_app_version">Uygulama Sürümü %s</string>
+    <string name="back">Geri</string>
+    <string name="cancel">İptal</string>
+    <string name="add">Ekle</string>
+    <string name="menu">Menü</string>
+    <string name="remove">Kaldır</string>
+    <string name="warning_alpha">Bu erken bir alfa sürümüdür. Yalnızca test için kullanılmalıdır. Kod tamamlanmamıştır ve denetlenmemiştir.</string>
+    <string name="warning_no_files_added">Dosya seçilmedi.</string>
+    <string name="clear_all">Tümünü temizle</string>
+    <string name="share_state_starting">Başlatılıyor…</string>
+    <string name="share_state_stopping">Durduruluyor…</string>
+    <string name="share_state_error">Hata</string>
+    <string name="share_state_error_text">Beklenmeyen bir sorun oluştu.</string>
+    <string name="share_button_stopping">Durduruluyor… durdurulana kadar bekleyin</string>
+    <string name="share_onion_intro">Bu OnionShare adresine sahip <b>herkes</b> <b>Tor Browser</b> kullanarak dosyalarınızı <b>indirebilir</b>:</string>
+    <string name="share_error_snackbar_text">OnionShare başlatılamadı</string>
+    <string name="about_title">Hakkında</string>
+    <string name="share_error_snackbar_action">Yeniden dene</string>
+    <string name="settings_tor_bridges_title">Özel Köprüler</string>
+    <string name="share">Paylaş</string>
+    <string name="delete">Sil</string>
+    <string name="paste">Yapıştır</string>
+    <string name="unknown">bilinmiyor</string>
+    <string name="warning_alpha_intro">Uyarı:</string>
+    <string name="share_state_ready">Hazır</string>
+    <string name="add_files_not_supported">Aygıtınız dosya eklemeyi desteklemiyor</string>
+    <string name="share_empty_state">Burada henüz bir şey yok.</string>
+    <string name="share_files_add">Dosya ekle</string>
+    <string name="share_state_sharing">Paylaşılıyor</string>
+    <string name="notification_channel_name_foreground">Dosya paylaşım bildirimi</string>
+    <string name="about_contributors">Katkıda bulunanlar</string>
+    <string name="settings_tor_intro">Köprü, Tor ağına giden özel ve sansürsüz bir yoldur. Otomatik seçilse bile, OnionShare bağlanmak için köprüleri kullanmayı deneyebilir.</string>
+    <string name="settings_tor_my_bridges_title">Köprülerim</string>
+    <string name="share_button_start">Paylaşımı başlat</string>
+    <string name="share_state_transfer_complete">Aktarım tamamlandı</string>
+    <string name="about_contributor_pm">%s, Proje Yöneticisi</string>
+    <string name="settings_tor_bridges_intro">Köprüleri almak için aşağıdaki bağlantıya dokunun. Ardından aşağıdaki alana bir veya daha fazla köprü satırı yapıştırın.</string>
+    <string name="clipboard_onion_service_label">OnionShare adresi</string>
+    <string name="notification_channel_name_sharing">Kullanılabilir paylaşım adresi</string>
+    <string name="clipboard_onion_service_copied">OnionShare adresi panoya kopyalandı.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d öge, %2$s</item>
+        <item quantity="other">%1$d öge, %2$s</item>
+    </plurals>
+    <string name="notification_sharing_title">OnionShare kullanılabilir</string>
+    <string name="notification_sharing_text">Dosyalarınızı paylaşacağınız adrese erişmek için dokunun.</string>
+    <string name="starting_notification_title">Dosyalar yayınlanıyor…</string>
+    <string name="sharing_notification_title">Şu anda dosya paylaşılıyor</string>
+    <string name="share_error_file_snackbar_text">%s açılamadı. Kaldırıldı.</string>
+    <string name="about_text">OnionShare, Micah Lee ve diğerleri tarafından geliştirilmiş ve açık kaynak kodları GPLv3 altında yayınlanmıştır.
+\n
+\nTüm yazılımlar gibi, OnionShare de hatalar veya güvenlik açıkları içerebilir.</string>
+    <string name="about_contributor_android">%s, Android Mühendisi</string>
+    <string name="settings_tor_automatic">Konuma göre otomatik</string>
+    <string name="settings_tor_bridges_none">Eklenen yok</string>
+    <string name="about_contributor_creator">%s, Oluşturan</string>
+    <string name="about_contributor_design">%s, Ürün Tasarımcısı</string>
+    <string name="about_contributing_orgs">Katkıda Bulunan Kuruluşlar</string>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_tor_title">Tor Bağlantısı Kurulumu</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d köprü eklendi</item>
+        <item quantity="other">%d köprü eklendi</item>
+    </plurals>
+    <string name="share_button_complete">Paylaşımı tekrar başlat</string>
+</resources>

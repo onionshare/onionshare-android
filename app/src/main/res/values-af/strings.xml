@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Terug</string>
+    <string name="cancel">Kanselleer</string>
+    <string name="add">Voeg toe</string>
+    <string name="share">Deel</string>
+    <string name="delete">Skrap</string>
+    <string name="paste">Plak</string>
+    <string name="add_files_not_supported">U toestel ondersteun nie die toevoeg van lêers nie</string>
+    <string name="unknown">onbekend</string>
+    <string name="remove">Verwyder</string>
+    <string name="share_empty_state">Nog niks hier nie.</string>
+    <string name="warning_alpha_intro">Waarskuwing:</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="warning_no_files_added">Geen lêers gekies.</string>
+    <string name="clear_all">Wis alles</string>
+    <string name="share_files_add">Voeg lêers toe</string>
+    <string name="share_state_ready">Gereed</string>
+    <string name="share_state_starting">Begin tans…</string>
+    <string name="share_state_sharing">Deel tans</string>
+    <string name="share_state_transfer_complete">Oordrag voltooi</string>
+    <string name="menu">Kieslys</string>
+    <string name="warning_alpha">Dit is ’n vroeë-alfa-vrystelling. Dit moet slegs gebruik word om te toets. Die kode is nog nie afgehandel nie en is nie geoudit nie.</string>
+    <string name="share_state_stopping">Stop tans…</string>
+    <string name="share_state_error">Fout</string>
+    <string name="share_state_error_text">’n Onverwagte fout het voorgekom.</string>
+    <string name="share_button_start">Begin deel</string>
+    <string name="share_button_starting">Begin tans… tik om te kanselleer</string>
+    <string name="share_button_stop">Staak deling</string>
+    <string name="share_button_complete">Begin weer deel</string>
+    <string name="share_button_stopping">Stop tans… wag tot dit gestop het</string>
+    <string name="share_button_error">Probeer weer</string>
+    <string name="share_onion_intro"><b>Enigeen</b> met hierdie OnionShare-adres kan u lêers <b>aflaai</b> d.m.v. <b>Tor Blaaier</b>:</string>
+    <string name="clipboard_onion_service_label">OnionShare-adres</string>
+    <string name="clipboard_onion_service_copied">OnionShare-adres na knipbord gekopieer.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d item, %2$s</item>
+        <item quantity="other">%1$d items, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Lêerdeelkennisgewing</string>
+    <string name="notification_sharing_title">OnionShare beskikbaar</string>
+    <string name="starting_notification_title">Lêers word gepubliseer…</string>
+    <string name="starting_notification_text">Dit kan ’n ruk duur.</string>
+    <string name="sharing_notification_title">Lêers word tans gedeel</string>
+    <string name="share_error_snackbar_text">Kon nie OnionShare begin nie</string>
+    <string name="share_error_file_snackbar_text">Kon nie %s open nie. Dis verwyder.</string>
+    <string name="share_error_snackbar_action">Probeer weer</string>
+    <string name="about_title">Oor</string>
+    <string name="about_app_version">Toepweergawe %s</string>
+    <string name="about_text">OnioShare is deur Micah Lee, et al. ontwikkel en is oopbron, vrygestel onder GPLv3.
+\n 
+\nSoos alle programmatuur kan OnionShare foute of kwesbaarhede bevat.</string>
+    <string name="about_contributors">Bydraers</string>
+    <string name="about_contributor_creator">%s, Skepper</string>
+    <string name="about_contributor_android">%s, Android-ingenieur</string>
+    <string name="about_contributor_pm">%s, Projekbestuurder</string>
+    <string name="about_contributor_design">%s, Produkontwikkelaar</string>
+    <string name="about_contributing_orgs">Bydraende organisasies</string>
+    <string name="settings_title">Instellings</string>
+    <string name="settings_tor_title">Verbind tans aan Tor</string>
+    <string name="settings_tor_automatic">Outomaties gebaseer op ligging</string>
+    <string name="settings_tor_intro">’n Brug is ’n toegewyde ongesensorde roete in die Tor-netwerk in. Selfs indien Outomaties gekies is, kan OnionShare brûe probeer gebruik om te koppel.</string>
+    <string name="settings_tor_bridges_title">Pasgemaakte brûe</string>
+    <string name="settings_tor_bridges_none">Niks toegevoeg</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d brug toegevoeg</item>
+        <item quantity="other">%d brûe toegevoeg</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Tik die skakel hier onder om brûe te kry. Plak dan een of meer bruglyne in die veld hier onder.</string>
+    <string name="settings_tor_my_bridges_title">My brûe</string>
+    <string name="notification_sharing_text">Tik vir toegang tot die adres om u lêers te deel.</string>
+    <string name="notification_channel_name_sharing">Adres vir deel onbeskikbaar</string>
+</resources>

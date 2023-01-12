@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_name_sharing">Delingsadresse tilgjengelig</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="cancel">Avbryt</string>
+    <string name="add_files_not_supported">Enheten din støtter ikke å legge til filer</string>
+    <string name="sharing_notification_title">Deler filer …</string>
+    <string name="back">Tilbake</string>
+    <string name="add">Legg til</string>
+    <string name="delete">Slett</string>
+    <string name="warning_no_files_added">Ingen filer valgt.</string>
+    <string name="share_state_ready">Klar</string>
+    <string name="share_button_starting">Starter … Trykk for å avbryte</string>
+    <string name="about_contributor_pm">%s, prosjektledelse</string>
+    <string name="menu">Meny</string>
+    <string name="share">Del</string>
+    <string name="paste">Lim inn</string>
+    <string name="unknown">ukjent</string>
+    <string name="remove">Fjern</string>
+    <string name="share_empty_state">Ingenting her enda.</string>
+    <string name="warning_alpha_intro">Advarsel:</string>
+    <string name="warning_alpha">Dette er en tidlig alfa-utgave. Den er kun tiltenkt testøyemed. Koden er ikke ferdig og ingen gjennomgang er gjort.</string>
+    <string name="clear_all">Tøm alle</string>
+    <string name="share_state_starting">Starter …</string>
+    <string name="share_state_sharing">Deler</string>
+    <string name="share_state_stopping">Stopper …</string>
+    <string name="share_files_add">Legg til filer</string>
+    <string name="share_state_transfer_complete">Overført</string>
+    <string name="share_state_error">Feil</string>
+    <string name="share_state_error_text">Uventet feil.</string>
+    <string name="share_button_start">Start deling</string>
+    <string name="share_button_stop">Stopp deling</string>
+    <string name="share_button_complete">Begynn deling igjen</string>
+    <string name="share_button_stopping">Stopper … Vent …</string>
+    <string name="share_button_error">Prøv igjen</string>
+    <string name="clipboard_onion_service_label">OnionShare-adresse</string>
+    <string name="clipboard_onion_service_copied">OnionShare-adresse kopiert til utklippstavlen.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d element, %2$s</item>
+        <item quantity="other">%1$d elementer, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Merknad om fildeling</string>
+    <string name="notification_sharing_title">OnionShare tilgjengelig</string>
+    <string name="notification_sharing_text">Trykk for å gå til adressen for deling av filene dine.</string>
+    <string name="settings_tor_bridges_intro">Trykk på lenken nedenfor for å hente inn broer. Lim så inn én eller flere brolinjer i feltet nedenfor.</string>
+    <string name="starting_notification_title">Publiserer filer …</string>
+    <string name="starting_notification_text">Dette kan ta litt tid.</string>
+    <string name="share_error_snackbar_text">Kunne ikke starte OnionShare</string>
+    <string name="share_error_file_snackbar_text">Kunne ikke åpne %s. Fjernet.</string>
+    <string name="share_error_snackbar_action">Prøv igjen</string>
+    <string name="about_app_version">Programversjon %s</string>
+    <string name="about_contributor_creator">%s, skaper</string>
+    <string name="about_contributor_android">%s, Android-ingeniør</string>
+    <string name="settings_title">Innstillinger</string>
+    <string name="settings_tor_intro">En bro er en dedikert usensurert rute inn i Tor-nettverket. Selv om «Automatisk» velges vil OnionShare prøve å koble til via broer.</string>
+    <string name="settings_tor_bridges_title">Egendefinerte broer</string>
+    <string name="settings_tor_bridges_none">Ingen lagt til</string>
+    <string name="settings_tor_my_bridges_title">Mine broer</string>
+    <string name="about_title">Om</string>
+    <string name="about_contributors">Bidragsytere</string>
+    <string name="about_contributor_design">%s, produktdesigner</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d bro lagt til</item>
+        <item quantity="other">%d broer lagt til</item>
+    </plurals>
+    <string name="share_onion_intro"><b>Alle</b> som har denne OnionShare-adressen kan <b>laste ned</b> filene dine ved bruk av <b>Tor-nettleseren</b>:</string>
+    <string name="about_contributing_orgs">Organisasjoner</string>
+    <string name="settings_tor_title">Tilkobling til Tor</string>
+    <string name="settings_tor_automatic">Automatisk, basert på sted</string>
+    <string name="about_text">OnionShare ble utviklet av Micah Lee, med flere. Det er fri programvare, lisensiert GPLv3+.
+\n
+\nSom all programvare kan det hende det oppstår problemer eller finnes sårbarheter.</string>
+</resources>

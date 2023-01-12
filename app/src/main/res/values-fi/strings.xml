@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu">Valikko</string>
+    <string name="cancel">Peruuta</string>
+    <string name="add">Lisää</string>
+    <string name="share">Jaa</string>
+    <string name="share_empty_state">Täällä ei ole vielä mitään.</string>
+    <string name="warning_alpha_intro">Varoitus:</string>
+    <string name="warning_no_files_added">Tiedostoja ei ole valittu.</string>
+    <string name="share_state_ready">Valmis</string>
+    <string name="share_state_starting">Käynnistetään…</string>
+    <string name="share_state_sharing">Jaetaan</string>
+    <string name="share_state_transfer_complete">Siirto valmis</string>
+    <string name="share_state_stopping">Pysäytetään…</string>
+    <string name="share_state_error">Virhe</string>
+    <string name="warning_alpha">Tämä on varhainen alphajulkaisu. Sitä ei tule käyttää muuhun kuin testaamiseen. Koodi ei ole valmista, eikä sitä ole auditoitu.</string>
+    <string name="share_state_error_text">Tapahtui odottamaton ongelma.</string>
+    <string name="share_button_start">Aloita jakaminen</string>
+    <string name="share_button_starting">Käynnistetään… napauta peruaksesi</string>
+    <string name="share_button_stop">Lopeta jakaminen</string>
+    <string name="share_button_complete">Käynnistä jakaminen uudelleen</string>
+    <string name="share_button_stopping">Pysäytetään… odota kunnes pysähtynyt</string>
+    <string name="share_button_error">Yritä uudelleen</string>
+    <string name="clipboard_onion_service_label">OnionShare-osoite</string>
+    <string name="clipboard_onion_service_copied">OnionShare-osoite kopioitu leikepöydälle.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d tietue, %2$s</item>
+        <item quantity="other">%1$d tietuetta, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Tiedostojaon ilmoitus</string>
+    <string name="notification_channel_name_sharing">Jako-osoite saatavilla</string>
+    <string name="notification_sharing_title">OnionShare saatavilla</string>
+    <string name="share_onion_intro"><b>Kuka tahansa</b>, jolla on tämä OnionShare-osoite, voi <b>ladata</b> tiedostojasi käyttäen <b>Tor-selainta</b>:</string>
+    <string name="starting_notification_title">Julkaistaan tiedostoja…</string>
+    <string name="starting_notification_text">Tämä saattaa kestää hetken.</string>
+    <string name="share_error_snackbar_text">OnionSharen käynnistäminen ei onnistunut</string>
+    <string name="share_error_file_snackbar_text">Ei voitu avata %s. Poistettu.</string>
+    <string name="share_error_snackbar_action">Yritä uudelleen</string>
+    <string name="about_title">Tietoja</string>
+    <string name="about_contributors">Avustajat</string>
+    <string name="about_contributor_creator">%s, tekijä</string>
+    <string name="about_contributor_android">%s, Android-kehittäjä</string>
+    <string name="about_contributor_pm">%s, Projektipäällikkö</string>
+    <string name="about_contributor_design">%s, Tuotesuunnittelija</string>
+    <string name="about_contributing_orgs">Avustavat organisaatiot</string>
+    <string name="settings_title">Asetukset</string>
+    <string name="settings_tor_title">Yhdistetään Toriin</string>
+    <string name="settings_tor_automatic">Automaattinen sijaintiin perustuen</string>
+    <string name="settings_tor_bridges_title">Mukautetut sillat</string>
+    <string name="settings_tor_bridges_none">Mitään ei ole lisätty</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d silta lisätty</item>
+        <item quantity="other">%d siltaa lisätty</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Omat sillat</string>
+    <string name="back">Takaisin</string>
+    <string name="delete">Poista</string>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="paste">Liitä</string>
+    <string name="add_files_not_supported">Laitteesi ei tue tiedostojen lisäämistä</string>
+    <string name="remove">Poista</string>
+    <string name="share_files_add">Lisää tiedostoja</string>
+    <string name="unknown">tuntematon</string>
+    <string name="clear_all">Tyhjennä kaikki</string>
+    <string name="about_app_version">Sovelluksen versio %s</string>
+</resources>
