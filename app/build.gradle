@@ -28,8 +28,8 @@ android {
         applicationId "org.onionshare.android"
         minSdk 21
         targetSdk 31
-        versionCode 8
-        versionName "0.1.7-alpha"
+        versionCode 9
+        versionName "0.1.8-alpha"
 
         vectorDrawables {
             useSupportLibrary true
