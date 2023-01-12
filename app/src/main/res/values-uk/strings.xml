@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_contributors">Учасники</string>
+    <string name="settings_tor_title">З\'єднання з Tor</string>
+    <string name="share_button_stopping">Припинення… дочекайтеся зупинки</string>
+    <string name="notification_sharing_title">OnionShare доступний</string>
+    <string name="share_onion_intro"><b>Будь-хто</b> з цією адресою OnionShare може <b>завантажити</b> ваші файли за допомогою <b>браузера Tor</b>:</string>
+    <string name="clipboard_onion_service_label">Адреса OnionShare</string>
+    <string name="clipboard_onion_service_copied">OnionShare адреса скопійована до буфера обміну.</string>
+    <string name="share_error_snackbar_action">Повторити</string>
+    <string name="about_app_version">Версія застосунку %s</string>
+    <string name="notification_channel_name_foreground">Сповіщення про надсилання файлу</string>
+    <string name="notification_sharing_text">Торкніться, щоб отримати доступ до адреси для обміну файлами.</string>
+    <string name="share_error_snackbar_text">Не вдалося запустити OnionShare</string>
+    <string name="sharing_notification_title">Наразі файли надсилаються</string>
+    <string name="about_title">Про застосунок</string>
+    <string name="share_error_file_snackbar_text">Не вдалося відкрити %s. Вилучено.</string>
+    <string name="settings_tor_automatic">Автоматично на основі місця перебування</string>
+    <string name="settings_tor_intro">Міст — це виділений нецензурований маршрут в мережу Tor. Навіть якщо вибрано Автоматично, OnionShare може спробувати використовувати мости для з\'єднання.</string>
+    <string name="about_contributor_android">%s, інженер Android</string>
+    <string name="settings_tor_bridges_title">Користувацькі мости</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d міст додано</item>
+        <item quantity="few">%d мости додано</item>
+        <item quantity="many">%d мостів додано</item>
+        <item quantity="other">%d мостів додано</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Торкніться посилання нижче, щоб отримати мости. Потім вставте одну або кілька ліній мостів у поле нижче.</string>
+    <string name="menu">Меню</string>
+    <string name="cancel">Скасувати</string>
+    <string name="add_files_not_supported">Ваш пристрій не підтримує додавання файлів</string>
+    <string name="remove">Вилучити</string>
+    <string name="warning_alpha_intro">Попередження:</string>
+    <string name="add">Додати</string>
+    <string name="paste">Вставити</string>
+    <string name="delete">Видалити</string>
+    <string name="share_empty_state">Тут поки що нічого немає.</string>
+    <string name="share_state_starting">Запуск…</string>
+    <string name="unknown">невідомо</string>
+    <string name="clear_all">Очистити все</string>
+    <string name="about_contributor_creator">%s, творець</string>
+    <string name="about_contributor_pm">%s, керівник проєкту</string>
+    <string name="share_state_sharing">Надсилання</string>
+    <string name="share_state_transfer_complete">Передавання завершено</string>
+    <string name="share_state_stopping">Припинення…</string>
+    <string name="share_state_error">Помилка</string>
+    <string name="share_state_error_text">Виникла несподівана проблема.</string>
+    <string name="share_button_start">Розпочати надсилання</string>
+    <string name="back">Назад</string>
+    <string name="share">Поділитися</string>
+    <string name="share_button_starting">Початок… натисніть, щоб скасувати</string>
+    <string name="share_button_stop">Припинити надсилання</string>
+    <string name="share_button_complete">Розпочати ділитися знову</string>
+    <string name="share_button_error">Повторити спробу</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d елемент, %2$s</item>
+        <item quantity="few">%1$d елементи, %2$s</item>
+        <item quantity="many">%1$d елементів, %2$s</item>
+        <item quantity="other">%1$d елементів, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_sharing">Адреса для надсилання доступна</string>
+    <string name="starting_notification_title">Публікування файлів…</string>
+    <string name="starting_notification_text">Це може тривати деякий час.</string>
+    <string name="about_text">OnionShare був розробив Micah Lee та інші й має відкритий код, випущений під ліцензією GPLv3.
+\n
+\nЯк і все програмне забезпечення, OnionShare може містити помилки або вразливості.</string>
+    <string name="about_contributor_design">%s, Дизайнер продукту</string>
+    <string name="about_contributing_orgs">Організації-учасники</string>
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_tor_bridges_none">Нічого не додано</string>
+    <string name="settings_tor_my_bridges_title">Мої мости</string>
+    <string name="app_name">OnionShare (альфа)</string>
+    <string name="warning_alpha">Це ранній альфа-випуск. Його слід використовувати тільки для тестування. Код не закінчений і не пройшов аудит.</string>
+    <string name="share_files_add">Додати файли</string>
+    <string name="warning_no_files_added">Файлів не вибрано.</string>
+    <string name="share_state_ready">Готовий</string>
+</resources>

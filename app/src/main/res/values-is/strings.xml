@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="back">Til baka</string>
+    <string name="delete">Eyða</string>
+    <string name="paste">Líma</string>
+    <string name="unknown">óþekkt</string>
+    <string name="remove">Fjarlægja</string>
+    <string name="share_empty_state">Ekkert hér ennþá.</string>
+    <string name="warning_alpha_intro">Aðvörun:</string>
+    <string name="share_state_error">Villa</string>
+    <string name="share_state_error_text">Upp kom óvænt vandamál.</string>
+    <string name="share_button_start">Hefja deilingu</string>
+    <string name="share_button_stop">Hætta að deila</string>
+    <string name="share_button_complete">Hefja aftur deilingu</string>
+    <string name="share_button_error">Reyndu aftur</string>
+    <string name="clipboard_onion_service_label">OnionShare-vistfang</string>
+    <string name="notification_channel_name_foreground">Tilkynning um deilingu skráar</string>
+    <string name="notification_channel_name_sharing">Deilingarvistfang er tiltækt</string>
+    <string name="notification_sharing_title">OnionShare er tiltækt</string>
+    <string name="starting_notification_title">Birti skrár…</string>
+    <string name="starting_notification_text">Þetta gæti tekið nokkra stund.</string>
+    <string name="share_error_snackbar_text">Gat ekki ræst OnionShare</string>
+    <string name="about_title">Um hugbúnaðinn</string>
+    <string name="about_app_version">Útgáfa forrits %s</string>
+    <string name="settings_tor_automatic">Sjálfvirkt byggt á staðsetningu</string>
+    <string name="settings_tor_bridges_title">Sérsniðnar brýr</string>
+    <string name="settings_tor_bridges_none">Engri bætt við</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d brú bætt við</item>
+        <item quantity="other">%d brúm bætt við</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Brýrnar mínar</string>
+    <string name="settings_tor_title">Tengist við Tor</string>
+    <string name="menu">Valmynd</string>
+    <string name="cancel">Hætta við</string>
+    <string name="add">Bæta við</string>
+    <string name="share">Deila</string>
+    <string name="warning_no_files_added">Engar skrár voru valdar.</string>
+    <string name="clear_all">Hreinsa allt</string>
+    <string name="share_files_add">Bæta við skrám</string>
+    <string name="share_state_ready">Tilbúið</string>
+    <string name="share_state_starting">Ræsi…</string>
+    <string name="share_state_sharing">Deiling</string>
+    <string name="share_state_transfer_complete">Flutningi lokið</string>
+    <string name="share_state_stopping">Stöðva…</string>
+    <string name="clipboard_onion_service_copied">OnionShare-vistfang afritað á klippispjald.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d atriði, %2$s</item>
+        <item quantity="other">%1$d atriði, %2$s</item>
+    </plurals>
+    <string name="share_error_file_snackbar_text">Tókst ekki að opna %s. Fjarlægði.</string>
+    <string name="share_error_snackbar_action">Reyna aftur</string>
+    <string name="about_contributors">Framlög frá</string>
+    <string name="about_contributor_creator">%s, höfundur</string>
+    <string name="about_contributor_android">%s, Android-forritari</string>
+    <string name="about_contributor_pm">%s, verkefnastjóri</string>
+    <string name="about_contributor_design">%s, vöruhönnuður</string>
+    <string name="settings_title">Stillingar</string>
+    <string name="share_onion_intro"><b>Hver sem er</b> með þetta OnionShare vistfang getur <b>sótt</b> skrárnar þínar með því að nota <b>Tor-vafrann</b>:</string>
+    <string name="sharing_notification_title">Er í augnablikinu að deila skrám</string>
+    <string name="about_text">OnionShare vað þróað af Micah Lee og fleirum, það er með opinn grunnkóða og er gefið út með GPLv3 notkunarleyfi.
+\n
+\nEins og með allan hugbúnað, getur OnionShare innihaldið galla eða veikleika.</string>
+    <string name="about_contributing_orgs">Félög, stofnanir og fyrirtæki sem eiga hlut að máli</string>
+    <string name="add_files_not_supported">Tækið þitt styður ekki að skrám sé bætt við</string>
+    <string name="share_button_starting">Ræsi... ýttu til að hætta við</string>
+    <string name="share_button_stopping">Stöðva… bíddu þar til stöðvað</string>
+    <string name="notification_sharing_text">Ýttu til að nálgast vistfangið til að deila skránum þínum.</string>
+    <string name="settings_tor_intro">Brú er sérstök óritskoðuð leið inn á Tor-netkerfið. Jafnvel þótt \'Sjálfvirkt\' sé valið, gæti OnionShare reynt að nota brýr til að tengjast.</string>
+    <string name="settings_tor_bridges_intro">Ýttu á tengilinn hér fyrir neðan til að fá brýr. Límdu síðan eina eða fleiri brúalínur inn í reitinn hér fyrir neðan.</string>
+    <string name="warning_alpha">Þetta er snemmbúin alfa-útgáfa. Hana ætti aðeins að nota til prófana. Kóðinn er ekki frágenginn og hefur ekki verið yfirfarinn.</string>
+</resources>

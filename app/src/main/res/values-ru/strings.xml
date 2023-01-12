@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnionShare (альфа)</string>
+    <string name="menu">Меню</string>
+    <string name="share">Поделиться</string>
+    <string name="delete">Удалить</string>
+    <string name="paste">Вставить</string>
+    <string name="unknown">неизвестно</string>
+    <string name="warning_alpha_intro">Внимание:</string>
+    <string name="remove">Убрать</string>
+    <string name="warning_no_files_added">Файлы не выбраны.</string>
+    <string name="clear_all">Очистить всё</string>
+    <string name="share_state_ready">Готово</string>
+    <string name="share_state_starting">Запуск…</string>
+    <string name="share_state_sharing">Идёт отправка</string>
+    <string name="share_state_transfer_complete">Отправка завершена</string>
+    <string name="share_state_stopping">Остановка…</string>
+    <string name="share_state_error">Ошибка</string>
+    <string name="share_button_start">Сделать доступным для скачивания</string>
+    <string name="share_button_complete">Возобновить доступ к скачиванию</string>
+    <string name="share_button_stop">Прекратить доступ к скачиванию</string>
+    <string name="share_button_stopping">Прекращение… ожидайте</string>
+    <string name="clipboard_onion_service_label">OnionShare адрес</string>
+    <string name="clipboard_onion_service_copied">OnionShare адрес скопирован в буфер обмена.</string>
+    <string name="notification_channel_name_foreground">Состояние доступа к файлам</string>
+    <string name="notification_channel_name_sharing">Адрес готов</string>
+    <string name="starting_notification_title">Публикуем файлы…</string>
+    <string name="sharing_notification_title">Файлы доступны для загрузки</string>
+    <string name="share_error_snackbar_text">Не удалось запустить OnionShare</string>
+    <string name="share_error_file_snackbar_text">Не удалось открыть %s. Файл удалён.</string>
+    <string name="share_error_snackbar_action">Повторить</string>
+    <string name="about_title">О программе</string>
+    <string name="about_app_version">Версия приложения: %s</string>
+    <string name="about_contributors">Авторы</string>
+    <string name="about_contributor_creator">%s – Создатель</string>
+    <string name="about_contributor_android">%s – Android Разработчик</string>
+    <string name="about_contributor_pm">%s – Руководитель Проекта</string>
+    <string name="about_contributor_design">%s – Дизайнер Продукта</string>
+    <string name="about_contributing_orgs">Организации-участники</string>
+    <string name="settings_tor_title">Подключение к Tor</string>
+    <string name="settings_tor_automatic">Автоматически, в зависимости от местоположения</string>
+    <string name="settings_tor_bridges_title">Через Мост</string>
+    <string name="settings_tor_bridges_none">Пока что ни одного не добавлено</string>
+    <string name="cancel">Отменить</string>
+    <string name="add">Добавить</string>
+    <string name="warning_alpha">Это ранняя альтфа-версия, её не следует использовать для чего-либо более серьёзного, чем тестирование. Она не завершена и ещё не проходила аудит.</string>
+    <string name="share_empty_state">Здесь пока ничего нет.</string>
+    <string name="add_files_not_supported">Ваше устройство не поддерживает добавление файлов</string>
+    <string name="share_files_add">Добавить файлы</string>
+    <string name="share_state_error_text">Произошла непредвиденная ошибка.</string>
+    <string name="share_button_starting">Запуск… нажмите, чтобы отменить</string>
+    <string name="share_button_error">Повторить попытку</string>
+    <string name="share_onion_intro"><b>Любой</b>, кто знает этот OnionShare адрес, может <b>скачать</b> ваши файлы с помощью <b>Tor Browser</b>:</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d элемент, %2$s</item>
+        <item quantity="few">%1$d элемента, %2$s</item>
+        <item quantity="many">%1$d элементов, %2$s</item>
+        <item quantity="other">%1$d элементов, %2$s</item>
+    </plurals>
+    <string name="settings_title">Настройки</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d мост добавлен</item>
+        <item quantity="few">%d моста добавлено</item>
+        <item quantity="many">%d мостов добавлено</item>
+        <item quantity="other">%d мостов добавлено</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Мои Мосты</string>
+    <string name="settings_tor_bridges_intro">Получите мосты по нижеуказанной ссылке, затем вставьте их (сразу все, или только отдельные строки) в текстовое поле ниже.</string>
+    <string name="settings_tor_intro">Мосты помогают получить доступ к сети Tor там, где он заблокирован. Даже если вы выбрали \"Автоматически\", OnionShare может попытаться подключиться через мост.</string>
+    <string name="notification_sharing_title">OnionShare готов</string>
+    <string name="notification_sharing_text">Нажмите, чтобы увидеть адрес к вашим файлам.</string>
+    <string name="starting_notification_text">Это может занять некоторое время.</string>
+    <string name="about_text">OnionShare создана Micah Lee и другими. Это свободное ПО, с лицензией GPLv3.
+\n
+\nКак и любая другая программа, OnionShare может содержать баги и уязвимости.</string>
+    <string name="back">Назад</string>
+</resources>

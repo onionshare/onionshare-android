@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="back">Bumalik</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Kanselahin</string>
+    <string name="add">Magdagdag</string>
+    <string name="share">Ibahagi</string>
+    <string name="delete">Burahin</string>
+    <string name="paste">I-paste</string>
+    <string name="add_files_not_supported">Hindi sinusuportahan ng device mo ang pagdadagdag ng file</string>
+    <string name="unknown">hindi alam</string>
+    <string name="remove">Tanggalin</string>
+    <string name="share_empty_state">Wala pang nandito.</string>
+    <string name="warning_alpha_intro">Babala:</string>
+    <string name="warning_alpha">Maaga itong alpha release. Para lang ito sa testing. Hindi pa natatapos o nasusuri ang code.</string>
+    <string name="warning_no_files_added">Walang napiling file.</string>
+    <string name="clear_all">Tanggalin Lahat</string>
+    <string name="share_files_add">Magdagdag ng file</string>
+    <string name="share_state_ready">Handa na</string>
+    <string name="share_state_starting">Sinisimulan…</string>
+    <string name="share_state_sharing">Nagbabahagi</string>
+    <string name="share_state_transfer_complete">Nakumpleto ang pagbabahagi</string>
+    <string name="share_state_stopping">Inihihinto…</string>
+    <string name="share_state_error">Error</string>
+    <string name="share_state_error_text">May problemang hindi inaasahan.</string>
+    <string name="share_button_start">Simulan ang Pagbabahagi</string>
+    <string name="share_button_starting">Sinisimulan… pindutin para kanselahin</string>
+    <string name="share_button_stop">Ihinto ang Pagbabahagi</string>
+    <string name="share_button_complete">Simulan Ulit ang Pagbabahagi</string>
+    <string name="share_button_stopping">Inihihinto… maghintay hanggang sa matapos</string>
+    <string name="share_button_error">Subukan ulit</string>
+    <string name="clipboard_onion_service_label">OnionShare address</string>
+    <string name="clipboard_onion_service_copied">Inilagay sa clipboard ang OnionShare address.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d item, %2$s</item>
+        <item quantity="other">%1$d mga item, %2$s</item>
+    </plurals>
+    <string name="share_onion_intro">Pwedeng ma-<b>download</b> ng <b>sinuman</b>g may OnionShare address na ito ang mga file mo gamit ang <b>Tor Browser</b>:</string>
+    <string name="notification_channel_name_foreground">Notipikasyon sa pagbabahagi ng file</string>
+    <string name="notification_channel_name_sharing">Available ang address sa pagbabahagi</string>
+    <string name="notification_sharing_title">Available ang OnionShare</string>
+    <string name="notification_sharing_text">Pindutin para makita ang mga address ng mga file mo para sa pagbabahagi.</string>
+    <string name="starting_notification_title">Isinasapubliko ang mga file…</string>
+    <string name="starting_notification_text">Medyo matatagalan ito.</string>
+    <string name="sharing_notification_title">Kasalukuyang nagbabahagi ng mga file</string>
+    <string name="share_error_snackbar_text">Hindi masimulan ang OnionShare</string>
+    <string name="share_error_file_snackbar_text">Hindi mabuksan kaya tinanggal ang %s.</string>
+    <string name="share_error_snackbar_action">Subukan ulit</string>
+    <string name="about_title">Tungkol</string>
+    <string name="about_app_version">Bersyon ng App %s</string>
+    <string name="about_text">Ginawa ni Micah Lee, et al. at open source ang OnionShare, isinapubliko sa ilalim ng GPLv3.
+\n
+\nMaaaring may bug o kahinaan ang OnionShare tulad ng anumang software.</string>
+    <string name="about_contributors">Mga nag-ambag</string>
+    <string name="about_contributor_creator">%s, May-likha</string>
+    <string name="about_contributor_android">%s, Inhinyero sa Android</string>
+    <string name="about_contributor_pm">%s, Tagapamahala ng Proyekto</string>
+    <string name="about_contributor_design">%s, Tagadisenyo ng Produkto</string>
+    <string name="about_contributing_orgs">Mga Organisasyong Nag-ambag</string>
+    <string name="settings_title">Mga Setting</string>
+    <string name="settings_tor_title">Kumokonekta sa Tor</string>
+    <string name="settings_tor_automatic">Awtomatiko base sa lokasyon</string>
+    <string name="settings_tor_intro">Ang tulay ay isang rutang walang censor patungo sa Tor network. Pwedeng gumamit ng tulay ang OnionShare para kumonekta kahit na Awtomatiko ang pinili.</string>
+    <string name="settings_tor_bridges_title">Ipinasadyang mga Tulay</string>
+    <string name="settings_tor_bridges_none">Walang naidagdag</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d naidagdag na tulay</item>
+        <item quantity="other">%d naidagdag na mga tulay</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Pindutin ang link sa ibaba para makakuha ng higit pang mga tulay. Tapos i-paste ang isa o higit pang mga linya ng tulay sa ibaba.</string>
+    <string name="settings_tor_my_bridges_title">Mga Tulay Ko</string>
+</resources>

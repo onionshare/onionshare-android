@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="share_state_error_text">Et uventet problem har opstået.</string>
+    <string name="share_button_start">Start deling</string>
+    <string name="share_button_complete">Start deling igen</string>
+    <string name="share_button_stopping">Stopper… Vent til delingen har stoppet.</string>
+    <string name="clipboard_onion_service_label">OnionShare-adresse</string>
+    <string name="share_error_file_snackbar_text">Kunne ikke åbne %s. Fjernet.</string>
+    <string name="share_error_snackbar_action">Prøv igen</string>
+    <string name="about_title">Om</string>
+    <string name="share_button_stop">Stop deling</string>
+    <string name="share_state_error">Feil</string>
+    <string name="share_button_error">Prøv igen</string>
+    <string name="share_button_starting">Starter… Tryk for at afbryde.</string>
+    <string name="clipboard_onion_service_copied">OnionShare-adresse kopieret til udklipstavle.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d element, %2$s</item>
+        <item quantity="other">%1$d elementer, %2$s</item>
+    </plurals>
+    <string name="about_app_version">Programversion %s</string>
+    <string name="settings_tor_my_bridges_title">Mine broer</string>
+</resources>

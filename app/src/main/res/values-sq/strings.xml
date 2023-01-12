@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="back">Mbrapsht</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Anuloje</string>
+    <string name="add">Shto</string>
+    <string name="delete">Fshije</string>
+    <string name="paste">Ngjiteni</string>
+    <string name="add_files_not_supported">Pajisja juaj mbulon shtim kartelash</string>
+    <string name="remove">Hiqe</string>
+    <string name="share_empty_state">Ende pa gjë këtu.</string>
+    <string name="warning_alpha_intro">Kujdes:</string>
+    <string name="warning_alpha">Kjo është një hedhje herët në qarkullim. Duhet përdorur vetëm për testim. Kodi s’është i përfunduar dhe nuk është shqyrtuar nga palë të paanshme.</string>
+    <string name="warning_no_files_added">S’u përzgjodhën kartela.</string>
+    <string name="clear_all">Spastroji Krejt</string>
+    <string name="share_files_add">Shto kartela</string>
+    <string name="share_state_ready">Gati</string>
+    <string name="share_state_starting">Po niset…</string>
+    <string name="share_state_transfer_complete">Shpërngulje e plotë</string>
+    <string name="share_state_stopping">Po ndalet…</string>
+    <string name="share_state_error">Gabim</string>
+    <string name="share_state_error_text">Ndodhi një gabim i papritur.</string>
+    <string name="share_button_start">Fillo të Ndash Me të Tjerë</string>
+    <string name="share_button_starting">Po niset… prekeni që të anulohet</string>
+    <string name="share_button_stop">Resht së Ndari Me të Tjerë</string>
+    <string name="share_button_complete">Rifillo Të Ndash Me të Tjerë</string>
+    <string name="share_button_stopping">Po ndalet… prisni deri sa të jetë ndalur</string>
+    <string name="share_button_error">Riprovoni</string>
+    <string name="share_onion_intro"><b>Cilido</b> me këtë adresë OnionShare mundet <b>të shkarkojë</b> kartelat tuaja duke përdorur <b>Shfletuesin Tor</b>:</string>
+    <string name="clipboard_onion_service_label">Adresë OnionShare</string>
+    <string name="clipboard_onion_service_copied">Adresa OnionShare u kopjua te e papastra.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d objekt %2$s</item>
+        <item quantity="other">%1$d objekte %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Njoftim për ndarje kartele</string>
+    <string name="notification_channel_name_sharing">Ka adresë për ndarje me të tjerë</string>
+    <string name="notification_sharing_title">Ka OnionShare</string>
+    <string name="notification_sharing_text">Prekeni që të hapet adresa për ndarje të kartelave tuaja me të tjerë.</string>
+    <string name="starting_notification_text">Kjo mund të dojë ca kohë.</string>
+    <string name="share_error_snackbar_text">S’u nis dot OnionShare</string>
+    <string name="share_error_file_snackbar_text">S’u hap dot %s. Është hequr.</string>
+    <string name="share_error_snackbar_action">Riprovo</string>
+    <string name="about_title">Mbi</string>
+    <string name="about_app_version">Version Aplikacioni %s</string>
+    <string name="about_text">OnionShare u zhvillua nga Micah Lee, dhe të tjerë dhe është me burim të hapët, hedhur në qarkullim nën GPLv3.
+\n
+\nSi krejt software-i, OnionShare mund të ketë të meta, ose cenueshmëri.</string>
+    <string name="about_contributors">Kontribues</string>
+    <string name="about_contributor_creator">%s, Krijues</string>
+    <string name="about_contributor_android">%s, Inxhinier Android</string>
+    <string name="about_contributor_pm">%s, Përgjegjës Projekti</string>
+    <string name="about_contributor_design">%s, Konceptues Produkti</string>
+    <string name="about_contributing_orgs">Ente Me Kontribut</string>
+    <string name="settings_title">Rregullime</string>
+    <string name="settings_tor_title">Lidhje Me Tor-in</string>
+    <string name="settings_tor_automatic">Automatike, bazuar në vendndodhjen</string>
+    <string name="settings_tor_intro">Një urë është një rrugë e pacensuruar, e krijuar enkas, për te rrjeti Tor. Edhe nëse është përzgjedhur “E automatiuar”, OnionShare-i mund të provojë të përdorë ura për t’u lidhur.</string>
+    <string name="settings_tor_bridges_title">Ura Vetjake</string>
+    <string name="settings_tor_bridges_none">S’u shtua gjë</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">U shtua %d urë</item>
+        <item quantity="other">U shtua %d ura</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Prekni lidhjen më poshtë, që të merrni ura. Mandej ngjitni një ose disa rreshta urash te fusha më poshtë.</string>
+    <string name="settings_tor_my_bridges_title">Urat e Mia</string>
+</resources>

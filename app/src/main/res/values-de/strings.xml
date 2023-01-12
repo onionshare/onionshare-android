@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Zurück</string>
+    <string name="menu">Menü</string>
+    <string name="paste">Einfügen</string>
+    <string name="add_files_not_supported">Dein Gerät unterstützt das Hinzufügen von Dateien nicht</string>
+    <string name="unknown">unbekannt</string>
+    <string name="remove">Entfernen</string>
+    <string name="warning_alpha_intro">Warnung:</string>
+    <string name="warning_no_files_added">Keine Dateien ausgewählt.</string>
+    <string name="clear_all">Alle löschen</string>
+    <string name="share_files_add">Dateien hinzufügen</string>
+    <string name="share_state_ready">Bereit</string>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="share">Teilen</string>
+    <string name="delete">Löschen</string>
+    <string name="share_empty_state">Hier ist noch nichts.</string>
+    <string name="add">Hinzufügen</string>
+    <string name="warning_alpha">Dies ist eine frühe Alpha-Version. Sie sollte nur zu Testzwecken verwendet werden. Der Code ist noch nicht fertig und wurde noch nicht geprüft.</string>
+    <string name="share_state_starting">Beginne…</string>
+    <string name="share_state_sharing">Teile</string>
+    <string name="share_state_transfer_complete">Übertragung abgeschlossen</string>
+    <string name="share_state_stopping">Anhalten…</string>
+    <string name="share_state_error">Fehler</string>
+    <string name="share_button_start">Teilen starten</string>
+    <string name="share_button_complete">Teilen wieder starten</string>
+    <string name="share_button_stopping">Anhalten… warten bis angehalten</string>
+    <string name="share_button_stop">Teilen beenden</string>
+    <string name="notification_sharing_text">Antippen, um auf die Adresse zum Teilen deiner Dateien zuzugreifen.</string>
+    <string name="starting_notification_text">Dies könnte eine Weile dauern.</string>
+    <string name="sharing_notification_title">Derzeit werden Dateien geteilt</string>
+    <string name="share_error_snackbar_text">OnionShare konnte nicht gestartet werden</string>
+    <string name="share_error_snackbar_action">Wiederholen</string>
+    <string name="about_title">Über</string>
+    <string name="about_app_version">App-Version %s</string>
+    <string name="about_contributors">Mitwirkende</string>
+    <string name="about_contributor_creator">%s, Ersteller</string>
+    <string name="about_contributor_android">%s, Android-Ingenieur</string>
+    <string name="about_contributor_pm">%s, Projektmanager</string>
+    <string name="about_contributor_design">%s, Produktdesigner</string>
+    <string name="about_contributing_orgs">Mitwirkende Organisationen</string>
+    <string name="settings_tor_intro">Eine Brücke ist eine spezielle unzensierte Route ins Tor-Netzwerk. Auch wenn Automatisch ausgewählt ist, kann OnionShare versuchen, sich über Brücken zu verbinden.</string>
+    <string name="settings_tor_bridges_title">Benutzerdefinierte Brücken</string>
+    <string name="settings_tor_bridges_none">Keine hinzugefügt</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d Brücke hinzugefügt</item>
+        <item quantity="other">%d Brücken hinzugefügt</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Tippe auf den Link unten, um Brücken zu erhalten. Füge dann eine oder mehrere Brückenlinien in das Feld unten ein.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d Element, %2$s</item>
+        <item quantity="other">%1$d Elemente, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Benachrichtigung über die Dateifreigabe</string>
+    <string name="starting_notification_title">Dateien veröffentlichen…</string>
+    <string name="settings_tor_my_bridges_title">Meine Brücken</string>
+    <string name="share_error_file_snackbar_text">%s konnte nicht geöffnet werden. Entfernt.</string>
+    <string name="about_text">OnionShare wurde von Micah Lee, et al. entwickelt und ist Open Source, veröffentlicht unter GPLv3.
+\n
+\nWie jede Software kann auch OnionShare Fehler oder Schwachstellen enthalten.</string>
+    <string name="share_onion_intro"><b>Jeder</b> mit dieser OnionShare-Adresse kann deine Dateien mit <b>Tor Browser</b> <b>herunterladen</b>:</string>
+    <string name="share_button_error">Erneut versuchen</string>
+    <string name="clipboard_onion_service_copied">OnionShare-Adresse in die Zwischenablage kopiert.</string>
+    <string name="share_state_error_text">Ein unerwartetes Problem ist aufgetreten.</string>
+    <string name="share_button_starting">Wird gestartet… zum Abbrechen tippen</string>
+    <string name="notification_channel_name_sharing">Adresse zum Teilen verfügbar</string>
+    <string name="notification_sharing_title">OnionShare verfügbar</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_tor_title">Verbindung zu Tor</string>
+    <string name="settings_tor_automatic">Automatisch je nach Standort</string>
+    <string name="clipboard_onion_service_label">OnionShare-Adresse</string>
+</resources>

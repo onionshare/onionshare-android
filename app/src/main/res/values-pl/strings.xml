@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Wstecz</string>
+    <string name="cancel">Anuluj</string>
+    <string name="add">Dodaj</string>
+    <string name="share">Udostępnij</string>
+    <string name="delete">Usuń</string>
+    <string name="paste">Wklej</string>
+    <string name="add_files_not_supported">Twoje urządzenie nie obsługuje dodawania plików</string>
+    <string name="unknown">nieznane</string>
+    <string name="remove">Usuń</string>
+    <string name="share_empty_state">Nic tu nie ma.</string>
+    <string name="warning_alpha_intro">Ostrzeżenie:</string>
+    <string name="warning_alpha">To jest wczesna wersja alfa, która powinna być używana tylko do testów. Nie jest ona ukończona i nie posiada audytu.</string>
+    <string name="warning_no_files_added">Nie wybrano plików.</string>
+    <string name="clear_all">Wyczyść wszystkie</string>
+    <string name="share_files_add">Dodaj pliki</string>
+    <string name="share_state_ready">Gotowe</string>
+    <string name="share_state_starting">Uruchamianie…</string>
+    <string name="share_state_sharing">Udostępnianie</string>
+    <string name="share_state_transfer_complete">Transfer ukończony</string>
+    <string name="share_state_stopping">Zatrzymywanie…</string>
+    <string name="share_state_error">Błąd</string>
+    <string name="share_state_error_text">Wystąpił nieoczekiwany problem.</string>
+    <string name="share_button_start">Rozpocznij udostępnianie</string>
+    <string name="share_button_starting">Uruchamianie... stuknij, aby anulować</string>
+    <string name="share_button_complete">Uruchom udostępnianie ponownie</string>
+    <string name="share_button_stopping">Zatrzymywanie… poczekaj do zatrzymania</string>
+    <string name="share_button_error">Spróbuj ponownie</string>
+    <string name="share_onion_intro"><b>Każdy</b> z tym adresem OnionShare może <b>pobierać</b> Twoje pliki za pomocą <b>Tor Browser</b>:</string>
+    <string name="clipboard_onion_service_label">Adres OnionShare</string>
+    <string name="clipboard_onion_service_copied">Adres OnionShare został skopiowany do schowka.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d element, %2$s</item>
+        <item quantity="few">%1$d elementy, %2$s</item>
+        <item quantity="many">%1$d elementów, %2$s</item>
+        <item quantity="other">%1$d elementów, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Powiadomienie o udostępnianiu plików</string>
+    <string name="notification_channel_name_sharing">Adres udostępniania dostępny</string>
+    <string name="notification_sharing_title">OnionShare dostępny</string>
+    <string name="starting_notification_title">Publikowanie plików…</string>
+    <string name="starting_notification_text">To może potrwać.</string>
+    <string name="sharing_notification_title">Obecnie udostępniane są pliki</string>
+    <string name="share_error_file_snackbar_text">Nie udało się otworzyć %s. Usunięto.</string>
+    <string name="share_error_snackbar_action">Spróbuj ponownie</string>
+    <string name="about_title">Informacje</string>
+    <string name="about_app_version">Wersja aplikacji %s</string>
+    <string name="about_contributors">Współtwórcy</string>
+    <string name="about_contributor_design">%s, twórca produktu</string>
+    <string name="about_contributing_orgs">Organizacje współtworzące</string>
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_tor_title">Łączenie z siecią Tor</string>
+    <string name="settings_tor_automatic">Automatycznie na podstawie lokalizacji</string>
+    <string name="settings_tor_intro">Mostek to wyspecjalizowane połączenie z siecią Tor, służące do ominięcia cenzury. Nawet jeżeli Automatycznie jest zaznaczone, OnionShare może spróbować użyć mostka.</string>
+    <string name="settings_tor_bridges_none">Żaden nie został dodany</string>
+    <string name="settings_tor_bridges_title">Mostki niestandardowe</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d mostek dodany</item>
+        <item quantity="few">%d mostki dodane</item>
+        <item quantity="many">%d mostków dodanych</item>
+        <item quantity="other">%d mostków dodanych</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Moje mostki</string>
+    <string name="notification_sharing_text">Stuknij, aby sprawdzić adres udostępniania plików.</string>
+    <string name="share_error_snackbar_text">Nie udało się uruchomić OnionShare</string>
+    <string name="about_contributor_pm">%s, kierownik projektu</string>
+    <string name="about_text">OnionShare został opracowany przez Micah Lee i in. i jest otwartym oprogramowaniem, na licencji GPLv3.
+\n
+\nJak każde oprogramowanie, OnionShare może zawierać błędy oraz luki.</string>
+    <string name="about_contributor_creator">%s, twórca</string>
+    <string name="about_contributor_android">%s, programista Android</string>
+    <string name="settings_tor_bridges_intro">Kliknij poniższe łącze, aby uzyskać mostki. Następnie wklej jedną lub więcej linii mostka w polu poniżej.</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="menu">Menu</string>
+    <string name="share_button_stop">Zatrzymaj udostępnianie</string>
+</resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Indietro</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Annulla</string>
+    <string name="add">Aggiungi</string>
+    <string name="share">Condividi</string>
+    <string name="delete">Elimina</string>
+    <string name="paste">Incolla</string>
+    <string name="add_files_not_supported">Il tuo dispositivo non supporta l\'aggiunta di file</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="unknown">sconosciuto</string>
+    <string name="remove">Rimuovi</string>
+    <string name="share_empty_state">Ancora niente qui.</string>
+    <string name="warning_alpha_intro">Attenzione:</string>
+    <string name="warning_no_files_added">Nessun file selezionato.</string>
+    <string name="clear_all">Cancella tutto</string>
+    <string name="share_files_add">Aggiungi file</string>
+    <string name="share_state_ready">Pronto</string>
+    <string name="share_state_starting">Avvio…</string>
+    <string name="share_state_sharing">In condivisione</string>
+    <string name="share_state_transfer_complete">Trasferimento completato</string>
+    <string name="share_state_stopping">Arresto…</string>
+    <string name="share_state_error">Errore</string>
+    <string name="share_state_error_text">Si è verificato un problema imprevisto.</string>
+    <string name="share_button_start">Inizia la condivisione</string>
+    <string name="share_button_starting">Avviato... Tocca per annullare</string>
+    <string name="share_button_stop">Interrompi la condivisione</string>
+    <string name="share_button_complete">Ricomincia a condividere</string>
+    <string name="share_button_stopping">In arresto... Attendi fino a quando non si ferma</string>
+    <string name="share_button_error">Riprova</string>
+    <string name="share_onion_intro"><b>Chiunque</b> abbia questo indirizzo di OnionShare può <b>scaricare</b> i tuoi file usando <b>Tor Browser</b>:</string>
+    <string name="clipboard_onion_service_copied">Indirizzo di OnionShare copiato negli appunti.</string>
+    <string name="notification_sharing_title">OnionShare disponibile</string>
+    <string name="notification_sharing_text">Tocca per accedere all\'indirizzo per condividere i tuoi file.</string>
+    <string name="starting_notification_title">Pubblicazione file…</string>
+    <string name="starting_notification_text">Questo potrebbe richiedere del tempo.</string>
+    <string name="sharing_notification_title">Attualmente in condivisione di file</string>
+    <string name="share_error_snackbar_text">Impossibile avviare OnionShare</string>
+    <string name="share_error_file_snackbar_text">Impossibile aprire %s. Rimosso.</string>
+    <string name="share_error_snackbar_action">Riprova</string>
+    <string name="about_title">Informazioni</string>
+    <string name="about_app_version">Versione dell\'app %s</string>
+    <string name="about_text">OnionShare è stato sviluppato da Micah Lee, et al. ed è open source, rilasciato sotto GPLv3.
+\n
+\nCome tutti i software, OnionShare può contenere bug o vulnerabilità.</string>
+    <string name="about_contributors">Contributori</string>
+    <string name="about_contributor_creator">%s, Creatore</string>
+    <string name="about_contributor_android">%s, Ingegnere Android</string>
+    <string name="about_contributor_design">%s, Product Designer</string>
+    <string name="about_contributing_orgs">Organizzazioni che contribuiscono</string>
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_tor_title">Connessione a Tor</string>
+    <string name="settings_tor_intro">Un bridge è un percorso dedicato non censurato nella rete Tor. Anche se è selezionato Automatico, OnionShare potrebbe tentare di utilizzare i bridge per connettersi.</string>
+    <string name="settings_tor_bridges_title">Bridge personali</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d bridge aggiunto</item>
+        <item quantity="many">%d bridge aggiunti</item>
+        <item quantity="other">%d bridge aggiunti</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">I miei Bridge</string>
+    <string name="about_contributor_pm">%s, Responsabile del progetto</string>
+    <string name="settings_tor_automatic">Automatico in base alla posizione</string>
+    <string name="settings_tor_bridges_none">Nessuno aggiunto</string>
+    <string name="settings_tor_bridges_intro">Tocca il link in basso per ottenere i bridge. Quindi incolla una o più linee di collegamento nel campo sottostante.</string>
+    <string name="notification_channel_name_foreground">Notifica di condivisione file</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d elemento, %2$s</item>
+        <item quantity="many">%1$d elementi, %2$s</item>
+        <item quantity="other">%1$d elementi, %2$s</item>
+    </plurals>
+    <string name="clipboard_onion_service_label">Indirizzo di OnionShare</string>
+    <string name="notification_channel_name_sharing">Indirizzo di condivisione disponibile</string>
+    <string name="warning_alpha">Questa è una prima versione alfa. Dovrebbe essere usato solo per i test. Il codice non è finito e non è stato verificato.</string>
+</resources>

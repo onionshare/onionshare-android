@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="paste">পেস্ট</string>
+    <string name="share_empty_state">এখনও কিছুই নেই।</string>
+    <string name="app_name">অনিয়নশেয়ার (আলফা)</string>
+    <string name="menu">মেনু</string>
+    <string name="cancel">বাতিল</string>
+    <string name="add">যোগ</string>
+    <string name="share">শেয়ার</string>
+    <string name="unknown">অজানা</string>
+    <string name="share_button_error">আবার চেষ্টা করুন</string>
+    <string name="share_onion_intro"><b>যেকেউ</b> এই অনিয়নশেয়ার অ্যাড্রেস দিয়ে <b>টর ব্রাউজার</b> ব্যাবহার করে আপনার ফাইল <b>ডাউনলোড</b> করতে পারবে:</string>
+    <string name="clipboard_onion_service_label">অনিয়ন শেয়ার অ্যাড্রেস</string>
+    <string name="back">পেছনে যান</string>
+    <string name="delete">মুছুন</string>
+    <string name="remove">সরান</string>
+    <string name="warning_no_files_added">কোনো ফাইল সিলেক্ট করা হয় নি।</string>
+    <string name="share_state_stopping">থামানে হচ্ছে…</string>
+    <string name="share_button_stop">শেয়ারিং থামান</string>
+    <string name="add_files_not_supported">আপনার ডিভাইস ফাইলস যোগ করা সমর্থন করে না</string>
+    <string name="warning_alpha_intro">সতর্কীকরণ:</string>
+    <string name="clear_all">সব পরিষ্কার করুন</string>
+    <string name="share_files_add">ফাইলস যোগ করুন</string>
+    <string name="share_state_ready">প্রস্তুত</string>
+    <string name="share_state_error_text">একটি অপ্রত্যাশিত সমস্যা হয়েছে।</string>
+    <string name="share_button_starting">শুরু করা হচ্ছে... বন্ধ করতে চাপুন</string>
+    <string name="share_state_error">ত্রুটি</string>
+    <string name="share_button_stopping">থামানো হচ্ছে... থামা পর্যন্ত অপেক্ষা করুন</string>
+    <string name="share_state_transfer_complete">স্থানান্তর সম্পুর্ন</string>
+    <string name="share_button_complete">আবার শেয়ারিং শুরু করুন</string>
+    <string name="warning_alpha">এটি একটি প্রাথমিক আলফা রিলিজ৷ এটি শুধুমাত্র পরীক্ষার জন্য ব্যবহার করা উচিত৷ কোড এখনও শেষ হয় নি।</string>
+    <string name="share_state_starting">শুরু করা হচ্ছে…</string>
+    <string name="share_state_sharing">শেয়ারিং</string>
+    <string name="share_button_start">শেয়ারিং শুরু করুন</string>
+</resources>
