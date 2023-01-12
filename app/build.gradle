@@ -76,7 +76,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.3.0'
+        kotlinCompilerExtensionVersion '1.3.2'
     }
     packagingOptions {
         exclude 'META-INF/*'
@@ -97,18 +97,18 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'androidx.activity:activity-compose:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.activity:activity-compose:1.6.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.material:material:1.3.1"
+    implementation "androidx.compose.material:material-icons-extended:1.3.1"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation "androidx.navigation:navigation-compose:2.5.2"
+    implementation "androidx.navigation:navigation-compose:2.5.3"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-    implementation "androidx.profileinstaller:profileinstaller:1.2.0"
-    implementation "androidx.security:security-crypto:1.1.0-alpha03"
+    implementation "androidx.profileinstaller:profileinstaller:1.2.2"
+    implementation "androidx.security:security-crypto:1.1.0-alpha04"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
@@ -122,21 +122,21 @@ dependencies {
     tor 'org.briarproject:obfs4proxy-android:0.0.14'
     tor 'org.briarproject:snowflake-android:2.3.1'
 
-    def ktor_version = '2.1.0'
+    def ktor_version = '2.2.2'
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "io.ktor:ktor-server-pebble:$ktor_version"
     implementation "io.ktor:ktor-server-status-pages:$ktor_version"
     implementation "io.ktor:ktor-server-call-logging:$ktor_version"
-    implementation 'com.github.tony19:logback-android:2.0.0'
+    implementation 'com.github.tony19:logback-android:2.0.1'
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
     testImplementation 'junit:junit:4.13.2'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     androidTestImplementation 'tools.fastlane:screengrab:2.1.1'
 }
