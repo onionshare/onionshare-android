@@ -84,6 +84,9 @@ android {
         exclude 'META-INF/licenses/*'
         exclude '**/attach_hotspot_windows.dll'
     }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 }
 
 configurations {
