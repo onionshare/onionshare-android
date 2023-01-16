@@ -27,7 +27,7 @@
         <item quantity="one">%1$d tietue, %2$s</item>
         <item quantity="other">%1$d tietuetta, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Tiedostojaon ilmoitus</string>
+    <string name="notification_channel_name_foreground">Tiedostojaon tila</string>
     <string name="notification_channel_name_sharing">Jako-osoite saatavilla</string>
     <string name="notification_sharing_title">OnionShare saatavilla</string>
     <string name="share_onion_intro"><b>Kuka tahansa</b>, jolla on tämä OnionShare-osoite, voi <b>ladata</b> tiedostojasi käyttäen <b>Tor-selainta</b>:</string>
@@ -63,4 +63,11 @@
     <string name="unknown">tuntematon</string>
     <string name="clear_all">Tyhjennä kaikki</string>
     <string name="about_app_version">Sovelluksen versio %s</string>
+    <string name="notification_sharing_text">Napauta saadaksesi osoitteesi tiedostojen jakamista varten.</string>
+    <string name="about_text">OnionSharen on kehittänyt Micah Lee ja muut, ja se on avointa lähdekoodia julkaistuna GPLv3-lisenssillä.
+\n
+\nKuten mikä tahansa muu ohjelmisto, OnionShare saattaa sisältää ohjelmistovirheitä ja haavoittuvuuksia.</string>
+    <string name="sharing_notification_title">Jaetaan parhaillaan tiedostoja</string>
+    <string name="settings_tor_bridges_intro">Napauta alla olevaa linkkiä saadaksesi siltoja. Liitä yksi tai useampi siltarivi alla olevaan kenttään.</string>
+    <string name="settings_tor_intro">Silta on erikoistunut, sunsuroimaton reitti Tor-verkkoon. Vaikka vaihtoehto Automaattinen on valittu, OnionShare saattaa yrittää siltojen käyttöä yhdistäessä.</string>
 </resources>

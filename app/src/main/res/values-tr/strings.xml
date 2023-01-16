@@ -34,7 +34,7 @@
     <string name="share_empty_state">Burada henüz bir şey yok.</string>
     <string name="share_files_add">Dosya ekle</string>
     <string name="share_state_sharing">Paylaşılıyor</string>
-    <string name="notification_channel_name_foreground">Dosya paylaşım bildirimi</string>
+    <string name="notification_channel_name_foreground">Dosya paylaşım durumu</string>
     <string name="about_contributors">Katkıda bulunanlar</string>
     <string name="settings_tor_intro">Köprü, Tor ağına giden özel ve sansürsüz bir yoldur. Otomatik seçilse bile, OnionShare bağlanmak için köprüleri kullanmayı deneyebilir.</string>
     <string name="settings_tor_my_bridges_title">Köprülerim</string>

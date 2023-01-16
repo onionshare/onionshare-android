@@ -9,7 +9,7 @@
     <string name="clipboard_onion_service_copied">OnionShare адреса скопійована до буфера обміну.</string>
     <string name="share_error_snackbar_action">Повторити</string>
     <string name="about_app_version">Версія застосунку %s</string>
-    <string name="notification_channel_name_foreground">Сповіщення про надсилання файлу</string>
+    <string name="notification_channel_name_foreground">Стан надсилання файлу</string>
     <string name="notification_sharing_text">Торкніться, щоб отримати доступ до адреси для обміну файлами.</string>
     <string name="share_error_snackbar_text">Не вдалося запустити OnionShare</string>
     <string name="sharing_notification_title">Наразі файли надсилаються</string>

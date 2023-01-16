@@ -52,7 +52,7 @@
         <item quantity="one">%1$d Element, %2$s</item>
         <item quantity="other">%1$d Elemente, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Benachrichtigung über die Dateifreigabe</string>
+    <string name="notification_channel_name_foreground">Status der Dateifreigabe</string>
     <string name="starting_notification_title">Dateien veröffentlichen…</string>
     <string name="settings_tor_my_bridges_title">Meine Brücken</string>
     <string name="share_error_file_snackbar_text">%s konnte nicht geöffnet werden. Entfernt.</string>
