@@ -30,7 +30,7 @@
     <string name="share_button_stopping">Deteniéndose… espera hasta que se detenga</string>
     <string name="share_onion_intro"><b>Cualquiera</b> con esta dirección de OnionShare puede <b>descargar</b> tus archivos usando el <b>Navegador Tor</b>:</string>
     <string name="clipboard_onion_service_label">Dirección de OnionShare</string>
-    <string name="notification_channel_name_foreground">Notificación de uso compartido de archivos</string>
+    <string name="notification_channel_name_foreground">Estado del intercambio de archivos</string>
     <string name="notification_channel_name_sharing">Compartir dirección disponible</string>
     <string name="notification_sharing_text">Tocar para acceder a la dirección para compartir los archivos.</string>
     <string name="starting_notification_title">Publicando archivos…</string>

@@ -33,7 +33,7 @@
         <item quantity="one">%1$d αντικείμενο, %2$s</item>
         <item quantity="other">%1$d αντικείμενα, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Ειδοποίηση διαμοιρασμού αρχείου</string>
+    <string name="notification_channel_name_foreground">Κατάσταση διαμοιρασμού αρχείου</string>
     <string name="notification_channel_name_sharing">Η διεύθυνση διαμοιρασμού είναι διαθέσιμη</string>
     <string name="notification_sharing_title">Το OnionShare είναι διαθέσιμο</string>
     <string name="notification_sharing_text">Πατήστε για διαμοιρασμό της διεύθυνσης διαμοιρασμού των αρχείων σας.</string>

@@ -36,7 +36,7 @@
         <item quantity="many">%1$d elementów, %2$s</item>
         <item quantity="other">%1$d elementów, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Powiadomienie o udostępnianiu plików</string>
+    <string name="notification_channel_name_foreground">Stan udostępniania plików</string>
     <string name="notification_channel_name_sharing">Adres udostępniania dostępny</string>
     <string name="notification_sharing_title">OnionShare dostępny</string>
     <string name="starting_notification_title">Publikowanie plików…</string>

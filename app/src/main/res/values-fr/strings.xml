@@ -49,7 +49,7 @@
     <string name="share_button_stop">Arrêter de partager</string>
     <string name="share_button_complete">Recommencer à partager</string>
     <string name="share_onion_intro"><b>Toute personne</b> possédant cette adresse OnionShare peut <b>télécharger</b> vos fichiers en utilisant <b>le navigateur Tor</b> :</string>
-    <string name="notification_channel_name_foreground">Notification de partage de fichiers</string>
+    <string name="notification_channel_name_foreground">Statut du partage de fichiers</string>
     <string name="clipboard_onion_service_label">Adresse OnionShare</string>
     <string name="starting_notification_title">Publication des fichiers…</string>
     <string name="about_text">OnionShare a été conçu par Micah Lee, et al. et son code source est ouvert, publié sous GPLv3.
