@@ -59,8 +59,12 @@ class ShareManager @Inject constructor(
         if (f is FilesState.Added && t is TorState.Stopped && w is WebServerState.Stopped && !w.downloadComplete) {
             if (f.files.isEmpty()) emit(ShareUiState.NoFiles)
             else emit(ShareUiState.FilesAdded(f.files))
-        } // handle error while adding files
-        else if (f is FilesState.Error) {
+        } // handle error while adding files while Tor is still starting or started
+        else if (f is FilesState.Error && (t is TorState.Starting || t is TorState.Started)) {
+            stopSharing()
+        } // handle error while adding files when Tor has stopped
+        else if (f is FilesState.Error && t is TorState.Stopped) {
+            // TODO notify the user when the app is not displayed
             emit(ShareUiState.ErrorAddingFile(f.files, f.errorFile))
             // special case handling for error state without file left
             if (f.files.isEmpty()) {
@@ -125,6 +129,8 @@ class ShareManager @Inject constructor(
             // TODO check if this always works as expected
             startSharingJob?.cancelAndJoin()
         }
+        // the ErrorAddingFile state is transient and needs manual reset to not persist
+        if (shareState.value is ShareUiState.ErrorAddingFile) fileManager.resetError()
         shouldStop.value = false
         // Attention: We'll launch sharing in Global scope, so it survives ViewModel death,
         // because this gets called implicitly by the ViewModel in ViewModelScope
