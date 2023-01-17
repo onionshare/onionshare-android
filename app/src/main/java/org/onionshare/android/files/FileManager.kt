@@ -72,9 +72,8 @@ class FileManager @Inject constructor(
     }
 
     private fun addFiles(uris: List<Uri>) {
-        val currentState = state.value
-        check(currentState is Added) { "Unexpected state: ${currentState::class.simpleName}" }
-        val existingFiles = currentState.files
+        checkModificationIsAllowed()
+        val existingFiles = state.value.files
         val files = uris.mapNotNull { uri ->
             // continue if we already have that file
             if (existingFiles.any { it.uri == uri }) return@mapNotNull null
@@ -91,7 +90,7 @@ class FileManager @Inject constructor(
     }
 
     fun removeFile(file: SendFile) {
-        check(state.value is Added) { "Unexpected state: ${state.value::class.simpleName}" }
+        checkModificationIsAllowed()
 
         // release persistable Uri permission again
         file.releaseUriPermission()
@@ -101,7 +100,7 @@ class FileManager @Inject constructor(
     }
 
     fun removeAll() {
-        check(state.value is Added) { "Unexpected state: ${state.value::class.simpleName}" }
+        checkModificationIsAllowed()
 
         // release persistable Uri permissions again
         state.value.files.iterator().forEach { file ->
@@ -127,9 +126,8 @@ class FileManager @Inject constructor(
 
     @Throws(IOException::class, FileErrorException::class)
     private suspend fun zipFilesInternal() {
-        val currentState = state.value
-        check(currentState is Added) { "Unexpected state: ${currentState::class.simpleName}" }
-        val files = currentState.files
+        checkModificationIsAllowed()
+        val files = state.value.files
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         val zipFile = ctx.getFileStreamPath(zipFileName)
         currentCoroutineContext().ensureActive()
@@ -196,6 +194,11 @@ class FileManager @Inject constructor(
         if (currentState is Zipping) currentState.zip.delete()
         if (currentState is Zipped) currentState.sendPage.zipFile.delete()
         _state.value = Added(currentState.files)
+    }
+
+    private fun checkModificationIsAllowed() {
+        // initial, completed and error state allow modification of file list
+        check(state.value !is Zipping) { "Unexpected state: ${state.value::class.simpleName}" }
     }
 
     private fun Uri.getFallBackName(): String? {
