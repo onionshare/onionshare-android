@@ -50,7 +50,9 @@ sealed class ShareUiState {
 
     data class Stopping(
         override val files: List<SendFile>,
-    ) : ShareUiState()
+    ) : ShareUiState() {
+        override val allowsModifyingFiles = false
+    }
 
     data class ErrorAddingFile(
         override val files: List<SendFile>,
