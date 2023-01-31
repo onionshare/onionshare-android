@@ -112,15 +112,16 @@ class FileManager @Inject constructor(
     suspend fun zipFiles() = withContext(Dispatchers.IO) {
         if (state.value is Zipped) return@withContext
         zipJob?.cancelAndJoin()
-        try {
-            @Suppress("BlockingMethodInNonBlockingContext")
-            zipJob = launch { zipFilesInternal() }
-        } catch (e: FileErrorException) {
-            // remove errorFile from list of files, so user can try again
-            val newFiles = state.value.files.toMutableList().apply { remove(e.file) }
-            _state.value = FilesState.Error(newFiles, e.file)
-        } catch (e: IOException) {
-            _state.value = FilesState.Error(state.value.files)
+        zipJob = launch {
+            try {
+                zipFilesInternal()
+            } catch (e: FileErrorException) {
+                // remove errorFile from list of files, so user can try again
+                val newFiles = state.value.files.toMutableList().apply { remove(e.file) }
+                _state.value = FilesState.Error(newFiles, e.file)
+            } catch (e: IOException) {
+                _state.value = FilesState.Error(state.value.files)
+            }
         }
     }
 
@@ -140,8 +141,6 @@ class FileManager @Inject constructor(
                         // check first if we got cancelled before adding another file to the zip
                         currentCoroutineContext().ensureActive()
                         val progress = ((i + 1) / files.size.toFloat() * 100).roundToInt()
-                        // TODO remove before release
-                        LOG.debug("Zipping next file $progress/100: ${file.basename}")
                         try {
                             ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                                 zipStream.putNextEntry(ZipEntry(file.basename))
@@ -193,7 +192,16 @@ class FileManager @Inject constructor(
         val currentState = state.value
         if (currentState is Zipping) currentState.zip.delete()
         if (currentState is Zipped) currentState.sendPage.zipFile.delete()
-        _state.value = Added(currentState.files)
+        _state.value = if (currentState is FilesState.Error) {
+            FilesState.Error(currentState.files, currentState.errorFile)
+        } else {
+            Added(currentState.files)
+        }
+    }
+
+    fun resetError() {
+        check(state.value is FilesState.Error) { "Unexpected state: ${state.value::class.simpleName}" }
+        _state.value = Added(state.value.files)
     }
 
     private fun checkModificationIsAllowed() {
