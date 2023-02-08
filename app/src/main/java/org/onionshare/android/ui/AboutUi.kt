@@ -28,10 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import org.onionshare.android.BuildConfig.VERSION_NAME
 import org.onionshare.android.R
 import org.onionshare.android.ui.theme.OnionshareTheme
 import org.onionshare.android.ui.theme.topBar
-import org.torproject.jni.BuildConfig.VERSION_NAME
 
 @Composable
 fun AboutUi(navController: NavHostController) {
