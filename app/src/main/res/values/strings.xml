@@ -19,6 +19,7 @@
     <string name="share_files_add">Add files</string>
     <string name="share_state_ready">Ready</string>
     <string name="share_state_starting">Starting…</string>
+    <string name="share_state_starting_text">⏱️ This could take a while. Feel free to leave the app. We\'ll notify you when ready.</string>
     <string name="share_state_sharing">Sharing</string>
     <string name="share_state_transfer_complete">Transfer complete</string>
     <string name="share_state_stopping">Stopping…</string>

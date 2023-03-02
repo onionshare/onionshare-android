@@ -135,7 +135,14 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
         }
         ProgressDivider(state)
         val colorControlNormal = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
-        if (state is ShareUiState.Sharing) {
+        @Suppress("CascadeIf") // not in the mood for 'when' right now
+        if (state is ShareUiState.Starting) {
+            Text(
+                text = stringResource(R.string.share_state_starting_text),
+                modifier = Modifier.padding(16.dp),
+            )
+            Divider(thickness = 2.dp)
+        } else if (state is ShareUiState.Sharing) {
             StyledLegacyText(
                 id = R.string.share_onion_intro,
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
