@@ -138,11 +138,6 @@ class TorManager @Inject constructor(
                 changeStartingState(progress)
             }
             return@RawEventListener
-        } else if (keyword == EVENT_WARN_MSG) {
-            if (data.startsWith("Pluggable Transport process terminated ")) {
-                LOG.error("Pluggable Transport process terminated unexpectedly. Stopping Tor...")
-                stop()
-            }
         }
         val onion = (state.value as? TorState.Starting)?.onion
         // descriptor upload counts as 90%
