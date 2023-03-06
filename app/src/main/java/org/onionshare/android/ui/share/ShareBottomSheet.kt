@@ -53,6 +53,7 @@ import org.onionshare.android.ui.theme.IndicatorSharing
 import org.onionshare.android.ui.theme.IndicatorStarting
 import org.onionshare.android.ui.theme.OnionRed
 import org.onionshare.android.ui.theme.OnionshareTheme
+import kotlin.random.Random
 
 private data class BottomSheetUi(
     val indicatorIcon: ImageVector = Icons.Filled.Circle,
@@ -162,8 +163,10 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
             }
             Divider(thickness = 2.dp)
         } else if (state is ShareUiState.Error) {
+            val textRes =
+                if (state.torFailedToConnect) R.string.share_state_error_tor_text else R.string.share_state_error_text
             Text(
-                text = stringResource(R.string.share_state_error_text),
+                text = stringResource(textRes),
                 modifier = Modifier.padding(16.dp),
             )
             Divider(thickness = 2.dp)
@@ -297,7 +300,7 @@ fun ShareBottomSheetErrorPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Error(emptyList()),
+                state = ShareUiState.Error(emptyList(), Random.nextBoolean()),
                 onSheetButtonClicked = {},
             )
         }

@@ -61,6 +61,7 @@ sealed class ShareUiState {
 
     data class Error(
         override val files: List<SendFile>,
+        val torFailedToConnect: Boolean = false,
     ) : ShareUiState()
 
 }

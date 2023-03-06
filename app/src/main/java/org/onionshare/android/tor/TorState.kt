@@ -2,7 +2,9 @@ package org.onionshare.android.tor
 
 sealed class TorState {
 
-    object Stopped : TorState()
+    data class Stopped(
+        val failedToConnect: Boolean,
+    ) : TorState()
 
     data class Starting(
         val progress: Int,
@@ -15,6 +17,8 @@ sealed class TorState {
         val onion: String,
     ) : TorState()
 
-    object Stopping : TorState()
+    data class Stopping(
+        val failedToConnect: Boolean,
+    ) : TorState()
 
 }

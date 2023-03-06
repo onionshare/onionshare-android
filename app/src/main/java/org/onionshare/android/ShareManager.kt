@@ -104,7 +104,13 @@ class ShareManager @Inject constructor(
         else if (!shouldStop && f is FilesState.Zipped &&
             (t is TorState.Stopping || t is TorState.Stopped || w is WebServerState.Stopped)
         ) {
-            emit(ShareUiState.Error(f.files))
+            notificationManager.onError()
+            val torFailed = (t as? TorState.Stopping)?.failedToConnect == true ||
+                (t as? TorState.Stopped)?.failedToConnect == true
+            LOG.info("Tor failed: $torFailed")
+            emit(ShareUiState.Error(f.files, torFailed))
+            // state hack to ensure the webserver also stops when tor fails, so we add files again
+            if (webserverManager.state.value !is WebServerState.Stopped) webserverManager.stop()
         } else {
             LOG.error("Unhandled state: ↑")
         }
