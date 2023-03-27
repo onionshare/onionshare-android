@@ -97,8 +97,8 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'com.google.android.material:material:1.8.0'
 
     implementation platform("androidx.compose:compose-bom:$compose_version")
@@ -118,12 +118,12 @@ dependencies {
     implementation 'org.briarproject:moat-api:0.2'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
-    implementation 'info.guardianproject:tor-android:0.4.7.8'
+    implementation 'info.guardianproject:tor-android:0.4.7.11'
     implementation 'info.guardianproject:jtorctl:0.4.5.7'
     tor 'org.briarproject:obfs4proxy-android:0.0.14-tor2'
     tor 'org.briarproject:snowflake-android:2.5.1'
 
-    def ktor_version = '2.2.3'
+    def ktor_version = '2.2.4'
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "io.ktor:ktor-server-pebble:$ktor_version"
