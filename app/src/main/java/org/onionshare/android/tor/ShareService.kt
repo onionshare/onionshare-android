@@ -2,6 +2,8 @@ package org.onionshare.android.tor
 
 import android.content.Intent
 import android.os.IBinder
+import androidx.core.app.ServiceCompat
+import androidx.core.app.ServiceCompat.stopForeground
 import dagger.hilt.android.AndroidEntryPoint
 import org.onionshare.android.ui.NOTIFICATION_ID_FOREGROUND
 import org.onionshare.android.ui.OnionNotificationManager
@@ -29,7 +31,7 @@ class ShareService : TorService() {
 
     override fun onDestroy() {
         LOG.debug("onDestroy")
-        stopForeground(true)
+        stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         super.onDestroy()
         // ensure this process terminates
         exitProcess(0)

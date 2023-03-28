@@ -3,8 +3,8 @@ package org.onionshare.android.tor
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.pm.ApplicationInfo
-import android.os.Build
 import android.os.Build.SUPPORTED_ABIS
+import android.os.Build.VERSION.SDK_INT
 import org.slf4j.LoggerFactory.getLogger
 import java.io.File
 import java.io.FileInputStream
@@ -56,7 +56,7 @@ class ExecutableManager @Inject constructor(
                 if (extracted.delete()) LOG.info("Deleted old binary")
                 else LOG.info("Failed to delete old binary")
             }
-        } else if (Build.VERSION.SDK_INT < 29) {
+        } else if (SDK_INT < 29) {
             // The binary wasn't extracted at install time. Try to extract it
             extractLibraryFromApk(libName, extracted)
         } else {

@@ -24,8 +24,10 @@ import javax.inject.Inject
 
 private const val CHANNEL_ID_FOREGROUND = "torSharingForegroundService"
 private const val CHANNEL_ID_SHARING = "torSharingStarted"
+private const val CHANNEL_ID_ERROR = "torErrorStarting"
 internal const val NOTIFICATION_ID_FOREGROUND = 1
 internal const val NOTIFICATION_ID_SHARING = 2
+internal const val NOTIFICATION_ID_ERROR = 3
 
 class OnionNotificationManager @Inject constructor(
     private val app: Application,
@@ -52,6 +54,12 @@ class OnionNotificationManager @Inject constructor(
         }
         if (!isActive) getSharingNotification().let {
             nm.notify(NOTIFICATION_ID_SHARING, it)
+        }
+    }
+
+    fun onError() {
+        if (!isActive) getErrorNotification().let {
+            nm.notify(NOTIFICATION_ID_ERROR, it)
         }
     }
 
@@ -93,14 +101,37 @@ class OnionNotificationManager @Inject constructor(
             .build()
     }
 
+    private fun getErrorNotification(): Notification {
+        return NotificationCompat.Builder(app, CHANNEL_ID_ERROR)
+            .setContentTitle(app.getText(R.string.notification_error_title))
+            .setContentText(app.getText(R.string.notification_error_text))
+            .setSmallIcon(R.drawable.ic_notification_error)
+            .setColor(getColor(app, R.color.purple_onion_light))
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setPriority(PRIORITY_HIGH)
+            .setCategory(CATEGORY_STATUS)
+            .build()
+    }
+
     @RequiresApi(26)
     private fun createNotificationChannels() {
-        NotificationChannel(CHANNEL_ID_FOREGROUND, app.getString(R.string.notification_channel_name_foreground),
-            IMPORTANCE_LOW).apply { setShowBadge(false) }.let {
+        NotificationChannel(
+            CHANNEL_ID_FOREGROUND, app.getString(R.string.notification_channel_name_foreground),
+            IMPORTANCE_LOW
+        ).apply { setShowBadge(false) }.let {
             nm.createNotificationChannel(it)
         }
-        NotificationChannel(CHANNEL_ID_SHARING, app.getString(R.string.notification_channel_name_sharing),
-            IMPORTANCE_HIGH).let {
+        NotificationChannel(
+            CHANNEL_ID_SHARING, app.getString(R.string.notification_channel_name_sharing),
+            IMPORTANCE_HIGH
+        ).let {
+            nm.createNotificationChannel(it)
+        }
+        NotificationChannel(
+            CHANNEL_ID_ERROR, app.getString(R.string.notification_channel_name_error),
+            IMPORTANCE_HIGH
+        ).let {
             nm.createNotificationChannel(it)
         }
     }

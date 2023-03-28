@@ -58,7 +58,7 @@ private val EVENTS = listOf(
     EVENT_WARN_MSG,
     EVENT_ERR_MSG,
 )
-private val BOOTSTRAP_REGEX = Regex("^NOTICE BOOTSTRAP PROGRESS=([0-9]{1,3}) .*$")
+private val BOOTSTRAP_REGEX = Regex("^NOTICE BOOTSTRAP PROGRESS=(\\d{1,3}) .*$")
 private val DEBUG_PARAMS_OBFS4 = if (BuildConfig.DEBUG) " -enableLogging -logLevel INFO" else ""
 private val DEBUG_PARAMS_SNOWFLAKE = if (BuildConfig.DEBUG) " -log-to-state-dir -log snowlog" else ""
 private val TOR_START_TIMEOUT_SINCE_START = MINUTES.toMillis(5)
@@ -73,7 +73,7 @@ class TorManager @Inject constructor(
     private val executableManager: ExecutableManager,
     private val locationUtils: AndroidLocationUtils,
 ) {
-    private val _state = MutableStateFlow<TorState>(TorState.Stopped)
+    private val _state = MutableStateFlow<TorState>(TorState.Stopped(false))
     internal val state = _state.asStateFlow()
     private val broadcastReceiver = object : BroadcastReceiver() {
         /**
@@ -90,7 +90,7 @@ class TorManager @Inject constructor(
                 }
                 TorService.STATUS_STOPPING -> {
                     LOG.debug("TorService: Stopping...")
-                    _state.value = TorState.Stopping
+                    _state.value = TorState.Stopping(false)
                 }
                 TorService.STATUS_OFF -> {
                     LOG.debug("TorService: Stopped")
@@ -138,11 +138,6 @@ class TorManager @Inject constructor(
                 changeStartingState(progress)
             }
             return@RawEventListener
-        } else if (keyword == EVENT_WARN_MSG) {
-            if (data.startsWith("Pluggable Transport process terminated ")) {
-                LOG.error("Pluggable Transport process terminated unexpectedly. Stopping Tor...")
-                stop()
-            }
         }
         val onion = (state.value as? TorState.Starting)?.onion
         // descriptor upload counts as 90%
@@ -189,11 +184,11 @@ class TorManager @Inject constructor(
         }
     }
 
-    fun stop() {
+    fun stop(failedToConnect: Boolean = false) {
         LOG.info("Stopping...")
         startCheckJob?.cancel()
         startCheckJob = null
-        _state.value = TorState.Stopping
+        _state.value = TorState.Stopping(failedToConnect)
         controlConnection = null
         Intent(app, ShareService::class.java).also { intent ->
             app.stopService(intent)
@@ -210,7 +205,8 @@ class TorManager @Inject constructor(
         }
         localSocket = null
         LOG.info("Stopped")
-        _state.value = TorState.Stopped
+        val failedToConnect = (state.value as? TorState.Stopping)?.failedToConnect == true
+        _state.value = TorState.Stopped(failedToConnect)
     }
 
     @Throws(IOException::class, IllegalArgumentException::class)
@@ -334,11 +330,8 @@ class TorManager @Inject constructor(
         LOG.info("Using built-in bridges...")
         useBridges(meekBridges + snowflakeBridges + obfs4Bridges)
         if (waitForTorToStart()) return
-        // TODO: let the user know that we can't connect and they need to get some custom bridges
-        // let's try without bridges again, just in case
-        LOG.info("Using no bridges...")
-        controlConnection?.setConf(listOf("UseBridges 0"))
-        controlConnection?.resetConf(listOf("Bridges"))
+        LOG.info("Could not connect to Tor, stopping...")
+        stop(failedToConnect = true)
     }
 
     /**
