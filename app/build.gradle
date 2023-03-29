@@ -23,9 +23,11 @@ android {
     compileSdk 33
 
     defaultConfig {
+        namespace "org.onionshare.android"
+
         applicationId "org.onionshare.android"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 11
         versionName "0.1.10-alpha"
 
