@@ -32,7 +32,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -80,7 +79,9 @@ fun ShareUi(
 ) {
     val state = stateFlow.collectAsState()
     val scaffoldState = rememberBottomSheetScaffoldState()
-    val offset = getOffsetInDp(scaffoldState.bottomSheetState.offset)
+    val offset = if (scaffoldState.bottomSheetState.isExpanded) {
+        getOffsetInDp(scaffoldState.bottomSheetState.requireOffset())
+    } else 0.dp
     if (state.value == ShareUiState.NoFiles) {
         Scaffold(
             topBar = { ActionBar(navController, R.string.app_name, state.value.allowsModifyingFiles) },
@@ -141,13 +142,12 @@ fun ShareUi(
 }
 
 @Composable
-private fun getOffsetInDp(offset: State<Float>): Dp {
-    val value by remember { offset }
-    if (value == 0f) return 0.dp
+private fun getOffsetInDp(offset: Float): Dp {
+    if (offset == 0f) return 0.dp
     val configuration = LocalConfiguration.current
     val screenHeight = with(LocalDensity.current) { configuration.screenHeightDp.dp.toPx() }
     return with(LocalDensity.current) {
-        (screenHeight - value).toDp()
+        (screenHeight - offset).toDp()
     }
 }
 
@@ -174,8 +174,8 @@ fun ActionBar(
                     onDismissRequest = { showMenu = false }
                 ) {
 
-                        DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
-                            Text(stringResource(R.string.settings_title))
+                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
+                        Text(stringResource(R.string.settings_title))
 
                     }
                     DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }) {
@@ -221,7 +221,8 @@ fun MainContent(
                 .fillMaxWidth()
                 .fillMaxHeight(),
         ) {
-            Box(contentAlignment = TopCenter,
+            Box(
+                contentAlignment = TopCenter,
                 modifier = Modifier
                     .padding(16.dp)
                     .background(MaterialTheme.colors.error)
