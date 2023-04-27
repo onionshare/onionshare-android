@@ -32,11 +32,6 @@
 
         <service
             android:name="org.onionshare.android.tor.ShareService"
-            android:exported="false"
-            android:process=":tor" />
-        <!-- Added TorService from upstream to ensure that it isn't exported. -->
-        <service
-            android:name="org.torproject.jni.TorService"
             android:exported="false" />
 
     </application>

@@ -1,5 +1,6 @@
 package org.onionshare.android.tor
 
+import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
@@ -8,14 +9,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.onionshare.android.ui.NOTIFICATION_ID_FOREGROUND
 import org.onionshare.android.ui.OnionNotificationManager
 import org.slf4j.LoggerFactory.getLogger
-import org.torproject.jni.TorService
 import javax.inject.Inject
-import kotlin.system.exitProcess
 
 private val LOG = getLogger(ShareService::class.java)
 
 @AndroidEntryPoint
-class ShareService : TorService() {
+class ShareService : Service() {
 
     @Inject
     internal lateinit var nm: OnionNotificationManager
@@ -33,7 +32,5 @@ class ShareService : TorService() {
         LOG.debug("onDestroy")
         stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         super.onDestroy()
-        // ensure this process terminates
-        exitProcess(0)
     }
 }
