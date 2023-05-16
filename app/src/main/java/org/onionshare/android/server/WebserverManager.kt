@@ -61,10 +61,15 @@ class WebserverManager @Inject constructor() {
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
         TrafficStats.setThreadStatsTag(0x42)
-        server = embeddedServer(Netty, PORT, watchPaths = emptyList(), configure = {
-            // disable response timeout
-            responseWriteTimeoutSeconds = 0
-        }) {
+        server = embeddedServer(
+            factory = Netty,
+            host = "127.0.0.1",
+            port = PORT,
+            watchPaths = emptyList(),
+            configure = {
+                // disable response timeout
+                responseWriteTimeoutSeconds = 0
+            }) {
             install(CallLogging)
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
