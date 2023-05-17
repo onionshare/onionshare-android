@@ -116,14 +116,13 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-    implementation 'org.briarproject:dont-kill-me-lib:0.2.5'
-    implementation 'org.briarproject:moat-api:0.2'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-
-    implementation 'info.guardianproject:tor-android:0.4.7.11'
-    implementation 'info.guardianproject:jtorctl:0.4.5.7'
+    // Tor
+    implementation "org.briarproject:onionwrapper-android:0.0.3"
+    tor 'org.briarproject:tor-android:0.4.7.13-2'
     tor 'org.briarproject:obfs4proxy-android:0.0.14-tor2'
     tor 'org.briarproject:snowflake-android:2.5.1'
+    implementation 'org.briarproject:moat-api:0.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
     def ktor_version = '2.2.4'
     implementation "io.ktor:ktor-server-core:$ktor_version"

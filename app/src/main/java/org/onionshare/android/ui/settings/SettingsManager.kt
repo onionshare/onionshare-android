@@ -8,7 +8,8 @@ import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionSche
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme
 import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM
-import org.onionshare.android.tor.AndroidLocationUtils
+import org.briarproject.onionwrapper.LocationUtils
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,11 +20,13 @@ private val VALID_BRIDGE_PREFIXES = listOf("obfs4", "meek_lite", "snowflake")
 @Singleton
 class SettingsManager @Inject constructor(
     app: Application,
-    private val locationUtils: AndroidLocationUtils,
+    private val locationUtils: LocationUtils,
 ) {
     private val masterKeyAlias = MasterKey.Builder(app).setKeyScheme(AES256_GCM).build()
-    private val sharedPreferences = EncryptedSharedPreferences.create(app, "secret_shared_prefs", masterKeyAlias,
-        AES256_SIV, PrefValueEncryptionScheme.AES256_GCM)
+    private val sharedPreferences = EncryptedSharedPreferences.create(
+        app, "secret_shared_prefs", masterKeyAlias,
+        AES256_SIV, PrefValueEncryptionScheme.AES256_GCM
+    )
 
     private val _automaticBridges = mutableStateOf(sharedPreferences.getBoolean(PREF_AUTO_BRIDGES, true))
     val automaticBridges: State<Boolean> = _automaticBridges
@@ -32,7 +35,10 @@ class SettingsManager @Inject constructor(
         mutableStateOf<List<String>>(sharedPreferences.getStringSet(PREF_CUSTOM_BRIDGES, emptySet())!!.toList())
     val customBridges: State<List<String>> = _customBridges
 
-    val currentCountry: String get() = locationUtils.currentCountryName
+    val currentCountry: String
+        get() = Locale.getAvailableLocales().find { locale ->
+            locale.country.equals(locationUtils.currentCountry, ignoreCase = true)
+        }?.displayCountry ?: locationUtils.currentCountry
 
     fun setAutomaticBridges(enabled: Boolean) {
         sharedPreferences.edit().putBoolean(PREF_AUTO_BRIDGES, enabled).apply()
