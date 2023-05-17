@@ -11,18 +11,12 @@ import android.util.Base64.encodeToString
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.onionshare.android.R
-import org.onionshare.android.files.FilesState.Added
-import org.onionshare.android.files.FilesState.Zipped
-import org.onionshare.android.files.FilesState.Zipping
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import org.slf4j.LoggerFactory.getLogger
@@ -45,11 +39,10 @@ class FileManager @Inject constructor(
     app: Application,
 ) {
     private val ctx = app.applicationContext
-    private val _state = MutableStateFlow<FilesState>(Added(emptyList()))
-    val state = _state.asStateFlow()
-
-    @Volatile
-    private var zipJob: Job? = null
+    private val _filesStateState = MutableStateFlow(FilesState(emptyList()))
+    val filesState = _filesStateState.asStateFlow()
+    private val _zipState = MutableStateFlow<ZipState?>(null)
+    val zipState = _zipState.asStateFlow()
 
     suspend fun addFiles(uris: List<Uri>, takePermission: Boolean) = withContext(Dispatchers.IO) {
         // taking persistable permissions only works with OPEN_DOCUMENT, not GET_CONTENT
@@ -72,8 +65,7 @@ class FileManager @Inject constructor(
     }
 
     private fun addFiles(uris: List<Uri>) {
-        checkModificationIsAllowed()
-        val existingFiles = state.value.files
+        val existingFiles = filesState.value.files
         val files = uris.mapNotNull { uri ->
             // continue if we already have that file
             if (existingFiles.any { it.uri == uri }) return@mapNotNull null
@@ -86,55 +78,47 @@ class FileManager @Inject constructor(
             }
             SendFile(name, sizeHuman, size, uri, documentFile.type)
         }
-        _state.value = Added(existingFiles + files)
+        _filesStateState.value = FilesState(existingFiles + files)
     }
 
     fun removeFile(file: SendFile) {
-        checkModificationIsAllowed()
-
         // release persistable Uri permission again
         file.releaseUriPermission()
 
-        val newList = state.value.files.filterNot { it == file }
-        _state.value = Added(newList)
+        val newList = filesState.value.files.filterNot { it == file }
+        _filesStateState.value = FilesState(newList)
     }
 
     fun removeAll() {
-        checkModificationIsAllowed()
-
         // release persistable Uri permissions again
-        state.value.files.iterator().forEach { file ->
+        filesState.value.files.iterator().forEach { file ->
             file.releaseUriPermission()
         }
-        _state.value = Added(emptyList())
+        _filesStateState.value = FilesState(emptyList())
     }
 
-    suspend fun zipFiles() = withContext(Dispatchers.IO) {
-        if (state.value is Zipped) return@withContext
-        zipJob?.cancelAndJoin()
-        zipJob = launch {
-            try {
-                zipFilesInternal()
-            } catch (e: FileErrorException) {
-                // remove errorFile from list of files, so user can try again
-                val newFiles = state.value.files.toMutableList().apply { remove(e.file) }
-                _state.value = FilesState.Error(newFiles, e.file)
-            } catch (e: IOException) {
-                _state.value = FilesState.Error(state.value.files)
-            }
+    suspend fun zipFiles(): ZipResult = withContext(Dispatchers.IO) {
+        try {
+            val sendPage = zipFilesInternal()
+            ZipResult.Zipped(sendPage)
+        } catch (e: FileErrorException) {
+            // remove errorFile from list of files, so user can try again
+            val newFiles = filesState.value.files.toMutableList().apply { remove(e.file) }
+            _filesStateState.value = FilesState(newFiles)
+            ZipResult.Error(e.file)
+        } catch (e: Exception) {
+            ZipResult.Error()
         }
     }
 
     @Throws(IOException::class, FileErrorException::class)
-    private suspend fun zipFilesInternal() {
-        checkModificationIsAllowed()
-        val files = state.value.files
+    private suspend fun zipFilesInternal(): SendPage {
+        val files = filesState.value.files
         val zipFileName = encodeToString(Random.nextBytes(32), NO_PADDING or URL_SAFE).trimEnd()
         val zipFile = ctx.getFileStreamPath(zipFileName)
         currentCoroutineContext().ensureActive()
-        _state.value = Zipping(files, zipFile, 0)
+        _zipState.value = ZipState(zipFile, 0)
         try {
-            @Suppress("BlockingMethodInNonBlockingContext")
             ctx.openFileOutput(zipFileName, MODE_PRIVATE).use { fileOutputStream ->
                 ZipOutputStream(fileOutputStream).use { zipStream ->
                     files.forEachIndexed { i, file ->
@@ -147,7 +131,7 @@ class FileManager @Inject constructor(
                                 inputStream.copyTo(zipStream)
                             }
                             currentCoroutineContext().ensureActive()
-                            _state.value = Zipping(files, zipFile, progress)
+                            _zipState.value = ZipState(zipFile, progress)
                         } catch (e: FileNotFoundException) {
                             LOG.warn("Error while opening file: ", e)
                             throw FileErrorException(file)
@@ -159,18 +143,16 @@ class FileManager @Inject constructor(
                 }
             }
         } catch (e: CancellationException) {
+            LOG.info("Got cancelled, deleting zip file...")
             zipFile.delete()
             throw e
         }
         currentCoroutineContext().ensureActive()
-        _state.value = Zipping(files, zipFile, 100)
+        _zipState.value = ZipState(zipFile, 100)
         zipFile.deleteOnExit()
 
         // get SendPage for updating to final state
-        @Suppress("BlockingMethodInNonBlockingContext")
-        val sendPage = getSendPage(files, zipFile)
-        currentCoroutineContext().ensureActive()
-        _state.value = Zipped(files, sendPage)
+        return getSendPage(files, zipFile)
     }
 
     @Throws(IOException::class)
@@ -186,27 +168,10 @@ class FileManager @Inject constructor(
         }
     }
 
-    suspend fun stop() {
-        // cancel running zipJob and wait here until cancelled
-        zipJob?.cancelAndJoin()
-        val currentState = state.value
-        if (currentState is Zipping) currentState.zip.delete()
-        if (currentState is Zipped) currentState.sendPage.zipFile.delete()
-        _state.value = if (currentState is FilesState.Error) {
-            FilesState.Error(currentState.files, currentState.errorFile)
-        } else {
-            Added(currentState.files)
-        }
-    }
-
-    fun resetError() {
-        check(state.value is FilesState.Error) { "Unexpected state: ${state.value::class.simpleName}" }
-        _state.value = Added(state.value.files)
-    }
-
-    private fun checkModificationIsAllowed() {
-        // initial, completed and error state allow modification of file list
-        check(state.value !is Zipping) { "Unexpected state: ${state.value::class.simpleName}" }
+    fun stop() {
+        _zipState.value?.zip?.delete()
+        // TODO
+        // if (currentState is ZipResult.Zipped) currentState.sendPage.zipFile.delete()
     }
 
     private fun Uri.getFallBackName(): String? {

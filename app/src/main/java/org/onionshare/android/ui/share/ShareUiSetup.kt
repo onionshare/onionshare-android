@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.GetMultipleContents
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import org.briarproject.android.dontkillmelib.DozeUtils.getDozeWhitelistingIntent
@@ -35,14 +36,16 @@ internal fun ShareUiSetup(navController: NavHostController, viewModel: MainViewM
         // TODO we might want to do user testing here to see if the assumption holds
         viewModel.onSheetButtonClicked()
     }
+    val shareState = viewModel.shareState.collectAsState()
+    val filesState = viewModel.filesState.collectAsState()
     ShareUi(
         navController = navController,
-        stateFlow = viewModel.shareState,
+        shareState = shareState.value,
+        filesState = filesState.value,
         onFabClicked = { onFabClicked(context, contentLauncher, contentFallbackLauncher) },
         onFileRemove = viewModel::removeFile,
-        onRemoveAll = viewModel::removeAll,
-        onSheetButtonClicked = { onSheetButtonClicked(context, viewModel, batteryLauncher) }
-    )
+        onRemoveAll = viewModel::removeAll
+    ) { onSheetButtonClicked(context, viewModel, batteryLauncher) }
 }
 
 private fun onUrisReceived(
@@ -80,8 +83,7 @@ private fun onSheetButtonClicked(
     viewModel: MainViewModel,
     batteryLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
 ) {
-    if (viewModel.shareState.value is ShareUiState.FilesAdded && viewModel.needsDozeWhitelisting
-    ) {
+    if (viewModel.shareState.value is ShareUiState.AddingFiles && viewModel.needsDozeWhitelisting) {
         try {
             batteryLauncher.launch(getDozeWhitelistingIntent(context))
         } catch (e: ActivityNotFoundException) {

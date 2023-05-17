@@ -1,25 +1,15 @@
 package org.onionshare.android.ui.share
 
-import org.onionshare.android.files.totalSize
 import org.onionshare.android.server.SendFile
 
 sealed class ShareUiState {
 
-    abstract val files: List<SendFile>
     open val allowsModifyingFiles = true
     open val collapsableSheet = false
-    val totalSize: Long get() = files.totalSize
 
-    object NoFiles : ShareUiState() {
-        override val files = emptyList<SendFile>()
-    }
-
-    data class FilesAdded(
-        override val files: List<SendFile>,
-    ) : ShareUiState()
+    object AddingFiles : ShareUiState()
 
     data class Starting(
-        override val files: List<SendFile>,
         private val zipPercent: Int,
         private val torPercent: Int,
     ) : ShareUiState() {
@@ -37,31 +27,25 @@ sealed class ShareUiState {
     }
 
     data class Sharing(
-        override val files: List<SendFile>,
         val onionAddress: String,
     ) : ShareUiState() {
         override val allowsModifyingFiles = false
         override val collapsableSheet = true
     }
 
-    data class Complete(
-        override val files: List<SendFile>,
-    ) : ShareUiState()
+    object Complete : ShareUiState()
 
-    data class Stopping(
-        override val files: List<SendFile>,
-    ) : ShareUiState() {
+    object Stopping : ShareUiState() {
         override val allowsModifyingFiles = false
     }
 
     data class ErrorAddingFile(
-        override val files: List<SendFile>,
         val errorFile: SendFile? = null,
     ) : ShareUiState()
 
     data class Error(
-        override val files: List<SendFile>,
         val torFailedToConnect: Boolean = false,
+        val errorMsg: String? = null,
     ) : ShareUiState()
 
 }

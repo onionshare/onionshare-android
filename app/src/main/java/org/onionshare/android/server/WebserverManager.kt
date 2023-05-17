@@ -38,7 +38,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private val LOG = LoggerFactory.getLogger(WebserverManager::class.java)
-internal const val PORT: Int = 17638
 
 sealed class WebServerState {
     object Starting : WebServerState()
@@ -55,15 +54,15 @@ class WebserverManager @Inject constructor() {
     private val _state = MutableStateFlow<WebServerState>(WebServerState.Stopped(false))
     val state = _state.asStateFlow()
 
-    fun start(sendPage: SendPage) {
+    suspend fun start(sendPage: SendPage): Int {
         _state.value = WebServerState.Starting
         val staticPath = getStaticPath()
         val staticPathMap = mapOf("static_url_path" to staticPath)
         TrafficStats.setThreadStatsTag(0x42)
-        server = embeddedServer(
+        val server = embeddedServer(
             factory = Netty,
             host = "127.0.0.1",
-            port = PORT,
+            port = 0, // will be chosen randomly
             watchPaths = emptyList(),
             configure = {
                 // disable response timeout
@@ -80,6 +79,8 @@ class WebserverManager @Inject constructor() {
                 sendRoutes(sendPage, staticPathMap)
             }
         }.also { it.start() }
+        this.server = server
+        return server.resolvedConnectors().first().port
     }
 
     fun stop(isFinishingDownloading: Boolean = false) {

@@ -63,11 +63,12 @@ private data class BottomSheetUi(
 )
 
 private fun getBottomSheetUi(state: ShareUiState) = when (state) {
-    is ShareUiState.FilesAdded -> BottomSheetUi(
+    is ShareUiState.AddingFiles -> BottomSheetUi(
         indicatorColor = IndicatorReady,
         stateText = R.string.share_state_ready,
         buttonText = R.string.share_button_start,
     )
+
     is ShareUiState.Starting -> BottomSheetUi(
         indicatorColor = IndicatorStarting,
         stateText = R.string.share_state_starting,
@@ -99,12 +100,10 @@ private fun getBottomSheetUi(state: ShareUiState) = when (state) {
         stateText = R.string.share_state_error,
         buttonText = R.string.share_button_error,
     )
-    is ShareUiState.NoFiles -> error("No bottom sheet in empty state.")
 }
 
 @Composable
 fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
-    if (state is ShareUiState.NoFiles) return
     val sheetUi = getBottomSheetUi(state)
     Column {
         if (state.collapsableSheet) Image(
@@ -226,7 +225,7 @@ fun ShareBottomSheetReadyPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.FilesAdded(emptyList()),
+                state = ShareUiState.AddingFiles,
                 onSheetButtonClicked = {},
             )
         }
@@ -239,7 +238,7 @@ fun ShareBottomSheetStartingPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Starting(emptyList(), 25, 50),
+                state = ShareUiState.Starting(25, 50),
                 onSheetButtonClicked = {},
             )
         }
@@ -253,7 +252,6 @@ fun ShareBottomSheetSharingPreview() {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
                 state = ShareUiState.Sharing(
-                    emptyList(),
                     "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/",
                 ),
                 onSheetButtonClicked = {},
@@ -274,7 +272,7 @@ fun ShareBottomSheetCompletePreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Complete(emptyList()),
+                state = ShareUiState.Complete,
                 onSheetButtonClicked = {},
             )
         }
@@ -287,7 +285,7 @@ fun ShareBottomSheetStoppingPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Stopping(emptyList()),
+                state = ShareUiState.Stopping,
                 onSheetButtonClicked = {},
             )
         }
@@ -300,7 +298,7 @@ fun ShareBottomSheetErrorPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Error(emptyList(), Random.nextBoolean()),
+                state = ShareUiState.Error(Random.nextBoolean()),
                 onSheetButtonClicked = {},
             )
         }

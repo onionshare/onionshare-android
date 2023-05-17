@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.briarproject.android.dontkillmelib.DozeUtils.needsDozeWhitelisting
 import org.onionshare.android.ShareManager
 import org.onionshare.android.files.FileManager
+import org.onionshare.android.files.FilesState
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.settings.SettingsManager
 import org.onionshare.android.ui.share.ShareUiState
@@ -24,6 +25,7 @@ class MainViewModel @Inject constructor(
 ) : AndroidViewModel(app) {
 
     val shareState: StateFlow<ShareUiState> = shareManager.shareState
+    val filesState: StateFlow<FilesState> = shareManager.filesState
 
     val needsDozeWhitelisting get() = needsDozeWhitelisting(getApplication())
 

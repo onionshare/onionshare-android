@@ -4,24 +4,23 @@ import org.onionshare.android.server.SendFile
 import org.onionshare.android.server.SendPage
 import java.io.File
 
-sealed class FilesState {
-    abstract val files: List<SendFile>
+data class FilesState(val files: List<SendFile>) {
+    val totalSize: Long get() = files.totalSize
+}
 
-    data class Added(override val files: List<SendFile>) : FilesState()
+data class ZipState(
+    val zip: File,
+    val progress: Int,
+)
 
-    data class Zipping(
-        override val files: List<SendFile>,
-        val zip: File,
-        val progress: Int,
-    ) : FilesState()
+sealed class ZipResult {
 
     data class Zipped(
-        override val files: List<SendFile>,
         val sendPage: SendPage,
-    ) : FilesState()
+    ) : ZipResult()
 
     data class Error(
-        override val files: List<SendFile>,
         val errorFile: SendFile? = null,
-    ) : FilesState()
+    ) : ZipResult()
+
 }

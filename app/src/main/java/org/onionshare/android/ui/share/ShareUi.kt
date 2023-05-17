@@ -32,7 +32,6 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,9 +54,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import org.onionshare.android.R
+import org.onionshare.android.files.FilesState
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.ROUTE_ABOUT
 import org.onionshare.android.ui.ROUTE_SETTINGS
@@ -71,23 +69,23 @@ private val bottomSheetPeekHeight = 60.dp
 @OptIn(ExperimentalMaterialApi::class)
 fun ShareUi(
     navController: NavHostController,
-    stateFlow: StateFlow<ShareUiState>,
+    shareState: ShareUiState,
+    filesState: FilesState,
     onFabClicked: () -> Unit,
     onFileRemove: (SendFile) -> Unit,
     onRemoveAll: () -> Unit,
     onSheetButtonClicked: () -> Unit,
 ) {
-    val state = stateFlow.collectAsState()
     val scaffoldState = rememberBottomSheetScaffoldState()
     val offset = getOffsetInDp(scaffoldState.bottomSheetState)
-    if (state.value == ShareUiState.NoFiles) {
+    if (shareState == ShareUiState.AddingFiles && filesState.files.isEmpty()) {
         Scaffold(
-            topBar = { ActionBar(navController, R.string.app_name, state.value.allowsModifyingFiles) },
+            topBar = { ActionBar(navController, R.string.app_name, shareState.allowsModifyingFiles) },
             floatingActionButton = {
                 Fab(scaffoldState.bottomSheetState, onFabClicked)
             },
         ) { innerPadding ->
-            MainContent(stateFlow, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
+            MainContent(shareState, filesState, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
         }
         LaunchedEffect("hideSheet") {
             // This ensures the FAB color can animate back when we transition to NoFiles state
@@ -98,15 +96,15 @@ fun ShareUi(
             delay(750)
             scaffoldState.bottomSheetState.expand()
         }
-        val uiState = state.value
-        if (uiState is ShareUiState.ErrorAddingFile) {
-            val errorFile = uiState.errorFile
+        if (shareState is ShareUiState.ErrorAddingFile) {
+            val errorFile = shareState.errorFile
             val text = if (errorFile != null) {
                 stringResource(R.string.share_error_file_snackbar_text, errorFile.basename)
             } else {
                 stringResource(R.string.share_error_snackbar_text)
             }
-            val action = if (uiState.files.isEmpty()) null else stringResource(R.string.share_error_snackbar_action)
+            val action =
+                if (filesState.files.isEmpty()) null else stringResource(R.string.share_error_snackbar_action)
             LaunchedEffect("showSnackbar") {
                 val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
                     message = text,
@@ -116,25 +114,25 @@ fun ShareUi(
                 if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
             }
         }
-        if (!uiState.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
+        if (!shareState.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
             // ensure the bottom sheet is visible
-            LaunchedEffect(uiState) {
+            LaunchedEffect(shareState) {
                 scaffoldState.bottomSheetState.expand()
             }
         }
         BottomSheetScaffold(
-            topBar = { ActionBar(navController, R.string.app_name, uiState.allowsModifyingFiles) },
-            floatingActionButton = if (uiState.allowsModifyingFiles) {
+            topBar = { ActionBar(navController, R.string.app_name, shareState.allowsModifyingFiles) },
+            floatingActionButton = if (shareState.allowsModifyingFiles) {
                 { Fab(scaffoldState.bottomSheetState, onFabClicked) }
             } else null,
-            sheetGesturesEnabled = uiState.collapsableSheet,
+            sheetGesturesEnabled = shareState.collapsableSheet,
             sheetPeekHeight = bottomSheetPeekHeight,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
             sheetElevation = 16.dp,
-            sheetContent = { BottomSheet(uiState, onSheetButtonClicked) }
+            sheetContent = { BottomSheet(shareState, onSheetButtonClicked) }
         ) { innerPadding ->
-            MainContent(stateFlow, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
+            MainContent(shareState, filesState, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
         }
     }
 }
@@ -213,14 +211,14 @@ fun Fab(scaffoldState: BottomSheetState, onFabClicked: () -> Unit) {
 
 @Composable
 fun MainContent(
-    stateFlow: StateFlow<ShareUiState>,
+    shareState: ShareUiState,
+    filesState: FilesState,
     offset: Dp,
     onFileRemove: (SendFile) -> Unit,
     onRemoveAll: () -> Unit,
     modifier: Modifier,
 ) {
-    val state = stateFlow.collectAsState()
-    if (state.value is ShareUiState.NoFiles) {
+    if (shareState is ShareUiState.AddingFiles && filesState.files.isEmpty()) {
         Box(
             modifier = modifier
                 .fillMaxWidth()
@@ -259,7 +257,7 @@ fun MainContent(
             }
         }
     } else {
-        FileList(Modifier.padding(bottom = offset), state, onFileRemove, onRemoveAll)
+        FileList(Modifier.padding(bottom = offset), shareState, filesState, onFileRemove, onRemoveAll)
     }
 }
 
@@ -272,7 +270,8 @@ fun DefaultPreview() {
     OnionshareTheme {
         ShareUi(
             navController = rememberNavController(),
-            stateFlow = MutableStateFlow(ShareUiState.FilesAdded(files)),
+            shareState = ShareUiState.AddingFiles,
+            filesState = FilesState(files),
             onFabClicked = {},
             onFileRemove = {},
             onRemoveAll = {},
@@ -286,7 +285,8 @@ fun NightModePreview() {
     OnionshareTheme {
         ShareUi(
             navController = rememberNavController(),
-            stateFlow = MutableStateFlow(ShareUiState.NoFiles),
+            shareState = ShareUiState.AddingFiles,
+            filesState = FilesState(emptyList()),
             onFabClicked = {},
             onFileRemove = {},
             onRemoveAll = {},

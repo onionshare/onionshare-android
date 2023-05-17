@@ -29,7 +29,6 @@ import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Slideshow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +42,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.onionshare.android.R
+import org.onionshare.android.files.FilesState
 import org.onionshare.android.server.SendFile
 import org.onionshare.android.ui.theme.OnionAccent
 import org.onionshare.android.ui.theme.OnionshareTheme
@@ -50,13 +50,14 @@ import org.onionshare.android.ui.theme.OnionshareTheme
 @Composable
 fun FileList(
     modifier: Modifier = Modifier,
-    state: State<ShareUiState>,
+    state: ShareUiState,
+    filesState: FilesState,
     onFileRemove: (SendFile) -> Unit,
     onRemoveAll: () -> Unit,
 ) {
-    val files = state.value.files
+    val files = filesState.files
     val ctx = LocalContext.current
-    val totalSize = formatShortFileSize(ctx, state.value.totalSize)
+    val totalSize = formatShortFileSize(ctx, filesState.totalSize)
     val res = ctx.resources
     val text =
         res.getQuantityString(R.plurals.share_file_list_summary, files.size, files.size, totalSize)
@@ -68,10 +69,12 @@ fun FileList(
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text, modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp))
-                if (state.value.allowsModifyingFiles) {
+                Text(
+                    text, modifier = Modifier
+                        .weight(1f)
+                        .padding(16.dp)
+                )
+                if (state.allowsModifyingFiles) {
                     TextButton(onClick = onRemoveAll, Modifier.padding(end = 8.dp)) {
                         Text(
                             text = stringResource(R.string.clear_all),
@@ -82,7 +85,7 @@ fun FileList(
             }
         }
         items(files) { file ->
-            FileRow(file, state.value.allowsModifyingFiles, onFileRemove)
+            FileRow(file, state.allowsModifyingFiles, onFileRemove)
         }
     }
 }
@@ -182,10 +185,7 @@ fun FileListPreviewDark() {
             val files = listOf(
                 SendFile("foo bar file", "1337 KiB", 1, Uri.parse("/foo"), null),
             )
-            val mutableState = remember {
-                mutableStateOf(ShareUiState.FilesAdded(files))
-            }
-            FileList(Modifier, mutableState, {}) {}
+            FileList(Modifier, ShareUiState.AddingFiles, FilesState(files), {}) {}
         }
     }
 }
@@ -199,9 +199,6 @@ fun FileListPreview() {
             SendFile("bar", "42 MiB", 2, Uri.parse("/bar"), "video/mp4"),
             SendFile("foo bar", "23 MiB", 3, Uri.parse("/foo/bar"), null),
         )
-        val mutableState = remember {
-            mutableStateOf(ShareUiState.FilesAdded(files))
-        }
-        FileList(Modifier, mutableState, {}) {}
+        FileList(Modifier, ShareUiState.AddingFiles, FilesState(files), {}) {}
     }
 }
