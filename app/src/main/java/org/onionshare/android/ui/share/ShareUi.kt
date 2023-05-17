@@ -79,9 +79,7 @@ fun ShareUi(
 ) {
     val state = stateFlow.collectAsState()
     val scaffoldState = rememberBottomSheetScaffoldState()
-    val offset = if (scaffoldState.bottomSheetState.isExpanded) {
-        getOffsetInDp(scaffoldState.bottomSheetState.requireOffset())
-    } else 0.dp
+    val offset = getOffsetInDp(scaffoldState.bottomSheetState)
     if (state.value == ShareUiState.NoFiles) {
         Scaffold(
             topBar = { ActionBar(navController, R.string.app_name, state.value.allowsModifyingFiles) },
@@ -142,7 +140,14 @@ fun ShareUi(
 }
 
 @Composable
-private fun getOffsetInDp(offset: Float): Dp {
+@OptIn(ExperimentalMaterialApi::class)
+private fun getOffsetInDp(bottomSheetState: BottomSheetState): Dp {
+    if (!bottomSheetState.isExpanded) return 0.dp
+    val offset = try {
+        bottomSheetState.requireOffset()
+    } catch (e: IllegalStateException) {
+        0f
+    }
     if (offset == 0f) return 0.dp
     val configuration = LocalConfiguration.current
     val screenHeight = with(LocalDensity.current) { configuration.screenHeightDp.dp.toPx() }
