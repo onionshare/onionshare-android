@@ -63,7 +63,7 @@
     <string name="settings_tor_automatic">Automatico in base alla posizione</string>
     <string name="settings_tor_bridges_none">Nessuno aggiunto</string>
     <string name="settings_tor_bridges_intro">Tocca il link in basso per ottenere i bridge. Quindi incolla una o più linee di collegamento nel campo sottostante.</string>
-    <string name="notification_channel_name_foreground">Notifica di condivisione file</string>
+    <string name="notification_channel_name_foreground">Stato condivisione file</string>
     <plurals name="share_file_list_summary">
         <item quantity="one">%1$d elemento, %2$s</item>
         <item quantity="many">%1$d elementi, %2$s</item>

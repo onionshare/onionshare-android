@@ -1,2 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu">Menu</string>
+    <string name="share_button_error">Tente novamente</string>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="back">Voltar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add">Adicionar</string>
+    <string name="share">Compartilhar</string>
+    <string name="delete">Apagar</string>
+    <string name="paste">Colar</string>
+    <string name="add_files_not_supported">O seu aparelho não suporta a adição de ficheiros</string>
+    <string name="unknown">desconhecido</string>
+    <string name="remove">Remover</string>
+    <string name="share_empty_state">Nada aqui ainda.</string>
+    <string name="warning_alpha_intro">Aviso:</string>
+    <string name="share_state_stopping">Parando…</string>
+    <string name="warning_alpha">Esta é uma versão alpha inicial. Deve ser usado apenas para testes. O código não está finalizado e não foi auditado.</string>
+    <string name="warning_no_files_added">Nenhum ficheiro selecionado.</string>
+    <string name="clear_all">Limpar tudo</string>
+    <string name="share_files_add">Adicionar ficheiros</string>
+    <string name="share_state_ready">Preparar</string>
+    <string name="share_state_starting">Iniciando…</string>
+    <string name="share_state_sharing">Compartilhando</string>
+    <string name="share_state_transfer_complete">Transferência completa</string>
+    <string name="share_state_error">Erro</string>
+    <string name="share_state_error_text">Ocorreu um problema inesperado.</string>
+    <string name="share_button_start">Iniciar compartilhamento</string>
+    <string name="share_button_starting">Iniciando… toque para cancelar</string>
+    <string name="share_button_stop">Pare de compartilhar</string>
+    <string name="share_button_stopping">Parando… espere até parar</string>
+    <string name="share_error_snackbar_text">Não foi possível iniciar o OnionShare</string>
+    <string name="clipboard_onion_service_label">Endereço OnionShare</string>
+    <string name="clipboard_onion_service_copied">Endereço OnionShare copiado para a área de transferência.</string>
+    <string name="notification_channel_name_sharing">Endereço de compartilhamento disponível</string>
+    <string name="notification_sharing_title">OnionShare disponível</string>
+    <string name="notification_sharing_text">Toque para acessar o endereço para compartilhar os seus ficheiros.</string>
+    <string name="starting_notification_title">Publicando ficheiros…</string>
+    <string name="starting_notification_text">Isto pode demorar algum tempo.</string>
+    <string name="sharing_notification_title">Atualmente compartilhando ficheiros</string>
+    <string name="share_error_file_snackbar_text">Não foi possível abrir %s. Removido.</string>
+    <string name="share_error_snackbar_action">Tentar novamente</string>
+    <string name="about_title">Sobre</string>
+    <string name="about_app_version">Versão da app %s</string>
+    <string name="about_text">OnionShare foi desenvolvido por Micah Lee, et al. e é de código aberto, lançado sob GPLv3.
+\n
+\nComo todo software, o OnionShare pode conter bugs ou vulnerabilidades.</string>
+    <string name="about_contributors">Contribuidores</string>
+    <string name="about_contributor_creator">%s, Criador</string>
+    <string name="about_contributor_pm">%s, Gestor de projeto</string>
+    <string name="about_contributor_design">%s, Designer de produto</string>
+    <string name="about_contributing_orgs">Organizações contribuintes</string>
+    <string name="settings_title">Configurações</string>
+    <string name="settings_tor_title">Conectando ao Tor</string>
+    <string name="settings_tor_automatic">Automático com base na localização</string>
+    <string name="settings_tor_intro">Uma ponte é uma rota dedicada sem censura para a rede Tor. Mesmo que Automático seja selecionado, o OnionShare pode tentar usar pontes para se conectar.</string>
+    <string name="settings_tor_bridges_title">Pontes personalizadas</string>
+    <string name="settings_tor_bridges_none">Nenhum adicionado</string>
+    <string name="settings_tor_bridges_intro">Toque na ligação abaixo para obter pontes. Em seguida, cole uma ou mais linhas de ponte no campo abaixo.</string>
+    <string name="settings_tor_my_bridges_title">Minhas pontes</string>
+    <string name="notification_channel_name_foreground">Status de compartilhamento de ficheiros</string>
+</resources>

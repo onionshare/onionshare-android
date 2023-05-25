@@ -59,4 +59,17 @@
     <string name="settings_tor_title">Conectando ao Tor</string>
     <string name="settings_tor_bridges_title">Pontes personalizadas</string>
     <string name="settings_tor_my_bridges_title">Minhas pontes</string>
+    <string name="share_button_complete">Comece a compartilhar novamente</string>
+    <string name="share_onion_intro"><b>Qualquer pessoa</b> com este endereço OnionShare pode <b>baixar</b> seus arquivos usando o <b>Tor Browser</b>:</string>
+    <string name="about_contributor_android">%s, Engenheiro Android</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d item, %2$s</item>
+        <item quantity="many">%1$d itens, %2$s</item>
+        <item quantity="other">%1$d item, %2$s</item>
+    </plurals>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d ponte adicionada</item>
+        <item quantity="many">%d pontes adicionadas</item>
+        <item quantity="other">%d pontes adicionadas</item>
+    </plurals>
 </resources>

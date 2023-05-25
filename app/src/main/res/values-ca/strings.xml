@@ -1,2 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="back">Enrere</string>
+    <string name="menu">Menú</string>
+    <string name="cancel">Cancel·la</string>
+    <string name="add">Afegeix</string>
+    <string name="share">Comparteix</string>
+    <string name="delete">Suprimeix</string>
+    <string name="paste">Enganxa</string>
+    <string name="add_files_not_supported">El dispositiu no permet afegir-hi fitxers</string>
+    <string name="unknown">desconegut</string>
+    <string name="remove">Elimina</string>
+    <string name="share_empty_state">Encara no hi ha res.</string>
+    <string name="warning_alpha_intro">Atenció:</string>
+    <string name="warning_alpha">Això és una versió alfa primerenca. Només s\'hauria d\'utilitzar per a fer proves. El codi no es troba finalitzat i no ha estat verificat.</string>
+    <string name="warning_no_files_added">No s\'ha seleccionat cap fitxer.</string>
+    <string name="share_files_add">Afegeix fitxers</string>
+    <string name="share_state_ready">A punt</string>
+    <string name="share_state_sharing">S\'està compartint</string>
+    <string name="share_state_transfer_complete">S\'ha completat la transferència</string>
+    <string name="share_button_start">Comença a compartir</string>
+    <string name="share_button_error">Torna a provar</string>
+    <string name="share_button_starting">S\'està iniciant… toqueu per a cancel·lar</string>
+    <string name="share_button_stop">Deixa de compartir</string>
+    <string name="share_button_complete">Comparteix de nou</string>
+    <string name="share_button_stopping">S\'està aturant… espereu fins que s\'aturi</string>
+    <string name="share_state_starting">S\'està iniciant…</string>
+    <string name="clear_all">Esborra-ho tot</string>
+    <string name="clipboard_onion_service_copied">S\'ha copiat l\'adreça al porta-retalls.</string>
+    <string name="share_onion_intro"><b>Qualsevol</b> amb aquesta adreça de l\'OnionShare pot <b>baixar</b>els vostres fitxers utilitzant el <b>Navegador Tor</b>:</string>
+    <string name="notification_channel_name_foreground">Estat de la compartició de fitxers</string>
+    <string name="share_state_starting_text">⏱️ Això podria trigar una estona. Podeu sortir de l\'aplicació. Us notificarem quan estigui a punt.</string>
+    <string name="share_state_stopping">S\'està aturant…</string>
+    <string name="share_state_error">Error</string>
+    <string name="share_state_error_text">S\'ha produït un problema inesperat.</string>
+    <string name="share_state_error_tor_text">No s\'ha pogut connectar al Tor. Potser hauríeu d\'afegir ponts personalitzats a la configuració.</string>
+    <string name="clipboard_onion_service_label">Adreça de l\'OnionShare</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d element, %2$s</item>
+        <item quantity="other">%1$d elements, %2$s</item>
+    </plurals>
+    <string name="notification_sharing_title">L\'OnionShare és disponible</string>
+    <string name="notification_sharing_text">Toqueu per a accedir a l\'adreça i compartir els fitxers.</string>
+    <string name="starting_notification_title">S\'estan publicant els fitxers…</string>
+    <string name="about_contributors">Col·laboradors</string>
+    <string name="about_contributor_design">%s, Dissenyador del producte</string>
+    <string name="sharing_notification_title">Actualment es comparteixen fitxers</string>
+    <string name="notification_channel_name_sharing">Es pot compartir una adreça</string>
+    <string name="notification_channel_name_error">Error</string>
+    <string name="notification_error_text">Toqueu per a veure els detalls.</string>
+    <string name="share_error_snackbar_text">No s\'ha pogut iniciar l\'OnionShare</string>
+    <string name="about_contributor_pm">%s, Gestor del projecte</string>
+    <string name="about_contributing_orgs">Organitzacions col·laboradores</string>
+    <string name="settings_tor_title">Connexió a Tor</string>
+    <string name="settings_tor_bridges_none">No se n\'ha afegit cap</string>
+    <string name="starting_notification_text">Això podria trigar un temps.</string>
+    <string name="notification_error_title">L\'OnionShare ha trobat un error</string>
+    <string name="share_error_file_snackbar_text">No s\'ha pogut obrir %s. S\'ha eliminat.</string>
+    <string name="share_error_snackbar_action">Torna a provar</string>
+    <string name="about_title">Quant a</string>
+    <string name="about_app_version">Versió de l\'aplicació %s</string>
+    <string name="about_text">L\'OnionShare ha estat desenvolupat per Micah Lee, et al. i és codi obert, publicat sota la GPLv3.
+\n
+\nCom qualsevol programari, l\'OnionShare podria contenir errors o vulnerabilitats.</string>
+    <string name="about_contributor_creator">%s, Creador</string>
+    <string name="about_contributor_android">%s, Enginyer Android</string>
+    <string name="settings_title">Configuració</string>
+    <string name="settings_tor_automatic">Automàtica basada en la ubicació</string>
+    <string name="settings_tor_intro">Un pont és una ruta dedicada sense censura a la xarxa Tor. Inclús si se selecciona Automàtica, l\'OnionShare provarà d\'utilitzar ponts per a connectar.</string>
+    <string name="settings_tor_bridges_title">Ponts personalitzats</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d pont afegit</item>
+        <item quantity="other">%d ponts afegits</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Toqueu l\'enllaç de sota per a obtenir ponts. Després, enganxeu una o més línies de ponts en el camp de sota.</string>
+    <string name="settings_tor_my_bridges_title">Els meus ponts</string>
+</resources>

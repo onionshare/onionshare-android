@@ -15,7 +15,7 @@
     <string name="share_button_complete">Hefja aftur deilingu</string>
     <string name="share_button_error">Reyndu aftur</string>
     <string name="clipboard_onion_service_label">OnionShare-vistfang</string>
-    <string name="notification_channel_name_foreground">Tilkynning um deilingu skráar</string>
+    <string name="notification_channel_name_foreground">Staða á deilingu skráa</string>
     <string name="notification_channel_name_sharing">Deilingarvistfang er tiltækt</string>
     <string name="notification_sharing_title">OnionShare er tiltækt</string>
     <string name="starting_notification_title">Birti skrár…</string>

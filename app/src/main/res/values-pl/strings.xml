@@ -16,7 +16,7 @@
     <string name="clear_all">Wyczyść wszystkie</string>
     <string name="share_files_add">Dodaj pliki</string>
     <string name="share_state_ready">Gotowe</string>
-    <string name="share_state_starting">Uruchamianie…</string>
+    <string name="share_state_starting">Rozpoczynanie…</string>
     <string name="share_state_sharing">Udostępnianie</string>
     <string name="share_state_transfer_complete">Transfer ukończony</string>
     <string name="share_state_stopping">Zatrzymywanie…</string>
@@ -74,4 +74,9 @@
     <string name="app_name">OnionShare (alfa)</string>
     <string name="menu">Menu</string>
     <string name="share_button_stop">Zatrzymaj udostępnianie</string>
+    <string name="share_state_starting_text">⏱️ To może trochę potrwać. Możesz opuścić aplikację. Powiadomimy Cię, gdy będzie gotowa.</string>
+    <string name="share_state_error_tor_text">Nie można połączyć się z Tor. Może być konieczne dodanie niestandardowych mostków w ustawieniach.</string>
+    <string name="notification_error_title">OnionShare napotkał problem</string>
+    <string name="notification_channel_name_error">Błąd</string>
+    <string name="notification_error_text">Stuknij, aby zobaczyć szczegóły.</string>
 </resources>

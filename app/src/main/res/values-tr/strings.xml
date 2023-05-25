@@ -70,4 +70,9 @@
         <item quantity="other">%d köprü eklendi</item>
     </plurals>
     <string name="share_button_complete">Paylaşımı tekrar başlat</string>
+    <string name="share_state_starting_text">⏱️ Bu biraz zaman alabilir. İstiyorsanız uygulamadan çıkabilirsiniz. Hazır olduğunda sizi bilgilendireceğiz.</string>
+    <string name="share_state_error_tor_text">Tor\'a bağlanılamadı. Ayarlarda özel köprüler eklemeniz gerekebilir.</string>
+    <string name="notification_channel_name_error">Hata</string>
+    <string name="notification_error_title">OnionShare bir sorunla karşılaştı</string>
+    <string name="notification_error_text">Ayrıntıları görmek için dokunun.</string>
 </resources>

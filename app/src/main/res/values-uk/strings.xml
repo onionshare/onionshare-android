@@ -74,4 +74,9 @@
     <string name="share_files_add">Додати файли</string>
     <string name="warning_no_files_added">Файлів не вибрано.</string>
     <string name="share_state_ready">Готовий</string>
+    <string name="share_state_starting_text">⏱️ Це може тривати задовго. Ви можете вийти із застосунку. Ми повідомимо вас, коли все буде готово.</string>
+    <string name="share_state_error_tor_text">Не вдалося під\'єднатися до Tor. Можливо, вам потрібно додати власні мости в налаштуваннях.</string>
+    <string name="notification_channel_name_error">Помилка</string>
+    <string name="notification_error_title">OnionShare зіткнувся з проблемою</string>
+    <string name="notification_error_text">Торкніться, щоб переглянути подробиці.</string>
 </resources>

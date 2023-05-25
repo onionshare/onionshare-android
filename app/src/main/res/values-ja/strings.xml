@@ -51,7 +51,7 @@
     <string name="share_button_stop">共有を停止</string>
     <string name="clipboard_onion_service_label">OnionShareアドレス</string>
     <string name="share_onion_intro">このOnionShareアドレスを知ってる<b>誰でも</b>、<b>Torブラウザ</b>を利用してファイルを<b>ダウンロード</b>できます：</string>
-    <string name="notification_channel_name_foreground">ファイル共有の通知</string>
+    <string name="notification_channel_name_foreground">ファイル共有の状態</string>
     <string name="notification_sharing_text">ファイル共有アドレスをアクセスするのにタップする。</string>
     <plurals name="share_file_list_summary">
         <item quantity="other">%1$d 個のファイル、 %2$s</item>
@@ -68,4 +68,9 @@
     <string name="settings_tor_bridges_title">カスタムのブリッジ</string>
     <string name="settings_tor_bridges_none">何も追加されていません</string>
     <string name="settings_tor_my_bridges_title">マイ・ブリッジ</string>
+    <string name="notification_channel_name_error">エラー</string>
+    <string name="share_state_starting_text">⏱️時間がかかるかもしれない。しばらく他のアプリに切り替えても大丈夫です。完了されたら通知します。</string>
+    <string name="share_state_error_tor_text">Torと接続できませんでした。設定にカスタムブリッジを追加する必要があるかもしれません。</string>
+    <string name="notification_error_title">OnionShareは問題に遭遇しました</string>
+    <string name="notification_error_text">詳細を見るのにタップ。</string>
 </resources>
