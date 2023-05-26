@@ -1,2 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d bro tillagd</item>
+        <item quantity="other">%d broar tillagda</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Tryck på länken nedan för att skaffa broar. Klistra sedan in en eller flera brorader i fältet nedan.</string>
+    <string name="settings_tor_my_bridges_title">Mina broar</string>
+    <string name="share_button_start">Börja delning</string>
+    <string name="share_state_sharing">Delar</string>
+    <string name="share_button_starting">Startar… tryck för att avbryta</string>
+    <string name="share_button_complete">Återuppta delning</string>
+    <string name="share_button_stop">Stoppa delning</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="back">Tillbaka</string>
+    <string name="menu">Meny</string>
+    <string name="cancel">Avbryt</string>
+    <string name="add">Lägg till</string>
+    <string name="share">Dela</string>
+    <string name="delete">Ta bort</string>
+    <string name="paste">Klistra in</string>
+    <string name="unknown">okänd</string>
+    <string name="share_state_transfer_complete">Överföringen slutförd</string>
+    <string name="about_text">OnionShare utvecklades av Micah Lee, et al. och släppt med öppen källkod under GPLv3.
+\n
+\nSom all programvara, kan OnionShare innehålla fel eller sårbarheter.</string>
+    <string name="about_title">Om</string>
+    <string name="about_app_version">Appversion %s</string>
+    <string name="add_files_not_supported">Din enhet stöder inte att lägga till filer</string>
+    <string name="clear_all">Rensa alla</string>
+    <string name="share_state_starting_text">⏱️ Det här kan ta ett tag. Lämna gärna appen. Vi meddelar dig när det är klart.</string>
+    <string name="remove">Ta bort</string>
+    <string name="warning_alpha_intro">Varning:</string>
+    <string name="share_empty_state">Inget här ännu.</string>
+    <string name="warning_alpha">Detta är en tidig alfaversion. Den ska endast användas för testning. Koden är inte färdig och har inte granskats.</string>
+    <string name="warning_no_files_added">Inga filer har valts.</string>
+    <string name="share_files_add">Lägg till filer</string>
+    <string name="share_state_ready">Redo</string>
+    <string name="share_state_stopping">Stoppar…</string>
+    <string name="share_state_starting">Startar…</string>
+    <string name="share_button_stopping">Stoppar… vänta tills det stoppas</string>
+    <string name="share_onion_intro"><b>Vem som helst</b> med denna OnionShare-adress kan <b>hämta</b> dina filer med <b>Tor Browser</b>:</string>
+    <string name="clipboard_onion_service_label">OnionShare-adress</string>
+    <string name="notification_error_text">Tryck för att se detaljer.</string>
+    <string name="notification_sharing_text">Tryck för att komma åt adressen för att dela dina filer.</string>
+    <string name="starting_notification_title">Publicerar filer…</string>
+    <string name="starting_notification_text">Det kan ta en stund.</string>
+    <string name="share_error_snackbar_text">Kunde inte starta OnionShare</string>
+    <string name="share_error_snackbar_action">Försök igen</string>
+    <string name="share_error_file_snackbar_text">Kunde inte öppna %s. Borttagen.</string>
+    <string name="about_contributors">Bidragsgivare</string>
+    <string name="about_contributor_creator">%s, skapare</string>
+    <string name="about_contributor_android">%s, Androidutvecklare</string>
+    <string name="about_contributor_pm">%s, projektledare</string>
+    <string name="about_contributor_design">%s, produktdesigner</string>
+    <string name="about_contributing_orgs">Bidragande organisationer</string>
+    <string name="settings_title">Inställningar</string>
+    <string name="settings_tor_title">Ansluta till Tor</string>
+    <string name="settings_tor_automatic">Automatiskt baserat på plats</string>
+    <string name="settings_tor_intro">En bro är en dedikerad ocensurerad väg till Tor-nätverket. Även om Automatisk är valt kan OnionShare försöka använda broar för att ansluta.</string>
+    <string name="settings_tor_bridges_title">Anpassade broar</string>
+    <string name="settings_tor_bridges_none">Ingen tillagd</string>
+    <string name="notification_channel_name_foreground">Fildelningsstatus</string>
+    <string name="share_state_error">Fel</string>
+    <string name="share_state_error_text">Ett oväntat problem har uppstått.</string>
+    <string name="share_state_error_tor_text">Kunde inte ansluta till Tor. Du kan behöva lägga till anpassade broar i inställningarna.</string>
+    <string name="share_button_error">Försök igen</string>
+    <string name="clipboard_onion_service_copied">OnionShare-adress kopierad till urklipp.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d objekt, %2$s</item>
+        <item quantity="other">%1$d objekt, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_sharing">Delningsadress tillgänglig</string>
+    <string name="notification_channel_name_error">Fel</string>
+    <string name="notification_sharing_title">OnionShare tillgängligt</string>
+    <string name="sharing_notification_title">Delar för närvarande filer</string>
+    <string name="notification_error_title">OnionShare stötte på ett problem</string>
+</resources>

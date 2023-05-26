@@ -39,7 +39,7 @@
         <item quantity="one">%1$d element, %2$s</item>
         <item quantity="other">%1$d elementer, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Merknad om fildeling</string>
+    <string name="notification_channel_name_foreground">Fildelingsstatus</string>
     <string name="notification_sharing_title">OnionShare tilgjengelig</string>
     <string name="notification_sharing_text">Trykk for å gå til adressen for deling av filene dine.</string>
     <string name="settings_tor_bridges_intro">Trykk på lenken nedenfor for å hente inn broer. Lim så inn én eller flere brolinjer i feltet nedenfor.</string>
@@ -70,4 +70,9 @@
     <string name="about_text">OnionShare ble utviklet av Micah Lee, med flere. Det er fri programvare, lisensiert GPLv3+.
 \n
 \nSom all programvare kan det hende det oppstår problemer eller finnes sårbarheter.</string>
+    <string name="share_state_starting_text">⏱️ Dette kan ta sin tid. Forlat gjerne programmet. Du får beskjed ved fullførelse.</string>
+    <string name="share_state_error_tor_text">Kunne ikke koble til Tor. Det kan hende du må legge til egendefinerte broer i innstillingene.</string>
+    <string name="notification_error_title">OnionShare støtte på et problem</string>
+    <string name="notification_error_text">Trykk for å vise detaljer.</string>
+    <string name="notification_channel_name_error">Feil</string>
 </resources>

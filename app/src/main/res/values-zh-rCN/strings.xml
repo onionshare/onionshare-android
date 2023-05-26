@@ -37,7 +37,7 @@
     <string name="share_error_snackbar_action">重试</string>
     <string name="about_title">关于</string>
     <string name="about_app_version">应用版本 %s</string>
-    <string name="notification_channel_name_foreground">文件分享通知</string>
+    <string name="notification_channel_name_foreground">文件分享状态</string>
     <string name="settings_title">设置</string>
     <string name="settings_tor_title">正在连接到 Tor</string>
     <string name="settings_tor_bridges_title">自定义网桥</string>
@@ -68,4 +68,9 @@
     <string name="settings_tor_automatic">自动基于位置</string>
     <string name="notification_channel_name_sharing">分享地址现已可用</string>
     <string name="notification_sharing_text">点按即可访问分享文件的链接。</string>
+    <string name="share_state_starting_text">⏱️ 会花上一点时间，这期间请随意，就绪后会发通知。</string>
+    <string name="share_state_error_tor_text">无法连接 Tor，也许需要设定增添自定网桥。</string>
+    <string name="notification_channel_name_error">出错</string>
+    <string name="notification_error_title">OnionShare 出问题</string>
+    <string name="notification_error_text">轻触了解详情。</string>
 </resources>

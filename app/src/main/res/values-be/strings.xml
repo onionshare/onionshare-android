@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu">Меню</string>
+    <string name="cancel">Адмяніць</string>
+    <string name="add">Дадаць</string>
+    <string name="share">Падзяліцца</string>
+    <string name="unknown">невядома</string>
+    <string name="remove">Выключыць</string>
+    <string name="app_name">OnionShare (альфа)</string>
+    <string name="paste">Уставіць</string>
+    <string name="back">Назад</string>
+    <string name="delete">Выдаліць</string>
+    <string name="add_files_not_supported">Ваша прылада не падтрымлівае даданне файлаў</string>
+</resources>

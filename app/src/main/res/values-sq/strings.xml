@@ -34,7 +34,7 @@
         <item quantity="one">%1$d objekt %2$s</item>
         <item quantity="other">%1$d objekte %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Njoftim për ndarje kartele</string>
+    <string name="notification_channel_name_foreground">Gjendje ndarjeje kartele</string>
     <string name="notification_channel_name_sharing">Ka adresë për ndarje me të tjerë</string>
     <string name="notification_sharing_title">Ka OnionShare</string>
     <string name="notification_sharing_text">Prekeni që të hapet adresa për ndarje të kartelave tuaja me të tjerë.</string>
@@ -65,4 +65,7 @@
     </plurals>
     <string name="settings_tor_bridges_intro">Prekni lidhjen më poshtë, që të merrni ura. Mandej ngjitni një ose disa rreshta urash te fusha më poshtë.</string>
     <string name="settings_tor_my_bridges_title">Urat e Mia</string>
+    <string name="unknown">i panjohur</string>
+    <string name="starting_notification_title">Po publikohen kartela…</string>
+    <string name="sharing_notification_title">Kartela që po jepen aktualisht</string>
 </resources>
