@@ -1,2 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="back">回去</string>
+    <string name="share_empty_state">這裏尚無東西。</string>
+    <string name="warning_alpha_intro">警告:</string>
+    <string name="warning_no_files_added">未選取檔案。</string>
+    <string name="warning_alpha">它仍在早期開發測試階段，其代碼尚未完成也沒有經過審查。</string>
+    <string name="share">分享</string>
+    <string name="clear_all">清除全部</string>
+    <string name="share_files_add">新增檔案</string>
+    <string name="share_state_ready">就緒</string>
+    <string name="share_state_starting">啟動…</string>
+    <string name="share_state_sharing">分享</string>
+    <string name="share_state_transfer_complete">傳輸完畢</string>
+    <string name="share_state_stopping">停止…</string>
+    <string name="share_state_error">出錯</string>
+    <string name="share_state_error_text">發生未預期的錯誤。</string>
+    <string name="share_button_start">開始分享</string>
+    <string name="share_button_starting">開始...輕觸以取消</string>
+    <string name="share_button_stopping">停止...請等候其完全停止</string>
+    <string name="share_button_error">再試一次</string>
+    <string name="clipboard_onion_service_label">OnionShare 地址</string>
+    <string name="notification_channel_name_foreground">檔案分享狀態</string>
+    <string name="notification_channel_name_sharing">分享地址可用</string>
+    <string name="starting_notification_title">發佈檔案…</string>
+    <string name="starting_notification_text">這要花點時間。</string>
+    <string name="share_error_snackbar_text">無法啟動 OnionShare</string>
+    <string name="share_error_snackbar_action">重試</string>
+    <string name="about_app_version">應用版本 %s</string>
+    <string name="about_contributors">貢獻者</string>
+    <string name="about_contributor_android">%s, Android 工程師</string>
+    <string name="about_contributor_pm">%s, 專案經理</string>
+    <string name="about_contributor_design">%s, 產品設計師</string>
+    <string name="about_contributing_orgs">出力組織</string>
+    <string name="share_onion_intro"><b>任何人</b> 有了這個 OnionShare 地址就可以透過 <b>Tor Browser</b>來<b>下載</b>您的檔案:</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="other">%1$d 項, %2$s</item>
+    </plurals>
+    <string name="notification_sharing_text">輕點訪問網址來分享檔案。</string>
+    <string name="clipboard_onion_service_copied">將 OnionShare 地址複製到剪貼簿。</string>
+    <string name="notification_sharing_title">OnionShare 可用</string>
+    <string name="share_error_file_snackbar_text">打不開 %s，移除。</string>
+    <string name="settings_title">設置</string>
+    <string name="settings_tor_automatic">依位置自動決定</string>
+    <string name="settings_tor_bridges_title">自定橋接器</string>
+    <string name="settings_tor_bridges_none">無新增</string>
+    <string name="settings_tor_intro">橋接器是 Tor 網路專用的無審查路徑，即便使用自動選擇，OnionShare 也會試著透過橋接方式來連接。</string>
+    <string name="settings_tor_my_bridges_title">我的橋接器</string>
+    <string name="share_button_complete">再次啟動分享</string>
+    <string name="menu">選單</string>
+    <string name="add">新增</string>
+    <string name="delete">分享</string>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="paste">貼上</string>
+    <string name="add_files_not_supported">您的設備不支援新增檔案</string>
+    <string name="unknown">未知的</string>
+    <string name="remove">移除</string>
+    <string name="cancel">取消</string>
+    <string name="share_button_stop">停止分享</string>
+    <string name="sharing_notification_title">目前分享的檔案</string>
+    <string name="about_title">關於</string>
+    <string name="about_contributor_creator">%s, 創建者</string>
+    <string name="settings_tor_title">連接到 Tor</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="other">已新增 %d 個橋接器</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">輕觸下方鏈連來取得橋接器，把橋接地址填入下面的欄位。</string>
+    <string name="about_text">OnionShare 由 Micah Lee 等人開發，為 GPLv3 授權的開放專案。
+\n
+\n一如所有軟體， OnionShare 也有軟體錯誤或弱點。</string>
+    <string name="notification_channel_name_error">錯誤</string>
+    <string name="notification_error_title">OnionShare 遇到問題</string>
+    <string name="share_state_starting_text">⏱️ 這會花上一點時間，請隨意離開，就緒後會通知您。</string>
+    <string name="share_state_error_tor_text">無法連接 Tor，您也許需要在設定中增添自定橋接中繼。</string>
+    <string name="notification_error_text">輕觸了解詳情。</string>
+</resources>

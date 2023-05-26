@@ -37,7 +37,7 @@
         <item quantity="one">%1$d item, %2$s</item>
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
-    <string name="notification_channel_name_foreground">Lêerdeelkennisgewing</string>
+    <string name="notification_channel_name_foreground">Lêerdeelstatus</string>
     <string name="notification_sharing_title">OnionShare beskikbaar</string>
     <string name="starting_notification_title">Lêers word gepubliseer…</string>
     <string name="starting_notification_text">Dit kan ’n ruk duur.</string>
@@ -70,4 +70,9 @@
     <string name="settings_tor_my_bridges_title">My brûe</string>
     <string name="notification_sharing_text">Tik vir toegang tot die adres om u lêers te deel.</string>
     <string name="notification_channel_name_sharing">Adres vir deel onbeskikbaar</string>
+    <string name="share_state_error_tor_text">Kon nie aan Tor koppel nie. U moet daalk pasgemaakte brûe in instellings toevoeg.</string>
+    <string name="notification_channel_name_error">Fout</string>
+    <string name="notification_error_title">OnionShare het ’n probleem ervaar</string>
+    <string name="notification_error_text">Tik om details te sien.</string>
+    <string name="share_state_starting_text">⏱️ Dit kan ’n ruk duur. Voel vry om die toep te verlaat. Ons sal u laat weet wanneer dit gereed is.</string>
 </resources>

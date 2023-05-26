@@ -72,4 +72,9 @@
         <item quantity="many">%d ponts ajoutés</item>
         <item quantity="other">%d ponts ajoutés</item>
     </plurals>
+    <string name="notification_channel_name_error">Erreur</string>
+    <string name="notification_error_title">OnionShare a rencontré un problème</string>
+    <string name="notification_error_text">Appuyez pour voir les détails.</string>
+    <string name="share_state_starting_text">⏱️ Cela pourrait prendre un certain temps. N\'hésitez pas à quitter l\'application. Nous vous préviendrons dès que nous serons prêts.</string>
+    <string name="share_state_error_tor_text">Impossible de se connecter à Tor. Il se peut que vous deviez ajouter des ponts personnalisés dans les paramètres.</string>
 </resources>

@@ -1,2 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="back">Rudi nyuma</string>
+    <string name="menu">Menyu</string>
+    <string name="cancel">Sitisha</string>
+    <string name="add">Ongeza</string>
+    <string name="share">Sambaza</string>
+    <string name="share_state_stopping">Sitisha…</string>
+    <string name="share_state_error">Dosari</string>
+    <string name="paste">Nakilisha</string>
+    <string name="delete">Futa</string>
+    <string name="add_files_not_supported">Kifaa chako hakiwezi kuongeza mafaili</string>
+    <string name="unknown">Haifahamiki</string>
+    <string name="remove">Toa</string>
+    <string name="share_empty_state">Bado hakuna kitu.</string>
+    <string name="warning_alpha_intro">Onyo:</string>
+    <string name="warning_alpha">Hii ni alpha ya awali iliyotolewa. Inatakiwa kutumika tu kwa ajili ya majaribio. Code bado haijakamilika na bado haijakaguliwa.</string>
+    <string name="warning_no_files_added">Hakuna faili lililochaguliwa.</string>
+    <string name="clear_all">Futa zote</string>
+    <string name="share_files_add">Ongeza faili</string>
+    <string name="share_state_ready">Tayari</string>
+    <string name="share_state_starting">Kuanza…</string>
+    <string name="share_state_sharing">Kusambaza</string>
+    <string name="share_state_transfer_complete">Uhamisho umekamilika</string>
+    <string name="notification_channel_name_sharing">Kusambaza anwani iliyopo</string>
+    <string name="clipboard_onion_service_copied">Anwani za OnionShare zimenakiliwa katika clipboard.</string>
+    <string name="notification_channel_name_foreground">Hali ya faili linalosambazwa</string>
+    <string name="sharing_notification_title">Mafaili yanayosambazwa muda huu</string>
+    <string name="share_error_snackbar_text">Haiwezi kuanza OnionShare</string>
+    <string name="share_error_file_snackbar_text">Haiwezi kufungua%s. Imeondolewa.</string>
+    <string name="share_error_snackbar_action">Jaribu tena</string>
+    <string name="about_title">Kuhusu</string>
+    <string name="about_app_version">Toleo la programu %s</string>
+    <string name="about_contributors">Wachangiaji</string>
+    <string name="settings_tor_title">Kuunganishwa katika Tor</string>
+    <string name="settings_tor_bridges_title">Bridge yenye sifa zilizokusudiwa</string>
+    <string name="settings_tor_automatic">Mojakwamoja inazingatia katika eneo</string>
+    <string name="settings_tor_intro">Bridge ni usafirishaji usiokuwa na udhibiti katika mtandao wa Tor. Hata kama imechaguliwa mojakwamoja, OnionShare inaweza kujaribu kutumia bridges ili kuuganisha.</string>
+    <string name="share_state_starting_text">⏱️ Hii inaweza kuchukua muda kidogo. Kuwa huru kuacha programu. Tutakutaarifu itakapokuwa tayari.</string>
+    <string name="share_state_error_text">Tatizo lisilo tarajiwa limetokea.</string>
+    <string name="share_state_error_tor_text">Haiwezi kuunganisha na Tor. Unaweza kuhitaji kuongewza bridges nyingine katika mipangilio.</string>
+    <string name="share_button_start">Anza kusambaza</string>
+    <string name="share_button_starting">Inaanza… Bofya kusitisha</string>
+    <string name="share_onion_intro"><b>Yeyote</b> aliye na anwani hizi za OnionShare anaweza <b>kupakua</b> mafaili yako kwa kutumia <b>Tor Browser</b>:</string>
+    <string name="clipboard_onion_service_label">Anwani za OnionShare</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d kitu, %2$s</item>
+        <item quantity="other">%1$d vitu, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_error">Dosari</string>
+    <string name="notification_sharing_title">OnionShare iliyopo</string>
+    <string name="notification_sharing_text">Bofya kupata anwani ya kusambazia faili lako.</string>
+    <string name="starting_notification_title">Kuchapisha mafaili…</string>
+    <string name="starting_notification_text">Hii inaweza kuchukua muda kidogo.</string>
+    <string name="notification_error_title">OnionShare zimepata tatizo</string>
+    <string name="notification_error_text">Bofya kuona maelezo.</string>
+    <string name="about_text">OnionShare zilitengenezwa na Micah Lee, et al. na zinapatikana bure, zilitolewa chini ya GPLv3.
+\n
+\nKama programu zote, OnionShare zinaweza kuwa na matatizo au hatari ya kuaribiwa.</string>
+    <string name="about_contributor_creator">%s, Mtengenezaji</string>
+    <string name="about_contributor_android">%s, Muhandisi wa Android</string>
+    <string name="about_contributor_pm">%s, Meneja Mradi</string>
+    <string name="about_contributor_design">%s, Mtengenezaji wa bidhaa</string>
+    <string name="about_contributing_orgs">Taasisi Zinazochangia</string>
+    <string name="settings_title">Mipangilio</string>
+    <string name="settings_tor_bridges_none">Hakuna iliyoongezwa</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d bridge iliyoongezwa</item>
+        <item quantity="other">%d bridges zilizoongezwa</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Bofya anwani hapo chini kupata bridges. Kisha nakilisha bridge moja au zaidi katika mistari hapo chini.</string>
+    <string name="settings_tor_my_bridges_title">Bridges yangu</string>
+    <string name="share_button_stop">Sitisha Kusambaza</string>
+    <string name="share_button_complete">Anza kusambaza tena</string>
+    <string name="share_button_stopping">Inasitisha… Subiri mpaka iache</string>
+    <string name="share_button_error">Jaribu tena</string>
+</resources>

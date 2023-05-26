@@ -1,2 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="back">Ar Ais</string>
+    <string name="menu">Roghchlár</string>
+    <string name="cancel">Cealaigh</string>
+    <string name="add">Cuir Leis</string>
+    <string name="share">Comhroinn</string>
+    <string name="delete">Scrios</string>
+    <string name="paste">Greamaigh</string>
+    <string name="add_files_not_supported">Ní féidir comhaid a chur leis an ngléas seo</string>
+    <string name="unknown">anaithnid</string>
+    <string name="remove">Bain</string>
+    <string name="share_empty_state">Níl faic anseo fós.</string>
+    <string name="warning_alpha_intro">Rabhadh:</string>
+    <string name="warning_alpha">Leagan luath alfa é seo, le haghaidh tástála amháin. Níl an cód críochnaithe agus ní dhearnadh iniúchadh air.</string>
+    <string name="warning_no_files_added">Níl aon chomhad roghnaithe.</string>
+    <string name="clear_all">Glan Uile</string>
+    <string name="share_files_add">Cuir comhaid leis</string>
+    <string name="share_state_ready">Réidh</string>
+    <string name="share_state_starting">Ag tosú…</string>
+    <string name="share_state_sharing">Comhroinnt</string>
+    <string name="share_state_transfer_complete">Aistriú curtha i gcrích</string>
+    <string name="share_state_stopping">Ag stopadh…</string>
+    <string name="share_state_error">Earráid</string>
+    <string name="share_state_error_text">Tharla botún gan súil leis.</string>
+    <string name="share_button_start">Tosaigh Comhroinnt</string>
+    <string name="share_button_starting">Ag tosú... tapáil lena chur ar ceal</string>
+    <string name="share_button_stop">Stop Comhroinnt</string>
+    <string name="share_button_complete">Tosaigh Comhroinnt Arís</string>
+    <string name="share_button_stopping">Ag stopadh... fan go dtí go stopfaidh sé</string>
+    <string name="share_button_error">Bain triail eile as</string>
+    <string name="share_onion_intro">Beidh <b>aon duine</b> a bhfuil an seoladh OnionShare seo acu in ann do chuid comhad a <b>íoslódáil</b> le <b>Brabhsálaí Tor</b>:</string>
+    <string name="clipboard_onion_service_label">Seoladh OnionShare</string>
+    <string name="clipboard_onion_service_copied">Cóipeáladh an seoladh OnionShare go dtí an ghearrthaisce.</string>
+    <string name="notification_channel_name_sharing">Seoladh comhroinnte ar fáil</string>
+    <string name="notification_sharing_title">OnionShare ar fáil</string>
+    <string name="starting_notification_title">Comhaid á bhfoilsiú…</string>
+    <string name="starting_notification_text">Tógfaidh sé seo tamall.</string>
+    <string name="sharing_notification_title">Comhaid á gcomhroinnt faoi láthair</string>
+    <string name="share_error_snackbar_text">Níorbh fhéidir OnionShare a thosú</string>
+    <string name="share_error_file_snackbar_text">Níorbh fhéidir %s a oscailt. Baineadh é.</string>
+    <string name="share_error_snackbar_action">Atriail</string>
+    <string name="about_app_version">Leagan %s</string>
+    <string name="about_contributors">Rannpháirtithe</string>
+    <string name="about_contributor_creator">%s, Cruthaitheoir</string>
+    <string name="about_contributor_android">%s, Innealtóir Android</string>
+    <string name="about_contributor_pm">%s, Bainisteoir an Tionscadail</string>
+    <string name="about_contributor_design">%s, Dearthóir an Táirge</string>
+    <string name="about_contributing_orgs">Eagraíochtaí Rannchuidithe</string>
+    <string name="settings_title">Socruithe</string>
+    <string name="settings_tor_intro">Is éard atá i ndroichead ná bealach tiomnaithe gan cinsireacht go dtí líonra Tor. D\'fhéadfadh OnionShare iarracht a dhéanamh droichid a úsáid fiú má roghnaítear Uathoibríoch.</string>
+    <string name="settings_tor_bridges_intro">Tapáil an nasc thíos chun droichid a fháil. Ansin, greamaigh droichead nó droichid isteach sa réimse thíos.</string>
+    <string name="notification_channel_name_foreground">Stádas comhroinnte</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d mhír, %2$s</item>
+        <item quantity="two">%1$d mhír, %2$s</item>
+        <item quantity="few">%1$d mhír, %2$s</item>
+        <item quantity="many">%1$d mír, %2$s</item>
+        <item quantity="other">%1$d mír, %2$s</item>
+    </plurals>
+    <string name="about_title">Maidir leis</string>
+    <string name="notification_sharing_text">Tapáil le teacht ar sheoladh lenar féidir do chuid comhad a chomhroinnt.</string>
+    <string name="settings_tor_title">Ag ceangal le Tor</string>
+    <string name="about_text">D\'fhorbair Micah Lee et al. Onion Share, agus is bogearra foinse oscailte é, ar fáil de réir téarmaí GPLv3.
+\n
+\nD\'fhéadfadh sé go bhfuil fabhtanna nó laigí slándála in OnionShare, ar nós gach bogearra.</string>
+    <string name="settings_tor_automatic">Uathoibríoch, bunaithe ar shuíomh</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">Cuireadh %d droichead leis</item>
+        <item quantity="two">Cuireadh %d dhroichead leis</item>
+        <item quantity="few">Cuireadh %d dhroichead leis</item>
+        <item quantity="many">Cuireadh %d ndroichead leis</item>
+        <item quantity="other">Cuireadh %d droichead leis</item>
+    </plurals>
+    <string name="settings_tor_bridges_title">Droichid Saincheaptha</string>
+    <string name="settings_tor_bridges_none">Gan droichead</string>
+    <string name="settings_tor_my_bridges_title">Mo Chuid Droichead</string>
+</resources>

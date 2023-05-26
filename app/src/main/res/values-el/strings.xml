@@ -70,4 +70,9 @@
     </plurals>
     <string name="settings_tor_my_bridges_title">Οι γέφυρές μου</string>
     <string name="settings_tor_bridges_intro">Πατήστε στον παρακάτω σύνδεσμο για να λάβετε γέφυρες. Επικολλήστε μία ή περισσότερες στο παρακάτω πεδίο.</string>
+    <string name="share_state_error_tor_text">Δεν υπάρχει σύνδεση στο Tor. Ίσως χρειαστεί να προσθέσετε προσαρμοσμένες γέφυρες στις ρυθμίσεις.</string>
+    <string name="share_state_starting_text">⏱️ Αυτό μπορεί να διαρκέσει λίγο. Μπορείτε να κλείσετε την εφαρμογή. Θα σας ειδοποιήσουμε όταν είναι έτοιμη.</string>
+    <string name="notification_channel_name_error">Σφάλμα</string>
+    <string name="notification_error_title">Το OnionShare αντιμετώπισε ένα ζήτημα</string>
+    <string name="notification_error_text">Πατήστε για να δείτε λεπτομέρειες.</string>
 </resources>

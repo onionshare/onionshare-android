@@ -24,7 +24,7 @@
     <string name="clipboard_onion_service_copied">OnionShare адрес скопирован в буфер обмена.</string>
     <string name="notification_channel_name_foreground">Состояние доступа к файлам</string>
     <string name="notification_channel_name_sharing">Адрес готов</string>
-    <string name="starting_notification_title">Публикуем файлы…</string>
+    <string name="starting_notification_title">Публикация файлов…</string>
     <string name="sharing_notification_title">Файлы доступны для загрузки</string>
     <string name="share_error_snackbar_text">Не удалось запустить OnionShare</string>
     <string name="share_error_file_snackbar_text">Не удалось открыть %s. Файл удалён.</string>
@@ -34,12 +34,12 @@
     <string name="about_contributors">Авторы</string>
     <string name="about_contributor_creator">%s – Создатель</string>
     <string name="about_contributor_android">%s – Android Разработчик</string>
-    <string name="about_contributor_pm">%s – Руководитель Проекта</string>
+    <string name="about_contributor_pm">%s – Руководитель проекта</string>
     <string name="about_contributor_design">%s – Дизайнер Продукта</string>
     <string name="about_contributing_orgs">Организации-участники</string>
     <string name="settings_tor_title">Подключение к Tor</string>
     <string name="settings_tor_automatic">Автоматически, в зависимости от местоположения</string>
-    <string name="settings_tor_bridges_title">Через Мост</string>
+    <string name="settings_tor_bridges_title">Пользовательские Мосты</string>
     <string name="settings_tor_bridges_none">Пока что ни одного не добавлено</string>
     <string name="cancel">Отменить</string>
     <string name="add">Добавить</string>
@@ -65,7 +65,7 @@
         <item quantity="other">%d мостов добавлено</item>
     </plurals>
     <string name="settings_tor_my_bridges_title">Мои Мосты</string>
-    <string name="settings_tor_bridges_intro">Получите мосты по нижеуказанной ссылке, затем вставьте их (сразу все, или только отдельные строки) в текстовое поле ниже.</string>
+    <string name="settings_tor_bridges_intro">Получите мосты по ссылке ниже, затем вставьте их (сразу все или же отдельные строки) в текстовое поле.</string>
     <string name="settings_tor_intro">Мосты помогают получить доступ к сети Tor там, где он заблокирован. Даже если вы выбрали \"Автоматически\", OnionShare может попытаться подключиться через мост.</string>
     <string name="notification_sharing_title">OnionShare готов</string>
     <string name="notification_sharing_text">Нажмите, чтобы увидеть адрес к вашим файлам.</string>
@@ -74,4 +74,9 @@
 \n
 \nКак и любая другая программа, OnionShare может содержать баги и уязвимости.</string>
     <string name="back">Назад</string>
+    <string name="share_state_error_tor_text">Не удалось подключиться к Tor. Возможно, вам потребуется добавить пользовательские мосты в настройках.</string>
+    <string name="notification_error_title">OnionShare столкнулся с ошибкой</string>
+    <string name="share_state_starting_text">⏱️ Это может занять некоторое время. Вы можете покинуть приложение. Мы сообщим вам, когда будет готово.</string>
+    <string name="notification_channel_name_error">Ошибка</string>
+    <string name="notification_error_text">Нажмите, чтобы увидеть подробности.</string>
 </resources>

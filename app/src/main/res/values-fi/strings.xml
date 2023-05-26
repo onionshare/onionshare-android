@@ -9,7 +9,7 @@
     <string name="warning_no_files_added">Tiedostoja ei ole valittu.</string>
     <string name="share_state_ready">Valmis</string>
     <string name="share_state_starting">Käynnistetään…</string>
-    <string name="share_state_sharing">Jaetaan</string>
+    <string name="share_state_sharing">Jakaminen</string>
     <string name="share_state_transfer_complete">Siirto valmis</string>
     <string name="share_state_stopping">Pysäytetään…</string>
     <string name="share_state_error">Virhe</string>

@@ -1,2 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="back">Zpět</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Zrušit</string>
+    <string name="add">Přidat</string>
+    <string name="share">Sdílet</string>
+    <string name="delete">Smazat</string>
+    <string name="paste">Vložit</string>
+    <string name="add_files_not_supported">Vaše zařízení nepodporuje přidávání souborů</string>
+    <string name="unknown">neznámý</string>
+    <string name="remove">Odstranit</string>
+    <string name="share_empty_state">Ještě zde nic není.</string>
+    <string name="warning_alpha_intro">Varování:</string>
+    <string name="warning_no_files_added">Nebyly vybrány žádné soubory.</string>
+    <string name="share_onion_intro"><b>Kdokoli</b> s touto OnionShare adresou může <b>stahovat</b> vaše soubory za pomoci <b>Tor Browseru</b>:</string>
+    <string name="clipboard_onion_service_label">OnionShare adresa</string>
+    <string name="clipboard_onion_service_copied">OnionShare adresa byla zkopírována do schránky.</string>
+    <string name="notification_channel_name_foreground">Status sdílení souborů</string>
+    <string name="notification_channel_name_sharing">Sdílení adresy je dostupné</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d položka, %2$s</item>
+        <item quantity="few">%1$d položek, %2$s</item>
+        <item quantity="other">%1$d item, %2$s</item>
+    </plurals>
+    <string name="notification_sharing_text">Klepnutím získáte přístup k adrese pro sdílení souborů.</string>
+    <string name="starting_notification_title">Publikuji soubory…</string>
+    <string name="starting_notification_text">Toto může zabrat nějaký čas.</string>
+    <string name="sharing_notification_title">Aktuálně sdílené soubory</string>
+    <string name="share_error_snackbar_text">Nepodařilo se spustit službu OnionShare</string>
+    <string name="share_error_file_snackbar_text">Nelze otevřít %s. Odstraněno.</string>
+    <string name="share_error_snackbar_action">Opakovat</string>
+    <string name="settings_tor_bridges_title">Vlastní mosty</string>
+    <string name="settings_tor_bridges_none">Žádný nebyl přidán</string>
+    <string name="share_state_ready">Připraveno</string>
+    <string name="share_state_sharing">Sdílení</string>
+    <string name="share_state_stopping">Zastavuji…</string>
+    <string name="share_state_error">Chyba</string>
+    <string name="share_state_error_text">Objevil se neočekávaný probém.</string>
+    <string name="share_button_start">Zahájit sdílení</string>
+    <string name="share_button_stop">Zastavit sdílení</string>
+    <string name="share_button_starting">Zahájení… klepnutím zrušíte</string>
+    <string name="about_title">O</string>
+    <string name="about_app_version">Verze aplikace %s</string>
+    <string name="about_contributing_orgs">Přispívající organizace</string>
+    <string name="settings_tor_intro">Most je vyhrazená necenzurovaná cesta do sítě Tor. I když je vybrána možnost Automaticky, může se služba OnionShare pokusit o připojení pomocí mostů.</string>
+    <string name="about_text">OnionShare vyvinul Micah Lee (a další) a jedná se o open source vydaný pod licencí GPLv3.
+\n
+\nJako každý software může i OnionShare obsahovat chyby nebo zranitelnosti.</string>
+    <string name="about_contributors">Přispěvatelé</string>
+    <string name="about_contributor_android">%s, Android developer</string>
+    <string name="about_contributor_creator">%s, Tvůrce</string>
+    <string name="about_contributor_pm">%s, Manažer projektu</string>
+    <string name="about_contributor_design">%s, Designer projektu</string>
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_tor_title">Připojování k síti Tor</string>
+    <string name="settings_tor_automatic">Automaticky na základě lokace</string>
+    <string name="share_button_complete">Znovu zahájit sdílení</string>
+    <string name="share_button_stopping">Zastavuji… vyčkejte než bude sdílení zastaveno</string>
+    <string name="share_button_error">Zkuste znovu</string>
+    <string name="settings_tor_bridges_intro">Klepněte na odkaz níže a získejte mosty. Poté vložte jeden nebo více řádků mostů do pole níže.</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d most přidán</item>
+        <item quantity="few">%d mostů přidáno</item>
+        <item quantity="other">%d bridges</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Mé mosty</string>
+    <string name="notification_sharing_title">OnionShare je dostupný</string>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="share_state_transfer_complete">Přenos dokončen</string>
+    <string name="warning_alpha">Toto je raná alfa verze. Měla by se používat pouze k testování. Kód ještě nebyl dokončen ani auditován.</string>
+    <string name="clear_all">Vymazat vše</string>
+    <string name="share_files_add">Přidat soubory</string>
+    <string name="share_state_starting">Startuje…</string>
+</resources>
