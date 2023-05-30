@@ -80,6 +80,9 @@ android {
         kotlinCompilerExtensionVersion '1.4.4'
     }
     packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
         exclude 'META-INF/*'
         // Due to https://github.com/Kotlin/kotlinx.coroutines/issues/2023
         exclude 'META-INF/licenses/*'
