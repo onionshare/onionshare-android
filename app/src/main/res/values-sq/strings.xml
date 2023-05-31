@@ -68,4 +68,9 @@
     <string name="unknown">i panjohur</string>
     <string name="starting_notification_title">Po publikohen kartela…</string>
     <string name="sharing_notification_title">Kartela që po jepen aktualisht</string>
+    <string name="share_state_starting_text">⏱️ Kjo mund të dojë ca kohë. Mos ngurroni të dilni nga aplikacioni. Do t’ju njoftojmë, kur të jetë gati.</string>
+    <string name="share_state_error_tor_text">S’u lidh dot me Tor-in. Mund t’ju duhet të shtoi ni ura vetjake te rregullimet.</string>
+    <string name="notification_channel_name_error">Gabim</string>
+    <string name="notification_error_title">OnionShare hasi një problem</string>
+    <string name="notification_error_text">Prekeni që të shihni hollësi.</string>
 </resources>
