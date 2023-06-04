@@ -72,4 +72,9 @@
     <string name="clear_all">Vymazat vše</string>
     <string name="share_files_add">Přidat soubory</string>
     <string name="share_state_starting">Startuje…</string>
+    <string name="share_state_starting_text">⏱️ Toto může chvíli trvat. Můžete aplikaci nechat být a po dokončení vás upozorníme.</string>
+    <string name="notification_channel_name_error">Chyba</string>
+    <string name="share_state_error_tor_text">Nebylo možné se připojit k Tor. Může být potřeba jít do nastavení a přidat vlastní most Tor.</string>
+    <string name="notification_error_title">OnionShare má problém</string>
+    <string name="notification_error_text">Klepněte pro podrobnosti.</string>
 </resources>
