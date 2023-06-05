@@ -70,4 +70,9 @@
     <string name="settings_tor_intro">Brú er sérstök óritskoðuð leið inn á Tor-netkerfið. Jafnvel þótt \'Sjálfvirkt\' sé valið, gæti OnionShare reynt að nota brýr til að tengjast.</string>
     <string name="settings_tor_bridges_intro">Ýttu á tengilinn hér fyrir neðan til að fá brýr. Límdu síðan eina eða fleiri brúalínur inn í reitinn hér fyrir neðan.</string>
     <string name="warning_alpha">Þetta er snemmbúin alfa-útgáfa. Hana ætti aðeins að nota til prófana. Kóðinn er ekki frágenginn og hefur ekki verið yfirfarinn.</string>
+    <string name="share_state_error_tor_text">Gat ekki tengst við Tor. Þú gætir þurft að bæta við sérsniðnum brúm í stillingunum.</string>
+    <string name="notification_error_title">OnionShare rakst á vandamál</string>
+    <string name="notification_error_text">Ýttu til að skoða frekari upplýsingar.</string>
+    <string name="share_state_starting_text">⏱ Þetta gæti tekið nokkra stund. Þú getur alveg yfirgefið forritið. Við munum láta þig vita þegar þetta er tilbúið.</string>
+    <string name="notification_channel_name_error">Villa</string>
 </resources>
