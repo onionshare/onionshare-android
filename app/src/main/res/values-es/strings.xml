@@ -73,8 +73,8 @@
     <string name="settings_tor_bridges_intro">Toca el enlace de abajo para obtener puentes. Luego pega una o más líneas de puente en el campo de abajo.</string>
     <string name="settings_tor_my_bridges_title">Mis Puentes</string>
     <string name="notification_channel_name_error">Error</string>
-    <string name="notification_error_title">OnionShare ha encontrado un problema</string>
-    <string name="notification_error_text">Pulsa para ver los detalles.</string>
+    <string name="notification_error_title">OnionShare encontró un problema</string>
+    <string name="notification_error_text">Toca para ver los detalles.</string>
     <string name="share_state_error_tor_text">No se pudo conectar a Tor. Es posible que debas agregar puentes personalizados en la configuración.</string>
     <string name="share_state_starting_text">⏱️ Esto podría tomar un tiempo. Siéntete libre de salir de la aplicación. Te avisaremos cuando esté listo.</string>
 </resources>
