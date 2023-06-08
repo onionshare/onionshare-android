@@ -16,14 +16,7 @@ import org.briarproject.moat.MoatApi
 import org.briarproject.onionwrapper.CircumventionProvider
 import org.briarproject.onionwrapper.LocationUtils
 import org.briarproject.onionwrapper.TorWrapper
-import org.briarproject.onionwrapper.TorWrapper.TorState.CONNECTED
-import org.briarproject.onionwrapper.TorWrapper.TorState.CONNECTING
-import org.briarproject.onionwrapper.TorWrapper.TorState.DISABLED
-import org.briarproject.onionwrapper.TorWrapper.TorState.NOT_STARTED
-import org.briarproject.onionwrapper.TorWrapper.TorState.STARTED
-import org.briarproject.onionwrapper.TorWrapper.TorState.STARTING
 import org.briarproject.onionwrapper.TorWrapper.TorState.STOPPED
-import org.briarproject.onionwrapper.TorWrapper.TorState.STOPPING
 import org.onionshare.android.ui.settings.SettingsManager
 import org.slf4j.LoggerFactory.getLogger
 import java.io.IOException
@@ -98,19 +91,8 @@ class TorManager @Inject constructor(
     }
 
     override fun onState(s: TorWrapper.TorState) {
-        when (s) {
-            NOT_STARTED -> LOG.info("new state: not started")
-            STARTING -> LOG.info("new state: starting")
-            STARTED -> LOG.info("new state: started")
-            CONNECTING -> LOG.info("new state: connecting")
-            CONNECTED -> LOG.info("new state: connected")
-            DISABLED -> LOG.info("new state: network disabled")
-            STOPPING -> LOG.info("new state: stopping")
-            STOPPED -> {
-                LOG.info("new state: stopped")
-                _state.value = TorState.Stopped
-            }
-        }
+        LOG.info("new state: $s")
+        if (s == STOPPED) _state.value = TorState.Stopped
     }
 
     fun publishOnionService(port: Int) {

@@ -39,8 +39,8 @@ class FileManager @Inject constructor(
     app: Application,
 ) {
     private val ctx = app.applicationContext
-    private val _filesStateState = MutableStateFlow(FilesState(emptyList()))
-    val filesState = _filesStateState.asStateFlow()
+    private val _filesState = MutableStateFlow(FilesState(emptyList()))
+    val filesState = _filesState.asStateFlow()
     private val _zipState = MutableStateFlow<ZipState?>(null)
     val zipState = _zipState.asStateFlow()
 
@@ -78,7 +78,7 @@ class FileManager @Inject constructor(
             }
             SendFile(name, sizeHuman, size, uri, documentFile.type)
         }
-        _filesStateState.value = FilesState(existingFiles + files)
+        _filesState.value = FilesState(existingFiles + files)
     }
 
     fun removeFile(file: SendFile) {
@@ -86,7 +86,7 @@ class FileManager @Inject constructor(
         file.releaseUriPermission()
 
         val newList = filesState.value.files.filterNot { it == file }
-        _filesStateState.value = FilesState(newList)
+        _filesState.value = FilesState(newList)
     }
 
     fun removeAll() {
@@ -94,7 +94,7 @@ class FileManager @Inject constructor(
         filesState.value.files.iterator().forEach { file ->
             file.releaseUriPermission()
         }
-        _filesStateState.value = FilesState(emptyList())
+        _filesState.value = FilesState(emptyList())
     }
 
     suspend fun zipFiles(): ZipResult = withContext(Dispatchers.IO) {
@@ -104,7 +104,7 @@ class FileManager @Inject constructor(
         } catch (e: FileErrorException) {
             // remove errorFile from list of files, so user can try again
             val newFiles = filesState.value.files.toMutableList().apply { remove(e.file) }
-            _filesStateState.value = FilesState(newFiles)
+            _filesState.value = FilesState(newFiles)
             ZipResult.Error(e.file)
         } catch (e: Exception) {
             ZipResult.Error()
@@ -170,8 +170,6 @@ class FileManager @Inject constructor(
 
     fun stop() {
         _zipState.value?.zip?.delete()
-        // TODO
-        // if (currentState is ZipResult.Zipped) currentState.sendPage.zipFile.delete()
     }
 
     private fun Uri.getFallBackName(): String? {
