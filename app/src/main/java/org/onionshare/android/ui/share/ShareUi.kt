@@ -23,6 +23,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -30,6 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -65,6 +67,11 @@ import org.onionshare.android.ui.theme.topBar
 
 private val bottomSheetPeekHeight = 60.dp
 
+private fun isEmptyState(shareState: ShareUiState, filesState: FilesState): Boolean {
+    return (shareState == ShareUiState.AddingFiles || shareState is ShareUiState.ErrorAddingFile) &&
+        filesState.files.isEmpty()
+}
+
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
 fun ShareUi(
@@ -78,9 +85,13 @@ fun ShareUi(
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val offset = getOffsetInDp(scaffoldState.bottomSheetState)
-    if (shareState == ShareUiState.AddingFiles && filesState.files.isEmpty()) {
+    val snackbarHostState: SnackbarHostState
+    if (isEmptyState(shareState, filesState)) {
+        val normalScaffoldState = rememberScaffoldState()
+        snackbarHostState = normalScaffoldState.snackbarHostState
         Scaffold(
             topBar = { ActionBar(navController, R.string.app_name, shareState.allowsModifyingFiles) },
+            scaffoldState = normalScaffoldState,
             floatingActionButton = {
                 Fab(scaffoldState.bottomSheetState, onFabClicked)
             },
@@ -92,27 +103,10 @@ fun ShareUi(
             scaffoldState.bottomSheetState.collapse()
         }
     } else {
+        snackbarHostState = scaffoldState.snackbarHostState
         LaunchedEffect("showSheet") {
             delay(750)
             scaffoldState.bottomSheetState.expand()
-        }
-        if (shareState is ShareUiState.ErrorAddingFile) {
-            val errorFile = shareState.errorFile
-            val text = if (errorFile != null) {
-                stringResource(R.string.share_error_file_snackbar_text, errorFile.basename)
-            } else {
-                stringResource(R.string.share_error_snackbar_text)
-            }
-            val action =
-                if (filesState.files.isEmpty()) null else stringResource(R.string.share_error_snackbar_action)
-            LaunchedEffect("showSnackbar") {
-                val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
-                    message = text,
-                    actionLabel = action,
-                    duration = SnackbarDuration.Long,
-                )
-                if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
-            }
         }
         if (!shareState.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
             // ensure the bottom sheet is visible
@@ -133,6 +127,23 @@ fun ShareUi(
             sheetContent = { BottomSheet(shareState, onSheetButtonClicked) }
         ) { innerPadding ->
             MainContent(shareState, filesState, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
+        }
+    }
+    if (shareState is ShareUiState.ErrorAddingFile) {
+        val errorFile = shareState.errorFile
+        val text = if (errorFile != null) {
+            stringResource(R.string.share_error_file_snackbar_text, errorFile.basename)
+        } else {
+            stringResource(R.string.share_error_snackbar_text)
+        }
+        val action = if (filesState.files.isEmpty()) null else stringResource(R.string.share_error_snackbar_action)
+        LaunchedEffect("showSnackbar") {
+            val snackbarResult = snackbarHostState.showSnackbar(
+                message = text,
+                actionLabel = action,
+                duration = SnackbarDuration.Long,
+            )
+            if (snackbarResult == SnackbarResult.ActionPerformed) onSheetButtonClicked()
         }
     }
 }
@@ -218,7 +229,7 @@ fun MainContent(
     onRemoveAll: () -> Unit,
     modifier: Modifier,
 ) {
-    if (shareState is ShareUiState.AddingFiles && filesState.files.isEmpty()) {
+    if (isEmptyState(shareState, filesState)) {
         Box(
             modifier = modifier
                 .fillMaxWidth()
