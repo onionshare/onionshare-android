@@ -165,7 +165,11 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
             val textRes =
                 if (state.torFailedToConnect) R.string.share_state_error_tor_text else R.string.share_state_error_text
             Text(
-                text = stringResource(textRes),
+                text = if (state.errorMsg == null) {
+                    stringResource(textRes)
+                } else {
+                    stringResource(textRes) + "\n\n${state.errorMsg}"
+                },
                 modifier = Modifier.padding(16.dp),
             )
             Divider(thickness = 2.dp)
