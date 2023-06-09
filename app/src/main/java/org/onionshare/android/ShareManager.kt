@@ -45,79 +45,6 @@ class ShareManager @Inject constructor(
     private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.AddingFiles)
     val shareState: StateFlow<ShareUiState> = _shareState.asStateFlow()
 
-//    @OptIn(DelicateCoroutinesApi::class)
-//    val shareState: StateFlow<ShareUiState> = combineTransform(
-//        flow = fileManager.state,
-//        flow2 = torManager.state,
-//        flow3 = webserverManager.state,
-//        flow4 = shouldStop,
-//    ) { f, t, w, shouldStop ->
-//        if (LOG.isInfoEnabled) {
-//            val s = if (shouldStop) "stop!" else ""
-//            LOG.info("New state from: f-${f::class.simpleName} t-${t::class.simpleName} w-${w::class.simpleName} $s")
-//        }
-//        // initial state: Adding file and services stopped
-//        if (f is FilesState.Added && t is TorState.Stopped && w is WebServerState.Stopped && !w.downloadComplete) {
-//            if (f.files.isEmpty()) emit(ShareUiState.NoFiles)
-//            else emit(ShareUiState.FilesAdded(f.files))
-//        } // handle error while adding files while Tor is still starting or started
-//        else if (f is FilesState.Error && (t is TorState.Starting || t is TorState.Published)) {
-//            stopSharing()
-//        } // handle error while adding files when Tor has stopped
-//        else if (f is FilesState.Error && t is TorState.Stopped) {
-//            // TODO notify the user when the app is not displayed
-//            emit(ShareUiState.ErrorAddingFile(f.files, f.errorFile))
-//            // special case handling for error state without file left
-//            if (f.files.isEmpty()) {
-//                delay(1000)
-//                emit(ShareUiState.NoFiles)
-//            }
-//        } // continue with zipping and report state while doing it
-//        else if (f is FilesState.Zipping && t is TorState.Starting) {
-//            val torPercent = (t as? TorState.Starting)?.progress ?: 0
-//            emit(ShareUiState.Starting(f.files, f.progress, torPercent))
-//        } // after zipping is complete, and webserver still stopped, start it
-//        else if (f is FilesState.Zipped && !shouldStop &&
-//            (t is TorState.Starting || t is TorState.Published) && w is WebServerState.Stopped
-//        ) {
-//            webserverManager.start(f.sendPage)
-//            val torPercent = (t as? TorState.Starting)?.progress ?: 0
-//            emit(ShareUiState.Starting(f.files, 100, torPercent))
-//        } // continue to report Tor progress after files are zipped
-//        else if (f is FilesState.Zipped && t is TorState.Starting) {
-//            emit(ShareUiState.Starting(f.files, 100, t.progress))
-//        } // everything is done, show sharing state with onion address
-//        else if (f is FilesState.Zipped && t is TorState.Published && w is WebServerState.Started) {
-//            val url = "http://${t.onion}.onion"
-//            emit(ShareUiState.Sharing(f.files, url))
-//            notificationManager.onSharing()
-//        } // if webserver says download is complete, report that back
-//        else if (w is WebServerState.Stopping && w.downloadComplete) {
-//            this@ShareManager.shouldStop.value = true
-//        } // wait with stopping Tor until download has really completed
-//        else if (w is WebServerState.Stopped && w.downloadComplete) {
-//            stopSharing()
-//            emit(ShareUiState.Complete(f.files))
-//        } // handle stopping state
-//        else if (t is TorState.Stopping) {
-//            emit(ShareUiState.Stopping(f.files))
-//        } // handle unexpected stopping/stopped only after zipped, because we start webserver only when that happens
-//        else if (!shouldStop && f is FilesState.Zipped && (t is TorState.Stopped || w is WebServerState.Stopped)
-//        ) {
-//            notificationManager.onError()
-//            val torFailed = (t as? TorState.Stopping)?.failedToConnect == true ||
-//                (t as? TorState.Stopped)?.failedToConnect == true
-//            LOG.info("Tor failed: $torFailed")
-//            emit(ShareUiState.Error(f.files, torFailed))
-//            // state hack to ensure the webserver also stops when tor fails, so we add files again
-//            if (webserverManager.state.value !is WebServerState.Stopped) webserverManager.stop()
-//        } else {
-//            LOG.error("Unhandled state: ↑")
-//        }
-//    }.distinctUntilChanged().onEach {
-//        LOG.debug("New state: ${it::class.simpleName}")
-//    }.stateIn(GlobalScope, SharingStarted.Lazily, ShareUiState.NoFiles)
-
     suspend fun onStateChangeRequested() = when (shareState.value) {
         is ShareUiState.AddingFiles -> startSharing()
         is ShareUiState.Starting -> stopSharing()
@@ -139,6 +66,7 @@ class ShareManager @Inject constructor(
         startSharingJob = GlobalScope.launch(Dispatchers.IO) {
             coroutineScope mainScope@{
                 fun stopOnError(error: ShareUiState.Error) {
+                    notificationManager.onError()
                     _shareState.value = error
                     // stop in a new scope to not cause deadlock when waiting for startSharingJob to complete
                     GlobalScope.launch {
@@ -201,6 +129,7 @@ class ShareManager @Inject constructor(
             is TorState.Published -> {
                 // We only create the hidden service after files have been zipped and webserver was started,
                 // so we are in sharing state once the first HS descriptor has been published.
+                notificationManager.onSharing()
                 ShareUiState.Sharing(torState.onion)
             }
 
