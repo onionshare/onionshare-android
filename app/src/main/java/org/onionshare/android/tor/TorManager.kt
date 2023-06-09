@@ -5,7 +5,9 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import androidx.core.content.ContextCompat.startForegroundService
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,11 +55,12 @@ class TorManager @Inject constructor(
      * Starts [ShareService] and creates a new onion service.
      * Suspends until the address of the onion service is available.
      */
+    @OptIn(DelicateCoroutinesApi::class)
     @Throws(IOException::class, IllegalArgumentException::class, InterruptedException::class)
     suspend fun start() = withContext(Dispatchers.IO) {
         LOG.info("Starting...")
         val now = System.currentTimeMillis()
-        _state.value = TorState.Starting(progress = 0, startTime = now, lastProgressTime = now)
+        _state.value = TorState.Starting(progress = 0, lastProgressTime = now)
         Intent(app, ShareService::class.java).also { intent ->
             startForegroundService(app, intent)
         }
@@ -65,7 +68,10 @@ class TorManager @Inject constructor(
         tor.start()
         changeStartingState(5)
         if (settingsManager.automaticBridges.value) {
-            startCheckJob = launch {
+            // we try without bridges first
+            tor.disableBridges()
+            // start the check job in global scope, so this method can return without waiting for it
+            startCheckJob = GlobalScope.launch {
                 LOG.info("Starting check job")
                 checkStartupProgress()
                 LOG.info("Check job finished")
@@ -117,14 +123,9 @@ class TorManager @Inject constructor(
     }
 
     private fun changeStartingState(progress: Int) {
-        val oldStartingState = state.value as? TorState.Starting
-        if (oldStartingState == null) LOG.warn("Old state was not Starting, but ${state.value}")
-        val now = System.currentTimeMillis()
-        val newState = oldStartingState?.copy(progress = progress, lastProgressTime = now)
-        _state.value = newState ?: TorState.Starting(
+        _state.value = TorState.Starting(
             progress = progress,
-            startTime = now,
-            lastProgressTime = now,
+            lastProgressTime = System.currentTimeMillis(),
         )
     }
 

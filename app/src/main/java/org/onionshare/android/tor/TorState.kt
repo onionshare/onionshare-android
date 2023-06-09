@@ -6,7 +6,6 @@ sealed class TorState {
 
     data class Starting(
         val progress: Int,
-        val startTime: Long,
         val lastProgressTime: Long,
     ) : TorState()
 

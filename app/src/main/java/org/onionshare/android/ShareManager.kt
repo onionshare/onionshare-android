@@ -40,7 +40,6 @@ class ShareManager @Inject constructor(
 
     @Volatile
     private var startSharingJob: Job? = null
-    private val shouldStop = MutableStateFlow(false)
 
     val filesState = fileManager.filesState
     private val _shareState = MutableStateFlow<ShareUiState>(ShareUiState.AddingFiles)
@@ -134,15 +133,23 @@ class ShareManager @Inject constructor(
             // TODO check if this always works as expected
             startSharingJob?.cancelAndJoin()
         }
+        _shareState.value = ShareUiState.Starting(0, 0)
         // the ErrorAddingFile state is transient and needs manual reset to not persist
         // TODO test
 //        if (shareState.value is ShareUiState.ErrorAddingFile) fileManager.resetError()
-        shouldStop.value = false
         // Attention: We'll launch sharing in Global scope, so it survives ViewModel death,
         // because this gets called implicitly by the ViewModel in ViewModelScope
         @Suppress("OPT_IN_USAGE")
         startSharingJob = GlobalScope.launch(Dispatchers.IO) {
             coroutineScope mainScope@{
+                fun stopOnError(error: ShareUiState.Error) {
+                    _shareState.value = error
+                    // stop in a new scope to not cause deadlock when waiting for startSharingJob to complete
+                    GlobalScope.launch {
+                        stopSharing(error)
+                    }
+                    this@mainScope.cancel()
+                }
                 // call ensureActive() before any heavy work to ensure we don't continue when cancelled
                 ensureActive()
                 // When the current scope gets cancelled, the async routine gets cancelled as well
@@ -153,10 +160,13 @@ class ShareManager @Inject constructor(
                         torManager.start()
                     } catch (e: Exception) {
                         LOG.error("Error starting Tor: ", e)
-                        this@mainScope.cancel()
-                        stopSharing()
+                        stopOnError(ShareUiState.Error(errorMsg = e.toString()))
                     }
                 }
+                // wait for tor.start() to return before starting to observe, actual startup happens async
+                torTask.await()
+                LOG.info("Tor task returned")
+                // start progress observer task
                 val observerTask = async {
                     fileManager.zipState.combine(torManager.state) { zipState, torState ->
                         onStarting(zipState, torState)
@@ -165,19 +175,21 @@ class ShareManager @Inject constructor(
                         // only continue collecting while we are starting (otherwise would never stop collecting)
                         shareUiState is ShareUiState.Starting
                     }.collect { shareUiState ->
+                        LOG.info("New share state: $shareUiState")
                         _shareState.value = shareUiState
+                        if (shareUiState is ShareUiState.Error) stopOnError(shareUiState)
                     }
+                    LOG.info("Observer task finished.")
                 }
+                ensureActive()
                 val zipResult = fileTask.await()
-                // wait for tor.start() to return, actual startup happens async
-                torTask.await()
                 if (zipResult is ZipResult.Zipped) {
                     val port = webserverManager.start(zipResult.sendPage)
                     torManager.publishOnionService(port)
                     observerTask.await()
                 } else if (zipResult is ZipResult.Error) {
-                    this@mainScope.cancel()
-                    stopSharing()
+                    // TODO handle zipResult.errorFile
+                    stopOnError(ShareUiState.Error())
                 }
             }
         }
@@ -202,17 +214,18 @@ class ShareManager @Inject constructor(
             }
 
             TorState.Stopped -> {
-                shareState.value
+                ShareUiState.Error(errorMsg = "Tor stopped unexpectedly.")
             }
         }
     }
 
-    private suspend fun stopSharing() = withContext(Dispatchers.IO) {
-        _shareState.value = ShareUiState.Stopping
-        shouldStop.value = true
+    private suspend fun stopSharing(errorState: ShareUiState.Error? = null) = withContext(Dispatchers.IO) {
         LOG.info("Stopping sharing...")
+        _shareState.value = ShareUiState.Stopping
         if (startSharingJob?.isActive == true) {
+            LOG.info("Wait for start job to finish...")
             startSharingJob?.cancelAndJoin()
+            LOG.info("Start job to finished.")
         }
         startSharingJob = null
 
@@ -221,7 +234,7 @@ class ShareManager @Inject constructor(
         fileManager.stop()
         notificationManager.onStopped()
 
-        _shareState.value = ShareUiState.AddingFiles
+        _shareState.value = errorState ?: ShareUiState.AddingFiles
     }
 
 }
