@@ -95,7 +95,8 @@ private fun getBottomSheetUi(state: ShareUiState) = when (state) {
         stateText = R.string.share_state_ready,
         buttonText = R.string.share_button_start,
     )
-    is ShareUiState.Error -> BottomSheetUi(
+
+    is ShareUiState.ErrorStarting -> BottomSheetUi(
         indicatorColor = Error,
         stateText = R.string.share_state_error,
         buttonText = R.string.share_button_error,
@@ -161,7 +162,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 )
             }
             Divider(thickness = 2.dp)
-        } else if (state is ShareUiState.Error) {
+        } else if (state is ShareUiState.ErrorStarting) {
             val textRes =
                 if (state.torFailedToConnect) R.string.share_state_error_tor_text else R.string.share_state_error_text
             Text(
@@ -302,7 +303,7 @@ fun ShareBottomSheetErrorPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
-                state = ShareUiState.Error(Random.nextBoolean()),
+                state = ShareUiState.ErrorStarting(Random.nextBoolean()),
                 onSheetButtonClicked = {},
             )
         }

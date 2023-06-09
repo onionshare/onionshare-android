@@ -39,13 +39,15 @@ sealed class ShareUiState {
         override val allowsModifyingFiles = false
     }
 
+    sealed class Error : ShareUiState()
+
     data class ErrorAddingFile(
         val errorFile: SendFile? = null,
-    ) : ShareUiState()
+    ) : Error()
 
-    data class Error(
+    data class ErrorStarting(
         val torFailedToConnect: Boolean = false,
         val errorMsg: String? = null,
-    ) : ShareUiState()
+    ) : Error()
 
 }

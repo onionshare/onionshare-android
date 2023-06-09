@@ -124,19 +124,15 @@ class ShareManager @Inject constructor(
         is ShareUiState.Sharing -> stopSharing()
         is ShareUiState.Complete -> startSharing()
         is ShareUiState.ErrorAddingFile -> startSharing()
-        is ShareUiState.Error -> startSharing()
+        is ShareUiState.ErrorStarting -> startSharing()
         is ShareUiState.Stopping -> error("Pressing sheet button while stopping should not be possible")
     }
 
     private suspend fun startSharing() {
         if (startSharingJob?.isActive == true) {
-            // TODO check if this always works as expected
             startSharingJob?.cancelAndJoin()
         }
         _shareState.value = ShareUiState.Starting(0, 0)
-        // the ErrorAddingFile state is transient and needs manual reset to not persist
-        // TODO test
-//        if (shareState.value is ShareUiState.ErrorAddingFile) fileManager.resetError()
         // Attention: We'll launch sharing in Global scope, so it survives ViewModel death,
         // because this gets called implicitly by the ViewModel in ViewModelScope
         @Suppress("OPT_IN_USAGE")
@@ -160,7 +156,7 @@ class ShareManager @Inject constructor(
                         torManager.start()
                     } catch (e: Exception) {
                         LOG.error("Error starting Tor: ", e)
-                        stopOnError(ShareUiState.Error(errorMsg = e.toString()))
+                        stopOnError(ShareUiState.ErrorStarting(errorMsg = e.toString()))
                     }
                 }
                 // wait for tor.start() to return before starting to observe, actual startup happens async
@@ -188,8 +184,7 @@ class ShareManager @Inject constructor(
                     torManager.publishOnionService(port)
                     observerTask.await()
                 } else if (zipResult is ZipResult.Error) {
-                    // TODO handle zipResult.errorFile
-                    stopOnError(ShareUiState.Error())
+                    stopOnError(ShareUiState.ErrorAddingFile(zipResult.errorFile))
                 }
             }
         }
@@ -210,11 +205,11 @@ class ShareManager @Inject constructor(
             }
 
             TorState.FailedToConnect -> {
-                ShareUiState.Error(true)
+                ShareUiState.ErrorStarting(true)
             }
 
             TorState.Stopped -> {
-                ShareUiState.Error(errorMsg = "Tor stopped unexpectedly.")
+                ShareUiState.ErrorStarting(errorMsg = "Tor stopped unexpectedly.")
             }
         }
     }
