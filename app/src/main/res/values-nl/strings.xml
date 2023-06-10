@@ -1,2 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="back">Terug</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Annuleren</string>
+    <string name="add">Toevoegen</string>
+    <string name="share">Delen</string>
+    <string name="delete">Verwijderen</string>
+    <string name="paste">Plakken</string>
+    <string name="remove">Weghalen</string>
+    <string name="add_files_not_supported">Je apparaat ondersteunt het toevoegen van bestanden niet</string>
+    <string name="unknown">onbekend</string>
+    <string name="share_empty_state">Nog niets hier.</string>
+    <string name="warning_alpha">Dit is een vroege alfa-versie. Deze mag alleen worden gebruikt om te testen. De code is nog niet af en is nog niet gecontroleerd.</string>
+    <string name="warning_no_files_added">Geen bestanden geselecteerd.</string>
+    <string name="share_files_add">Bestanden toevoegen</string>
+    <string name="share_state_ready">Gereed</string>
+    <string name="share_state_starting">Starten…</string>
+    <string name="share_state_sharing">Aan het delen</string>
+    <string name="share_state_transfer_complete">Overdracht compleet</string>
+    <string name="share_state_stopping">Aan het stoppen…</string>
+    <string name="share_state_error">Fout</string>
+    <string name="notification_sharing_title">OnionShare beschikbaar</string>
+    <string name="notification_channel_name_sharing">Adres delen beschikbaar</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d item, %2$s</item>
+        <item quantity="other">%1$d items, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Status van bestandsdeling</string>
+    <string name="warning_alpha_intro">Waarschuwing:</string>
+    <string name="clear_all">Wis Alles</string>
+    <string name="share_button_start">Begin met delen</string>
+    <string name="share_error_snackbar_action">Opnieuw proberen</string>
+    <string name="share_onion_intro"><b>Iedereen</b> met dit OnionShare-adres kan je bestanden <b>downloaden</b> met <b>Tor Browser</b>:</string>
+    <string name="starting_notification_title">Bestanden publiceren…</string>
+    <string name="about_text">OnionShare is ontwikkeld door Micah Lee, et al. en is open source, vrijgegeven onder GPLv3.
+\n
+\nZoals alle software kan OnionShare bugs of kwetsbaarheden bevatten.</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d brug toegevoegd</item>
+        <item quantity="other">%d bruggen toegevoegd</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">Tik op de link hieronder om bruggen te verkrijgen. Plak vervolgens een of meer brugregels in het onderstaande veld.</string>
+    <string name="share_state_starting_text">⏱️ Dit kan even duren. Voel je vrij om de app te verlaten. We laten het je weten als het klaar is.</string>
+    <string name="share_state_error_text">Er heeft zich een onverwacht probleem voorgedaan.</string>
+    <string name="share_state_error_tor_text">Kan geen verbinding maken met Tor. Mogelijk moet je aangepaste bruggen toevoegen in instellingen.</string>
+    <string name="share_button_starting">Aan het starten... tik om te annuleren</string>
+    <string name="share_button_stop">Stop met delen</string>
+    <string name="share_button_complete">Begin opnieuw met delen</string>
+    <string name="share_button_stopping">Aan het stoppen... wacht totdat gestopt is</string>
+    <string name="share_button_error">Probeer het opnieuw</string>
+    <string name="clipboard_onion_service_label">OnionShare-adres</string>
+    <string name="clipboard_onion_service_copied">OnionShare-adres gekopieerd naar klembord.</string>
+    <string name="notification_channel_name_error">Fout</string>
+    <string name="notification_sharing_text">Tik om naar het adres te gaan om je bestanden te delen.</string>
+    <string name="starting_notification_text">Dit kan enige tijd duren.</string>
+    <string name="sharing_notification_title">Momenteel bestanden aan het delen</string>
+    <string name="notification_error_title">OnionShare ondervond een probleem</string>
+    <string name="notification_error_text">Tik om details te bekijken.</string>
+    <string name="share_error_snackbar_text">Kon OnionShare niet starten</string>
+    <string name="share_error_file_snackbar_text">Kon %s niet openen. Verwijderd.</string>
+    <string name="about_title">Over</string>
+    <string name="about_app_version">Applicatieversie %s</string>
+    <string name="about_contributors">Bijdragers</string>
+    <string name="about_contributor_creator">%s, Maker</string>
+    <string name="about_contributor_android">%s, Android-Engineer</string>
+    <string name="about_contributor_pm">%s, Projectmanager</string>
+    <string name="about_contributor_design">%s, Productontwerper</string>
+    <string name="settings_title">Instellingen</string>
+    <string name="about_contributing_orgs">Bijdragende Organisaties</string>
+    <string name="settings_tor_title">Verbinding maken met Tor</string>
+    <string name="settings_tor_automatic">Automatisch op basis van locatie</string>
+    <string name="settings_tor_intro">Een brug is een speciale ongecensureerde route naar het Tornetwerk. Zelfs als Automatisch is geselecteerd, kan OnionShare proberen bruggen te gebruiken om verbinding te maken.</string>
+    <string name="settings_tor_bridges_title">Aangepaste Bruggen</string>
+    <string name="settings_tor_bridges_none">Geen toegevoegd</string>
+    <string name="settings_tor_my_bridges_title">Mijn Bruggen</string>
+</resources>
