@@ -2,4 +2,10 @@
 <resources>
     <string name="add">დამატება</string>
     <string name="settings_tor_title">Tor-თან დაკავშირება</string>
+    <string name="menu">მენიუ</string>
+    <string name="cancel">გაუქმება</string>
+    <string name="delete">წაშლა</string>
+    <string name="unknown">უცნობი</string>
+    <string name="back">უკან</string>
+    <string name="share">გაზიარება</string>
 </resources>
