@@ -1,2 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="back">رجوع</string>
+    <string name="cancel">إلغاء</string>
+    <string name="add">اضافة</string>
+    <string name="share">مشاركة</string>
+    <string name="delete">حدف</string>
+    <string name="paste">لصق</string>
+    <string name="app_name">OnionShare (تجريبي)</string>
+    <string name="share_state_stopping">جار توقف…</string>
+    <string name="share_state_error_text">حدثت مشكلة غير متوقعة.</string>
+    <string name="unknown">مجهول</string>
+    <string name="remove">إزالة</string>
+    <string name="warning_alpha_intro">تحذير:</string>
+    <string name="warning_no_files_added">لم يتم اختيار آي ملفات.</string>
+    <string name="clear_all">مسح الكل</string>
+    <string name="share_files_add">إضافة ملفات</string>
+    <string name="share_state_ready">جاهز</string>
+    <string name="share_state_starting">جاري البدء…</string>
+    <string name="share_state_sharing">تجري المشاركة</string>
+    <string name="share_state_transfer_complete">اكتمل النقل</string>
+    <string name="share_state_error">خطأ</string>
+    <string name="share_button_start">ابدء المشاركة</string>
+    <string name="share_button_starting">جارٍ البدء… انقر للإلغاء</string>
+    <string name="share_button_stop">وقف المشاركة</string>
+    <string name="share_button_complete">ابدأ بالمشاركة مرة أخرى</string>
+    <string name="about_contributors">المساهمون</string>
+    <string name="about_contributor_design">%s، مصمم المنتج</string>
+    <string name="settings_tor_bridges_title">جسور مخصصة</string>
+    <string name="settings_tor_bridges_none">لم يتم إضافة شئ</string>
+    <string name="menu">القائمة</string>
+    <string name="add_files_not_supported">جهازك لا يدعم إضافة الملفات</string>
+    <string name="share_empty_state">لا شيء هنا حتى الآن.</string>
+    <string name="warning_alpha">هذا إصدار ألفا تجريبي مبكر. يجب استخدامه فقط للإختبار. لم ينتهي العمل عليه بعد، ولم يتم تدقيقه.</string>
+    <string name="sharing_notification_title">مشاركة الملفات حاليا</string>
+    <string name="share_error_snackbar_text">تعذر بدء OnionShare</string>
+    <string name="about_contributing_orgs">المنظمات المساهمة</string>
+    <string name="about_text">تم تطوير OnionShare بواسطة Micah Lee وal. وهو مفتوح المصدر ، تم إصداره بموجب GPLv3.
+\n
+\nمثل كل البرامج ، قد تحتوي OnionShare على أخطاء أو نقاط ضعف.</string>
+    <string name="about_contributor_pm">%s، مدير المشروع</string>
+    <string name="settings_tor_automatic">تلقائيا بناءا على الموقع</string>
+    <string name="settings_tor_intro">الجسر bridge هو طريق مخصص إلى شبكة Tor غير خاضع للرقابة. حتى إذا تم تحديد تلقائي ، فقد يحاول OnionShare استخدام الجسور للاتصال.</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="zero">0</item>
+        <item quantity="one">1</item>
+        <item quantity="two">2</item>
+        <item quantity="few">بضع</item>
+        <item quantity="many">عدة</item>
+        <item quantity="other">اخرى</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">اضغط على الرابط أدناه للحصول على جسور. ثم الصق واحدًا أو أكثر من خطوط الجسر bridge في الحقل أدناه.</string>
+    <string name="share_state_error_tor_text">تعذر الاتصال بـ Tor. قد تحتاج إلى إضافة جسور مخصصة في الإعدادات.</string>
+    <string name="notification_sharing_text">أنقر للوصول إلى العنوان لمشاركة ملفاتك.</string>
+    <string name="starting_notification_title">جارٍ نشر الملفات …</string>
+    <string name="starting_notification_text">هذا قد يستغرق بعض الوقت.</string>
+    <string name="notification_error_title">OnionShare واجه مشكلة</string>
+    <string name="notification_error_text">أنقر لترى التفاصيل.</string>
+    <string name="share_error_file_snackbar_text">تعذر فتح %s. حذف.</string>
+    <string name="share_error_snackbar_action">حاول مجددا</string>
+    <string name="about_title">عن</string>
+    <string name="about_app_version">نسخة التطبيق Version %s</string>
+    <string name="about_contributor_creator">%s، المطور</string>
+    <string name="about_contributor_android">%s، مهندس Android</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_tor_title">يتم الاتصال ب Tor</string>
+    <string name="settings_tor_my_bridges_title">جسوري</string>
+    <string name="share_state_starting_text">⏱️ قد يستغرق هذا بعض الوقت. لا تتردد في مغادرة التطبيق. سنخطرك عندما تكون جاهزًا.</string>
+    <string name="notification_channel_name_foreground">حالة مشاركة الملف</string>
+    <string name="notification_channel_name_sharing">عنوان المشاركة متاح</string>
+    <string name="notification_channel_name_error">خطأ</string>
+    <string name="notification_sharing_title">OnionShare متاح</string>
+    <string name="share_button_stopping">انتظر حتى يتوقف</string>
+    <string name="share_button_error">أعد المحاولة</string>
+    <string name="clipboard_onion_service_label">عنوان OnionShare</string>
+    <string name="clipboard_onion_service_copied">تم نسخ عنوان OnionShare إلى الحافظة.</string>
+</resources>
