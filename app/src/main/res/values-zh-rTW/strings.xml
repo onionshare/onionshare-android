@@ -9,7 +9,7 @@
     <string name="clear_all">清除全部</string>
     <string name="share_files_add">新增檔案</string>
     <string name="share_state_ready">就緒</string>
-    <string name="share_state_starting">啟動…</string>
+    <string name="share_state_starting">啟動中…</string>
     <string name="share_state_sharing">分享</string>
     <string name="share_state_transfer_complete">傳輸完畢</string>
     <string name="share_state_stopping">停止…</string>
