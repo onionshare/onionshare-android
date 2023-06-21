@@ -106,13 +106,16 @@ class ShareManager @Inject constructor(
                     LOG.info("Observer task finished.")
                 }
                 ensureActive()
-                val zipResult = fileTask.await()
-                if (zipResult is ZipResult.Zipped) {
-                    val port = webserverManager.start(zipResult.sendPage)
-                    torManager.publishOnionService(port)
-                    observerTask.await()
-                } else if (zipResult is ZipResult.Error) {
-                    stopOnError(ShareUiState.ErrorAddingFile(zipResult.errorFile))
+                when (val zipResult = fileTask.await()) {
+                    is ZipResult.Zipped -> {
+                        val port = webserverManager.start(zipResult.sendPage)
+                        torManager.publishOnionService(port)
+                        observerTask.await()
+                    }
+
+                    is ZipResult.Error -> {
+                        stopOnError(ShareUiState.ErrorAddingFile(zipResult.errorFile))
+                    }
                 }
             }
         }
