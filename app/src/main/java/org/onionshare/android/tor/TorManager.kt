@@ -68,8 +68,6 @@ class TorManager @Inject constructor(
         tor.start()
         changeStartingState(5)
         if (settingsManager.automaticBridges.value) {
-            // we try without bridges first
-            tor.disableBridges()
             // start the check job in global scope, so this method can return without waiting for it
             startCheckJob = GlobalScope.launch {
                 LOG.info("Starting check job")

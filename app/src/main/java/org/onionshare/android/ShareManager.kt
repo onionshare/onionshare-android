@@ -92,6 +92,7 @@ class ShareManager @Inject constructor(
                 LOG.info("Tor task returned")
                 // start progress observer task
                 val observerTask = async {
+                    LOG.info("Starting Observer task...")
                     fileManager.zipState.combine(torManager.state) { zipState, torState ->
                         onStarting(zipState, torState)
                     }.transformWhile { shareUiState ->
@@ -106,6 +107,7 @@ class ShareManager @Inject constructor(
                     LOG.info("Observer task finished.")
                 }
                 ensureActive()
+                LOG.info("Awaiting file task...")
                 when (val zipResult = fileTask.await()) {
                     is ZipResult.Zipped -> {
                         val port = webserverManager.start(zipResult.sendPage)

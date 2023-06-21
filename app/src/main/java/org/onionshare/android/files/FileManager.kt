@@ -107,6 +107,7 @@ class FileManager @Inject constructor(
             _filesState.value = FilesState(newFiles)
             ZipResult.Error(e.file)
         } catch (e: Exception) {
+            LOG.error("Error zipping files: ", e)
             ZipResult.Error()
         }
     }
