@@ -74,4 +74,13 @@
     <string name="share_button_error">أعد المحاولة</string>
     <string name="clipboard_onion_service_label">عنوان OnionShare</string>
     <string name="clipboard_onion_service_copied">تم نسخ عنوان OnionShare إلى الحافظة.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="zero">0</item>
+        <item quantity="one">1</item>
+        <item quantity="two">2</item>
+        <item quantity="few">بضع</item>
+        <item quantity="many">عدة</item>
+        <item quantity="other">اخرى</item>
+    </plurals>
+    <string name="share_onion_intro"><b>يمكن لأي شخص</b>لديه عنوان OnionShare هذا<b> تنزيل</b> ملفاتك باستخدام <b> Tor Browser </b>:</string>
 </resources>
