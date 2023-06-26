@@ -15,4 +15,6 @@ sealed class TorState {
 
     object FailedToConnect : TorState()
 
+    object Stopping : TorState()
+
 }

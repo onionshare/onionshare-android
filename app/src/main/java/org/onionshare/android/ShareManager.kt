@@ -142,6 +142,8 @@ class ShareManager @Inject constructor(
                 ShareUiState.ErrorStarting(true)
             }
 
+            TorState.Stopping -> error("Still observing TorState after calling stop().")
+
             TorState.Stopped -> {
                 ShareUiState.ErrorStarting(errorMsg = "Tor stopped unexpectedly.")
             }
@@ -158,7 +160,8 @@ class ShareManager @Inject constructor(
         }
         startSharingJob = null
 
-        if (torManager.state.value !is TorState.Stopped) torManager.stop()
+        val torState = torManager.state.value
+        if (torState !is TorState.Stopped && torState !is TorState.Stopping) torManager.stop()
         if (webserverManager.state.value !is WebServerState.Stopped) webserverManager.stop()
         fileManager.stop()
         notificationManager.onStopped()

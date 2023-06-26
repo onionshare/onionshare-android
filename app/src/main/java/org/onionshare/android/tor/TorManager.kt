@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.roundToInt
+import kotlin.reflect.KClass
 
 private val LOG = getLogger(TorManager::class.java)
 private val TOR_START_TIMEOUT_SINCE_START = MINUTES.toMillis(5)
@@ -42,6 +43,9 @@ class TorManager @Inject constructor(
     private val locationUtils: LocationUtils,
 ) : TorWrapper.Observer {
 
+    /**
+     * Attention: Only use [updateTorState] to update this state.
+     */
     private val _state = MutableStateFlow<TorState>(TorState.Stopped)
     internal val state = _state.asStateFlow()
 
@@ -49,6 +53,21 @@ class TorManager @Inject constructor(
 
     init {
         tor.setObserver(this@TorManager)
+    }
+
+    /**
+     * Updates the [_state] with the given new [state] preventing concurrent modifications.
+     * The state only gets updated when [_state] was in [expectedState].
+     * @return true if the state was updated and false if not.
+     */
+    @Synchronized
+    private fun updateTorState(expectedState: KClass<*>?, newState: TorState, warn: Boolean = true): Boolean {
+        if (expectedState != null && _state.value::class != expectedState) {
+            if (warn) LOG.warn("Expected state $expectedState, but was ${state.value}")
+            return false
+        }
+        _state.value = newState
+        return true
     }
 
     /**
@@ -60,7 +79,7 @@ class TorManager @Inject constructor(
     suspend fun start() = withContext(Dispatchers.IO) {
         LOG.info("Starting...")
         val now = System.currentTimeMillis()
-        _state.value = TorState.Starting(progress = 0, lastProgressTime = now)
+        updateTorState(null, TorState.Starting(progress = 0, lastProgressTime = now))
         Intent(app, ShareService::class.java).also { intent ->
             startForegroundService(app, intent)
         }
@@ -86,6 +105,7 @@ class TorManager @Inject constructor(
 
     fun stop() {
         LOG.info("Stopping...")
+        updateTorState(null, TorState.Stopping)
         startCheckJob?.cancel()
         startCheckJob = null
         tor.stop()
@@ -96,7 +116,7 @@ class TorManager @Inject constructor(
 
     override fun onState(s: TorWrapper.TorState) {
         LOG.info("new state: $s")
-        if (s == STOPPED) _state.value = TorState.Stopped
+        if (s == STOPPED) updateTorState(null, TorState.Stopped)
     }
 
     fun publishOnionService(port: Int) {
@@ -109,8 +129,7 @@ class TorManager @Inject constructor(
     }
 
     override fun onHsDescriptorUpload(onion: String) {
-        if (state.value !is TorState.Published) {
-            _state.value = TorState.Published(onion)
+        if (updateTorState(TorState.Starting::class, TorState.Published(onion), warn = false)) {
             startCheckJob?.cancel()
             startCheckJob = null
         }
@@ -121,10 +140,11 @@ class TorManager @Inject constructor(
     }
 
     private fun changeStartingState(progress: Int) {
-        _state.value = TorState.Starting(
+        val newState = TorState.Starting(
             progress = progress,
             lastProgressTime = System.currentTimeMillis(),
         )
+        updateTorState(TorState.Starting::class, newState)
     }
 
     private suspend fun checkStartupProgress() {
@@ -154,7 +174,7 @@ class TorManager @Inject constructor(
         useBridges(builtInBridges)
         if (waitForTorToStart()) return
         LOG.info("Could not connect to Tor")
-        _state.value = TorState.FailedToConnect
+        updateTorState(TorState.Starting::class, TorState.FailedToConnect)
     }
 
     /**
