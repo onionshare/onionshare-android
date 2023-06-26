@@ -1,5 +1,6 @@
 package org.onionshare.android
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -84,7 +85,9 @@ class ShareManager @Inject constructor(
                         torManager.start()
                     } catch (e: Exception) {
                         LOG.error("Error starting Tor: ", e)
-                        stopOnError(ShareUiState.ErrorStarting(errorMsg = e.toString()))
+                        if (e !is CancellationException) {
+                            stopOnError(ShareUiState.ErrorStarting(errorMsg = e.toString()))
+                        }
                     }
                 }
                 // wait for tor.start() to return before starting to observe, actual startup happens async
