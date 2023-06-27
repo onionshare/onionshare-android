@@ -4,7 +4,6 @@ import android.net.TrafficStats
 import android.util.Base64
 import android.util.Base64.NO_PADDING
 import android.util.Base64.URL_SAFE
-import com.mitchellbosecke.pebble.loader.ClasspathLoader
 import io.ktor.http.ContentDisposition.Companion.Attachment
 import io.ktor.http.ContentDisposition.Parameters.FileName
 import io.ktor.http.HttpHeaders.ContentDisposition
@@ -17,8 +16,7 @@ import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
-import io.ktor.server.http.content.resources
-import io.ktor.server.http.content.static
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.netty.Netty
 import io.ktor.server.pebble.Pebble
 import io.ktor.server.pebble.PebbleContent
@@ -30,6 +28,7 @@ import io.ktor.server.response.respondFile
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import io.pebbletemplates.pebble.loader.ClasspathLoader
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.slf4j.LoggerFactory
@@ -136,15 +135,9 @@ class WebserverManager @Inject constructor() {
     }
 
     private fun Route.defaultRoutes(staticPath: String) {
-        static("$staticPath/css") {
-            resources("assets/static/css")
-        }
-        static("$staticPath/img") {
-            resources("assets/static/img")
-        }
-        static("$staticPath/js") {
-            resources("assets/static/js")
-        }
+        staticResources("$staticPath/css", "assets/static/css")
+        staticResources("$staticPath/img", "assets/static/img")
+        staticResources("$staticPath/js", "assets/static/js")
     }
 
     private fun Route.sendRoutes(sendPage: SendPage, staticPathMap: Map<String, String>) {
