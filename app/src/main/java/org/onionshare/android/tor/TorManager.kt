@@ -58,7 +58,10 @@ class TorManager @Inject constructor(
     /**
      * Updates the [_state] with the given new [state] preventing concurrent modifications.
      * The state only gets updated when [_state] was in [expectedState].
-     * @return true if the state was updated and false if not.
+     *
+     * Note that the underlying [MutableStateFlow] may reject updates that are equal to the previous state.
+     *
+     * @return true if the expected state was either null or matched the previous state.
      */
     @Synchronized
     private fun updateTorState(expectedState: KClass<*>?, newState: TorState, warn: Boolean = true): Boolean {
@@ -104,13 +107,16 @@ class TorManager @Inject constructor(
     }
 
     fun stop() {
-        LOG.info("Stopping...")
-        updateTorState(null, TorState.Stopping)
-        startCheckJob?.cancel()
-        startCheckJob = null
-        tor.stop()
-        Intent(app, ShareService::class.java).also { intent ->
-            app.stopService(intent)
+        if (updateTorState(TorState.Stopping::class, TorState.Stopping, warn = false)) {
+            LOG.info("Was already stopping. Not stopping again.")
+        } else {
+            LOG.info("Stopping...")
+            startCheckJob?.cancel()
+            startCheckJob = null
+            tor.stop()
+            Intent(app, ShareService::class.java).also { intent ->
+                app.stopService(intent)
+            }
         }
     }
 

@@ -163,8 +163,7 @@ class ShareManager @Inject constructor(
         }
         startSharingJob = null
 
-        val torState = torManager.state.value
-        if (torState !is TorState.Stopped && torState !is TorState.Stopping) torManager.stop()
+        torManager.stop()
         if (webserverManager.state.value !is WebServerState.Stopped) webserverManager.stop()
         fileManager.stop()
         notificationManager.onStopped()
