@@ -62,4 +62,19 @@
     <string name="share_state_starting_text">⏱️ Isto pode demorar algum tempo. Não hesite em deixar a aplicação. Será notificado quando tudo pronto.</string>
     <string name="share_state_error_tor_text">Não foi possível ligar ao Tor. Poderá ser necessário adicionar pontes personalizadas nas configurações.</string>
     <string name="share_button_complete">Comece a partilhar novamente</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d item, %2$s</item>
+        <item quantity="many">%1$d itens, %2$s</item>
+        <item quantity="other">%1$d item, %2$s</item>
+    </plurals>
+    <string name="about_contributor_android">%s, Engenheiro Android</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d ponte adicionada</item>
+        <item quantity="many">%d pontes adicionadas</item>
+        <item quantity="other">%d pontes adicionadas</item>
+    </plurals>
+    <string name="share_onion_intro"><b>Todas as pessoas</b> com este endereço OnionShare podem <b>descarregar</b> os seus ficheiros usando o <b>Tor Browser</b>:</string>
+    <string name="notification_channel_name_error">Erro</string>
+    <string name="notification_error_title">O OnionShare encontrou um problema</string>
+    <string name="notification_error_text">Toque para ver os detalhes.</string>
 </resources>
