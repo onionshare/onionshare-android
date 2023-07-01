@@ -59,4 +59,7 @@
     <string name="settings_tor_bridges_intro">Toque na ligação abaixo para obter pontes. Em seguida, cole uma ou mais linhas de ponte no campo abaixo.</string>
     <string name="settings_tor_my_bridges_title">Minhas pontes</string>
     <string name="notification_channel_name_foreground">Status de compartilhamento de ficheiros</string>
+    <string name="share_state_starting_text">⏱️ Isto pode demorar algum tempo. Não hesite em deixar a aplicação. Será notificado quando tudo pronto.</string>
+    <string name="share_state_error_tor_text">Não foi possível ligar ao Tor. Poderá ser necessário adicionar pontes personalizadas nas configurações.</string>
+    <string name="share_button_complete">Comece a partilhar novamente</string>
 </resources>
