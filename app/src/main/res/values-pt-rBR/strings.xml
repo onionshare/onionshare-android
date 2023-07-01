@@ -72,4 +72,7 @@
         <item quantity="many">%d pontes adicionadas</item>
         <item quantity="other">%d pontes adicionadas</item>
     </plurals>
+    <string name="notification_channel_name_error">Erro</string>
+    <string name="notification_error_title">O OnionShare encontrou um problema</string>
+    <string name="notification_error_text">Toque para ver os detalhes.</string>
 </resources>
