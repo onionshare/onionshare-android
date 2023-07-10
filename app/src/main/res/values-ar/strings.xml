@@ -2,7 +2,7 @@
 <resources>
     <string name="back">رجوع</string>
     <string name="cancel">إلغاء</string>
-    <string name="add">اضافة</string>
+    <string name="add">إضافة</string>
     <string name="share">مشاركة</string>
     <string name="delete">حدف</string>
     <string name="paste">لصق</string>
@@ -31,7 +31,7 @@
     <string name="menu">القائمة</string>
     <string name="add_files_not_supported">جهازك لا يدعم إضافة الملفات</string>
     <string name="share_empty_state">لا شيء هنا حتى الآن.</string>
-    <string name="warning_alpha">هذا إصدار ألفا تجريبي مبكر. يجب استخدامه فقط للإختبار. لم ينتهي العمل عليه بعد، ولم يتم تدقيقه.</string>
+    <string name="warning_alpha">هذا إصدار «أَلْفا» تجريبي مبكر. يجب استخدامه فقط للاختبار. لم ينتهِ العمل عليه بعد، ولم يتم تدقيقه.</string>
     <string name="sharing_notification_title">مشاركة الملفات حاليا</string>
     <string name="share_error_snackbar_text">تعذر بدء OnionShare</string>
     <string name="about_contributing_orgs">المنظمات المساهمة</string>
