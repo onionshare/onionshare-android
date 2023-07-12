@@ -75,4 +75,6 @@
     <string name="notification_channel_name_error">Erro</string>
     <string name="notification_error_title">O OnionShare encontrou um problema</string>
     <string name="notification_error_text">Toque para ver os detalhes.</string>
+    <string name="share_state_starting_text">⏱️ Isto pode demorar um pouco. Sinta-se livre para deixar o aplicativo. Notificaremos quando estiver pronto.</string>
+    <string name="share_state_error_tor_text">Não foi possível conectar-se ao Tor. Talvez você precise adicionar pontes personalizadas nas configurações.</string>
 </resources>
