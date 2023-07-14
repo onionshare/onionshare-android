@@ -8,4 +8,14 @@
     <string name="unknown">უცნობი</string>
     <string name="back">უკან</string>
     <string name="share">გაზიარება</string>
+    <string name="paste">ჩასმა</string>
+    <string name="remove">წაშლა</string>
+    <string name="share_state_error">შეცდომა</string>
+    <string name="share_state_ready">მზადაა</string>
+    <string name="share_error_snackbar_action">გამეორება</string>
+    <string name="about_contributors">მოხალისეები</string>
+    <string name="settings_title">მორგება</string>
+    <string name="share_button_error">კიდევ სცადეთ</string>
+    <string name="about_title">შესახებ</string>
+    <string name="notification_channel_name_error">შეცდომა</string>
 </resources>
