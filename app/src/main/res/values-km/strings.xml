@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="back">ថយក្រោយ</string>
+    <string name="menu">ម៉ឺនុយ</string>
+    <string name="cancel">បោះបង់</string>
+    <string name="share">ចែករំលែក</string>
+    <string name="delete">លុប</string>
+    <string name="unknown">មិន​ស្គាល់</string>
+    <string name="remove">ដកចេញ</string>
+    <string name="clear_all">លុបចេញ​ទាំងអស់</string>
+    <string name="share_state_starting">ចាប់ផ្តើម…</string>
+    <string name="share_state_sharing">ការចែករំលែក</string>
+    <string name="share_error_snackbar_action">ព្យាយាមម្តងទៀត</string>
+    <string name="paste">បិទភ្ជាប់​</string>
+    <string name="add">បញ្ចូល</string>
+    <string name="share_state_error">កំហុស</string>
+    <string name="share_button_start">ចាប់ផ្តើមបញ្ជូន</string>
+    <string name="clipboard_onion_service_copied">អាសយដ្ឋាន OnionShare ត្រូវបានចម្លងទៅ clipboard.</string>
+    <string name="notification_channel_name_error">កំហុស</string>
+</resources>

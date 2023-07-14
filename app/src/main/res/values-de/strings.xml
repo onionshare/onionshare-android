@@ -70,4 +70,9 @@
     <string name="settings_tor_title">Verbindung zu Tor</string>
     <string name="settings_tor_automatic">Automatisch je nach Standort</string>
     <string name="clipboard_onion_service_label">OnionShare-Adresse</string>
+    <string name="share_state_starting_text">⏱️ Das kann eine Weile dauern. Du kannst die App gerne verlassen. Wir werden dich benachrichtigen, wenn es soweit ist.</string>
+    <string name="share_state_error_tor_text">Es konnte keine Verbindung zu Tor hergestellt werden. Möglicherweise musst du benutzerdefinierte Brücken in den Einstellungen hinzufügen.</string>
+    <string name="notification_channel_name_error">Fehler</string>
+    <string name="notification_error_title">OnionShare ist auf ein Problem gestoßen</string>
+    <string name="notification_error_text">Antippen, um Details anzuzeigen.</string>
 </resources>
