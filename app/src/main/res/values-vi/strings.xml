@@ -68,4 +68,9 @@
     <string name="share_button_complete">Bắt đầu chia sẻ lại</string>
     <string name="share_button_stopping">Đang dừng... đợi đến khi đã dừng</string>
     <string name="starting_notification_title">Đang xuất bản tập tin…</string>
+    <string name="share_state_starting_text">⏱️ Điều này có thể mất chút thời gian. Hãy cứ tự nhiên rời khỏi app ứng dụng. Chúng tôi sẽ thông báo cho bạn biết một khi sẵn sàng.</string>
+    <string name="notification_channel_name_error">Lỗi</string>
+    <string name="notification_error_title">OnionShare đã gặp phải một vấn đề</string>
+    <string name="share_state_error_tor_text">Đã không thể kết nối tới Tor. Có thể bạn cần phải thêm vào các cầu Bridge tuỳ chỉnh trong mục Cài đặt.</string>
+    <string name="notification_error_text">Nhấp để xem các chi tiết.</string>
 </resources>
