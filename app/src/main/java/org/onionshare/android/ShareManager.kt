@@ -138,7 +138,7 @@ class ShareManager @Inject constructor(
                 // We only create the hidden service after files have been zipped and webserver was started,
                 // so we are in sharing state once the first HS descriptor has been published.
                 notificationManager.onSharing()
-                ShareUiState.Sharing(torState.onion)
+                ShareUiState.Sharing("http://${torState.onion}.onion")
             }
 
             TorState.FailedToConnect -> {
