@@ -14,34 +14,55 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.briarproject.moat.MoatApi
 import org.briarproject.onionwrapper.CircumventionProvider
 import org.briarproject.onionwrapper.LocationUtils
 import org.briarproject.onionwrapper.TorWrapper
 import org.briarproject.onionwrapper.TorWrapper.TorState.STOPPED
+import org.onionshare.android.Clock
+import org.onionshare.android.DefaultClock
 import org.onionshare.android.ui.settings.SettingsManager
 import org.slf4j.LoggerFactory.getLogger
 import java.io.IOException
 import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 import kotlin.math.roundToInt
 import kotlin.reflect.KClass
 
 private val LOG = getLogger(TorManager::class.java)
 private val TOR_START_TIMEOUT_SINCE_START = MINUTES.toMillis(5)
 private val TOR_START_TIMEOUT_SINCE_LAST_PROGRESS = MINUTES.toMillis(2)
-private const val MOAT_URL = "https://onion.azureedge.net/"
-private const val MOAT_FRONT = "ajax.aspnetcdn.com"
 
 @Singleton
-class TorManager @Inject constructor(
+class TorManager(
     private val app: Application,
     private val tor: TorWrapper,
     private val settingsManager: SettingsManager,
     private val circumventionProvider: CircumventionProvider,
     private val locationUtils: LocationUtils,
+    private val moatApiFactory: MoatApiFactory,
+    private val clock: Clock,
+    private val dispatcher: CoroutineContext,
 ) : TorWrapper.Observer {
+
+    @Inject
+    constructor(
+        app: Application,
+        tor: TorWrapper,
+        settingsManager: SettingsManager,
+        circumventionProvider: CircumventionProvider,
+        locationUtils: LocationUtils,
+    ) : this(
+        app = app,
+        tor = tor,
+        settingsManager = settingsManager,
+        circumventionProvider = circumventionProvider,
+        locationUtils = locationUtils,
+        moatApiFactory = DefaultMoatApiFactory,
+        clock = DefaultClock,
+        dispatcher = Dispatchers.IO
+    )
 
     /**
      * Attention: Only use [updateTorState] to update this state.
@@ -81,7 +102,7 @@ class TorManager @Inject constructor(
     @Throws(IOException::class, IllegalArgumentException::class, InterruptedException::class)
     suspend fun start() = withContext(Dispatchers.IO) {
         LOG.info("Starting...")
-        val now = System.currentTimeMillis()
+        val now = clock.currentTimeMillis()
         updateTorState(null, TorState.Starting(progress = 0, lastProgressTime = now))
         Intent(app, ShareService::class.java).also { intent ->
             startForegroundService(app, intent)
@@ -91,7 +112,7 @@ class TorManager @Inject constructor(
         changeStartingState(5)
         if (settingsManager.automaticBridges.value) {
             // start the check job in global scope, so this method can return without waiting for it
-            startCheckJob = GlobalScope.launch {
+            startCheckJob = GlobalScope.launch(dispatcher) {
                 LOG.info("Starting check job")
                 checkStartupProgress()
                 LOG.info("Check job finished")
@@ -148,7 +169,7 @@ class TorManager @Inject constructor(
     private fun changeStartingState(progress: Int) {
         val newState = TorState.Starting(
             progress = progress,
-            lastProgressTime = System.currentTimeMillis(),
+            lastProgressTime = clock.currentTimeMillis(),
         )
         updateTorState(TorState.Starting::class, newState)
     }
@@ -170,6 +191,8 @@ class TorManager @Inject constructor(
             LOG.info("Using bridges from Moat...")
             useBridges(bridges)
             if (waitForTorToStart()) return
+        } else {
+            LOG.info("No bridges received from Moat. Continuing...")
         }
         // use built-in bridges
         LOG.info("Using built-in bridges...")
@@ -195,11 +218,16 @@ class TorManager @Inject constructor(
         // Measure TOR_START_TIMEOUT_SINCE_START from the time when this method was called, rather than the time
         // when Tor was started, otherwise if one connection method times out then all subsequent methods will be
         // considered to have timed out too
-        val start = System.currentTimeMillis()
+        val start = clock.currentTimeMillis()
+        val oldState = state.value as? TorState.Starting ?: return true
+        // reset time of last progress to current as well to measure progress since last changing bridge settings
+        if (!updateTorState(TorState.Starting::class, oldState.copy(lastProgressTime = start))) {
+            return true
+        }
         while (true) {
             val s = state.value
             if (s !is TorState.Starting) return true
-            val now = System.currentTimeMillis()
+            val now = clock.currentTimeMillis()
             if (now - start > TOR_START_TIMEOUT_SINCE_START) {
                 LOG.info("Tor is taking too long to start")
                 return false
@@ -213,9 +241,10 @@ class TorManager @Inject constructor(
     }
 
     private fun getBridgesFromMoat(): List<String> {
-        val obfs4Executable = tor.obfs4ExecutableFile
-        val stateDir = app.getDir("state", MODE_PRIVATE)
-        val moat = MoatApi(obfs4Executable, stateDir, MOAT_URL, MOAT_FRONT)
+        val moat = moatApiFactory.createMoatApi(
+            obfs4Executable = tor.obfs4ExecutableFile,
+            obfs4Dir = app.getDir("state", MODE_PRIVATE)
+        )
         val bridges = moat.get().let {
             // if response was empty, try it again with what we think the country should be
             if (it.isEmpty()) moat.getWithCountry(locationUtils.currentCountry)
