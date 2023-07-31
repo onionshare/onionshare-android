@@ -8,6 +8,7 @@ import android.text.format.Formatter.formatShortFileSize
 import android.util.Base64.NO_PADDING
 import android.util.Base64.URL_SAFE
 import android.util.Base64.encodeToString
+import androidx.annotation.WorkerThread
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,8 @@ import org.slf4j.LoggerFactory.getLogger
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import javax.inject.Inject
@@ -129,7 +132,7 @@ class FileManager @Inject constructor(
                         try {
                             ctx.contentResolver.openInputStream(file.uri)?.use { inputStream ->
                                 zipStream.putNextEntry(ZipEntry(file.basename))
-                                inputStream.copyTo(zipStream)
+                                inputStream.cancelableCopyTo(zipStream)
                             }
                             currentCoroutineContext().ensureActive()
                             _zipState.value = ZipState(zipFile, progress)
@@ -171,6 +174,18 @@ class FileManager @Inject constructor(
 
     fun stop() {
         _zipState.value?.zip?.delete()
+    }
+
+    @WorkerThread
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun InputStream.cancelableCopyTo(out: OutputStream, bufferSize: Int = DEFAULT_BUFFER_SIZE) {
+        val buffer = ByteArray(bufferSize)
+        var bytes = read(buffer)
+        while (bytes >= 0) {
+            currentCoroutineContext().ensureActive()
+            out.write(buffer, 0, bytes)
+            bytes = read(buffer)
+        }
     }
 
     private fun Uri.getFallBackName(): String? {
