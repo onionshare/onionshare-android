@@ -68,8 +68,7 @@ import org.onionshare.android.ui.theme.topBar
 private val bottomSheetPeekHeight = 60.dp
 
 private fun isEmptyState(shareState: ShareUiState, filesState: FilesState): Boolean {
-    return (shareState == ShareUiState.AddingFiles || shareState is ShareUiState.ErrorAddingFile) &&
-        filesState.files.isEmpty()
+    return shareState.allowsModifyingFiles && filesState.files.isEmpty()
 }
 
 @Composable
