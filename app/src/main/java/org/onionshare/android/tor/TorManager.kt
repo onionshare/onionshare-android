@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
-import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat.startForegroundService
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -15,43 +14,61 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.briarproject.moat.MoatApi
 import org.briarproject.onionwrapper.CircumventionProvider
 import org.briarproject.onionwrapper.LocationUtils
 import org.briarproject.onionwrapper.TorWrapper
 import org.briarproject.onionwrapper.TorWrapper.TorState.CONNECTED
-import org.briarproject.onionwrapper.TorWrapper.TorState.CONNECTING
-import org.briarproject.onionwrapper.TorWrapper.TorState.DISABLED
-import org.briarproject.onionwrapper.TorWrapper.TorState.NOT_STARTED
-import org.briarproject.onionwrapper.TorWrapper.TorState.STARTED
-import org.briarproject.onionwrapper.TorWrapper.TorState.STARTING
 import org.briarproject.onionwrapper.TorWrapper.TorState.STOPPED
-import org.briarproject.onionwrapper.TorWrapper.TorState.STOPPING
-import org.onionshare.android.server.PORT
+import org.onionshare.android.Clock
+import org.onionshare.android.DefaultClock
 import org.onionshare.android.ui.settings.SettingsManager
 import org.slf4j.LoggerFactory.getLogger
 import java.io.IOException
 import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 import kotlin.math.roundToInt
+import kotlin.reflect.KClass
 
 private val LOG = getLogger(TorManager::class.java)
 private val TOR_START_TIMEOUT_SINCE_START = MINUTES.toMillis(5)
 private val TOR_START_TIMEOUT_SINCE_LAST_PROGRESS = MINUTES.toMillis(2)
-private const val MOAT_URL = "https://onion.azureedge.net/"
-private const val MOAT_FRONT = "ajax.aspnetcdn.com"
 
 @Singleton
-class TorManager @Inject constructor(
+class TorManager(
     private val app: Application,
     private val tor: TorWrapper,
     private val settingsManager: SettingsManager,
     private val circumventionProvider: CircumventionProvider,
     private val locationUtils: LocationUtils,
+    private val moatApiFactory: MoatApiFactory,
+    private val clock: Clock,
+    private val dispatcher: CoroutineContext,
 ) : TorWrapper.Observer {
 
-    private val _state = MutableStateFlow<TorState>(TorState.Stopped(false))
+    @Inject
+    constructor(
+        app: Application,
+        tor: TorWrapper,
+        settingsManager: SettingsManager,
+        circumventionProvider: CircumventionProvider,
+        locationUtils: LocationUtils,
+    ) : this(
+        app = app,
+        tor = tor,
+        settingsManager = settingsManager,
+        circumventionProvider = circumventionProvider,
+        locationUtils = locationUtils,
+        moatApiFactory = DefaultMoatApiFactory,
+        clock = DefaultClock,
+        dispatcher = Dispatchers.IO
+    )
+
+    /**
+     * Attention: Only use [updateTorState] to update this state.
+     */
+    private val _state = MutableStateFlow<TorState>(TorState.Stopped)
     internal val state = _state.asStateFlow()
 
     private var startCheckJob: Job? = null
@@ -61,119 +78,102 @@ class TorManager @Inject constructor(
     }
 
     /**
+     * Updates the [_state] with the given new [state] preventing concurrent modifications.
+     * The state only gets updated when [_state] was in [expectedState].
+     *
+     * Note that the underlying [MutableStateFlow] may reject updates that are equal to the previous state.
+     *
+     * @return true if the expected state was either null or matched the previous state.
+     */
+    @Synchronized
+    private fun updateTorState(expectedState: KClass<*>?, newState: TorState, warn: Boolean = true): Boolean {
+        if (expectedState != null && _state.value::class != expectedState) {
+            if (warn) LOG.warn("Expected state $expectedState, but was ${state.value}")
+            return false
+        }
+        _state.value = newState
+        return true
+    }
+
+    /**
      * Starts [ShareService] and creates a new onion service.
      * Suspends until the address of the onion service is available.
      */
+    @OptIn(DelicateCoroutinesApi::class)
+    @Throws(IOException::class, IllegalArgumentException::class, InterruptedException::class)
     suspend fun start() = withContext(Dispatchers.IO) {
-        if (state.value !is TorState.Stopped) stop()
-
         LOG.info("Starting...")
-        val now = System.currentTimeMillis()
-        _state.value = TorState.Starting(progress = 0, startTime = now, lastProgressTime = now)
-
+        val now = clock.currentTimeMillis()
+        updateTorState(null, TorState.Starting(progress = 0, lastProgressTime = now))
         Intent(app, ShareService::class.java).also { intent ->
             startForegroundService(app, intent)
         }
 
         tor.start()
-    }
-
-    fun stop(failedToConnect: Boolean = false) {
-        LOG.info("Stopping...")
-        startCheckJob?.cancel()
-        startCheckJob = null
-        _state.value = TorState.Stopping(failedToConnect)
-        tor.stop()
-        Intent(app, ShareService::class.java).also { intent ->
-            app.stopService(intent)
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    override fun onState(s: TorWrapper.TorState) {
-        when (s) {
-            NOT_STARTED -> LOG.info("new state: not started")
-            STARTING -> LOG.info("new state: starting")
-            STARTED -> GlobalScope.launch {
-                LOG.info("new state: started")
-                try {
-                    onTorServiceStarted()
-                } catch (e: Exception) {
-                    LOG.warn("Error while starting Tor: ", e)
-                    stop()
-                }
-            }
-
-            CONNECTING -> LOG.info("new state: connecting")
-            CONNECTED -> LOG.info("new state: connected")
-            DISABLED -> LOG.info("new state: network disabled")
-            STOPPING -> LOG.info("new state: stopping")
-            STOPPED -> onStopped()
-        }
-    }
-
-    @UiThread
-    fun onStopped() {
-        LOG.info("Stopped")
-        val failedToConnect = (state.value as? TorState.Stopping)?.failedToConnect == true
-        _state.value = TorState.Stopped(failedToConnect)
-    }
-
-    override fun onBootstrapPercentage(percentage: Int) {
-        changeStartingState((percentage * 0.7).roundToInt())
-    }
-
-    override fun onHsDescriptorUpload(onion: String) {
-        if (state.value !is TorState.Started) changeStartingState(90, onion)
-        onDescriptorUploaded(onion)
-    }
-
-    override fun onClockSkewDetected(skewSeconds: Long) {
-        // TODO
-    }
-
-    @Throws(IOException::class, IllegalArgumentException::class)
-    private suspend fun onTorServiceStarted() = withContext(Dispatchers.IO) {
         changeStartingState(5)
-        val autoMode = settingsManager.automaticBridges.value
-        if (!autoMode) {
+        if (settingsManager.automaticBridges.value) {
+            // start the check job in global scope, so this method can return without waiting for it
+            startCheckJob = GlobalScope.launch(dispatcher) {
+                LOG.info("Starting check job")
+                checkStartupProgress()
+                LOG.info("Check job finished")
+            }
+        } else {
             val customBridges = settingsManager.customBridges.value
             if (customBridges.isNotEmpty()) {
                 LOG.info("Using ${customBridges.size} custom bridges...")
                 tor.enableBridges(customBridges.map { "Bridge $it" })
             }
         }
-        LOG.info("Starting hidden service...")
-        val hsResponse = tor.publishHiddenService(PORT, 80, null)
-        changeStartingState(10, hsResponse.onion)
-        if (autoMode) {
-            startCheckJob = launch {
-                LOG.info("Starting check job")
-                checkStartupProgress()
-                LOG.info("Check job finished")
-            }
-        }
         tor.enableNetwork(true)
     }
 
-    private fun changeStartingState(progress: Int, onion: String? = null) {
-        val oldStartingState = state.value as? TorState.Starting
-        if (oldStartingState == null) LOG.warn("Old state was not Starting, but ${state.value}")
-        val now = System.currentTimeMillis()
-        val newState = if (onion == null) oldStartingState?.copy(progress = progress, lastProgressTime = now)
-        else oldStartingState?.copy(progress = progress, onion = onion, lastProgressTime = now)
-        _state.value = newState ?: TorState.Starting(
-            progress = progress,
-            startTime = now,
-            lastProgressTime = now,
-            onion = onion,
-        )
+    fun stop() {
+        if (updateTorState(TorState.Stopping::class, TorState.Stopping, warn = false)) {
+            LOG.info("Was already stopping. Not stopping again.")
+        } else {
+            LOG.info("Stopping...")
+            startCheckJob?.cancel()
+            startCheckJob = null
+            tor.stop()
+            Intent(app, ShareService::class.java).also { intent ->
+                app.stopService(intent)
+            }
+        }
     }
 
-    private fun onDescriptorUploaded(onion: String) {
-        _state.value = TorState.Started(onion)
-        startCheckJob?.cancel()
-        startCheckJob = null
+    override fun onState(s: TorWrapper.TorState) {
+        LOG.info("new state: $s")
+        if (s == CONNECTED) updateTorState(TorState.Starting::class, TorState.Started)
+        else if (s == STOPPED) updateTorState(null, TorState.Stopped)
+    }
+
+    fun publishOnionService(port: Int) {
+        LOG.info("Starting hidden service...")
+        tor.publishHiddenService(port, 80, null)
+    }
+
+    override fun onBootstrapPercentage(percentage: Int) {
+        changeStartingState(5 + (percentage * 0.9).roundToInt())
+    }
+
+    override fun onHsDescriptorUpload(onion: String) {
+        if (updateTorState(TorState.Started::class, TorState.Published(onion), warn = false)) {
+            startCheckJob?.cancel()
+            startCheckJob = null
+        }
+    }
+
+    override fun onClockSkewDetected(skewSeconds: Long) {
+        // TODO
+    }
+
+    private fun changeStartingState(progress: Int) {
+        val newState = TorState.Starting(
+            progress = progress,
+            lastProgressTime = clock.currentTimeMillis(),
+        )
+        updateTorState(TorState.Starting::class, newState)
     }
 
     private suspend fun checkStartupProgress() {
@@ -193,6 +193,8 @@ class TorManager @Inject constructor(
             LOG.info("Using bridges from Moat...")
             useBridges(bridges)
             if (waitForTorToStart()) return
+        } else {
+            LOG.info("No bridges received from Moat. Continuing...")
         }
         // use built-in bridges
         LOG.info("Using built-in bridges...")
@@ -202,8 +204,8 @@ class TorManager @Inject constructor(
         }
         useBridges(builtInBridges)
         if (waitForTorToStart()) return
-        LOG.info("Could not connect to Tor, stopping...")
-        stop(failedToConnect = true)
+        LOG.info("Could not connect to Tor")
+        updateTorState(TorState.Starting::class, TorState.FailedToConnect)
     }
 
     /**
@@ -218,11 +220,16 @@ class TorManager @Inject constructor(
         // Measure TOR_START_TIMEOUT_SINCE_START from the time when this method was called, rather than the time
         // when Tor was started, otherwise if one connection method times out then all subsequent methods will be
         // considered to have timed out too
-        val start = System.currentTimeMillis()
+        val start = clock.currentTimeMillis()
+        val oldState = state.value as? TorState.Starting ?: return true
+        // reset time of last progress to current as well to measure progress since last changing bridge settings
+        if (!updateTorState(TorState.Starting::class, oldState.copy(lastProgressTime = start))) {
+            return true
+        }
         while (true) {
             val s = state.value
             if (s !is TorState.Starting) return true
-            val now = System.currentTimeMillis()
+            val now = clock.currentTimeMillis()
             if (now - start > TOR_START_TIMEOUT_SINCE_START) {
                 LOG.info("Tor is taking too long to start")
                 return false
@@ -236,9 +243,10 @@ class TorManager @Inject constructor(
     }
 
     private fun getBridgesFromMoat(): List<String> {
-        val obfs4Executable = tor.obfs4ExecutableFile
-        val stateDir = app.getDir("state", MODE_PRIVATE)
-        val moat = MoatApi(obfs4Executable, stateDir, MOAT_URL, MOAT_FRONT)
+        val moat = moatApiFactory.createMoatApi(
+            obfs4Executable = tor.obfs4ExecutableFile,
+            obfs4Dir = app.getDir("state", MODE_PRIVATE)
+        )
         val bridges = moat.get().let {
             // if response was empty, try it again with what we think the country should be
             if (it.isEmpty()) moat.getWithCountry(locationUtils.currentCountry)
