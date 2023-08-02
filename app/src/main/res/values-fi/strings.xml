@@ -70,4 +70,5 @@
     <string name="sharing_notification_title">Jaetaan parhaillaan tiedostoja</string>
     <string name="settings_tor_bridges_intro">Napauta alla olevaa linkkiä saadaksesi siltoja. Liitä yksi tai useampi siltarivi alla olevaan kenttään.</string>
     <string name="settings_tor_intro">Silta on erikoistunut, sunsuroimaton reitti Tor-verkkoon. Vaikka vaihtoehto Automaattinen on valittu, OnionShare saattaa yrittää siltojen käyttöä yhdistäessä.</string>
+    <string name="notification_channel_name_error">Virhe</string>
 </resources>
