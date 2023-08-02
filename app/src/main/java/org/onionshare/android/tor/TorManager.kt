@@ -135,7 +135,11 @@ class TorManager(
             LOG.info("Stopping...")
             startCheckJob?.cancel()
             startCheckJob = null
-            tor.stop()
+            try {
+                tor.stop()
+            } catch (e: Exception) {
+                LOG.warn("Error stopping Tor: ", e)
+            }
             Intent(app, ShareService::class.java).also { intent ->
                 app.stopService(intent)
             }
@@ -148,6 +152,7 @@ class TorManager(
         else if (s == STOPPED) updateTorState(null, TorState.Stopped)
     }
 
+    @Throws(IOException::class)
     fun publishOnionService(port: Int) {
         LOG.info("Starting hidden service...")
         tor.publishHiddenService(port, 80, null)
@@ -191,7 +196,13 @@ class TorManager(
         // try bridges we got from Moat, if any
         if (!bridges.isNullOrEmpty()) {
             LOG.info("Using bridges from Moat...")
-            useBridges(bridges)
+            try {
+                useBridges(bridges)
+            } catch (e: IOException) {
+                LOG.error("Error setting bridges: ", e)
+                stop()
+                return
+            }
             if (waitForTorToStart()) return
         } else {
             LOG.info("No bridges received from Moat. Continuing...")
@@ -202,7 +213,13 @@ class TorManager(
         val builtInBridges = circumventionProvider.getSuitableBridgeTypes(countryCode).flatMap { type ->
             circumventionProvider.getBridges(type, countryCode, SDK_INT >= 25)
         }
-        useBridges(builtInBridges)
+        try {
+            useBridges(builtInBridges)
+        } catch (e: IOException) {
+            LOG.error("Error setting bridges: ", e)
+            stop()
+            return
+        }
         if (waitForTorToStart()) return
         LOG.info("Could not connect to Tor")
         updateTorState(TorState.Starting::class, TorState.FailedToConnect)
@@ -259,6 +276,7 @@ class TorManager(
         }
     }
 
+    @Throws(IOException::class)
     private fun useBridges(bridges: List<String>) {
         if (LOG.isInfoEnabled) {
             LOG.info("Using bridges:")
