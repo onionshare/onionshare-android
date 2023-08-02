@@ -26,6 +26,7 @@ import org.onionshare.android.tor.TorState
 import org.onionshare.android.ui.OnionNotificationManager
 import org.onionshare.android.ui.share.ShareUiState
 import org.slf4j.LoggerFactory.getLogger
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -114,8 +115,13 @@ class ShareManager @Inject constructor(
                 when (val zipResult = fileTask.await()) {
                     is ZipResult.Zipped -> {
                         val port = webserverManager.start(zipResult.sendPage)
-                        torManager.publishOnionService(port)
-                        observerTask.await()
+                        try {
+                            torManager.publishOnionService(port)
+                            observerTask.await()
+                        } catch (e: IOException) {
+                            LOG.error("Error publishing onion service: ", e)
+                            stopOnError(ShareUiState.ErrorStarting())
+                        }
                     }
 
                     is ZipResult.Error -> {
@@ -149,7 +155,11 @@ class ShareManager @Inject constructor(
                 ShareUiState.ErrorStarting(true)
             }
 
-            TorState.Stopping -> error("Still observing TorState after calling stop().")
+            TorState.Stopping -> {
+                // Somebody is stopping Tor. It wasn't us, because we would have stopped collected its state.
+                // So go to stopping state for now until Tor has stopped and we'll show the error below.
+                ShareUiState.Stopping
+            }
 
             TorState.Stopped -> {
                 ShareUiState.ErrorStarting(errorMsg = "Tor stopped unexpectedly.")
