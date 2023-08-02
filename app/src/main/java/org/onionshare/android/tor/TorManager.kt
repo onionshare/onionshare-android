@@ -17,6 +17,7 @@ import kotlinx.coroutines.withContext
 import org.briarproject.onionwrapper.CircumventionProvider
 import org.briarproject.onionwrapper.LocationUtils
 import org.briarproject.onionwrapper.TorWrapper
+import org.briarproject.onionwrapper.TorWrapper.TorState.CONNECTED
 import org.briarproject.onionwrapper.TorWrapper.TorState.STOPPED
 import org.onionshare.android.Clock
 import org.onionshare.android.DefaultClock
@@ -143,7 +144,8 @@ class TorManager(
 
     override fun onState(s: TorWrapper.TorState) {
         LOG.info("new state: $s")
-        if (s == STOPPED) updateTorState(null, TorState.Stopped)
+        if (s == CONNECTED) updateTorState(TorState.Starting::class, TorState.Started)
+        else if (s == STOPPED) updateTorState(null, TorState.Stopped)
     }
 
     fun publishOnionService(port: Int) {
@@ -156,7 +158,7 @@ class TorManager(
     }
 
     override fun onHsDescriptorUpload(onion: String) {
-        if (updateTorState(TorState.Starting::class, TorState.Published(onion), warn = false)) {
+        if (updateTorState(TorState.Started::class, TorState.Published(onion), warn = false)) {
             startCheckJob?.cancel()
             startCheckJob = null
         }

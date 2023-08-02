@@ -9,6 +9,8 @@ sealed class TorState {
         val lastProgressTime: Long,
     ) : TorState()
 
+    object Started : TorState()
+
     data class Published(
         val onion: String,
     ) : TorState()

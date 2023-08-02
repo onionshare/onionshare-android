@@ -75,6 +75,10 @@ class TorManagerTest {
             assertIs<TorState.Starting>(starting50) // 50%
             assertEquals(50, starting50.progress)
 
+            // getting informed about CONNECTED is required now
+            torManager.onState(TorWrapper.TorState.CONNECTED)
+            assertIs<TorState.Started>(awaitItem())
+
             torManager.onHsDescriptorUpload("foobar")
             val published = awaitItem()
             assertIs<TorState.Published>(published)

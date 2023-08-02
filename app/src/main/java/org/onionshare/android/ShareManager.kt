@@ -134,6 +134,10 @@ class ShareManager @Inject constructor(
                 ShareUiState.Starting(zipState?.progress ?: 0, torPercent)
             }
 
+            is TorState.Started -> {
+                ShareUiState.Starting(zipState?.progress ?: 0, 95)
+            }
+
             is TorState.Published -> {
                 // We only create the hidden service after files have been zipped and webserver was started,
                 // so we are in sharing state once the first HS descriptor has been published.
