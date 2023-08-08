@@ -121,7 +121,7 @@ dependencies {
 
     // Tor
     implementation "org.briarproject:onionwrapper-android:0.0.5"
-    tor 'org.briarproject:tor-android:0.4.7.13-2'
+    tor 'org.briarproject:tor-android:0.4.7.14'
     tor 'org.briarproject:obfs4proxy-android:0.0.14-tor2'
     tor 'org.briarproject:snowflake-android:2.5.1'
     implementation 'org.briarproject:moat-api:0.2'
