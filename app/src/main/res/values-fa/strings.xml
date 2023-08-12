@@ -70,4 +70,5 @@
     <string name="settings_tor_automatic">خودکار بر اساس مکان</string>
     <string name="settings_tor_intro">یک پل یک مسیر اختصاصی سانسور نشده به شبکهٔ Tor است. حتی اگر گزینه خودکار انتخاب شده باشد، OnionShare ممکن است سعی کند با استفاده از پل متصل شود.</string>
     <string name="notification_channel_name_foreground">وضعیت اشتراک‌گذاری فایل</string>
+    <string name="share_state_starting_text">⏱️</string>
 </resources>

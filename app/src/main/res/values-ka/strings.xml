@@ -2,4 +2,20 @@
 <resources>
     <string name="add">დამატება</string>
     <string name="settings_tor_title">Tor-თან დაკავშირება</string>
+    <string name="menu">მენიუ</string>
+    <string name="paste">ჩასმა</string>
+    <string name="remove">წაშლა</string>
+    <string name="share_state_ready">მზადაა</string>
+    <string name="share_state_error">შეცდომა</string>
+    <string name="back">უკან</string>
+    <string name="share">გაზიარება</string>
+    <string name="cancel">გაუქმება</string>
+    <string name="delete">წაშლა</string>
+    <string name="unknown">უცნობი</string>
+    <string name="share_button_error">კიდევ სცადეთ</string>
+    <string name="share_error_snackbar_action">გამეორება</string>
+    <string name="about_contributors">მოხალისეები</string>
+    <string name="settings_title">მორგება</string>
+    <string name="about_title">შესახებ</string>
+    <string name="notification_channel_name_error">შეცდომა</string>
 </resources>
