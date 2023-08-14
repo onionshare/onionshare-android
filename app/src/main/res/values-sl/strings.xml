@@ -1,2 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="back">Nazaj</string>
+    <string name="menu">Meni</string>
+    <string name="cancel">Prekliči</string>
+    <string name="add">Dodaj</string>
+    <string name="share">Deli</string>
+    <string name="delete">Izbriši</string>
+    <string name="paste">Prilepi</string>
+    <string name="add_files_not_supported">Vaša naprava ne podpira dodajanja datotek</string>
+    <string name="unknown">neznano</string>
+    <string name="share_state_sharing">Deljenje</string>
+    <string name="remove">Odstrani</string>
+    <string name="share_empty_state">Tukaj še ni ničesar.</string>
+    <string name="warning_alpha_intro">Opozorilo:</string>
+    <string name="warning_no_files_added">Ni izbranih datotek.</string>
+    <string name="clear_all">Počisti vse</string>
+    <string name="share_files_add">Dodaj datoteke</string>
+    <string name="share_state_ready">Pripravljen</string>
+    <string name="share_state_starting">Začetek …</string>
+    <string name="share_state_error_text">Prišlo je do nepričakovane težave.</string>
+    <string name="share_button_start">Začnite deliti</string>
+    <string name="share_button_starting">Začetek ... tapnite za preklic</string>
+    <string name="share_button_stop">Ustavi deljenje</string>
+    <string name="clipboard_onion_service_copied">OnionShare naslov kopiran v odložišče.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d predmet, %2$s</item>
+        <item quantity="two">%1$d predmeta, %2$s</item>
+        <item quantity="few">%1$d predmeti, %2$s</item>
+        <item quantity="other">%1$d predmetov, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_sharing">Naslov za deljenje je na voljo</string>
+    <string name="notification_sharing_title">OnionShare na voljo</string>
+    <string name="starting_notification_title">Objavljanje datotek …</string>
+    <string name="starting_notification_text">To lahko traja nekaj časa.</string>
+    <string name="sharing_notification_title">Trenutno delite datoteke</string>
+    <string name="share_error_snackbar_text">Ni bilo mogoče zagnati OnionShare</string>
+    <string name="share_error_file_snackbar_text">Ni bilo mogoče odpreti %s. Odstranjeno.</string>
+    <string name="share_error_snackbar_action">Poskusite znova</string>
+    <string name="about_title">O tem</string>
+    <string name="settings_title">Nastavitve</string>
+    <string name="notification_sharing_text">Tapnite za dostop do naslova za skupno rabo datotek.</string>
+    <string name="settings_tor_intro">Most je namenska necenzurirana pot v Tor omrežje. Tudi če je izbrana možnost samodejno, lahko OnionShare poskusi uporabiti mostove za povezavo.</string>
+    <string name="warning_alpha">To je zgodnja alfa izdaja. Uporabljati je potreba samo za testiranje. Koda ni dokončana in ni bila revidirana.</string>
+    <string name="notification_channel_name_foreground">Stanje deljenja datotek</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d most dodan</item>
+        <item quantity="two">%d mostova dodana</item>
+        <item quantity="few">%d mostovi dodani</item>
+        <item quantity="other">%d mostov dodanih</item>
+    </plurals>
+    <string name="share_state_starting_text">⏱️ To lahko traja nekaj časa. Lahko zapustite aplikacijo. Ko bo pripravljeno, vas bomo obvestili.</string>
+    <string name="share_state_transfer_complete">Prenos končan</string>
+    <string name="share_state_stopping">Ustavljanje …</string>
+    <string name="share_state_error">Napaka</string>
+    <string name="share_state_error_tor_text">Povezave s Torom ni bilo mogoče vzpostaviti. Morda boste morali v nastavitvah dodati mostove po meri.</string>
+    <string name="share_button_complete">Znova začni deliti</string>
+    <string name="share_button_stopping">Ustavljanje ... počakajte, da se ustavi</string>
+    <string name="share_button_error">Poskusi ponovno</string>
+    <string name="share_onion_intro"><b>Kdorkoli</b> s tem OnionShare naslovom lahko <b>prenese</b> vaše datoteke s <b>Tor brskalnikom</b>:</string>
+    <string name="clipboard_onion_service_label">OnionShare naslov</string>
+    <string name="notification_channel_name_error">Napaka</string>
+    <string name="notification_error_title">OnionShare je naletel na težavo</string>
+    <string name="notification_error_text">Tapnite za ogled podrobnosti.</string>
+    <string name="about_app_version">Različica aplikacije %s</string>
+    <string name="about_text">OnionShare so razvili Micah Lee, et al. in je odprtokoden, izdan pod GPLv3.
+\n
+\nKot vsa programska oprema lahko tudi OnionShare vsebuje napake ali ranljivosti.</string>
+    <string name="about_contributors">Sodelujoči</string>
+    <string name="about_contributor_creator">%s, ustvarjalec</string>
+    <string name="about_contributor_android">%s, Android inženir</string>
+    <string name="about_contributor_pm">%s, vodja projekta</string>
+    <string name="about_contributor_design">%s, oblikovalec izdelkov</string>
+    <string name="about_contributing_orgs">Sodelujoče organizacije</string>
+    <string name="settings_tor_title">Povezovanje s Torom</string>
+    <string name="settings_tor_automatic">Samodejno glede na lokacijo</string>
+    <string name="settings_tor_bridges_title">Mostovi po meri</string>
+    <string name="settings_tor_bridges_none">Nič dodanega</string>
+    <string name="settings_tor_bridges_intro">Dotaknite se spodnje povezave, da dobite mostove. Nato prilepite eno ali več črt mostovov v spodnje polje.</string>
+    <string name="settings_tor_my_bridges_title">Moji mostovi</string>
+</resources>

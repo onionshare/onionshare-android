@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Reen</string>
+    <string name="menu">Menuo</string>
+    <string name="add">Aldoni</string>
+    <string name="warning_alpha">Ĉi tio estas frua alfa eldono. Oni nur devas uzi ĝin por provado. La kodo ankoraŭ ne estas aŭ finita aŭ kontrolita.</string>
+    <string name="warning_no_files_added">Neniuj dosieroj elektitaj.</string>
+    <string name="clear_all">Forviŝi ĉiujn</string>
+    <string name="share_files_add">Aldoni dosierojn</string>
+    <string name="share_state_ready">Preta</string>
+    <string name="share_state_starting">Komencanta…</string>
+    <string name="share_state_starting_text">⏱️ Ĉi tiu procezo eble daŭros iom da tempo. Sentu vin rajtita forlasi la aplikaĵon. Ni sciigos vin post kiam finiĝos la procezo.</string>
+    <string name="share_state_sharing">Disvastiganta</string>
+    <string name="share_state_transfer_complete">Translokigo finita</string>
+    <string name="share_state_stopping">Ĉesanta…</string>
+    <string name="share_state_error">Eraro</string>
+    <string name="share_state_error_text">Okazis neatendita problemo.</string>
+    <string name="share_state_error_tor_text">Malsukcesis konektado al Tor. Eble vi devas aldoni laŭmendajn pontojn en la agordoj.</string>
+    <string name="share_button_start">Komenci disvastigadon</string>
+    <string name="share_button_starting">Komencanta… frapeti por nuligi</string>
+    <string name="share_button_stop">Ĉesigi disvastigadon</string>
+    <string name="share_button_complete">Rekomenci disvastigadon</string>
+    <string name="share_button_stopping">Ĉesanta… atendu ĝis ĉesita</string>
+    <string name="share_button_error">Reprovi</string>
+    <string name="share_onion_intro"><b>Iu ajn</b>, kiu havas ĉi tiun OnionShare-adreson, povos <b>alŝuti</b> viajn dosierojn per <b>Tor Browser</b>:</string>
+    <string name="clipboard_onion_service_label">OnionShare-adreso</string>
+    <string name="clipboard_onion_service_copied">La OnionShare-adreso estis kopiita al la clipboard.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d ero, %2$s</item>
+        <item quantity="other">%1$d eroj, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">Stato de dosiera disvastigado</string>
+    <string name="app_name">OnionShare (alfa)</string>
+    <string name="cancel">Nuligi</string>
+    <string name="share">Disvastigi</string>
+    <string name="delete">Forigi</string>
+    <string name="paste">Alglui</string>
+    <string name="add_files_not_supported">Via aparato ne subtenas la aldonadon de dosieroj</string>
+    <string name="unknown">nekonata</string>
+    <string name="remove">Forigi</string>
+    <string name="share_empty_state">Ankoraŭ estas nenio ĉi tie.</string>
+    <string name="warning_alpha_intro">Averto:</string>
+</resources>
