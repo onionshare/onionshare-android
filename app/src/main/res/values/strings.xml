@@ -53,6 +53,7 @@
     <string name="share_error_snackbar_text">Could not start OnionShare</string>
     <string name="share_error_file_snackbar_text">Could not open %s. Removed.</string>
     <string name="share_error_snackbar_action">Retry</string>
+    <string name="share_error_not_allowed">Sharing new files is only possible when not already sharing.</string>
 
     <string name="about_title">About</string>
     <string name="about_app_version">App Version %s</string>
