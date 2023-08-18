@@ -21,8 +21,26 @@
 #-renamesourcefileattribute SourceFile
 
 -dontobfuscate
+-keepattributes SourceFile, LineNumberTable, *Annotation*, Signature, InnerClasses, EnclosingMethod
+
 -keep class org.onionshare.android.** { *; }
 -keep class org.torproject.jni.** { *; }
 
--keep class ch.qos.** { *; }
--keep class org.slf4j.** { *; }
+# Keep logging
+-keep public class org.slf4j.** { *; }
+-keep public class ch.qos.logback.** { *; }
+
+# Keep Netty classes that are loaded via reflection
+-keep class io.netty.util.ReferenceCountUtil { *; }
+-keep class io.netty.buffer.WrappedByteBuf { *; }
+
+-dontwarn com.fasterxml.jackson.databind.ext.Java7SupportImpl
+-dontwarn io.netty.internal.tcnative.*
+-dontwarn java.lang.management.*
+-dontwarn org.apache.log4j.*
+-dontwarn org.apache.logging.log4j.**
+-dontwarn org.conscrypt.*
+-dontwarn org.eclipse.jetty.npn.*
+-dontwarn org.jetbrains.annotations.*
+-dontwarn reactor.blockhound.integration.BlockHoundIntegration
+-dontwarn javax.mail.**
