@@ -14,6 +14,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import dagger.hilt.android.HiltAndroidApp
 import org.onionshare.android.ui.MainActivity
+import org.slf4j.bridge.SLF4JBridgeHandler
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -27,6 +28,9 @@ class OnionShareApp @Inject constructor() : Application(), ActivityLifecycleCall
         super.onCreate()
         registerActivityLifecycleCallbacks(this)
         if (!isTorProcess()) releaseUriPermissions()
+        // Route java.util.logging through Logback
+        SLF4JBridgeHandler.removeHandlersForRootLogger()
+        SLF4JBridgeHandler.install()
     }
 
     private fun isTorProcess(): Boolean {

@@ -1,10 +1,15 @@
 <configuration>
+    <!-- scrub local port numbers from logs -->
+    <conversionRule
+	    conversionWord="scrubbed"
+	    converterClass="org.onionshare.android.LogConverter"
+    />
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
         <tagEncoder>
             <pattern>%logger{12}</pattern>
         </tagEncoder>
         <encoder>
-            <pattern>%msg</pattern>
+            <pattern>%scrubbed</pattern>
         </encoder>
     </appender>
     <root level="ALL">
