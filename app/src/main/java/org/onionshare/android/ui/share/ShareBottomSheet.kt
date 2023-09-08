@@ -257,7 +257,7 @@ fun ShareBottomSheetSharingPreview() {
         Surface(color = MaterialTheme.colors.background) {
             BottomSheet(
                 state = ShareUiState.Sharing(
-                    "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/",
+                    "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/eW91IGFyZSBhIG5lcmQ7KQ",
                 ),
                 onSheetButtonClicked = {},
             )
