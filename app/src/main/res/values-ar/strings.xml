@@ -83,4 +83,5 @@
         <item quantity="other">%1$d عنصر، الحجم الكلي %2$s</item>
     </plurals>
     <string name="share_onion_intro">يمكن <b>لأي شخص</b> لديه عنوان OnionShare هذا<b> تنزيل</b> ملفاتك باستخدام <b>متصفح تور</b>:</string>
+    <string name="share_error_not_allowed">مشاركة الملفات الجديدة ممكنة فقط عندما لا تشاركها بالفعل.</string>
 </resources>

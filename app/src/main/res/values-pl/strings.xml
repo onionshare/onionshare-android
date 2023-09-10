@@ -79,4 +79,5 @@
     <string name="notification_error_title">OnionShare napotkał problem</string>
     <string name="notification_channel_name_error">Błąd</string>
     <string name="notification_error_text">Stuknij, aby zobaczyć szczegóły.</string>
+    <string name="share_error_not_allowed">Udostępnianie nowych plików jest możliwe tylko wtedy, gdy jeszcze ich nie udostępniasz.</string>
 </resources>

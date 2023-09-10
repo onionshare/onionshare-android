@@ -73,4 +73,5 @@
     <string name="share_state_error_tor_text">Torと接続できませんでした。設定にカスタムブリッジを追加する必要があるかもしれません。</string>
     <string name="notification_error_title">OnionShareは問題に遭遇しました</string>
     <string name="notification_error_text">詳細を見るのにタップ。</string>
+    <string name="share_error_not_allowed">すでにファイル共有途中場合は新しいファイルを共有できません。</string>
 </resources>

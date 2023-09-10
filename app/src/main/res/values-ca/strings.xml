@@ -75,4 +75,5 @@
     </plurals>
     <string name="settings_tor_bridges_intro">Toqueu l\'enllaç de sota per a obtenir ponts. Després, enganxeu una o més línies de ponts en el camp de sota.</string>
     <string name="settings_tor_my_bridges_title">Els meus ponts</string>
+    <string name="share_error_not_allowed">Només es pot compartir fitxers nous quan no s\'estigui compartint res.</string>
 </resources>

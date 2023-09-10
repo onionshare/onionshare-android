@@ -32,4 +32,15 @@
     <string name="share_state_starting">শুরু করা হচ্ছে…</string>
     <string name="share_state_sharing">শেয়ারিং</string>
     <string name="share_button_start">শেয়ারিং শুরু করুন</string>
+    <string name="notification_channel_name_foreground">ফাইল শেয়ারিং স্ট্যাটাস</string>
+    <string name="notification_sharing_text">আপনার ফাইল শেয়ার করতে ঠিকানা অ্যাক্সেস করতে ট্যাপ করুন।</string>
+    <string name="starting_notification_title">ফাইল প্রকাশ করা হচ্ছে…</string>
+    <string name="starting_notification_text">এটি কিছু সময় নিতে পারে।</string>
+    <string name="sharing_notification_title">বর্তমানে ফাইল শেয়ার করা হচ্ছে</string>
+    <string name="share_state_starting_text">⏱️ এতে কিছু সময় লাগতে পারে।বিনা দ্বিধায় অ্যাপটি ছেড়ে যেতে পারেন। কাজটি সম্পন্ন হলে আমরা আপনাকে জানিয়ে দেব।</string>
+    <string name="share_state_error_tor_text">টর এর সাথে সংযোগ করা যায়নি। আপনাকে সেটিংসে কাস্টম ব্রিজ যোগ করতে হতে পারে।</string>
+    <string name="clipboard_onion_service_copied">OnionShare ঠিকানাটি ক্লিপবোর্ডে কপি করা হয়েছে।</string>
+    <string name="notification_channel_name_sharing">শেয়ার করার ঠিকানা ব্যবহার যোগ্য</string>
+    <string name="notification_channel_name_error">ভুল</string>
+    <string name="notification_sharing_title">OnionShare পাওয়া যাবে</string>
 </resources>

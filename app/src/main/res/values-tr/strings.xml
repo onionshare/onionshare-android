@@ -75,4 +75,5 @@
     <string name="notification_channel_name_error">Hata</string>
     <string name="notification_error_title">OnionShare bir sorunla karşılaştı</string>
     <string name="notification_error_text">Ayrıntıları görmek için dokunun.</string>
+    <string name="share_error_not_allowed">Yeni dosyalar yalnızca zaten paylaşılmamışsa paylaşılabilir.</string>
 </resources>

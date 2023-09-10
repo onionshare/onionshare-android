@@ -73,4 +73,5 @@
     <string name="notification_error_title">OnionShare đã gặp phải một vấn đề</string>
     <string name="share_state_error_tor_text">Đã không thể kết nối tới Tor. Có thể bạn cần phải thêm vào các cầu Bridge tuỳ chỉnh trong mục Cài đặt.</string>
     <string name="notification_error_text">Nhấp để xem các chi tiết.</string>
+    <string name="share_error_not_allowed">Việc chia sẻ tập tin mới chỉ khả dụng khi vẫn chưa chia sẻ.</string>
 </resources>
