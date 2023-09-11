@@ -53,11 +53,12 @@ class WebserverManager @Inject constructor() {
     private var server: ApplicationEngine? = null
     private val _state = MutableStateFlow<WebServerState>(WebServerState.Stopped(false))
     val state = _state.asStateFlow()
+    val contentPath = getRandomPath()
 
     suspend fun start(sendPage: SendPage): Int {
         _state.value = WebServerState.Starting
         val staticPath = getStaticPath()
-        val staticPathMap = mapOf("static_url_path" to staticPath)
+        val pathMap = mapOf("static_url_path" to staticPath, "content_path" to contentPath)
         TrafficStats.setThreadStatsTag(0x42)
         val server = embeddedServer(
             factory = Netty,
@@ -72,11 +73,11 @@ class WebserverManager @Inject constructor() {
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }
-            installStatusPages(staticPathMap)
+            installStatusPages(pathMap)
             addListener()
             routing {
                 defaultRoutes(staticPath)
-                sendRoutes(sendPage, staticPathMap)
+                sendRoutes(sendPage, pathMap)
             }
         }.also { it.start() }
         this.server = server
@@ -98,11 +99,13 @@ class WebserverManager @Inject constructor() {
         }
     }
 
+    private fun getRandomPath(): String {
+        val randomBytes = ByteArray(16).apply { secureRandom.nextBytes(this) }
+        return Base64.encodeToString(randomBytes, NO_PADDING or URL_SAFE).trimEnd()
+    }
+
     private fun getStaticPath(): String {
-        val staticSuffixBytes = ByteArray(16).apply { secureRandom.nextBytes(this) }
-        val staticSuffix =
-            Base64.encodeToString(staticSuffixBytes, NO_PADDING or URL_SAFE).trimEnd()
-        return "/static_$staticSuffix"
+        return "/static_${getRandomPath()}"
     }
 
     private fun Application.addListener() {
@@ -142,11 +145,11 @@ class WebserverManager @Inject constructor() {
     }
 
     private fun Route.sendRoutes(sendPage: SendPage, staticPathMap: Map<String, String>) {
-        get("/") {
+        get("/$contentPath") {
             val model = sendPage.model + staticPathMap
             call.respond(PebbleContent("send.html", model))
         }
-        get("/download") {
+        get("/$contentPath/download") {
             call.response.header(
                 ContentDisposition,
                 Attachment.withParameter(FileName, sendPage.fileName).toString()
