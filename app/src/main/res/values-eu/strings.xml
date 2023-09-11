@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="share_state_transfer_complete">Transferentzia burutu da</string>
+    <string name="warning_alpha_intro">Oharra:</string>
+    <string name="warning_no_files_added">Ez dago hautatutako fitxategiarik.</string>
+    <string name="clear_all">Dena garbitu</string>
+    <string name="remove">Ezabatu</string>
+    <string name="share_state_sharing">Partekatzen</string>
+    <string name="unknown">ezezaguna</string>
+    <string name="back">Atzera</string>
+    <string name="delete">Ezabatu</string>
+    <string name="menu">Menua</string>
+    <string name="share_empty_state">Ezer ez hemen oraindik.</string>
+    <string name="paste">Itsatsi</string>
+    <string name="share_state_ready">Listo</string>
+    <string name="add_files_not_supported">Zure gailuak ez du onartzen fitxategiak gehitzea</string>
+    <string name="warning_alpha">Bertsio hau alfa goiztiarra da. Testing gisa baino ez da erabili behar. Kodea ez dago amaituta eta ez da ikuskatu.</string>
+    <string name="cancel">Utzi</string>
+    <string name="share_state_starting">Hasten…</string>
+    <string name="share_files_add">Fitxategiak gehitu</string>
+    <string name="app_name">OnionShare (alpha)</string>
+    <string name="share">Partekatu</string>
+    <string name="add">Gehitu</string>
+    <string name="share_state_starting_text">⏱️ Honek denbora har lezake. Ez irten aplikaziotik. Prest dagoenean jakinaraziko dizugu.</string>
+</resources>

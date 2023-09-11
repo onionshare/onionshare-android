@@ -79,4 +79,5 @@
     <string name="share_state_starting_text">⏱️ Это может занять некоторое время. Вы можете покинуть приложение. Мы сообщим вам, когда будет готово.</string>
     <string name="notification_channel_name_error">Ошибка</string>
     <string name="notification_error_text">Нажмите, чтобы увидеть подробности.</string>
+    <string name="share_error_not_allowed">Общий доступ к новым файлам возможен только в том случае, если они еще не поделились.</string>
 </resources>

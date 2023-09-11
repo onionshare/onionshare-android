@@ -75,4 +75,5 @@
     <string name="notification_error_text">Ýttu til að skoða frekari upplýsingar.</string>
     <string name="share_state_starting_text">⏱ Þetta gæti tekið nokkra stund. Þú getur alveg yfirgefið forritið. Við munum láta þig vita þegar þetta er tilbúið.</string>
     <string name="notification_channel_name_error">Villa</string>
+    <string name="share_error_not_allowed">Aðeins er hægt að deila nýjum skrám þegar ekki er þegar verið að deila.</string>
 </resources>

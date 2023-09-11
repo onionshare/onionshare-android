@@ -1,2 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="back">Назад</string>
+    <string name="menu">Меню</string>
+    <string name="cancel">Отказ</string>
+    <string name="app_name">OnionShare (алфа)</string>
+    <string name="share">Споделяне</string>
+    <string name="add">Добавяне</string>
+    <string name="share_state_error">Грешка</string>
+    <string name="share_state_transfer_complete">Прехвърлянето е завършено</string>
+    <string name="notification_error_text">Докоснете за подробности.</string>
+    <string name="share_button_stopping">Изключване… изчакайте</string>
+    <string name="share_button_starting">Включване… докоснете за отказ</string>
+    <string name="warning_alpha_intro">Внимание:</string>
+    <string name="warning_no_files_added">Няма избрани файлове.</string>
+    <string name="clear_all">Изчистване на всички</string>
+    <string name="remove">Премахване</string>
+    <string name="settings_tor_bridges_title">Потребителски мостове</string>
+    <string name="about_contributor_pm">%s - ръководител проект</string>
+    <string name="settings_tor_bridges_none">Не е добавен</string>
+    <string name="share_state_sharing">Прехвърляне</string>
+    <string name="about_contributor_creator">%s - създател</string>
+    <string name="share_error_not_allowed">Споделяне на нови файлове е възможно само ако в момента не споделяте.</string>
+    <string name="notification_sharing_title">Приложението OnionShare е готово</string>
+    <string name="unknown">неизвестно</string>
+    <string name="share_error_file_snackbar_text">„%s“ не може да бъде отворен. Премахнат от списъка.</string>
+    <string name="settings_tor_my_bridges_title">Мои мостове</string>
+    <string name="share_error_snackbar_text">Грешка при стартиране на OnionShare</string>
+    <string name="share_button_stop">Изключване на споделянето</string>
+    <string name="settings_title">Настройки</string>
+    <string name="share_onion_intro"><b>Всеки</b>, който има този адрес на OnionShare може да <b>изтегли</b> файловете посредством <b>четеца Тор</b>:</string>
+    <string name="share_button_complete">Повторно споделяне</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d мост е добавен</item>
+        <item quantity="other">%d моста са добавени</item>
+    </plurals>
+    <string name="sharing_notification_title">Споделя файлове</string>
+    <string name="notification_channel_name_error">Грешка</string>
+    <string name="about_contributor_design">%s - продуктов дизайнер</string>
+    <string name="delete">Изтриване</string>
+    <string name="share_empty_state">Все още няма нищо.</string>
+    <string name="starting_notification_title">Публикуване на файловете…</string>
+    <string name="clipboard_onion_service_copied">Адресът на OnionShare е копиран.</string>
+    <string name="paste">Поставяне</string>
+    <string name="notification_error_title">Възникна грешка в OnionShare</string>
+    <string name="about_contributors">Сътрудници</string>
+    <string name="starting_notification_text">Ще отнеме минута.</string>
+    <string name="share_state_ready">В готовност</string>
+    <string name="about_app_version">Издание %s</string>
+    <string name="add_files_not_supported">Устройството не поддържа добавяне на файлове</string>
+    <string name="warning_alpha">Това е незавършено издание. Да се използва само за изпитателни цели. Кодът му е незавършен и не е преминал одит.</string>
+    <string name="share_error_snackbar_action">Повторен опит</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d елемент, %2$s</item>
+        <item quantity="other">%1$d елемента, %2$s</item>
+    </plurals>
+    <string name="share_state_stopping">Изключване…</string>
+    <string name="share_state_error_tor_text">Грешка при свързване към мрежата на Тор. Може би трябва да добавите потребителски мостове от настройките.</string>
+    <string name="share_button_error">Повторен опит</string>
+    <string name="about_contributor_android">%s - разработчик Андроид</string>
+    <string name="share_state_starting">Включване…</string>
+    <string name="share_button_start">Споделяне</string>
+    <string name="clipboard_onion_service_label">Адрес на OnionShare</string>
+    <string name="share_files_add">Добавяне на файлове</string>
+    <string name="about_title">Относно</string>
+    <string name="share_state_error_text">Възникна непредвидена грешка.</string>
+    <string name="notification_channel_name_foreground">Състояние на споделяне</string>
+    <string name="share_state_starting_text">⏱️ Ще отнеме минута. Можете да оставите приложението, а когато е готово ще получите известие.</string>
+    <string name="settings_tor_title">Свързване към Тор</string>
+    <string name="settings_tor_intro">Мостът е специален нецензуриран маршрут към мрежата на Тор. Дори ако е избрано Автоматично, OnionShare може да се опита да използва мостове при свързване.</string>
+    <string name="about_text">OnionShare е разработен от Мика Лий и др. и е с отворен код, под GPLv3 лиценз.
+\n
+\nКакто всеки софтуер, OnionShare може да съдържа дефекти или уязвимости.</string>
+    <string name="settings_tor_automatic">Автоматично, в зависимост от местоположението</string>
+    <string name="notification_channel_name_sharing">Наличен адрес</string>
+    <string name="notification_sharing_text">За адреса към файловете, докоснете.</string>
+    <string name="settings_tor_bridges_intro">За да получите мостове, докоснете връзката по-долу. След това поставете един или повече редове с мостове в полето отдолу.</string>
+    <string name="about_contributing_orgs">Допринасящи организации</string>
+</resources>
