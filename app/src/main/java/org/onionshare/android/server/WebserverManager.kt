@@ -31,6 +31,7 @@ import io.ktor.server.routing.routing
 import io.pebbletemplates.pebble.loader.ClasspathLoader
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.onionshare.android.BuildConfig.DEBUG
 import org.slf4j.LoggerFactory
 import java.security.SecureRandom
 import java.util.concurrent.RejectedExecutionException
@@ -69,7 +70,7 @@ class WebserverManager @Inject constructor() {
                 // disable response timeout
                 responseWriteTimeoutSeconds = 0
             }) {
-            install(CallLogging)
+            if (DEBUG) install(CallLogging)
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
             }

@@ -31,6 +31,8 @@ sealed class ShareUiState {
     ) : ShareUiState() {
         override val allowsModifyingFiles = false
         override val collapsableSheet = true
+        // Don't allow onion address to be logged
+        override fun toString() = "Sharing()"
     }
 
     object Complete : ShareUiState()
