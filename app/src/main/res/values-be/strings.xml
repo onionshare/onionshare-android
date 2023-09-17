@@ -78,5 +78,6 @@
     <string name="share_error_snackbar_text">Не атрымалася запусціць OnionShare</string>
     <string name="settings_tor_title">Падключэнне да Tor</string>
     <string name="settings_tor_automatic">Аўтаматычна ў залежнасці ад месцазнаходжання</string>
-    <string name="remove">Выключыць</string>
+    <string name="remove">Выдаліць</string>
+    <string name="share_error_not_allowed">Абмен новымі файламі магчымы толькі ў тым выпадку, калі яны яшчэ не знаходзяцца ў агульным доступе.</string>
 </resources>
