@@ -16,31 +16,31 @@
     <string name="share_state_transfer_complete">Отправка завершена</string>
     <string name="share_state_stopping">Остановка…</string>
     <string name="share_state_error">Ошибка</string>
-    <string name="share_button_start">Сделать доступным для скачивания</string>
-    <string name="share_button_complete">Возобновить доступ к скачиванию</string>
-    <string name="share_button_stop">Прекратить доступ к скачиванию</string>
+    <string name="share_button_start">Начать Распространение</string>
+    <string name="share_button_complete">Начать Распространение Заново</string>
+    <string name="share_button_stop">Остановить Распространение</string>
     <string name="share_button_stopping">Прекращение… ожидайте</string>
     <string name="clipboard_onion_service_label">OnionShare адрес</string>
     <string name="clipboard_onion_service_copied">OnionShare адрес скопирован в буфер обмена.</string>
     <string name="notification_channel_name_foreground">Состояние доступа к файлам</string>
-    <string name="notification_channel_name_sharing">Адрес готов</string>
+    <string name="notification_channel_name_sharing">Доступен адрес распространения</string>
     <string name="starting_notification_title">Публикация файлов…</string>
-    <string name="sharing_notification_title">Файлы доступны для загрузки</string>
+    <string name="sharing_notification_title">Нынешние распространяемые файлы</string>
     <string name="share_error_snackbar_text">Не удалось запустить OnionShare</string>
     <string name="share_error_file_snackbar_text">Не удалось открыть %s. Файл удалён.</string>
     <string name="share_error_snackbar_action">Повторить</string>
     <string name="about_title">О программе</string>
     <string name="about_app_version">Версия приложения: %s</string>
-    <string name="about_contributors">Авторы</string>
-    <string name="about_contributor_creator">%s – Создатель</string>
-    <string name="about_contributor_android">%s – Android Разработчик</string>
+    <string name="about_contributors">Участники</string>
+    <string name="about_contributor_creator">%s, Создатель</string>
+    <string name="about_contributor_android">%s, Android Инженер</string>
     <string name="about_contributor_pm">%s – Руководитель проекта</string>
     <string name="about_contributor_design">%s – Дизайнер Продукта</string>
     <string name="about_contributing_orgs">Организации-участники</string>
     <string name="settings_tor_title">Подключение к Tor</string>
     <string name="settings_tor_automatic">Автоматически, в зависимости от местоположения</string>
     <string name="settings_tor_bridges_title">Пользовательские Мосты</string>
-    <string name="settings_tor_bridges_none">Пока что ни одного не добавлено</string>
+    <string name="settings_tor_bridges_none">Ничего</string>
     <string name="cancel">Отменить</string>
     <string name="add">Добавить</string>
     <string name="warning_alpha">Это ранняя альтфа-версия, её не следует использовать для чего-либо более серьёзного, чем тестирование. Она не завершена и ещё не проходила аудит.</string>
@@ -67,12 +67,12 @@
     <string name="settings_tor_my_bridges_title">Мои Мосты</string>
     <string name="settings_tor_bridges_intro">Получите мосты по ссылке ниже, затем вставьте их (сразу все или же отдельные строки) в текстовое поле.</string>
     <string name="settings_tor_intro">Мосты помогают получить доступ к сети Tor там, где он заблокирован. Даже если вы выбрали \"Автоматически\", OnionShare может попытаться подключиться через мост.</string>
-    <string name="notification_sharing_title">OnionShare готов</string>
-    <string name="notification_sharing_text">Нажмите, чтобы увидеть адрес к вашим файлам.</string>
+    <string name="notification_sharing_title">Доступен OnionShare</string>
+    <string name="notification_sharing_text">Коснитесь для доступа к адресу чтобы поделиться вашими файлами.</string>
     <string name="starting_notification_text">Это может занять некоторое время.</string>
-    <string name="about_text">OnionShare создана Micah Lee и другими. Это свободное ПО, с лицензией GPLv3.
+    <string name="about_text">OnionShare был разработан Micah Lee, и другими. OnionShare имеет открытый исходный код, выпущенным под лицензией GPLv3.
 \n
-\nКак и любая другая программа, OnionShare может содержать баги и уязвимости.</string>
+\nКак все программы, OnionShare может иметь ошибки или уязвимости.</string>
     <string name="back">Назад</string>
     <string name="share_state_error_tor_text">Не удалось подключиться к Tor. Возможно, вам потребуется добавить пользовательские мосты в настройках.</string>
     <string name="notification_error_title">OnionShare столкнулся с ошибкой</string>

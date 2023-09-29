@@ -71,4 +71,9 @@
     <string name="settings_tor_bridges_intro">Napauta alla olevaa linkkiä saadaksesi siltoja. Liitä yksi tai useampi siltarivi alla olevaan kenttään.</string>
     <string name="settings_tor_intro">Silta on erikoistunut, sunsuroimaton reitti Tor-verkkoon. Vaikka vaihtoehto Automaattinen on valittu, OnionShare saattaa yrittää siltojen käyttöä yhdistäessä.</string>
     <string name="notification_channel_name_error">Virhe</string>
+    <string name="notification_error_text">Näytä tietoja napauttamalla.</string>
+    <string name="share_error_not_allowed">Uusia tiedostoja voidaan jakaa vain jakamisen ollessa pois käytöstä.</string>
+    <string name="notification_error_title">OnionShare kohtasi ongelman</string>
+    <string name="share_state_error_tor_text">Tor-yhteyttä ei voitu muodostaa. Sinun on ehkä lisättävä asetuksiin omia siltoja.</string>
+    <string name="share_state_starting_text">⏱️ Tämä saattaa kestää tovin ja voit halutessasi poistua sovelluksesta. Saat valmistumisesta ilmoituksen.</string>
 </resources>

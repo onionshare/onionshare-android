@@ -18,7 +18,7 @@
     <string name="settings_tor_bridges_title">Потребителски мостове</string>
     <string name="about_contributor_pm">%s - ръководител проект</string>
     <string name="settings_tor_bridges_none">Не е добавен</string>
-    <string name="share_state_sharing">Прехвърляне</string>
+    <string name="share_state_sharing">Споделяне</string>
     <string name="about_contributor_creator">%s - създател</string>
     <string name="share_error_not_allowed">Споделяне на нови файлове е възможно само ако в момента не споделяте.</string>
     <string name="notification_sharing_title">Приложението OnionShare е готово</string>
