@@ -89,7 +89,7 @@ android {
         exclude '**/attach_hotspot_windows.dll'
     }
     lintOptions {
-        disable 'MissingTranslation', 'MissingQuantity'
+        disable 'MissingTranslation', 'ExtraTranslation', 'MissingQuantity'
     }
 }
 
