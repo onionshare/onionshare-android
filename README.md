@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/onionshare/onionshare-android/actions/workflows/build.yml/badge.svg)](https://github.com/onionshare/onionshare-android/actions/workflows/build.yml)
 
-Android version of OnionShare (under development)
+Android version of OnionShare
 
 ## Nightly builds
 
