@@ -7,7 +7,7 @@ sealed class ShareUiState {
     open val allowsModifyingFiles = true
     open val collapsableSheet = false
 
-    data object AddingFiles : ShareUiState()
+    object AddingFiles : ShareUiState()
 
     data class Starting(
         private val zipPercent: Int,
@@ -35,9 +35,9 @@ sealed class ShareUiState {
         override fun toString() = "Sharing()"
     }
 
-    data object Complete : ShareUiState()
+    object Complete : ShareUiState()
 
-    data object Stopping : ShareUiState() {
+    object Stopping : ShareUiState() {
         override val allowsModifyingFiles = false
     }
 
