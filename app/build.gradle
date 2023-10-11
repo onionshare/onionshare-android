@@ -47,10 +47,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        benchmark {
-            signingConfig signingConfigs.debug
-            debuggable false
-        }
     }
     flavorDimensions "releaseType"
     productFlavors {
