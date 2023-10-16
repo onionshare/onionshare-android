@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
 
     <string name="back">Back</string>
     <string name="menu">Menu</string>
@@ -12,8 +12,6 @@
     <string name="unknown">unknown</string>
     <string name="remove">Remove</string>
     <string name="share_empty_state">Nothing here yet.</string>
-    <string name="warning_alpha_intro">Warning:</string>
-    <string name="warning_alpha">This is an early alpha release. It should only be used for testing. The code is not finished and has not been audited.</string>
     <string name="warning_no_files_added">No files selected.</string>
     <string name="clear_all">Clear All</string>
     <string name="share_files_add">Add files</string>

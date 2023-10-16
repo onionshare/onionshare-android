@@ -4,9 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Center
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,17 +37,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.TopCenter
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -229,45 +221,21 @@ fun MainContent(
     modifier: Modifier,
 ) {
     if (isEmptyState(shareState, filesState)) {
-        Box(
+        Column(
+            horizontalAlignment = CenterHorizontally,
+            verticalArrangement = Center,
             modifier = modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
+                .fillMaxHeight()
         ) {
-            Box(
-                contentAlignment = TopCenter,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .background(MaterialTheme.colors.error)
-            ) {
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(SpanStyle(fontWeight = Bold)) {
-                            append(stringResource(R.string.warning_alpha_intro))
-                        }
-                        append(" ")
-                        append(stringResource(R.string.warning_alpha))
-                    },
-                    color = Color.White,
-                    modifier = Modifier.padding(16.dp),
-                )
-            }
-            Column(
-                horizontalAlignment = CenterHorizontally,
-                verticalArrangement = Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ) {
-                Image(painterResource(R.drawable.ic_share_empty_state), contentDescription = null)
-                Text(
-                    text = stringResource(R.string.share_empty_state),
-                    modifier = Modifier.padding(16.dp),
-                )
-            }
+            Image(painterResource(R.drawable.ic_share_empty_state), contentDescription = null)
+            Text(
+                text = stringResource(R.string.share_empty_state),
+                modifier = Modifier.padding(16.dp),
+            )
         }
     } else {
-        FileList(Modifier.padding(bottom = offset), shareState, filesState, onFileRemove, onRemoveAll)
+        FileList(modifier.padding(bottom = offset), shareState, filesState, onFileRemove, onRemoveAll)
     }
 }
 
