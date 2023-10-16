@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (альфа)</string>
+    <string name="app_name">OnionShare (alpha)</string>
     <string name="menu">Меню</string>
     <string name="share">Поделиться</string>
     <string name="delete">Удалить</string>
@@ -27,7 +27,7 @@
     <string name="starting_notification_title">Публикация файлов…</string>
     <string name="sharing_notification_title">Нынешние распространяемые файлы</string>
     <string name="share_error_snackbar_text">Не удалось запустить OnionShare</string>
-    <string name="share_error_file_snackbar_text">Не удалось открыть %s. Файл удалён.</string>
+    <string name="share_error_file_snackbar_text">Не удалось запустить %s. Убрано.</string>
     <string name="share_error_snackbar_action">Повторить</string>
     <string name="about_title">О программе</string>
     <string name="about_app_version">Версия приложения: %s</string>

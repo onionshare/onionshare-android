@@ -75,4 +75,5 @@
     <string name="notification_error_title">OnionShare støtte på et problem</string>
     <string name="notification_error_text">Trykk for å vise detaljer.</string>
     <string name="notification_channel_name_error">Feil</string>
+    <string name="share_error_not_allowed">Deling av nye filer er kun mulig når man ikke allerede deler.</string>
 </resources>

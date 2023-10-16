@@ -73,4 +73,5 @@
     <string name="notification_channel_name_error">出错</string>
     <string name="notification_error_title">OnionShare 出问题</string>
     <string name="notification_error_text">轻触了解详情。</string>
+    <string name="share_error_not_allowed">没在分享时才能分享新文件。</string>
 </resources>
