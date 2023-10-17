@@ -63,6 +63,10 @@
     <string name="about_contributor_pm">%s, Project Manager</string>
     <string name="about_contributor_design">%s, Product Designer</string>
     <string name="about_contributing_orgs">Contributing Organizations</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_links_homepage">Homepage</string>
+    <string name="about_links_github">Github</string>
+    <string name="about_links_privacy_policy">Privacy Policy</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_tor_title">Connecting to Tor</string>

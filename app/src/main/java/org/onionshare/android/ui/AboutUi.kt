@@ -3,6 +3,7 @@ package org.onionshare.android.ui
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,30 +41,67 @@ fun AboutUi(navController: NavHostController) {
         AboutActionBar(navController, R.string.about_title)
     }) { innerPadding ->
         val scrollableState = rememberScrollState()
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp)
-            .verticalScroll(scrollableState)
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+                .verticalScroll(scrollableState)
         ) {
-            AboutHeader()
+            AboutHeader(modifier = Modifier.padding(top = 32.dp))
             Text(
                 text = stringResource(R.string.about_text),
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier.padding(top = 24.dp),
             )
-            TextList(headline = stringResource(R.string.about_contributors), items = listOf(
-                stringResource(R.string.about_contributor_creator, "Micah Lee"),
-                stringResource(R.string.about_contributor_android, "Torsten Grote"),
-                stringResource(R.string.about_contributor_android, "Michael Rogers"),
-                stringResource(R.string.about_contributor_pm, "Nathan Freitas"),
-                stringResource(R.string.about_contributor_design, "Glenn Sorrentino"),
-            ))
-            TextList(headline = stringResource(R.string.about_contributing_orgs), items = listOf(
-                "Guardian Project",
-                "The Calyx Institute",
-                "Tor Project",
-                "Briar Project",
-            ))
+            TextList(
+                headline = stringResource(R.string.about_contributors), items = listOf(
+                    stringResource(R.string.about_contributor_creator, "Micah Lee"),
+                    stringResource(R.string.about_contributor_android, "Torsten Grote"),
+                    stringResource(R.string.about_contributor_android, "Michael Rogers"),
+                    stringResource(R.string.about_contributor_pm, "Nathan Freitas"),
+                    stringResource(R.string.about_contributor_design, "Glenn Sorrentino"),
+                )
+            )
+            TextList(
+                headline = stringResource(R.string.about_contributing_orgs), items = listOf(
+                    "Guardian Project",
+                    "The Calyx Institute",
+                    "Tor Project",
+                    "Briar Project",
+                )
+            )
+            Column(modifier = Modifier.padding(top = 24.dp)) {
+                val uriHandler = LocalUriHandler.current
+                Text(
+                    text = stringResource(R.string.about_links_title),
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.body1,
+                )
+                Text(
+                    text = stringResource(R.string.about_links_homepage),
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.secondary,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .clickable { uriHandler.openUri("https://onionshare.org") }
+                )
+                Text(
+                    text = stringResource(R.string.about_links_github),
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.secondary,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .clickable { uriHandler.openUri("https://github.com/onionshare") }
+                )
+                Text(
+                    text = stringResource(R.string.about_links_privacy_policy),
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.secondary,
+                    modifier = Modifier
+                        .padding(top = 4.dp, bottom = 8.dp)
+                        .clickable { uriHandler.openUri("https://onionshare.org/privacy") }
+                )
+            }
         }
     }
 }
@@ -85,10 +124,10 @@ fun AboutActionBar(
 )
 
 @Composable
-fun AboutHeader() {
+fun AboutHeader(modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_logo_about),
