@@ -11,7 +11,7 @@
     <string name="add_files_not_supported">Your device does not support adding files</string>
     <string name="unknown">unknown</string>
     <string name="remove">Remove</string>
-    <string name="share_empty_state">Nothing here yet.</string>
+    <string name="share_empty_state">Nothing here yet. Add files to start sharing.</string>
     <string name="warning_no_files_added">No files selected.</string>
     <string name="clear_all">Clear All</string>
     <string name="share_files_add">Add files</string>
