@@ -54,10 +54,13 @@ class WebserverManager @Inject constructor() {
     private var server: ApplicationEngine? = null
     private val _state = MutableStateFlow<WebServerState>(WebServerState.Stopped(false))
     val state = _state.asStateFlow()
-    val contentPath = getRandomPath()
+    @Volatile
+    var contentPath = ""
+        private set
 
     suspend fun start(sendPage: SendPage): Int {
         _state.value = WebServerState.Starting
+        contentPath = getRandomPath()
         val staticPath = getStaticPath()
         val pathMap = mapOf("static_url_path" to staticPath, "content_path" to contentPath)
         TrafficStats.setThreadStatsTag(0x42)
