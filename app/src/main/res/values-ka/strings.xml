@@ -18,4 +18,63 @@
     <string name="settings_title">მორგება</string>
     <string name="about_title">შესახებ</string>
     <string name="notification_channel_name_error">შეცდომა</string>
+    <string name="app_name">OnionShare (ბეტა)</string>
+    <string name="add_files_not_supported">თქვენს მოწყობილობას ფაილების დამატების მხარდაჭერა არ გააჩნია</string>
+    <string name="share_empty_state">აქ ჯერ არაფერია. დაამატეთ ფაილები გაზიარების დასაწყებად.</string>
+    <string name="warning_no_files_added">ფაილები არჩეული არაა.</string>
+    <string name="clear_all">ყველას გასუფთავება</string>
+    <string name="share_files_add">ფაილების დამატება</string>
+    <string name="share_state_starting">გაშვება…</string>
+    <string name="share_state_transfer_complete">გადაცემა დასრულდა</string>
+    <string name="share_state_error_text">აღმოჩენილია მოულოდნელი პრობლემა.</string>
+    <string name="share_state_stopping">გაჩერება…</string>
+    <string name="share_button_start">გაზიარების დაწყება</string>
+    <string name="share_button_starting">დაწყება…დაატყაპუნეთ გასაუქმებლად</string>
+    <string name="share_button_complete">გაზიარების თავიდან დაწყება</string>
+    <string name="share_button_stopping">გაჩერება… მოითმინეთ, სანამ გაჩერდება</string>
+    <string name="share_onion_intro"><b>ყველას</b> ამ OnionShare-ის მისამართით შეუძლია <b>გადმოწეროს </b> თქვენი ფაილები <b>Tor ბრაუზერით</b>:</string>
+    <string name="clipboard_onion_service_label">OnionShare-ის მისამართი</string>
+    <string name="notification_channel_name_foreground">ფაილის გაზიარების მდგომარეობა</string>
+    <string name="clipboard_onion_service_copied">OnionShare-ის მისამართი დაკოპირდა ბუფერში.</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d ელემენტი, %2$s</item>
+        <item quantity="other">%1$d ელემენტი, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_sharing">გაზიარების მისამართი ხელმისაწვდომია</string>
+    <string name="notification_sharing_title">OnionShare ხელმისაწვდომია</string>
+    <string name="notification_sharing_text">დაატყაპუნეთ თქვენი ფაილების გაზიარების ბმულთან წვდომისთვის.</string>
+    <string name="starting_notification_title">ფაილების პუბლიკაცია…</string>
+    <string name="sharing_notification_title">ამჟამად ზიარდება ფაილები</string>
+    <string name="share_error_snackbar_text">OnionShare-ის გაშვება შეუძლებელია</string>
+    <string name="share_error_file_snackbar_text">%s-ის გახსნა შეუძლებელია. წაიშალა.</string>
+    <string name="about_app_version">აპის ვერსია %s</string>
+    <string name="about_contributor_pm">%s, პროექტის მმართველი</string>
+    <string name="about_contributor_design">%s, პროდუქტის დიზაინერი</string>
+    <string name="about_contributing_orgs">შემომწირავი ორგანიზაციები</string>
+    <string name="settings_tor_intro">ხიდი გამოყოფილი დაუცენზორებელი გზაა Tor-ის ქსელამდე. მაშინაც კი, თუ აირჩევთ ავტომატურს, OnionShare-მა, შეიძლება, ხიდები მაინც გამოიყენოს მისაერთებლად.</string>
+    <string name="settings_tor_bridges_title">მომხმარებლის ხიდები</string>
+    <string name="settings_tor_bridges_none">არაფერია დამატებული</string>
+    <string name="share_state_starting_text">⏱️ ამას საკმაო დრო დასჭირდება. შეგიძლიათ, გახვიდეთ აპიდან. შეგატყობინებთ, როცა მზად იქნება.</string>
+    <string name="share_state_error_tor_text">Tor-თან მიერთება შეუძლებელია. შეიძლება, პარამეტრებში დამატებითი ხიდების დამატება დაგჭირდეთ.</string>
+    <string name="notification_error_title">OnionShare-მა აღმოაჩინა პრობლემა</string>
+    <string name="notification_error_text">დაატყაპუნეთ დეტალების სანახავად.</string>
+    <string name="share_error_not_allowed">ახალი ფაილების გაზიარება, მხოლოდ, მაშინ შეგიძლიათ, როცა ისინი უკვე გაზიარებული არაა.</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_text">OnionShare აწერა მიკა ლიმ და სხვებმა. ის ღია კოდითაა, GPLv3 ლიცენზიით.
+\n
+\nროგორც ყველა პროგრამა, OnionShare-იც, შეიძლება, შეცდომებს და მოწყვლადობებს შეიცავდეს.</string>
+    <string name="about_contributor_android">%s, Android-ის ინჟინერი</string>
+    <string name="settings_tor_automatic">ავტომატური, მდებარეობის მიხედვით</string>
+    <string name="about_contributor_creator">%s, შემქმნელი</string>
+    <string name="starting_notification_text">ამას საკმაო დრო შეიძლება დასჭირდეს.</string>
+    <string name="share_button_stop">გაზიარების გაჩერება</string>
+    <string name="share_state_sharing">გაზიარება</string>
+    <string name="about_links_homepage">საწყისი გვერდი</string>
+    <string name="settings_tor_my_bridges_title">ჩემი ხიდები</string>
+    <string name="about_links_privacy_policy">კონფიდენციალობის პოლიტიკა</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d ხიდი დამატებულია</item>
+        <item quantity="other">%d ხიდი დამატებულია</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">დაატყაპუნეთ ქვემო ბმულებზე ხიდების მისაღებად. შემდეგ ჩასვით ერთი ან მეტი ხიდის სახელი ქვემო ველებში.</string>
 </resources>
