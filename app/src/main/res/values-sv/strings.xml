@@ -30,7 +30,7 @@
     <string name="clear_all">Rensa alla</string>
     <string name="share_state_starting_text">⏱️ Det här kan ta ett tag. Lämna gärna appen. Vi meddelar dig när det är klart.</string>
     <string name="remove">Ta bort</string>
-    <string name="share_empty_state">Inget här ännu.</string>
+    <string name="share_empty_state">Inget här ännu. Lägg till filer för att börja dela.</string>
     <string name="warning_no_files_added">Inga filer har valts.</string>
     <string name="share_files_add">Lägg till filer</string>
     <string name="share_state_ready">Redo</string>
