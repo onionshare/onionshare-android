@@ -4,7 +4,7 @@
     <string name="cancel">Peruuta</string>
     <string name="add">Lisää</string>
     <string name="share">Jaa</string>
-    <string name="share_empty_state">Täällä ei ole vielä mitään.</string>
+    <string name="share_empty_state">Täällä ei ole vielä mitään. Lisää tiedostoja lähetettäväksi.</string>
     <string name="warning_no_files_added">Tiedostoja ei ole valittu.</string>
     <string name="share_state_ready">Valmis</string>
     <string name="share_state_starting">Käynnistetään…</string>
