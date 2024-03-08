@@ -8,10 +8,10 @@
     <string name="delete">Elimina</string>
     <string name="paste">Incolla</string>
     <string name="add_files_not_supported">Il tuo dispositivo non supporta l\'aggiunta di file</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="unknown">sconosciuto</string>
     <string name="remove">Rimuovi</string>
-    <string name="share_empty_state">Ancora niente qui.</string>
+    <string name="share_empty_state">Ancora niente qui. Aggiungi i file per iniziare la condivisione.</string>
     <string name="warning_no_files_added">Nessun file selezionato.</string>
     <string name="clear_all">Cancella tutto</string>
     <string name="share_files_add">Aggiungi file</string>
