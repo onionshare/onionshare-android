@@ -11,7 +11,7 @@
     <string name="add_files_not_supported">El dispositiu no permet afegir-hi fitxers</string>
     <string name="unknown">desconegut</string>
     <string name="remove">Elimina</string>
-    <string name="share_empty_state">Encara no hi ha res.</string>
+    <string name="share_empty_state">Encara no hi ha res. Afegiu fitxers per començar a compartir.</string>
     <string name="warning_no_files_added">No s\'ha seleccionat cap fitxer.</string>
     <string name="share_files_add">Afegeix fitxers</string>
     <string name="share_state_ready">A punt</string>
