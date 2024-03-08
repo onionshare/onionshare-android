@@ -6,24 +6,24 @@
     <string name="back">Voltar</string>
     <string name="cancel">Cancelar</string>
     <string name="add">Adicionar</string>
-    <string name="share">Compartilhar</string>
+    <string name="share">Partilhar</string>
     <string name="delete">Apagar</string>
     <string name="paste">Colar</string>
     <string name="add_files_not_supported">O seu aparelho não suporta a adição de ficheiros</string>
     <string name="unknown">desconhecido</string>
     <string name="remove">Remover</string>
-    <string name="share_empty_state">Nada aqui ainda.</string>
+    <string name="share_empty_state">Nada aqui ainda. Adicione ficheiros para começar a partilhar.</string>
     <string name="share_state_stopping">Parando…</string>
     <string name="warning_no_files_added">Nenhum ficheiro selecionado.</string>
-    <string name="clear_all">Limpar tudo</string>
+    <string name="clear_all">Limpar Tudo</string>
     <string name="share_files_add">Adicionar ficheiros</string>
     <string name="share_state_ready">Preparar</string>
-    <string name="share_state_starting">Iniciando…</string>
-    <string name="share_state_sharing">Compartilhando</string>
+    <string name="share_state_starting">A começar…</string>
+    <string name="share_state_sharing">A partilhar</string>
     <string name="share_state_transfer_complete">Transferência completa</string>
     <string name="share_state_error">Erro</string>
     <string name="share_state_error_text">Ocorreu um problema inesperado.</string>
-    <string name="share_button_start">Iniciar compartilhamento</string>
+    <string name="share_button_start">Começar a partilhar</string>
     <string name="share_button_starting">Iniciando… toque para cancelar</string>
     <string name="share_button_stop">Pare de compartilhar</string>
     <string name="share_button_stopping">Parando… espere até parar</string>
@@ -49,7 +49,7 @@
     <string name="about_contributor_design">%s, Designer de produto</string>
     <string name="about_contributing_orgs">Organizações contribuintes</string>
     <string name="settings_title">Configurações</string>
-    <string name="settings_tor_title">Conectando ao Tor</string>
+    <string name="settings_tor_title">A Conectar ao Tor</string>
     <string name="settings_tor_automatic">Automático com base na localização</string>
     <string name="settings_tor_intro">Uma ponte é uma rota dedicada sem censura para a rede Tor. Mesmo que Automático seja selecionado, o OnionShare pode tentar usar pontes para se conectar.</string>
     <string name="settings_tor_bridges_title">Pontes personalizadas</string>
@@ -75,4 +75,6 @@
     <string name="notification_error_title">O OnionShare encontrou um problema</string>
     <string name="notification_error_text">Toque para ver os detalhes.</string>
     <string name="share_button_complete">Comece a partilhar novamente</string>
+    <string name="share_error_not_allowed">Partilhar novos ficheiros só é possível quando ainda não está a partilhar.</string>
+    <string name="about_links_title">Ligações</string>
 </resources>
