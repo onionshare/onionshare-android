@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (beta)</string>
-    <string name="back">Retour</string>
+    <string name="app_name">OnionShare (version bêta)</string>
+    <string name="back">Précédent</string>
     <string name="menu">Menu</string>
     <string name="cancel">Annuler</string>
     <string name="add">Ajouter</string>
@@ -30,9 +30,9 @@
     <string name="settings_tor_bridges_none">Aucun ajouté</string>
     <string name="settings_tor_my_bridges_title">Mes ponts</string>
     <string name="share_button_starting">Démarrage… appuyez pour annuler</string>
-    <string name="add_files_not_supported">Votre appareil ne prend pas en charge l\'ajout de fichiers</string>
+    <string name="add_files_not_supported">Votre appareil ne prend pas en charge l’ajout de fichiers</string>
     <string name="share_files_add">Ajouter des fichiers</string>
-    <string name="remove">Retirer</string>
+    <string name="remove">Supprimer</string>
     <string name="share_empty_state">Encore rien ici.</string>
     <string name="clear_all">Tout effacer</string>
     <string name="share_state_ready">Prêt</string>
