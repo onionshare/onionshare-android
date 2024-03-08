@@ -6,7 +6,6 @@
     <string name="delete">Удалить</string>
     <string name="paste">Вставить</string>
     <string name="unknown">неизвестно</string>
-    <string name="warning_alpha_intro">Внимание:</string>
     <string name="remove">Убрать</string>
     <string name="warning_no_files_added">Файлы не выбраны.</string>
     <string name="clear_all">Очистить всё</string>
@@ -43,7 +42,6 @@
     <string name="settings_tor_bridges_none">Ничего</string>
     <string name="cancel">Отменить</string>
     <string name="add">Добавить</string>
-    <string name="warning_alpha">Это ранняя альтфа-версия, её не следует использовать для чего-либо более серьёзного, чем тестирование. Она не завершена и ещё не проходила аудит.</string>
     <string name="share_empty_state">Здесь пока ничего нет.</string>
     <string name="add_files_not_supported">Ваше устройство не поддерживает добавление файлов</string>
     <string name="share_files_add">Добавить файлы</string>

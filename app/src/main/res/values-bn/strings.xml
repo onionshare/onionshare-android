@@ -18,7 +18,6 @@
     <string name="share_state_stopping">থামানে হচ্ছে…</string>
     <string name="share_button_stop">শেয়ারিং থামান</string>
     <string name="add_files_not_supported">আপনার ডিভাইস ফাইলস যোগ করা সমর্থন করে না</string>
-    <string name="warning_alpha_intro">সতর্কীকরণ:</string>
     <string name="clear_all">সব পরিষ্কার করুন</string>
     <string name="share_files_add">ফাইলস যোগ করুন</string>
     <string name="share_state_ready">প্রস্তুত</string>
@@ -28,7 +27,6 @@
     <string name="share_button_stopping">থামানো হচ্ছে... থামা পর্যন্ত অপেক্ষা করুন</string>
     <string name="share_state_transfer_complete">স্থানান্তর সম্পুর্ন</string>
     <string name="share_button_complete">আবার শেয়ারিং শুরু করুন</string>
-    <string name="warning_alpha">এটি একটি প্রাথমিক আলফা রিলিজ৷ এটি শুধুমাত্র পরীক্ষার জন্য ব্যবহার করা উচিত৷ কোড এখনও শেষ হয় নি।</string>
     <string name="share_state_starting">শুরু করা হচ্ছে…</string>
     <string name="share_state_sharing">শেয়ারিং</string>
     <string name="share_button_start">শেয়ারিং শুরু করুন</string>

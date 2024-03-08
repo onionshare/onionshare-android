@@ -3,7 +3,7 @@
     <string name="back">Назад</string>
     <string name="menu">Меню</string>
     <string name="cancel">Отказ</string>
-    <string name="app_name">OnionShare (алфа)</string>
+    <string name="app_name">OnionShare (бета)</string>
     <string name="share">Споделяне</string>
     <string name="add">Добавяне</string>
     <string name="share_state_error">Грешка</string>
@@ -11,7 +11,6 @@
     <string name="notification_error_text">Докоснете за подробности.</string>
     <string name="share_button_stopping">Изключване… изчакайте</string>
     <string name="share_button_starting">Включване… докоснете за отказ</string>
-    <string name="warning_alpha_intro">Внимание:</string>
     <string name="warning_no_files_added">Няма избрани файлове.</string>
     <string name="clear_all">Изчистване на всички</string>
     <string name="remove">Премахване</string>
@@ -48,7 +47,6 @@
     <string name="share_state_ready">В готовност</string>
     <string name="about_app_version">Издание %s</string>
     <string name="add_files_not_supported">Устройството не поддържа добавяне на файлове</string>
-    <string name="warning_alpha">Това е незавършено издание. Да се използва само за изпитателни цели. Кодът му е незавършен и не е преминал одит.</string>
     <string name="share_error_snackbar_action">Повторен опит</string>
     <plurals name="share_file_list_summary">
         <item quantity="one">%1$d елемент, %2$s</item>
@@ -76,4 +74,8 @@
     <string name="notification_sharing_text">За адреса към файловете, докоснете.</string>
     <string name="settings_tor_bridges_intro">За да получите мостове, докоснете връзката по-долу. След това поставете един или повече редове с мостове в полето отдолу.</string>
     <string name="about_contributing_orgs">Допринасящи организации</string>
+    <string name="about_links_title">Препратки</string>
+    <string name="about_links_homepage">Страница</string>
+    <string name="about_links_github">Гитхъб</string>
+    <string name="about_links_privacy_policy">Политика на поверителност</string>
 </resources>

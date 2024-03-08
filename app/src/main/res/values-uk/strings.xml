@@ -30,11 +30,10 @@
     <string name="cancel">Скасувати</string>
     <string name="add_files_not_supported">Ваш пристрій не підтримує додавання файлів</string>
     <string name="remove">Вилучити</string>
-    <string name="warning_alpha_intro">Попередження:</string>
     <string name="add">Додати</string>
     <string name="paste">Вставити</string>
     <string name="delete">Видалити</string>
-    <string name="share_empty_state">Тут поки що нічого немає.</string>
+    <string name="share_empty_state">Тут поки що нічого немає. Додайте файли, щоб розпочати обмін.</string>
     <string name="share_state_starting">Запуск…</string>
     <string name="unknown">невідомо</string>
     <string name="clear_all">Очистити все</string>
@@ -69,8 +68,7 @@
     <string name="settings_title">Налаштування</string>
     <string name="settings_tor_bridges_none">Нічого не додано</string>
     <string name="settings_tor_my_bridges_title">Мої мости</string>
-    <string name="app_name">OnionShare (альфа)</string>
-    <string name="warning_alpha">Це ранній альфа-випуск. Його слід використовувати тільки для тестування. Код не закінчений і не пройшов аудит.</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="share_files_add">Додати файли</string>
     <string name="warning_no_files_added">Файлів не вибрано.</string>
     <string name="share_state_ready">Готовий</string>
@@ -80,4 +78,8 @@
     <string name="notification_error_title">OnionShare зіткнувся з проблемою</string>
     <string name="notification_error_text">Торкніться, щоб переглянути подробиці.</string>
     <string name="share_error_not_allowed">Спільний доступ до нових файлів можливий лише тоді, коли він ще не наданий.</string>
+    <string name="about_links_title">Посилання</string>
+    <string name="about_links_homepage">Головна</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Політика приватності</string>
 </resources>

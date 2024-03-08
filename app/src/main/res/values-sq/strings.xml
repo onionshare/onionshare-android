@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Mbrapsht</string>
     <string name="menu">Menu</string>
     <string name="cancel">Anuloje</string>
@@ -10,8 +10,6 @@
     <string name="add_files_not_supported">Pajisja juaj mbulon shtim kartelash</string>
     <string name="remove">Hiqe</string>
     <string name="share_empty_state">Ende pa gjë këtu.</string>
-    <string name="warning_alpha_intro">Kujdes:</string>
-    <string name="warning_alpha">Kjo është një hedhje herët në qarkullim. Duhet përdorur vetëm për testim. Kodi s’është i përfunduar dhe nuk është shqyrtuar nga palë të paanshme.</string>
     <string name="warning_no_files_added">S’u përzgjodhën kartela.</string>
     <string name="clear_all">Spastroji Krejt</string>
     <string name="share_files_add">Shto kartela</string>
@@ -74,5 +72,10 @@
     <string name="share_state_error_tor_text">S’u lidh dot me Tor-in. Mund t’ju duhet të shtoni ura vetjake te rregullimet.</string>
     <string name="notification_channel_name_error">Gabim</string>
     <string name="notification_error_title">OnionShare hasi një problem</string>
-    <string name="notification_error_text">Prekeni, që të shihni hollësi.</string>
+    <string name="notification_error_text">Prekeni që të shihni hollësi.</string>
+    <string name="about_links_title">Lidhje</string>
+    <string name="about_links_homepage">Faqe hyrëse</string>
+    <string name="about_links_privacy_policy">Rregulla Privatësie</string>
+    <string name="share_error_not_allowed">Ndarja me të tjerë e kartelave të reja është e mundur vetëm kur nuk ka tashmë ndarje të tjerash.</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

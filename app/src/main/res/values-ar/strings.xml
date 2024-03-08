@@ -6,12 +6,11 @@
     <string name="share">مشاركة</string>
     <string name="delete">حدف</string>
     <string name="paste">لصق</string>
-    <string name="app_name">OnionShare (إصدار تجريبي مبكر)</string>
+    <string name="app_name">OnionShare (إصدار تجريبي)</string>
     <string name="share_state_stopping">يجري الإيقاف…</string>
     <string name="share_state_error_text">لقد حدثت مشكلة غير متوقعة.</string>
     <string name="unknown">مجهول</string>
     <string name="remove">إزالة</string>
-    <string name="warning_alpha_intro">تحذير:</string>
     <string name="warning_no_files_added">لم يتم تحديد أي ملف.</string>
     <string name="clear_all">محو الكل</string>
     <string name="share_files_add">إضافة ملفات</string>
@@ -30,8 +29,7 @@
     <string name="settings_tor_bridges_none">لم يتم إضافة شيء</string>
     <string name="menu">القائمة</string>
     <string name="add_files_not_supported">جهازك لا يدعم إضافة الملفات</string>
-    <string name="share_empty_state">لا شيء هنا حتى الآن.</string>
-    <string name="warning_alpha">هذا إصدار «أَلْفا» تجريبي مبكر. يجب استخدامه فقط للاختبار. لم ينتهِ العمل عليه بعد، ولم يتم التدقيق فيه.</string>
+    <string name="share_empty_state">لا شيء هنا حتى الآن. أضِف ملفات لبدء المشاركة.</string>
     <string name="sharing_notification_title">مشاركة الملفات حاليا</string>
     <string name="share_error_snackbar_text">تعذر بدء OnionShare</string>
     <string name="about_contributing_orgs">المنظمات المساهمة</string>
@@ -84,4 +82,8 @@
     </plurals>
     <string name="share_onion_intro">يمكن <b>لأي شخص</b> لديه عنوان OnionShare هذا<b> تنزيل</b> ملفاتك باستخدام <b>متصفح تور</b>:</string>
     <string name="share_error_not_allowed">مشاركة الملفات الجديدة ممكنة فقط عندما لا تشاركها بالفعل.</string>
+    <string name="about_links_title">الروابط</string>
+    <string name="about_links_homepage">الرئيسية</string>
+    <string name="about_links_privacy_policy">سياسة الخصوصية</string>
+    <string name="about_links_github">جت‌هب</string>
 </resources>

@@ -18,8 +18,6 @@
     <string name="unknown">ukjent</string>
     <string name="remove">Fjern</string>
     <string name="share_empty_state">Ingenting her enda.</string>
-    <string name="warning_alpha_intro">Advarsel:</string>
-    <string name="warning_alpha">Dette er en tidlig alfa-utgave. Den er kun tiltenkt testøyemed. Koden er ikke ferdig og ingen gjennomgang er gjort.</string>
     <string name="clear_all">Tøm alle</string>
     <string name="share_state_starting">Starter …</string>
     <string name="share_state_sharing">Deler</string>

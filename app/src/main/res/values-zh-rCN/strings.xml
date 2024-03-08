@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_contributor_android">%s，Android 工程师</string>
-    <string name="app_name">OnionShare（Alpha 版）</string>
+    <string name="app_name">OnionShare(Beta)</string>
     <string name="back">返回</string>
     <string name="menu">菜单</string>
     <string name="cancel">取消</string>
@@ -10,8 +10,7 @@
     <string name="delete">删除</string>
     <string name="paste">粘贴</string>
     <string name="add_files_not_supported">你的设备不支持添加文件</string>
-    <string name="share_empty_state">此处尚无任何内容。</string>
-    <string name="warning_alpha_intro">警告：</string>
+    <string name="share_empty_state">此处尚无任何内容。添加文件开始分享。</string>
     <string name="unknown">未知</string>
     <string name="remove">移除</string>
     <string name="share_state_ready">就绪</string>
@@ -56,7 +55,6 @@
     </plurals>
     <string name="clipboard_onion_service_copied">已将 OnionShare 地址复制到剪贴板。</string>
     <string name="share_error_file_snackbar_text">无法打开 %s 。已删除。</string>
-    <string name="warning_alpha">这是早期 Alpha 版本，仅用于测试。代码尚未完成，且未经审核。</string>
     <string name="share_onion_intro"><b>任何</b>拥有此 OnionShare 地址的人都可以用 <b>Tor 浏览器</b> <b>下载</b>你的文件：</string>
     <string name="settings_tor_bridges_none">未添加网桥</string>
     <string name="about_text">OnionShare 是由 Micah Lee 等人开发的开源软件，并以 GPLv3 发布。
@@ -74,4 +72,8 @@
     <string name="notification_error_title">OnionShare 出问题</string>
     <string name="notification_error_text">轻触了解详情。</string>
     <string name="share_error_not_allowed">没在分享时才能分享新文件。</string>
+    <string name="about_links_title">链接</string>
+    <string name="about_links_homepage">首页</string>
+    <string name="about_links_privacy_policy">隐私政策</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="starting_notification_text">Điều này có thể mất chút thời gian.</string>
     <string name="about_contributor_pm">%s, Quản lý dự án</string>
     <string name="share_button_starting">Đang bắt đầu… bấm để hủy bỏ</string>
     <string name="share_onion_intro"><b>Bất kỳ ai</b> có địa chỉ OnionShare này đều có thể <b>tải xuống</b> các tập tin của bạn bằng cách sử dụng <b>Trình duyệt Tor Browser</b>:</string>
     <string name="share_error_file_snackbar_text">Đã không thể mở %s. Đã loại bỏ.</string>
     <string name="share_error_snackbar_action">Thử lại</string>
-    <string name="about_title">Về</string>
+    <string name="about_title">Giới thiệu</string>
     <string name="about_app_version">Phiên bản ứng dụng %s</string>
     <string name="about_contributors">Những người đóng góp</string>
     <string name="about_contributor_creator">%s, Nhà khởi tạo</string>
@@ -25,7 +25,6 @@
     <string name="settings_tor_bridges_intro">Bấm vào liên kết bên dưới để nhận cầu Bridge. Sau đó dán một hoặc nhiều dòng của cầu Bridge vào miền bên dưới.</string>
     <string name="settings_tor_my_bridges_title">Các cầu Bridge của tôi</string>
     <string name="add_files_not_supported">Thiết bị của bạn không hỗ trợ việc thêm tệp tin</string>
-    <string name="warning_alpha">Đây là một bản phát hành sớm alpha. Nó chỉ nên được sử dụng để test thử nghiệm. Mã code chưa được hoàn thành và chưa được kiểm tra.</string>
     <plurals name="share_file_list_summary">
         <item quantity="other">%1$d mục, %2$s</item>
     </plurals>
@@ -44,8 +43,7 @@
     <string name="paste">Dán</string>
     <string name="unknown">không xác định</string>
     <string name="remove">Loại bỏ</string>
-    <string name="share_empty_state">Chưa có gì ở đây.</string>
-    <string name="warning_alpha_intro">Cảnh báo:</string>
+    <string name="share_empty_state">Chưa có gì ở đây. Thêm tập tin để bắt đầu chia sẻ.</string>
     <string name="warning_no_files_added">Không có tập tin nào được chọn.</string>
     <string name="clear_all">Xoá bỏ Tất cả</string>
     <string name="share_files_add">Thêm các tập tin</string>
@@ -74,4 +72,7 @@
     <string name="share_state_error_tor_text">Đã không thể kết nối tới Tor. Có thể bạn cần phải thêm vào các cầu Bridge tuỳ chỉnh trong mục Cài đặt.</string>
     <string name="notification_error_text">Nhấp để xem các chi tiết.</string>
     <string name="share_error_not_allowed">Việc chia sẻ tập tin mới chỉ khả dụng khi vẫn chưa chia sẻ.</string>
+    <string name="about_links_title">Liên kết</string>
+    <string name="about_links_homepage">Trang chủ</string>
+    <string name="about_links_privacy_policy">Chính sách bảo mật</string>
 </resources>

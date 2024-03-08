@@ -12,7 +12,6 @@
     <string name="add_files_not_supported">Je apparaat ondersteunt het toevoegen van bestanden niet</string>
     <string name="unknown">onbekend</string>
     <string name="share_empty_state">Nog niets hier.</string>
-    <string name="warning_alpha">Dit is een vroege alfa-versie. Deze mag alleen worden gebruikt om te testen. De code is nog niet af en is nog niet gecontroleerd.</string>
     <string name="warning_no_files_added">Geen bestanden geselecteerd.</string>
     <string name="share_files_add">Bestanden toevoegen</string>
     <string name="share_state_ready">Gereed</string>
@@ -28,7 +27,6 @@
         <item quantity="other">%1$d items, %2$s</item>
     </plurals>
     <string name="notification_channel_name_foreground">Status van bestandsdeling</string>
-    <string name="warning_alpha_intro">Waarschuwing:</string>
     <string name="clear_all">Wis Alles</string>
     <string name="share_button_start">Begin met delen</string>
     <string name="share_error_snackbar_action">Opnieuw proberen</string>

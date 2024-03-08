@@ -10,8 +10,7 @@
     <string name="unknown">onbekend</string>
     <string name="remove">Verwyder</string>
     <string name="share_empty_state">Nog niks hier nie.</string>
-    <string name="warning_alpha_intro">Waarskuwing:</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="warning_no_files_added">Geen lêers gekies.</string>
     <string name="clear_all">Wis alles</string>
     <string name="share_files_add">Voeg lêers toe</string>
@@ -20,7 +19,6 @@
     <string name="share_state_sharing">Deel tans</string>
     <string name="share_state_transfer_complete">Oordrag voltooi</string>
     <string name="menu">Kieslys</string>
-    <string name="warning_alpha">Dit is ’n vroeë-alfa-vrystelling. Dit moet slegs gebruik word om te toets. Die kode is nog nie afgehandel nie en is nie geoudit nie.</string>
     <string name="share_state_stopping">Stop tans…</string>
     <string name="share_state_error">Fout</string>
     <string name="share_state_error_text">’n Onverwagte fout het voorgekom.</string>
@@ -48,7 +46,7 @@
     <string name="about_title">Oor</string>
     <string name="about_app_version">Toepweergawe %s</string>
     <string name="about_text">OnioShare is deur Micah Lee, et al. ontwikkel en is oopbron, vrygestel onder GPLv3.
-\n 
+\n
 \nSoos alle programmatuur kan OnionShare foute of kwesbaarhede bevat.</string>
     <string name="about_contributors">Bydraers</string>
     <string name="about_contributor_creator">%s, Skepper</string>
@@ -75,4 +73,9 @@
     <string name="notification_error_title">OnionShare het ’n probleem ervaar</string>
     <string name="notification_error_text">Tik om details te sien.</string>
     <string name="share_state_starting_text">⏱️ Dit kan ’n ruk duur. Voel vry om die toep te verlaat. Ons sal u laat weet wanneer dit gereed is.</string>
+    <string name="about_links_title">Skakels</string>
+    <string name="share_error_not_allowed">Dit is slegs moontlik om nuwe lêers te deel indien u nog niks deel nie.</string>
+    <string name="about_links_homepage">Tuisblad</string>
+    <string name="about_links_privacy_policy">Privaatheidsbeleid</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

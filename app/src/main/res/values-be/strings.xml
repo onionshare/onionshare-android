@@ -4,7 +4,7 @@
     <string name="cancel">Адмяніць</string>
     <string name="add">Дадаць</string>
     <string name="share">Падзяліцца</string>
-    <string name="app_name">OnionShare (альфа)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="paste">Уставіць</string>
     <string name="add_files_not_supported">Ваша прылада не падтрымлівае даданне файлаў</string>
     <string name="back">Назад</string>
@@ -25,7 +25,6 @@
     <string name="about_contributing_orgs">Арганізацыі-ўкладчыкі</string>
     <string name="settings_tor_bridges_intro">Націсніце на спасылку ніжэй, каб атрымаць масты. Затым устаўце адну або некалькі ліній моста ў поле ніжэй.</string>
     <string name="share_state_sharing">Адпраўка</string>
-    <string name="warning_alpha">Гэта ранні альфа-рэліз. Яго трэба выкарыстоўваць толькі для тэставання. Код не скончаны і не правяраўся.</string>
     <string name="share_state_starting">Запуск…</string>
     <string name="notification_channel_name_error">Памылка</string>
     <string name="notification_sharing_title">OnionShare даступны</string>
@@ -68,7 +67,6 @@
     <string name="share_error_snackbar_action">Паспрабуйце яшчэ раз</string>
     <string name="about_app_version">Версія праграмы %s</string>
     <string name="share_empty_state">Тут яшчэ нічога няма.</string>
-    <string name="warning_alpha_intro">Папярэджанне:</string>
     <string name="warning_no_files_added">Файлы не выбраны.</string>
     <string name="clear_all">Ачысціць усё</string>
     <string name="share_files_add">Дадаць файлы</string>
@@ -80,4 +78,8 @@
     <string name="settings_tor_automatic">Аўтаматычна ў залежнасці ад месцазнаходжання</string>
     <string name="remove">Выдаліць</string>
     <string name="share_error_not_allowed">Абмен новымі файламі магчымы толькі ў тым выпадку, калі яны яшчэ не знаходзяцца ў агульным доступе.</string>
+    <string name="about_links_title">Спасылкі</string>
+    <string name="about_links_privacy_policy">Палітыка прыватнасці</string>
+    <string name="about_links_homepage">Галоўная</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Retour</string>
     <string name="menu">Menu</string>
     <string name="cancel">Annuler</string>
@@ -34,8 +34,6 @@
     <string name="share_files_add">Ajouter des fichiers</string>
     <string name="remove">Retirer</string>
     <string name="share_empty_state">Encore rien ici.</string>
-    <string name="warning_alpha_intro">Avertissement :</string>
-    <string name="warning_alpha">Ceci est une version alpha précoce. Elle ne doit être utilisée qu\'à des fins de test. Le code n\'est pas terminé et n\'a pas été vérifié.</string>
     <string name="clear_all">Tout effacer</string>
     <string name="share_state_ready">Prêt</string>
     <string name="share_state_transfer_complete">Transfert terminé</string>
@@ -78,4 +76,8 @@
     <string name="share_state_starting_text">⏱️ Cela pourrait prendre un certain temps. N\'hésitez pas à quitter l\'application. Nous vous préviendrons dès que nous serons prêts.</string>
     <string name="share_state_error_tor_text">Impossible de se connecter à Tor. Il se peut que vous deviez ajouter des ponts personnalisés dans les paramètres.</string>
     <string name="share_error_not_allowed">Partager de nouveaux fichiers n\'est possible uniquement s\'il n\'y a pas déjà de partage en cours.</string>
+    <string name="about_links_title">Liens</string>
+    <string name="about_links_homepage">Page d\'accueil</string>
+    <string name="about_links_privacy_policy">Politique de confidentialité</string>
+    <string name="about_links_github">Github</string>
 </resources>

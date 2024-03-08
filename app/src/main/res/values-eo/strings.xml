@@ -3,7 +3,6 @@
     <string name="back">Reen</string>
     <string name="menu">Menuo</string>
     <string name="add">Aldoni</string>
-    <string name="warning_alpha">Ĉi tio estas frua alfa eldono. Oni nur devas uzi ĝin por provado. La kodo ankoraŭ ne estas aŭ finita aŭ kontrolita.</string>
     <string name="warning_no_files_added">Neniuj dosieroj elektitaj.</string>
     <string name="clear_all">Forviŝi ĉiujn</string>
     <string name="share_files_add">Aldoni dosierojn</string>
@@ -39,5 +38,4 @@
     <string name="unknown">nekonata</string>
     <string name="remove">Forigi</string>
     <string name="share_empty_state">Ankoraŭ estas nenio ĉi tie.</string>
-    <string name="warning_alpha_intro">Averto:</string>
 </resources>

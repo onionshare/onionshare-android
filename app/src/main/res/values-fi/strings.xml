@@ -5,7 +5,6 @@
     <string name="add">Lisää</string>
     <string name="share">Jaa</string>
     <string name="share_empty_state">Täällä ei ole vielä mitään.</string>
-    <string name="warning_alpha_intro">Varoitus:</string>
     <string name="warning_no_files_added">Tiedostoja ei ole valittu.</string>
     <string name="share_state_ready">Valmis</string>
     <string name="share_state_starting">Käynnistetään…</string>
@@ -13,7 +12,6 @@
     <string name="share_state_transfer_complete">Siirto valmis</string>
     <string name="share_state_stopping">Pysäytetään…</string>
     <string name="share_state_error">Virhe</string>
-    <string name="warning_alpha">Tämä on varhainen alphajulkaisu. Sitä ei tule käyttää muuhun kuin testaamiseen. Koodi ei ole valmista, eikä sitä ole auditoitu.</string>
     <string name="share_state_error_text">Tapahtui odottamaton ongelma.</string>
     <string name="share_button_start">Aloita jakaminen</string>
     <string name="share_button_starting">Käynnistetään… napauta peruaksesi</string>
@@ -55,7 +53,7 @@
     <string name="settings_tor_my_bridges_title">Omat sillat</string>
     <string name="back">Takaisin</string>
     <string name="delete">Poista</string>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="paste">Liitä</string>
     <string name="add_files_not_supported">Laitteesi ei tue tiedostojen lisäämistä</string>
     <string name="remove">Poista</string>
@@ -76,4 +74,8 @@
     <string name="notification_error_title">OnionShare kohtasi ongelman</string>
     <string name="share_state_error_tor_text">Tor-yhteyttä ei voitu muodostaa. Sinun on ehkä lisättävä asetuksiin omia siltoja.</string>
     <string name="share_state_starting_text">⏱️ Tämä saattaa kestää tovin ja voit halutessasi poistua sovelluksesta. Saat valmistumisesta ilmoituksen.</string>
+    <string name="about_links_title">Linkkejä</string>
+    <string name="about_links_homepage">Kotisivu</string>
+    <string name="about_links_privacy_policy">Tietosuojakäytäntö</string>
+    <string name="about_links_github">Github</string>
 </resources>

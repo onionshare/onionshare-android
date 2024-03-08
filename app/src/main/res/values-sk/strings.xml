@@ -8,7 +8,6 @@
     <string name="paste">Vloziť</string>
     <string name="remove">Odstrániť</string>
     <string name="share_empty_state">Zatiaľ tu nič nie je.</string>
-    <string name="warning_alpha_intro">Varovanie:</string>
     <string name="warning_no_files_added">Nie sú vybraté žiadne súbory.</string>
     <string name="clear_all">Vymazať všetko</string>
     <string name="app_name">OnionShare (Alfa)</string>
@@ -20,7 +19,6 @@
     <string name="unknown">neznámy</string>
     <string name="share_state_starting">Začína…</string>
     <string name="share_state_transfer_complete">Prenos dokončený</string>
-    <string name="warning_alpha">Toto je skoré vydanie alfa. Mal by sa používať iba na testovanie. Kód nie je dokončený a nebol auditovaný.</string>
     <string name="clipboard_onion_service_label">OnionShare adresa</string>
     <string name="clipboard_onion_service_copied">OnionShare adresa bola skopírovaná do schránky</string>
     <string name="about_contributor_pm">%s, Projektový manažér</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="share">Compartir</string>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Atrás</string>
     <string name="menu">Menú</string>
     <string name="add">Añadir</string>
@@ -10,13 +10,11 @@
     <string name="paste">Pegar</string>
     <string name="add_files_not_supported">Su dispositivo no soporta añadir archivos</string>
     <string name="unknown">desconocido</string>
-    <string name="warning_alpha_intro">Advertencia:</string>
     <string name="clear_all">Limpiar todo</string>
     <string name="warning_no_files_added">No hay archivos seleccionados.</string>
     <string name="share_files_add">Añadir archivos</string>
-    <string name="share_empty_state">Nada aquí todavía.</string>
+    <string name="share_empty_state">Todavía no hay nada. Añade archivos para empezar a compartir.</string>
     <string name="remove">Remover</string>
-    <string name="warning_alpha">Esta es una versión alfa temprana. Solo debe usarse como testing. El código no está terminado y no ha sido auditado.</string>
     <string name="share_state_starting">Comenzando…</string>
     <string name="share_state_ready">Listo</string>
     <string name="share_state_sharing">Compartiendo</string>
@@ -78,4 +76,8 @@
     <string name="share_state_error_tor_text">No se pudo conectar a Tor. Es posible que debas agregar puentes personalizados en la configuración.</string>
     <string name="share_state_starting_text">⏱️ Esto podría tomar un tiempo. Siéntete libre de salir de la aplicación. Te avisaremos cuando esté listo.</string>
     <string name="share_error_not_allowed">Sólo es posible compartir archivos nuevos si no se han compartido ya.</string>
+    <string name="about_links_title">Enlaces</string>
+    <string name="about_links_homepage">Página de inicio</string>
+    <string name="about_links_privacy_policy">Política de privacidad</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

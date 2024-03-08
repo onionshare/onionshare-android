@@ -13,9 +13,7 @@
     <string name="unknown">desconhecido</string>
     <string name="remove">Remover</string>
     <string name="share_empty_state">Nada aqui ainda.</string>
-    <string name="warning_alpha_intro">Aviso:</string>
     <string name="share_state_stopping">Parando…</string>
-    <string name="warning_alpha">Esta é uma versão alpha inicial. Deve ser usado apenas para testes. O código não está finalizado e não foi auditado.</string>
     <string name="warning_no_files_added">Nenhum ficheiro selecionado.</string>
     <string name="clear_all">Limpar tudo</string>
     <string name="share_files_add">Adicionar ficheiros</string>
@@ -66,9 +64,9 @@
         <item quantity="other">%d pontes adicionadas</item>
     </plurals>
     <plurals name="share_file_list_summary">
-        <item quantity="one">%1$d item, %2$s%1$d itens, %2$s%1$d item, %2$s</item>
-        <item quantity="many">%1$d item, %2$s%1$d itens, %2$s%1$d item, %2$s</item>
-        <item quantity="other">%1$d item, %2$s%1$d itens, %2$s%1$d item, %2$s</item>
+        <item quantity="one">%1$d item, %2$s</item>
+        <item quantity="many">%1$d item, %2$s</item>
+        <item quantity="other">%1$d item, %2$s</item>
     </plurals>
     <string name="share_state_starting_text">⏱️ Isto pode demorar algum tempo. Não hesite em deixar a aplicação. Será notificado quando tudo pronto.</string>
     <string name="share_state_error_tor_text">Não foi possível ligar ao Tor. Poderá ser necessário adicionar pontes personalizadas nas configurações.</string>

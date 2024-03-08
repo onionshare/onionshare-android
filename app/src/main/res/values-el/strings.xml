@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Πίσω</string>
     <string name="menu">Μενού</string>
     <string name="delete">Διαγραφή</string>
@@ -18,8 +18,6 @@
     <string name="share_state_starting">Έναρξη…</string>
     <string name="share_state_sharing">Κοινή χρήση</string>
     <string name="share_empty_state">Τίποτα εδώ ακόμα.</string>
-    <string name="warning_alpha_intro">Προειδοποίηση:</string>
-    <string name="warning_alpha">Αυτή είναι μια πρώτη έκδοση άλφα. Θα πρέπει να χρησιμοποιείται μόνο για δοκιμές. Ο κώδικας δεν έχει ολοκληρωθεί και δεν έχει ελεγχθεί.</string>
     <string name="share_state_transfer_complete">Η μεταβίβαση ολοκληρώθηκε</string>
     <string name="share_button_start">Έναρξη διαμοιρασμού</string>
     <string name="share_button_stop">Τερματισμός διαμοιρασμού</string>
@@ -76,4 +74,8 @@
     <string name="notification_error_title">Το OnionShare αντιμετώπισε ένα ζήτημα</string>
     <string name="notification_error_text">Πατήστε για να δείτε λεπτομέρειες.</string>
     <string name="share_error_not_allowed">Η κοινή χρήση νέων αρχείων είναι δυνατή μόνο όταν δε γίνεται διαμοιρασμός.</string>
+    <string name="about_links_title">Σύνδεσμοι</string>
+    <string name="about_links_homepage">Αρχική</string>
+    <string name="about_links_privacy_policy">Πολιτική απορρήτου</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

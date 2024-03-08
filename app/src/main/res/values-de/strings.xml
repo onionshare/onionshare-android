@@ -6,18 +6,16 @@
     <string name="add_files_not_supported">Dein Gerät unterstützt das Hinzufügen von Dateien nicht</string>
     <string name="unknown">unbekannt</string>
     <string name="remove">Entfernen</string>
-    <string name="warning_alpha_intro">Warnung:</string>
     <string name="warning_no_files_added">Keine Dateien ausgewählt.</string>
     <string name="clear_all">Alle löschen</string>
     <string name="share_files_add">Dateien hinzufügen</string>
     <string name="share_state_ready">Bereit</string>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="cancel">Abbrechen</string>
-    <string name="share">Teilen</string>
+    <string name="share">Teile</string>
     <string name="delete">Löschen</string>
-    <string name="share_empty_state">Hier ist noch nichts.</string>
+    <string name="share_empty_state">Hier ist noch nichts. Dateien hinzufügen, um die Freigabe zu starten.</string>
     <string name="add">Hinzufügen</string>
-    <string name="warning_alpha">Dies ist eine frühe Alpha-Version. Sie sollte nur zu Testzwecken verwendet werden. Der Code ist noch nicht fertig und wurde noch nicht geprüft.</string>
     <string name="share_state_starting">Beginne…</string>
     <string name="share_state_sharing">Teile</string>
     <string name="share_state_transfer_complete">Übertragung abgeschlossen</string>
@@ -75,4 +73,9 @@
     <string name="notification_channel_name_error">Fehler</string>
     <string name="notification_error_title">OnionShare ist auf ein Problem gestoßen</string>
     <string name="notification_error_text">Antippen, um Details anzuzeigen.</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_links_homepage">Startseite</string>
+    <string name="about_links_privacy_policy">Datenschutzrichtlinie</string>
+    <string name="about_links_github">Github</string>
+    <string name="share_error_not_allowed">Die Freigabe neuer Dateien ist nur möglich, wenn sie noch nicht freigegeben sind.</string>
 </resources>

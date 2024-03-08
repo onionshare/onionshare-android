@@ -4,14 +4,13 @@
     <string name="share_button_starting">Başlatılıyor… iptal etmek için dokunun</string>
     <string name="share_button_error">Tekrar deneyin</string>
     <string name="share_button_stop">Paylaşımı durdur</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="about_app_version">Uygulama Sürümü %s</string>
     <string name="back">Geri</string>
     <string name="cancel">İptal</string>
     <string name="add">Ekle</string>
     <string name="menu">Menü</string>
     <string name="remove">Kaldır</string>
-    <string name="warning_alpha">Bu erken bir alfa sürümüdür. Yalnızca test için kullanılmalıdır. Kod tamamlanmamıştır ve denetlenmemiştir.</string>
     <string name="warning_no_files_added">Dosya seçilmedi.</string>
     <string name="clear_all">Tümünü temizle</string>
     <string name="share_state_starting">Başlatılıyor…</string>
@@ -28,10 +27,9 @@
     <string name="delete">Sil</string>
     <string name="paste">Yapıştır</string>
     <string name="unknown">bilinmiyor</string>
-    <string name="warning_alpha_intro">Uyarı:</string>
     <string name="share_state_ready">Hazır</string>
     <string name="add_files_not_supported">Aygıtınız dosya eklemeyi desteklemiyor</string>
-    <string name="share_empty_state">Burada henüz bir şey yok.</string>
+    <string name="share_empty_state">Burada henüz bir şey yok. Paylaşmaya başlamak için dosya ekleyin.</string>
     <string name="share_files_add">Dosya ekle</string>
     <string name="share_state_sharing">Paylaşılıyor</string>
     <string name="notification_channel_name_foreground">Dosya paylaşım durumu</string>
@@ -76,4 +74,8 @@
     <string name="notification_error_title">OnionShare bir sorunla karşılaştı</string>
     <string name="notification_error_text">Ayrıntıları görmek için dokunun.</string>
     <string name="share_error_not_allowed">Yeni dosyalar yalnızca zaten paylaşılmamışsa paylaşılabilir.</string>
+    <string name="about_links_title">Bağlantılar</string>
+    <string name="about_links_homepage">Site</string>
+    <string name="about_links_privacy_policy">Gizlilik ilkesi</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

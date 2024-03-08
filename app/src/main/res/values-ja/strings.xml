@@ -3,8 +3,7 @@
     <string name="share">共有</string>
     <string name="delete">削除</string>
     <string name="remove">取り除く</string>
-    <string name="share_empty_state">まだ何もありません。</string>
-    <string name="warning_alpha_intro">警告：</string>
+    <string name="share_empty_state">まだ何もありません。ファイルを追加して共有を開始します。</string>
     <string name="clear_all">すべてクリア</string>
     <string name="share_files_add">ファイルを追加</string>
     <string name="share_state_ready">準備完了</string>
@@ -40,10 +39,9 @@
     <string name="cancel">キャンセル</string>
     <string name="add_files_not_supported">このデバイスではファイル追加が未対応</string>
     <string name="back">戻る</string>
-    <string name="app_name">OnionShare (アルファ版)</string>
+    <string name="app_name">OnionShare (beta版)</string>
     <string name="add">追加</string>
     <string name="paste">貼り付け</string>
-    <string name="warning_alpha">これは初期アルファ版のリリースです。未完で監査されていないため、テスト以外の使用は勧められません。</string>
     <string name="warning_no_files_added">選択されたファイルはありません。</string>
     <string name="share_state_transfer_complete">転送完了</string>
     <string name="share_state_stopping">停止中…</string>
@@ -74,4 +72,8 @@
     <string name="notification_error_title">OnionShareは問題に遭遇しました</string>
     <string name="notification_error_text">詳細を見るのにタップ。</string>
     <string name="share_error_not_allowed">すでにファイル共有途中場合は新しいファイルを共有できません。</string>
+    <string name="about_links_title">リンク</string>
+    <string name="about_links_privacy_policy">プライバシーポリシー</string>
+    <string name="about_links_homepage">ホームページ</string>
+    <string name="about_links_github">Github</string>
 </resources>

@@ -2,15 +2,13 @@
 <resources>
     <string name="back">回去</string>
     <string name="share_empty_state">這裏尚無東西。</string>
-    <string name="warning_alpha_intro">警告:</string>
     <string name="warning_no_files_added">未選取檔案。</string>
-    <string name="warning_alpha">它仍在早期開發測試階段，其代碼尚未完成也沒有經過審查。</string>
     <string name="share">分享</string>
     <string name="clear_all">清除全部</string>
     <string name="share_files_add">新增檔案</string>
     <string name="share_state_ready">就緒</string>
     <string name="share_state_starting">啟動…</string>
-    <string name="share_state_sharing">分享</string>
+    <string name="share_state_sharing">分享中</string>
     <string name="share_state_transfer_complete">傳輸完畢</string>
     <string name="share_state_stopping">停止…</string>
     <string name="share_state_error">出錯</string>
@@ -40,7 +38,7 @@
     <string name="clipboard_onion_service_copied">將 OnionShare 地址複製到剪貼簿。</string>
     <string name="notification_sharing_title">OnionShare 可用</string>
     <string name="share_error_file_snackbar_text">打不開 %s，移除。</string>
-    <string name="settings_title">設置</string>
+    <string name="settings_title">設定</string>
     <string name="settings_tor_automatic">依位置自動決定</string>
     <string name="settings_tor_bridges_title">自定橋接器</string>
     <string name="settings_tor_bridges_none">無新增</string>
@@ -50,7 +48,7 @@
     <string name="menu">選單</string>
     <string name="add">新增</string>
     <string name="delete">分享</string>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="paste">貼上</string>
     <string name="add_files_not_supported">您的設備不支援新增檔案</string>
     <string name="unknown">未知的</string>
@@ -60,7 +58,7 @@
     <string name="sharing_notification_title">目前分享的檔案</string>
     <string name="about_title">關於</string>
     <string name="about_contributor_creator">%s, 創建者</string>
-    <string name="settings_tor_title">連接到 Tor</string>
+    <string name="settings_tor_title">連結Tor中</string>
     <plurals name="settings_tor_bridges_number">
         <item quantity="other">已新增 %d 個橋接器</item>
     </plurals>
@@ -73,4 +71,9 @@
     <string name="share_state_starting_text">⏱️ 這會花上一點時間，請隨意離開，就緒後會通知您。</string>
     <string name="share_state_error_tor_text">無法連接 Tor，您也許需要在設定中增添自定橋接中繼。</string>
     <string name="notification_error_text">輕觸了解詳情。</string>
+    <string name="about_links_title">連結</string>
+    <string name="about_links_homepage">首頁</string>
+    <string name="about_links_privacy_policy">隱私政策</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="share_error_not_allowed">僅當尚未共享時才可以共享新文件。</string>
 </resources>

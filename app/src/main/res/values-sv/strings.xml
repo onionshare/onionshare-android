@@ -11,7 +11,7 @@
     <string name="share_button_starting">Startar… tryck för att avbryta</string>
     <string name="share_button_complete">Återuppta delning</string>
     <string name="share_button_stop">Stoppa delning</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Tillbaka</string>
     <string name="menu">Meny</string>
     <string name="cancel">Avbryt</string>
@@ -30,9 +30,7 @@
     <string name="clear_all">Rensa alla</string>
     <string name="share_state_starting_text">⏱️ Det här kan ta ett tag. Lämna gärna appen. Vi meddelar dig när det är klart.</string>
     <string name="remove">Ta bort</string>
-    <string name="warning_alpha_intro">Varning:</string>
     <string name="share_empty_state">Inget här ännu.</string>
-    <string name="warning_alpha">Detta är en tidig alfaversion. Den ska endast användas för testning. Koden är inte färdig och har inte granskats.</string>
     <string name="warning_no_files_added">Inga filer har valts.</string>
     <string name="share_files_add">Lägg till filer</string>
     <string name="share_state_ready">Redo</string>
@@ -75,4 +73,9 @@
     <string name="notification_sharing_title">OnionShare tillgängligt</string>
     <string name="sharing_notification_title">Delar för närvarande filer</string>
     <string name="notification_error_title">OnionShare stötte på ett problem</string>
+    <string name="share_error_not_allowed">Dela nya filer är bara möjligt när de inte redan delar.</string>
+    <string name="about_links_title">Länkar</string>
+    <string name="about_links_homepage">Hemsida</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Sekretesspolicy</string>
 </resources>

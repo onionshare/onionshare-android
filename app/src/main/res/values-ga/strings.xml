@@ -12,8 +12,6 @@
     <string name="unknown">anaithnid</string>
     <string name="remove">Bain</string>
     <string name="share_empty_state">Níl faic anseo fós.</string>
-    <string name="warning_alpha_intro">Rabhadh:</string>
-    <string name="warning_alpha">Leagan luath alfa é seo, le haghaidh tástála amháin. Níl an cód críochnaithe agus ní dhearnadh iniúchadh air.</string>
     <string name="warning_no_files_added">Níl aon chomhad roghnaithe.</string>
     <string name="clear_all">Glan Uile</string>
     <string name="share_files_add">Cuir comhaid leis</string>

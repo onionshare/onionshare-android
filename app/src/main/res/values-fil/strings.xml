@@ -12,8 +12,6 @@
     <string name="unknown">hindi alam</string>
     <string name="remove">Tanggalin</string>
     <string name="share_empty_state">Wala pang nandito.</string>
-    <string name="warning_alpha_intro">Babala:</string>
-    <string name="warning_alpha">Maaga itong alpha release. Para lang ito sa testing. Hindi pa natatapos o nasusuri ang code.</string>
     <string name="warning_no_files_added">Walang napiling file.</string>
     <string name="clear_all">Tanggalin Lahat</string>
     <string name="share_files_add">Magdagdag ng file</string>

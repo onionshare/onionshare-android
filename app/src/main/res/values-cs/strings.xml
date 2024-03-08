@@ -10,8 +10,7 @@
     <string name="add_files_not_supported">Vaše zařízení nepodporuje přidávání souborů</string>
     <string name="unknown">neznámý</string>
     <string name="remove">Odstranit</string>
-    <string name="share_empty_state">Ještě zde nic není.</string>
-    <string name="warning_alpha_intro">Varování:</string>
+    <string name="share_empty_state">Ještě zde nic není. Pro zahájení sdílení přidejte soubory.</string>
     <string name="warning_no_files_added">Nebyly vybrány žádné soubory.</string>
     <string name="share_onion_intro"><b>Kdokoli</b> s touto OnionShare adresou může <b>stahovat</b> vaše soubory za pomoci <b>Tor Browseru</b>:</string>
     <string name="clipboard_onion_service_label">OnionShare adresa</string>
@@ -66,9 +65,8 @@
     </plurals>
     <string name="settings_tor_my_bridges_title">Mé mosty</string>
     <string name="notification_sharing_title">OnionShare je dostupný</string>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="share_state_transfer_complete">Přenos dokončen</string>
-    <string name="warning_alpha">Toto je raná alfa verze. Měla by se používat pouze k testování. Kód ještě nebyl dokončen ani auditován.</string>
     <string name="clear_all">Vyčistit vše</string>
     <string name="share_files_add">Přidat soubory</string>
     <string name="share_state_starting">Startuje…</string>
@@ -77,4 +75,9 @@
     <string name="notification_error_text">Klepněte pro podrobnosti.</string>
     <string name="notification_error_title">OnionShare má problém</string>
     <string name="share_state_error_tor_text">Nebylo možné se připojit k Tor. Může být potřeba jít do nastavení a přidat vlastní most Tor.</string>
+    <string name="about_links_title">Odkazy</string>
+    <string name="about_links_homepage">Domovská stránka</string>
+    <string name="about_links_privacy_policy">Zásady ochrany soukromí</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="share_error_not_allowed">Sdílení nových souborů je možné pouze pokud ještě nesdílíte.</string>
 </resources>
