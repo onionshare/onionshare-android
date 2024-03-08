@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="back">回去</string>
-    <string name="share_empty_state">這裏尚無東西。</string>
+    <string name="share_empty_state">這裏尚無東西。新增檔案以共享。</string>
     <string name="warning_no_files_added">未選取檔案。</string>
     <string name="share">分享</string>
     <string name="clear_all">清除全部</string>
