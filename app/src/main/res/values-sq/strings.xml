@@ -9,7 +9,7 @@
     <string name="paste">Ngjiteni</string>
     <string name="add_files_not_supported">Pajisja juaj mbulon shtim kartelash</string>
     <string name="remove">Hiqe</string>
-    <string name="share_empty_state">Ende pa gjë këtu.</string>
+    <string name="share_empty_state">Ende pa gjë këtu. Shtoni kartela, që të fillohet të ndahen me të tjerë.</string>
     <string name="warning_no_files_added">S’u përzgjodhën kartela.</string>
     <string name="clear_all">Spastroji Krejt</string>
     <string name="share_files_add">Shto kartela</string>
