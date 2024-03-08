@@ -33,7 +33,7 @@
     <string name="add_files_not_supported">Votre appareil ne prend pas en charge l’ajout de fichiers</string>
     <string name="share_files_add">Ajouter des fichiers</string>
     <string name="remove">Supprimer</string>
-    <string name="share_empty_state">Encore rien ici.</string>
+    <string name="share_empty_state">Rien encore ici. Ajoutez des fichiers pour commencer le partage.</string>
     <string name="clear_all">Tout effacer</string>
     <string name="share_state_ready">Prêt</string>
     <string name="share_state_transfer_complete">Transfert terminé</string>
