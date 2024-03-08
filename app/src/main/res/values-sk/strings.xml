@@ -39,9 +39,9 @@
     <string name="about_contributor_android">%s, Android Engineer</string>
     <string name="notification_channel_name_foreground">Stav zdieľania súborov</string>
     <plurals name="share_file_list_summary">
-        <item quantity="one">1niekoľkoveľa</item>
-        <item quantity="few">1niekoľkoveľa</item>
-        <item quantity="other">1niekoľkoveľa</item>
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
     </plurals>
     <string name="share_state_sharing">Zdieľanie</string>
     <string name="share_state_stopping">Ukončovanie…</string>
