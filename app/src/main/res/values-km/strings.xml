@@ -17,4 +17,63 @@
     <string name="share_button_start">ចាប់ផ្តើមបញ្ជូន</string>
     <string name="clipboard_onion_service_copied">អាសយដ្ឋាន OnionShare ត្រូវបានចម្លងទៅ clipboard.</string>
     <string name="notification_channel_name_error">កំហុស</string>
+    <string name="about_contributor_design">%s អ្នករចនាផលិតផល</string>
+    <string name="settings_tor_bridges_title">Bridges ផ្ទាល់ខ្លួន</string>
+    <string name="app_name">OnionShare (បេតា)</string>
+    <string name="share_state_stopping">កំពុង​ឈប់…</string>
+    <string name="share_button_stopping">កំពុងឈប់… រង់ចាំរហូតដល់ឈប់</string>
+    <string name="share_button_error">ព្យាយាមម្ដងទៀត</string>
+    <string name="clipboard_onion_service_label">អាសយដ្ឋាន OnionShare</string>
+    <string name="notification_channel_name_sharing">មានអាសយដ្ឋានចែករំលែក</string>
+    <string name="share_error_file_snackbar_text">មិនអាចបើក %s បានទេ។ បានដកចេញ។</string>
+    <string name="about_contributor_pm">%s, អ្នកគ្រប់គ្រងគម្រោង</string>
+    <string name="settings_title">ការកំណត់</string>
+    <string name="settings_tor_title">កំពុងភ្ជាប់ទៅ Tor</string>
+    <string name="settings_tor_bridges_none">មិនមានអ្វីបានបន្ថែមទេ</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="other">%d bridges បានបន្ថែម</item>
+    </plurals>
+    <string name="about_links_title">តំណភ្ជាប់</string>
+    <string name="about_links_homepage">គេហទំព័រ</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="starting_notification_title">កំពុងបង្ហោះឯកសារ…</string>
+    <string name="about_contributor_android">%s, វិស្វករ Android</string>
+    <string name="sharing_notification_title">កំពុងចែករំលែកឯកសារ</string>
+    <string name="share_state_error_tor_text">មិនអាចភ្ជាប់ទៅ Tor បានទេ។ អ្នកប្រហែលជាត្រូវបន្ថែម briges ផ្ទាល់ខ្លួននៅក្នុងការកំណត់។</string>
+    <string name="share_error_snackbar_text">មិនអាចចាប់ផ្តើម OnionShare បានទេ</string>
+    <string name="warning_no_files_added">មិនបានជ្រើសរើសឯកសារទេ។</string>
+    <string name="about_text">OnionShare ត្រូវបានបង្កើតឡើងដោយ Micah Lee, et al . និង​ជា​ប្រភព​បើក​ចំហ ដែល​បាន​ចេញ​ផ្សាយ​ក្រោម GPLv3.
+\n
+\nដូចកម្មវិធីទាំងអស់ដែរ OnionShare អាចមានកំហុស ឬភាពងាយរងគ្រោះ។</string>
+    <string name="share_state_error_text">បញ្ហាដែលមិននឹកស្មានដល់ បានកើតឡើង។</string>
+    <string name="starting_notification_text">វាអាចចំណាយពេលខ្លះ។</string>
+    <string name="add_files_not_supported">ឧបករណ៍របស់អ្នកមិនគាំទ្រការបន្ថែមឯកសារទេ</string>
+    <string name="share_empty_state">គ្មានអ្វីនៅទីនេះទេ។ បន្ថែមឯកសារដើម្បីចាប់ផ្តើមចែករំលែក។</string>
+    <string name="share_files_add">បន្ថែមឯកសារ</string>
+    <string name="share_state_ready">រួចរាល់</string>
+    <string name="share_state_starting_text">⏱️ វាអាចចំណាយពេលបន្តិច។ អ្នកអាចចាកចេញពីកម្មវិធី។ យើងនឹងជូនដំណឹងដល់អ្នកនៅពេលរួចរាល់។</string>
+    <string name="share_state_transfer_complete">ការផ្ទេរបានបញ្ចប់</string>
+    <string name="share_button_starting">កំពុងចាប់ផ្តើម... ចុចដើម្បីបោះបង់</string>
+    <string name="share_button_stop">បញ្ឈប់ការចែករំលែក</string>
+    <string name="share_button_complete">ចាប់ផ្តើមចែករំលែកម្តងទៀត</string>
+    <string name="share_onion_intro"><b>នរណាម្នាក់</b>ដែលមានអាសយដ្ឋាន OnionShare នេះអាច<b>ទាញយក</b>ឯកសាររបស់អ្នកដោយប្រើ <b>Tor Browser</b>៖</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="other">%1$d ធាតុ, %2$s</item>
+    </plurals>
+    <string name="notification_channel_name_foreground">ស្ថានភាពចែករំលែកឯកសារ</string>
+    <string name="notification_sharing_title">OnionShare មាន</string>
+    <string name="notification_sharing_text">ចុចដើម្បីចូលប្រើអាសយដ្ឋានដើម្បីចែករំលែកឯកសាររបស់អ្នក។</string>
+    <string name="notification_error_title">OnionShare បានជួបប្រទះបញ្ហាមួយ</string>
+    <string name="notification_error_text">ចុចដើម្បីមើលព័ត៌មានលម្អិត។</string>
+    <string name="share_error_not_allowed">ការចែករំលែកឯកសារថ្មីអាចធ្វើទៅបាន លុះត្រាតែមិនទាន់បានចែករំលែក។</string>
+    <string name="about_title">អំពី</string>
+    <string name="about_contributors">អ្នករួមចំណែក</string>
+    <string name="about_contributor_creator">%s អ្នកបង្កើត</string>
+    <string name="about_contributing_orgs">ស្ថាប័នរួមចំណែក</string>
+    <string name="about_links_privacy_policy">គោលការណ៍​ឯកជនភាព</string>
+    <string name="settings_tor_automatic">ដោយស្វ័យប្រវត្តិផ្អែកលើទីតាំង</string>
+    <string name="settings_tor_my_bridges_title">Bridges របស់ខ្ញុំ</string>
+    <string name="settings_tor_bridges_intro">ចុចលើតំណភ្ជាប់ខាងក្រោមដើម្បីទទួលបាន bridge។ បន្ទាប់មកបិទភ្ជាប់ខ្សែ bridge មួយ ឬច្រើនទៅក្នុងចន្លោះខាងក្រោម។</string>
+    <string name="settings_tor_intro">Bridge គឺជាផ្លូវដែលមិនមានការឃ្លាំមើលចូលទៅក្នុងបណ្តាញ Tor ។ ទោះបីជាត្រូវបានជ្រើសរើសដោយស្វ័យប្រវត្តិក៏ដោយ OnionShare អាចនឹងព្យាយាមប្រើ bridge ដើម្បីភ្ជាប់។</string>
+    <string name="about_app_version">កំណែកម្មវិធី %s</string>
 </resources>
