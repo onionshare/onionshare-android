@@ -131,12 +131,12 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     // Tor
-    implementation "org.briarproject:onionwrapper-android:0.0.6"
-    tor 'org.briarproject:tor-android:0.4.7.15'
+    implementation "org.briarproject:onionwrapper-android:0.0.7"
+    tor 'org.briarproject:tor-android:0.4.8.9-1'
     tor 'org.briarproject:obfs4proxy-android:0.0.14-tor2'
     tor 'org.briarproject:snowflake-android:2.5.1'
     implementation 'org.briarproject:moat-api:0.2'
-    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
     def ktor_version = '2.3.5'
     implementation "io.ktor:ktor-server-core:$ktor_version"
