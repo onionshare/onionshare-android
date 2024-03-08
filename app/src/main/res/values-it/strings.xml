@@ -76,4 +76,8 @@
     <string name="notification_error_title">OnionShare ha riscontrato un problema</string>
     <string name="share_state_error_tor_text">Impossibile connettersi a Tor. Potresti aver bisogno di aggiungere dei bridges personalizzati nelle impostazioni.</string>
     <string name="share_state_starting_text">⏱️ Potrebbe impiegare del tempo. Puoi lasciare l\'app. Ti avviseremo quando avrà fatto.</string>
+    <string name="about_links_title">Link</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Informativa sulla privacy</string>
+    <string name="about_links_homepage">Homepage</string>
 </resources>

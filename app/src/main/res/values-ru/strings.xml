@@ -79,4 +79,7 @@
     <string name="notification_error_text">Нажмите, чтобы увидеть подробности.</string>
     <string name="share_error_not_allowed">Общий доступ к новым файлам возможен только в том случае, если они еще не поделились.</string>
     <string name="about_links_github">GitHub</string>
+    <string name="about_links_title">Ссылки</string>
+    <string name="about_links_homepage">Домашняя страница</string>
+    <string name="about_links_privacy_policy">Политика конфиденциальности</string>
 </resources>

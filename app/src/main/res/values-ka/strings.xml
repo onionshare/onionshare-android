@@ -77,4 +77,5 @@
         <item quantity="other">%d ხიდი დამატებულია</item>
     </plurals>
     <string name="settings_tor_bridges_intro">დაატყაპუნეთ ქვემო ბმულებზე ხიდების მისაღებად. შემდეგ ჩასვით ერთი ან მეტი ხიდის სახელი ქვემო ველებში.</string>
+    <string name="about_links_title">ბმულები</string>
 </resources>
