@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (آلفا)</string>
+    <string name="app_name">OnionShare (بتا)</string>
     <string name="back">بازگشت</string>
     <string name="notification_sharing_title">OnionShare در دسترس است</string>
     <string name="menu">فهرست</string>
@@ -11,20 +11,18 @@
     <string name="delete">حذف</string>
     <string name="add_files_not_supported">دستگاه شما از اضافه کردن فایل‌ها پشتیبانی نمی‌کند</string>
     <string name="unknown">نامعلوم</string>
-    <string name="remove">حذف</string>
-    <string name="share_empty_state">هنوز چیزی اینجا نیست.</string>
-    <string name="warning_alpha_intro">هشدار:</string>
+    <string name="remove">برداشتن</string>
+    <string name="share_empty_state">هنوز چیزی این‌جا نیست. برای آغاز هم‌رسانی پرونده‌‌ها را بیفزایید.</string>
     <string name="settings_tor_bridges_title">پل‌های سفارشی</string>
-    <string name="settings_tor_bridges_none">چیزی افزوده نشده است</string>
+    <string name="settings_tor_bridges_none">چیزی افزوده نشده</string>
     <plurals name="settings_tor_bridges_number">
         <item quantity="one">%d پل اضافه شد</item>
-        <item quantity="other">%d پل‌ها اضافه شدند</item>
+        <item quantity="other">%d پل اضافه شدند</item>
     </plurals>
     <string name="settings_tor_my_bridges_title">پل‌های من</string>
-    <string name="settings_tor_bridges_intro">برای دریافت پل‌ها بر روی پیوند زیر ضربه بزنید. سپس یک خط پل یا بیشتر را در فیلد زیر جایگذاری کنید.</string>
+    <string name="settings_tor_bridges_intro">برای دریافت پل‌ها روی پیوند زیر بزنید. سپس یک خط پل یا بیش‌تر را در زمینهٔ زیر جایگذاری کنید.</string>
     <string name="share_button_starting">در حال شروع... برای لغو ضربه بزنید</string>
     <string name="share_state_starting">در حال شروع…</string>
-    <string name="warning_alpha">این انتشار آلفا اولیه است. باید تنها برای آزمایش استفاده شود. کد تمام نشده و حسابرسی نشده است.</string>
     <string name="clear_all">پاک کردن همه</string>
     <string name="share_state_ready">آماده</string>
     <string name="share_state_transfer_complete">انتقال کامل شد</string>
@@ -68,7 +66,16 @@
     <string name="about_contributor_design">%s، طراح محصول</string>
     <string name="settings_title">تنظیمات</string>
     <string name="settings_tor_automatic">خودکار بر اساس مکان</string>
-    <string name="settings_tor_intro">یک پل یک مسیر اختصاصی سانسور نشده به شبکهٔ Tor است. حتی اگر گزینه خودکار انتخاب شده باشد، OnionShare ممکن است سعی کند با استفاده از پل متصل شود.</string>
+    <string name="settings_tor_intro">پل‌ها مسیرهای اختصاصی سانسور نشده به شبکهٔ تورند. حتا اگر خودکار گزیده باشد، ممکن است OnionShare سعی کند با استفاده از پل وصل شود.</string>
     <string name="notification_channel_name_foreground">وضعیت اشتراک‌گذاری فایل</string>
-    <string name="share_state_starting_text">⏱️</string>
+    <string name="share_state_starting_text">⏱️ممکن است کمی طول بکشد. می‌توانید از کاره خارج شوید. هنگام آماده بودن آگاهتان می‌کنیم.</string>
+    <string name="about_links_title">پیوندها</string>
+    <string name="notification_error_text">برای دیدن جزییات بزنید.</string>
+    <string name="notification_channel_name_error">خطا</string>
+    <string name="about_links_homepage">صفحهٔ اصلی</string>
+    <string name="notification_error_title">OnionShare با خطایی مواجه شد</string>
+    <string name="about_links_privacy_policy">سیاست محرمانگی</string>
+    <string name="about_links_github">گیت‌هاب</string>
+    <string name="share_error_not_allowed">هم‌رسانی پرونده‌های جدید تنها هنگامی ممکن است که از پیش هم‌رسانده نشده باشند.</string>
+    <string name="share_state_error_tor_text">نتوانست به تور وصل شود. شاید بخواهید پل‌های سفارشی در تنظیمات بیفزایید.</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Voltar</string>
     <string name="menu">Menu</string>
     <string name="add_files_not_supported">Seu dispositivo não suporta a adição de arquivos</string>
@@ -24,9 +24,7 @@
     <string name="share">Compartilhar</string>
     <string name="paste">Colar</string>
     <string name="remove">Remover</string>
-    <string name="share_empty_state">Nada aqui ainda.</string>
-    <string name="warning_alpha_intro">Aviso:</string>
-    <string name="warning_alpha">Esta é uma versão alpha inicial. Deve ser usado apenas para testes. O código não está finalizado e não foi auditado.</string>
+    <string name="share_empty_state">Nada aqui ainda. Adicione arquivos para começar a compartilhar.</string>
     <string name="share_files_add">Adicionar arquivos</string>
     <string name="delete">Excluir</string>
     <string name="warning_no_files_added">Nenhum arquivo selecionado.</string>
@@ -77,4 +75,9 @@
     <string name="notification_error_text">Toque para ver os detalhes.</string>
     <string name="share_state_starting_text">⏱️ Isto pode demorar um pouco. Sinta-se livre para deixar o aplicativo. Notificaremos quando estiver pronto.</string>
     <string name="share_state_error_tor_text">Não foi possível conectar-se ao Tor. Talvez você precise adicionar pontes personalizadas nas configurações.</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_links_homepage">Página inicial</string>
+    <string name="about_links_privacy_policy">Política de Privacidade</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="share_error_not_allowed">Compartilhar novos arquivos só é possível quando não está compartilhando.</string>
 </resources>

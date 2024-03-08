@@ -8,11 +8,10 @@
     <string name="delete">Elimina</string>
     <string name="paste">Incolla</string>
     <string name="add_files_not_supported">Il tuo dispositivo non supporta l\'aggiunta di file</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="unknown">sconosciuto</string>
     <string name="remove">Rimuovi</string>
-    <string name="share_empty_state">Ancora niente qui.</string>
-    <string name="warning_alpha_intro">Attenzione:</string>
+    <string name="share_empty_state">Ancora niente qui. Aggiungi i file per iniziare la condivisione.</string>
     <string name="warning_no_files_added">Nessun file selezionato.</string>
     <string name="clear_all">Cancella tutto</string>
     <string name="share_files_add">Aggiungi file</string>
@@ -71,5 +70,14 @@
     </plurals>
     <string name="clipboard_onion_service_label">Indirizzo di OnionShare</string>
     <string name="notification_channel_name_sharing">Indirizzo di condivisione disponibile</string>
-    <string name="warning_alpha">Questa è una prima versione alfa. Dovrebbe essere usato solo per i test. Il codice non è finito e non è stato verificato.</string>
+    <string name="notification_error_text">Tocca per vedere i dettagli.</string>
+    <string name="share_error_not_allowed">La condivisione di nuovi file è possibile solo se non li stai già condividendo.</string>
+    <string name="notification_channel_name_error">Errore</string>
+    <string name="notification_error_title">OnionShare ha riscontrato un problema</string>
+    <string name="share_state_error_tor_text">Impossibile connettersi a Tor. Potresti aver bisogno di aggiungere dei bridges personalizzati nelle impostazioni.</string>
+    <string name="share_state_starting_text">⏱️ Potrebbe impiegare del tempo. Puoi lasciare l\'app. Ti avviseremo quando avrà fatto.</string>
+    <string name="about_links_title">Link</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Informativa sulla privacy</string>
+    <string name="about_links_homepage">Homepage</string>
 </resources>

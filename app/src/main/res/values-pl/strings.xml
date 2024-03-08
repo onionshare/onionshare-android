@@ -9,9 +9,7 @@
     <string name="add_files_not_supported">Twoje urządzenie nie obsługuje dodawania plików</string>
     <string name="unknown">nieznane</string>
     <string name="remove">Usuń</string>
-    <string name="share_empty_state">Nic tu nie ma.</string>
-    <string name="warning_alpha_intro">Ostrzeżenie:</string>
-    <string name="warning_alpha">To jest wczesna wersja alfa, która powinna być używana tylko do testów. Nie jest ona ukończona i nie posiada audytu.</string>
+    <string name="share_empty_state">Nic tu nie ma. Dodaj pliki, aby rozpocząć udostępnianie.</string>
     <string name="warning_no_files_added">Nie wybrano plików.</string>
     <string name="clear_all">Wyczyść wszystkie</string>
     <string name="share_files_add">Dodaj pliki</string>
@@ -71,7 +69,7 @@
     <string name="about_contributor_creator">%s, twórca</string>
     <string name="about_contributor_android">%s, programista Android</string>
     <string name="settings_tor_bridges_intro">Kliknij poniższe łącze, aby uzyskać mostki. Następnie wklej jedną lub więcej linii mostka w polu poniżej.</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="menu">Menu</string>
     <string name="share_button_stop">Zatrzymaj udostępnianie</string>
     <string name="share_state_starting_text">⏱️ To może trochę potrwać. Możesz opuścić aplikację. Powiadomimy Cię, gdy będzie gotowa.</string>
@@ -80,4 +78,8 @@
     <string name="notification_channel_name_error">Błąd</string>
     <string name="notification_error_text">Stuknij, aby zobaczyć szczegóły.</string>
     <string name="share_error_not_allowed">Udostępnianie nowych plików jest możliwe tylko wtedy, gdy jeszcze ich nie udostępniasz.</string>
+    <string name="about_links_title">Linki</string>
+    <string name="about_links_homepage">Strona główna</string>
+    <string name="about_links_privacy_policy">Polityka prywatności</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta-prófunarútgáfa)</string>
     <string name="back">Til baka</string>
     <string name="delete">Eyða</string>
     <string name="paste">Líma</string>
     <string name="unknown">óþekkt</string>
     <string name="remove">Fjarlægja</string>
     <string name="share_empty_state">Ekkert hér ennþá.</string>
-    <string name="warning_alpha_intro">Aðvörun:</string>
     <string name="share_state_error">Villa</string>
     <string name="share_state_error_text">Upp kom óvænt vandamál.</string>
     <string name="share_button_start">Hefja deilingu</string>
@@ -69,11 +68,14 @@
     <string name="notification_sharing_text">Ýttu til að nálgast vistfangið til að deila skránum þínum.</string>
     <string name="settings_tor_intro">Brú er sérstök óritskoðuð leið inn á Tor-netkerfið. Jafnvel þótt \'Sjálfvirkt\' sé valið, gæti OnionShare reynt að nota brýr til að tengjast.</string>
     <string name="settings_tor_bridges_intro">Ýttu á tengilinn hér fyrir neðan til að fá brýr. Límdu síðan eina eða fleiri brúalínur inn í reitinn hér fyrir neðan.</string>
-    <string name="warning_alpha">Þetta er snemmbúin alfa-útgáfa. Hana ætti aðeins að nota til prófana. Kóðinn er ekki frágenginn og hefur ekki verið yfirfarinn.</string>
     <string name="share_state_error_tor_text">Gat ekki tengst við Tor. Þú gætir þurft að bæta við sérsniðnum brúm í stillingunum.</string>
     <string name="notification_error_title">OnionShare rakst á vandamál</string>
     <string name="notification_error_text">Ýttu til að skoða frekari upplýsingar.</string>
     <string name="share_state_starting_text">⏱ Þetta gæti tekið nokkra stund. Þú getur alveg yfirgefið forritið. Við munum láta þig vita þegar þetta er tilbúið.</string>
     <string name="notification_channel_name_error">Villa</string>
     <string name="share_error_not_allowed">Aðeins er hægt að deila nýjum skrám þegar ekki er þegar verið að deila.</string>
+    <string name="about_links_title">Tenglar</string>
+    <string name="about_links_privacy_policy">Meðferð persónuupplýsinga</string>
+    <string name="about_links_homepage">Heimasíða</string>
+    <string name="about_links_github">GitHub</string>
 </resources>

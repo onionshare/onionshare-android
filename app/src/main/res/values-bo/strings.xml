@@ -19,7 +19,6 @@
     <string name="unknown">ཆ་མེད།</string>
     <string name="remove">གཙང་གསུབ།</string>
     <string name="share_empty_state">འདི་ན་ད་དུང་ཅི་ཡང་མི་འདུག</string>
-    <string name="warning_alpha_intro">ཉེན་བརྡ།</string>
     <string name="warning_no_files_added">ཡིག་ཆ་གང་ཡང་འདེམས་མི་འདུག</string>
     <string name="clear_all">ཆ་ཚང་གཙང་གསུབ།</string>
     <string name="share_files_add">ཡིག་ཆ་ཁ་སྣོན།</string>
@@ -63,7 +62,6 @@
     <string name="share_onion_intro"><b>མི་གང་རུང་ཞིག་གིས་</b> OnionShare ཁ་བྱང་འདིའི་སྟེང་ནས་ <b>ཕབ་ལེན་བྱེད་ཐུབ</b> ཁྱེད་ཀྱི་ཡིག་ཆ <b>Tor བཤེར་ཆས་བརྒྱུད་</b>:</string>
     <string name="share_state_error_text">བསམ་ཡུལ་ལས་འདས་པའི་ནོར་འཁྲུལ་ཞིག་བྱུང་སོང་།</string>
     <string name="add_files_not_supported">ཁྱེད་ཀྱི་ཁ་པར་གྱིས་ཁ་སྣོན་ཡིག་ཆ་རྒྱབ་སྐྱོར་བྱེད་ཀྱི་མི་འདུག</string>
-    <string name="warning_alpha">འདི་ནི་ཆེས་སྔོན་འགྲོའི་ཐོན་རིམ་ཞིག་ཡིན་པས། ཚོད་ལྟ་ཁོ་ནའི་ཆེད་དུ་སྤྱོད་འོས། ཚབ་ཨང་ཚར་མེད་ལ་ཞིབ་བཤེར་བྱས་མེད།</string>
     <string name="share_state_sharing">བརྒྱུད་སྐུར།</string>
     <string name="share_state_transfer_complete">བརྒྱུད་གཏོང་བྱས་ཚར།</string>
 </resources>

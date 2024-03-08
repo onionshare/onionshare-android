@@ -19,4 +19,18 @@
     </plurals>
     <string name="about_app_version">Programversion %s</string>
     <string name="settings_tor_my_bridges_title">Mine broer</string>
+    <string name="unknown">ukendt</string>
+    <string name="add">Tilføj</string>
+    <string name="menu">Menu</string>
+    <string name="share_state_ready">Klar</string>
+    <string name="paste">Indsæt</string>
+    <string name="back">Tilbage</string>
+    <string name="share">Del</string>
+    <string name="remove">Fjern</string>
+    <string name="share_state_starting">Starter …</string>
+    <string name="app_name">OnionShare (beta)</string>
+    <string name="delete">Slet</string>
+    <string name="share_files_add">Tilføj filer</string>
+    <string name="add_files_not_supported">Din enhed understøtter ikke tilføjelse af filer</string>
+    <string name="share_state_sharing">Deling</string>
 </resources>

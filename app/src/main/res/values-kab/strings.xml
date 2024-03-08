@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="back">Tuɣalin</string>
+    <string name="clear_all">Sfeḍ kullec</string>
+    <string name="share_files_add">Rnu ifuyla</string>
+    <string name="share_state_starting">Asenker…</string>
+    <string name="share_state_sharing">Beṭṭu</string>
+    <string name="share_state_error">Tuccḍa</string>
+    <string name="share_button_start">Bdu beṭṭu</string>
+    <string name="share_button_stop">Ḥbes beṭṭu</string>
+    <string name="share_button_error">Ɛreḍ tikkelt nniḍen</string>
+    <string name="clipboard_onion_service_label">Tansa n OnionShare</string>
+    <string name="clipboard_onion_service_copied">Tansa n OnionShare tenɣel ɣer tfelwit.</string>
+    <string name="notification_channel_name_foreground">Addad n beṭṭu n ifuyla</string>
+    <string name="notification_channel_name_sharing">Tura tella tansa n beṭṭu</string>
+    <string name="notification_channel_name_error">Tuccḍa</string>
+    <string name="notification_sharing_title">OnionShare yewjed</string>
+    <string name="notification_error_text">Senned akken ad twaliḍ ttfaṣil.</string>
+    <string name="share_error_snackbar_action">Ɛreḍ tikkelt niḍen</string>
+    <string name="about_title">Ɣef</string>
+    <string name="about_text">OnionShare yesnulfa-t-id Micah Lee akked et al. d aɣbalu yeldin, i d-yeffɣen ddaw GPLv3.
+\n
+\nAm yiseɣẓanen akk, zemren ad ilin ibugen deg OnionShare.</string>
+    <string name="about_contributors">Imttekkiyen</string>
+    <string name="about_links_title">Iseɣwan</string>
+    <string name="about_links_homepage">Asebter agejdan</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Tasertit n tbaḍnit</string>
+    <string name="settings_title">Iɣewwaṛen</string>
+    <string name="settings_tor_title">Tuqqna ɣer Tor</string>
+    <string name="settings_tor_automatic">Tawurmant, tebna ɣef wadeg</string>
+    <string name="settings_tor_bridges_title">Tiqenṭyar timagdanin</string>
+    <string name="settings_tor_my_bridges_title">Tiqenṭyar-iw</string>
+    <string name="menu">Umuɣ</string>
+    <string name="cancel">Sefsex</string>
+    <string name="add">Rnu</string>
+    <string name="share">Bḍu</string>
+    <string name="delete">Kkes</string>
+    <string name="unknown">arussin</string>
+    <string name="paste">Senṭeḍ</string>
+    <string name="remove">Kkes</string>
+    <string name="add_files_not_supported">Ibenk-inek ur yessefrak ara timerna n yifuyla</string>
+    <string name="share_empty_state">Mazal, kra ur yelli da. Rnu ifuyla akken ad tebduḍ beṭṭu.</string>
+    <string name="warning_no_files_added">Ulac ifuyla yettwafernen.</string>
+    <string name="share_state_ready">Yewjed</string>
+    <string name="share_state_error_text">Yeḍra-d wugur ur nebni fell-as.</string>
+    <string name="share_button_complete">Ɛawed bḍu</string>
+    <string name="notification_sharing_text">Senned akken ad tkecmeḍ ɣer tansa akken ad tebḍuḍ ifuyla-inek.</string>
+    <string name="starting_notification_title">Asuffeɣ n yifuyla…</string>
+    <string name="starting_notification_text">Aya yezmer ad yeṭṭef cwiṭ n wakud.</string>
+    <string name="sharing_notification_title">Akka tura, ibeṭṭu ifuyla</string>
+    <string name="notification_error_title">OnionShare yemlal-d yiwen n wugur</string>
+    <string name="share_error_snackbar_text">Ur yezmir ara ad yessenker OnionShare</string>
+    <string name="about_app_version">Lqem n usnas %s</string>
+</resources>

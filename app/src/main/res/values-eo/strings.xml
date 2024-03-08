@@ -3,7 +3,6 @@
     <string name="back">Reen</string>
     <string name="menu">Menuo</string>
     <string name="add">Aldoni</string>
-    <string name="warning_alpha">Ĉi tio estas frua alfa eldono. Oni nur devas uzi ĝin por provado. La kodo ankoraŭ ne estas aŭ finita aŭ kontrolita.</string>
     <string name="warning_no_files_added">Neniuj dosieroj elektitaj.</string>
     <string name="clear_all">Forviŝi ĉiujn</string>
     <string name="share_files_add">Aldoni dosierojn</string>
@@ -30,7 +29,7 @@
         <item quantity="other">%1$d eroj, %2$s</item>
     </plurals>
     <string name="notification_channel_name_foreground">Stato de dosiera disvastigado</string>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="cancel">Nuligi</string>
     <string name="share">Disvastigi</string>
     <string name="delete">Forigi</string>
@@ -38,6 +37,10 @@
     <string name="add_files_not_supported">Via aparato ne subtenas la aldonadon de dosieroj</string>
     <string name="unknown">nekonata</string>
     <string name="remove">Forigi</string>
-    <string name="share_empty_state">Ankoraŭ estas nenio ĉi tie.</string>
-    <string name="warning_alpha_intro">Averto:</string>
+    <string name="share_empty_state">Ankoraŭ estas nenio ĉi tie. Aldonu dosierojn por komenci disvastigi.</string>
+    <string name="notification_channel_name_error">Eraro</string>
+    <string name="notification_sharing_text">Frapeti por vidigi la adreson por disvastigi viajn dosierojn.</string>
+    <string name="starting_notification_title">Publikigante dosierojn…</string>
+    <string name="notification_channel_name_sharing">Disvastig-adreso estas havebla</string>
+    <string name="notification_sharing_title">OnionShare estas havebla</string>
 </resources>
