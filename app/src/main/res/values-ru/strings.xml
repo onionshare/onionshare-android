@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="menu">Меню</string>
     <string name="share">Поделиться</string>
     <string name="delete">Удалить</string>
@@ -42,7 +42,7 @@
     <string name="settings_tor_bridges_none">Ничего</string>
     <string name="cancel">Отменить</string>
     <string name="add">Добавить</string>
-    <string name="share_empty_state">Здесь пока ничего нет.</string>
+    <string name="share_empty_state">Здесь пока ничего нет. Добавьте файлы, чтобы начать раздачу.</string>
     <string name="add_files_not_supported">Ваше устройство не поддерживает добавление файлов</string>
     <string name="share_files_add">Добавить файлы</string>
     <string name="share_state_error_text">Произошла непредвиденная ошибка.</string>
@@ -78,4 +78,5 @@
     <string name="notification_channel_name_error">Ошибка</string>
     <string name="notification_error_text">Нажмите, чтобы увидеть подробности.</string>
     <string name="share_error_not_allowed">Общий доступ к новым файлам возможен только в том случае, если они еще не поделились.</string>
+    <string name="about_links_github">GitHub</string>
 </resources>
