@@ -37,7 +37,7 @@
     <string name="notification_channel_name_error">Грешка</string>
     <string name="about_contributor_design">%s - продуктов дизайнер</string>
     <string name="delete">Изтриване</string>
-    <string name="share_empty_state">Все още няма нищо.</string>
+    <string name="share_empty_state">Все още няма нищо. За да започнете да споделяте добавете файлове.</string>
     <string name="starting_notification_title">Публикуване на файловете…</string>
     <string name="clipboard_onion_service_copied">Адресът на OnionShare е копиран.</string>
     <string name="paste">Поставяне</string>
