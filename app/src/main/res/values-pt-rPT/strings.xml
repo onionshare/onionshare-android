@@ -77,4 +77,7 @@
     <string name="share_button_complete">Comece a partilhar novamente</string>
     <string name="share_error_not_allowed">Partilhar novos ficheiros só é possível quando ainda não está a partilhar.</string>
     <string name="about_links_title">Ligações</string>
+    <string name="about_links_homepage">Página inicial</string>
+    <string name="about_links_privacy_policy">Política de Privacidade</string>
+    <string name="about_links_github">GitHub</string>
 </resources>
