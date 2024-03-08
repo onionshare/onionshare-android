@@ -12,12 +12,12 @@
     <string name="add_files_not_supported">دستگاه شما از اضافه کردن فایل‌ها پشتیبانی نمی‌کند</string>
     <string name="unknown">نامعلوم</string>
     <string name="remove">برداشتن</string>
-    <string name="share_empty_state">هنوز چیزی اینجا نیست.</string>
+    <string name="share_empty_state">هنوز چیزی این‌جا نیست. برای آغاز هم‌رسانی پرونده‌‌ها را بیفزایید.</string>
     <string name="settings_tor_bridges_title">پل‌های سفارشی</string>
     <string name="settings_tor_bridges_none">چیزی افزوده نشده</string>
     <plurals name="settings_tor_bridges_number">
         <item quantity="one">%d پل اضافه شد</item>
-        <item quantity="other">%d پل اضافه شد</item>
+        <item quantity="other">%d پل اضافه شدند</item>
     </plurals>
     <string name="settings_tor_my_bridges_title">پل‌های من</string>
     <string name="settings_tor_bridges_intro">برای دریافت پل‌ها روی پیوند زیر بزنید. سپس یک خط پل یا بیش‌تر را در زمینهٔ زیر جایگذاری کنید.</string>
