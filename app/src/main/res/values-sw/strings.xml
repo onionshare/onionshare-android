@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alpha)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="back">Rudi nyuma</string>
     <string name="menu">Menyu</string>
     <string name="cancel">Sitisha</string>
@@ -13,7 +13,7 @@
     <string name="add_files_not_supported">Kifaa chako hakiwezi kuongeza mafaili</string>
     <string name="unknown">Haifahamiki</string>
     <string name="remove">Toa</string>
-    <string name="share_empty_state">Bado hakuna kitu.</string>
+    <string name="share_empty_state">Bado hakuna kitu.Ongeza faili ili uanze kusambaza.</string>
     <string name="warning_no_files_added">Hakuna faili lililochaguliwa.</string>
     <string name="clear_all">Futa zote</string>
     <string name="share_files_add">Ongeza faili</string>
@@ -73,4 +73,9 @@
     <string name="share_button_complete">Anza kusambaza tena</string>
     <string name="share_button_stopping">Inasitisha… Subiri mpaka iache</string>
     <string name="share_button_error">Jaribu tena</string>
+    <string name="share_error_not_allowed">Kushiriki faili mpya kunawezekana tu wakati bado haujashiriki.</string>
+    <string name="about_links_title">Viunganishi</string>
+    <string name="about_links_homepage">Ukurasa wa nyumbani</string>
+    <string name="about_links_github">Github</string>
+    <string name="about_links_privacy_policy">Sera ya Faragha</string>
 </resources>
