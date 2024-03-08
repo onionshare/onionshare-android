@@ -38,11 +38,6 @@
     <string name="settings_tor_my_bridges_title">Moje Mosty</string>
     <string name="about_contributor_android">%s, Android Engineer</string>
     <string name="notification_channel_name_foreground">Stav zdieľania súborov</string>
-    <plurals name="share_file_list_summary">
-        <item quantity="one"></item>
-        <item quantity="few"></item>
-        <item quantity="other"></item>
-    </plurals>
     <string name="share_state_sharing">Zdieľanie</string>
     <string name="share_state_stopping">Ukončovanie…</string>
     <string name="share_state_error">Chyba</string>
