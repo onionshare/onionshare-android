@@ -211,7 +211,7 @@ class TorManager(
         LOG.info("Using built-in bridges...")
         val countryCode = locationUtils.currentCountry
         val builtInBridges = circumventionProvider.getSuitableBridgeTypes(countryCode).flatMap { type ->
-            circumventionProvider.getBridges(type, countryCode, SDK_INT >= 25)
+            circumventionProvider.getBridges(type, countryCode)
         }
         try {
             useBridges(builtInBridges)
