@@ -23,6 +23,7 @@ import org.onionshare.android.DefaultClock
 import org.onionshare.android.ui.settings.SettingsManager
 import org.slf4j.LoggerFactory.getLogger
 import java.io.IOException
+import java.util.Locale.US
 import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -265,7 +266,7 @@ class TorManager(
         )
         val bridges = moat.get().let {
             // if response was empty, try it again with what we think the country should be
-            if (it.isEmpty()) moat.getWithCountry(locationUtils.currentCountry)
+            if (it.isEmpty()) moat.getWithCountry(locationUtils.currentCountry.lowercase(US))
             else it
         }
         return bridges.flatMap { bridge ->
