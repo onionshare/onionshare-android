@@ -3,7 +3,6 @@ package org.onionshare.android.tor
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.os.Build.VERSION.SDK_INT
 import androidx.core.content.ContextCompat.startForegroundService
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -211,7 +210,7 @@ class TorManager(
         LOG.info("Using built-in bridges...")
         val countryCode = locationUtils.currentCountry
         val builtInBridges = circumventionProvider.getSuitableBridgeTypes(countryCode).flatMap { type ->
-            circumventionProvider.getBridges(type, countryCode, SDK_INT >= 25)
+            circumventionProvider.getBridges(type, countryCode)
         }
         try {
             useBridges(builtInBridges)
