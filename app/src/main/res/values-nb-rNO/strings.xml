@@ -74,4 +74,8 @@
     <string name="notification_error_text">Trykk for å vise detaljer.</string>
     <string name="notification_channel_name_error">Feil</string>
     <string name="share_error_not_allowed">Deling av nye filer er kun mulig når man ikke allerede deler.</string>
+    <string name="about_links_title">Lenker</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Personvernspraksis</string>
+    <string name="about_links_homepage">Hjemmeside</string>
 </resources>
