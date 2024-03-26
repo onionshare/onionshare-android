@@ -2,7 +2,7 @@
 <resources>
     <string name="share">共有</string>
     <string name="delete">削除</string>
-    <string name="remove">取り除く</string>
+    <string name="remove">削除</string>
     <string name="share_empty_state">まだ何もありません。ファイルを追加して共有を開始しましょう。</string>
     <string name="clear_all">すべてクリア</string>
     <string name="share_files_add">ファイルを追加</string>
@@ -21,19 +21,19 @@
     <string name="starting_notification_text">これには時間がかかる場合があります。</string>
     <string name="sharing_notification_title">ファイルを共有しています</string>
     <string name="share_error_snackbar_text">OnionShareを開始できませんでした</string>
-    <string name="share_error_file_snackbar_text">%sを開けませんでした。取り除かれました。</string>
+    <string name="share_error_file_snackbar_text">%sを開けませんでした。削除されています。</string>
     <string name="share_error_snackbar_action">もう一度試す</string>
     <string name="about_title">概要</string>
     <string name="about_app_version">アプリバージョン%s</string>
     <string name="about_contributors">貢献者</string>
-    <string name="about_contributor_creator">%s、クリエイター</string>
+    <string name="about_contributor_creator">%s、作者</string>
     <string name="about_contributor_android">%s、Androidエンジニア</string>
     <string name="about_contributing_orgs">貢献している組織</string>
     <string name="settings_tor_intro">ブリッジとは、Torネットワークへの検閲されていない専用通信ルートです。自動接続を選択しても、OnionShareがブリッジで接続しようとする場合があります。</string>
     <plurals name="settings_tor_bridges_number">
         <item quantity="other">%d個のブリッジを追加しました</item>
     </plurals>
-    <string name="settings_tor_bridges_intro">以下のリンクをタップするとブリッジを入手できます。入手後、下の入力欄にブリッジの行を貼り付けてください。</string>
+    <string name="settings_tor_bridges_intro">ブリッジを入手するには、以下のリンクをタップしてください。入手後、下の入力欄にブリッジの行を貼り付けてください。</string>
     <string name="unknown">不明</string>
     <string name="menu">メニュー</string>
     <string name="cancel">キャンセル</string>

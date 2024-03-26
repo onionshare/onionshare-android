@@ -20,7 +20,7 @@
     <plurals name="share_file_list_summary">
         <item quantity="one">%1$d položka, %2$s</item>
         <item quantity="few">%1$d položek, %2$s</item>
-        <item quantity="other">%1$d item, %2$s</item>
+        <item quantity="other">%1$d položek, %2$s</item>
     </plurals>
     <string name="notification_sharing_text">Klepnutím získáte přístup k adrese pro sdílení souborů.</string>
     <string name="starting_notification_title">Publikuji soubory…</string>
@@ -61,7 +61,7 @@
     <plurals name="settings_tor_bridges_number">
         <item quantity="one">%d most přidán</item>
         <item quantity="few">%d mostů přidáno</item>
-        <item quantity="other">%d bridges</item>
+        <item quantity="other">%d mostů</item>
     </plurals>
     <string name="settings_tor_my_bridges_title">Mé mosty</string>
     <string name="notification_sharing_title">OnionShare je dostupný</string>
