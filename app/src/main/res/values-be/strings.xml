@@ -66,7 +66,7 @@
     </plurals>
     <string name="share_error_snackbar_action">Паспрабуйце яшчэ раз</string>
     <string name="about_app_version">Версія праграмы %s</string>
-    <string name="share_empty_state">Тут яшчэ нічога няма.</string>
+    <string name="share_empty_state">Тут яшчэ нічога няма. Дадайце файлы, каб пачаць абмен.</string>
     <string name="warning_no_files_added">Файлы не выбраны.</string>
     <string name="clear_all">Ачысціць усё</string>
     <string name="share_files_add">Дадаць файлы</string>

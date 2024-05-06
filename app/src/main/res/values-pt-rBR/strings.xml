@@ -3,21 +3,21 @@
     <string name="app_name">OnionShare (beta)</string>
     <string name="back">Voltar</string>
     <string name="menu">Menu</string>
-    <string name="add_files_not_supported">Seu dispositivo não suporta a adição de arquivos</string>
+    <string name="add_files_not_supported">Seu dispositivo não suporta adicionar arquivos</string>
     <string name="unknown">desconhecido</string>
     <string name="share_state_starting">Iniciando…</string>
     <string name="share_state_error_text">Ocorreu um problema inesperado.</string>
     <string name="share_button_start">Iniciar compartilhamento</string>
     <string name="share_button_starting">Iniciando… toque para cancelar</string>
     <string name="clipboard_onion_service_label">Endereço OnionShare</string>
-    <string name="clipboard_onion_service_copied">Endereço OnionShare copiado para a área de transferência.</string>
+    <string name="clipboard_onion_service_copied">Endereço OnionShare foi copiado para a área de transferência.</string>
     <string name="notification_channel_name_foreground">Status de compartilhamento de arquivos</string>
     <string name="notification_channel_name_sharing">Endereço de compartilhamento disponível</string>
     <string name="starting_notification_text">Isto pode demorar algum tempo.</string>
-    <string name="about_contributor_design">%s, Designer de produto</string>
-    <string name="about_contributing_orgs">Organizações contribuintes</string>
+    <string name="about_contributor_design">%s, Designer do Produto</string>
+    <string name="about_contributing_orgs">Organizações Contribuintes</string>
     <string name="settings_title">Configurações</string>
-    <string name="settings_tor_bridges_none">Nenhum adicionado</string>
+    <string name="settings_tor_bridges_none">Nenhuma adicionada</string>
     <string name="settings_tor_bridges_intro">Toque no link abaixo para obter pontes. Em seguida, cole uma ou mais linhas de ponte no campo abaixo.</string>
     <string name="add">Adicionar</string>
     <string name="cancel">Cancelar</string>
@@ -29,7 +29,7 @@
     <string name="delete">Excluir</string>
     <string name="warning_no_files_added">Nenhum arquivo selecionado.</string>
     <string name="clear_all">Apagar Tudo</string>
-    <string name="share_state_ready">Preparar</string>
+    <string name="share_state_ready">Pronto</string>
     <string name="share_state_sharing">Compartilhando</string>
     <string name="share_state_transfer_complete">Transferência completa</string>
     <string name="share_state_error">Erro</string>
@@ -42,21 +42,21 @@
 \n
 \nComo todo software, o OnionShare pode conter bugs ou vulnerabilidades.</string>
     <string name="share_state_stopping">Parando…</string>
-    <string name="share_button_stop">Pare de compartilhar</string>
-    <string name="sharing_notification_title">Atualmente compartilhando arquivos</string>
+    <string name="share_button_stop">Parar de Compartilhar</string>
+    <string name="sharing_notification_title">Compartilhando arquivos neste momento</string>
     <string name="about_contributor_creator">%s, Criador</string>
     <string name="settings_tor_automatic">Automático com base na localização</string>
     <string name="settings_tor_intro">Uma ponte é uma rota dedicada sem censura para a rede Tor. Mesmo que Automático seja selecionado, o OnionShare pode tentar usar pontes para se conectar.</string>
     <string name="about_title">Sobre</string>
-    <string name="about_app_version">Versão do aplicativo %s</string>
+    <string name="about_app_version">Versão do Aplicativo %s</string>
     <string name="starting_notification_title">Publicando arquivos…</string>
     <string name="share_error_file_snackbar_text">Não foi possível abrir %s. Removido.</string>
     <string name="share_error_snackbar_action">Tentar novamente</string>
     <string name="about_contributors">Contribuidores</string>
-    <string name="about_contributor_pm">%s, Gestor de projeto</string>
-    <string name="settings_tor_title">Conectando ao Tor</string>
-    <string name="settings_tor_bridges_title">Pontes personalizadas</string>
-    <string name="settings_tor_my_bridges_title">Minhas pontes</string>
+    <string name="about_contributor_pm">%s, Gestor do Projeto</string>
+    <string name="settings_tor_title">Modo de conexão ao Tor</string>
+    <string name="settings_tor_bridges_title">Pontes Personalizadas</string>
+    <string name="settings_tor_my_bridges_title">Minhas Pontes</string>
     <string name="share_button_complete">Comece a compartilhar novamente</string>
     <string name="share_onion_intro"><b>Qualquer pessoa</b> com este endereço OnionShare pode <b>baixar</b> seus arquivos usando o <b>Tor Browser</b>:</string>
     <string name="about_contributor_android">%s, Engenheiro Android</string>
@@ -72,12 +72,12 @@
     </plurals>
     <string name="notification_channel_name_error">Erro</string>
     <string name="notification_error_title">O OnionShare encontrou um problema</string>
-    <string name="notification_error_text">Toque para ver os detalhes.</string>
-    <string name="share_state_starting_text">⏱️ Isto pode demorar um pouco. Sinta-se livre para deixar o aplicativo. Notificaremos quando estiver pronto.</string>
+    <string name="notification_error_text">Toque para ver detalhes.</string>
+    <string name="share_state_starting_text">⏱️ Isto pode demorar um pouco. Sinta-se livre para sair do aplicativo. Notificaremos você quando estiver pronto.</string>
     <string name="share_state_error_tor_text">Não foi possível conectar-se ao Tor. Talvez você precise adicionar pontes personalizadas nas configurações.</string>
     <string name="about_links_title">Links</string>
     <string name="about_links_homepage">Página inicial</string>
     <string name="about_links_privacy_policy">Política de Privacidade</string>
     <string name="about_links_github">GitHub</string>
-    <string name="share_error_not_allowed">Compartilhar novos arquivos só é possível quando não está compartilhando.</string>
+    <string name="share_error_not_allowed">Só é possível compartilhar arquivos novos com o compartilhamento desligado.</string>
 </resources>
