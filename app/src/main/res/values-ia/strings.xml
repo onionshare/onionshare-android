@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="share">Compartir</string>
+    <string name="delete">Deler</string>
+    <string name="menu">Menu</string>
+    <string name="cancel">Cancellar</string>
+    <string name="remove">Remover</string>
+    <string name="add">Adder</string>
+    <string name="paste">Collar</string>
+    <string name="add_files_not_supported">Tu apparato non supporta adder files</string>
+    <string name="unknown">incognite</string>
+    <string name="warning_no_files_added">Necun files seligite.</string>
+    <string name="clear_all">Rader toto</string>
+    <string name="share_files_add">Adder files</string>
+    <string name="share_state_ready">Preste</string>
+    <string name="share_state_starting">Initiante…</string>
+    <string name="share_state_stopping">Stoppante…</string>
+    <string name="share_state_error">Error</string>
+    <string name="share_button_start">Comenciar a compartir</string>
+    <string name="clipboard_onion_service_label">Adresse de OnionShare</string>
+    <string name="notification_channel_name_error">Error</string>
+    <string name="notification_sharing_title">OnionShare es disponibile</string>
+</resources>

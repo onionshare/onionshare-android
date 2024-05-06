@@ -6,7 +6,7 @@
     <string name="paste">Líma</string>
     <string name="unknown">óþekkt</string>
     <string name="remove">Fjarlægja</string>
-    <string name="share_empty_state">Ekkert hér ennþá.</string>
+    <string name="share_empty_state">Ekkert hér ennþá. Bættu við skrám til að hefja deilingu.</string>
     <string name="share_state_error">Villa</string>
     <string name="share_state_error_text">Upp kom óvænt vandamál.</string>
     <string name="share_button_start">Hefja deilingu</string>

@@ -17,7 +17,7 @@
     <string name="share_state_ready">Έτοιμο</string>
     <string name="share_state_starting">Έναρξη…</string>
     <string name="share_state_sharing">Κοινή χρήση</string>
-    <string name="share_empty_state">Τίποτα εδώ ακόμα.</string>
+    <string name="share_empty_state">Τίποτα εδώ ακόμα. Προσθέστε αρχεία για διαμοιρασμό.</string>
     <string name="share_state_transfer_complete">Η μεταβίβαση ολοκληρώθηκε</string>
     <string name="share_button_start">Έναρξη διαμοιρασμού</string>
     <string name="share_button_stop">Τερματισμός διαμοιρασμού</string>
