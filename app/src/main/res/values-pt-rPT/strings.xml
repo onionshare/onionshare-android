@@ -23,7 +23,7 @@
     <string name="share_state_transfer_complete">Transferência completa</string>
     <string name="share_state_error">Erro</string>
     <string name="share_state_error_text">Ocorreu um problema inesperado.</string>
-    <string name="share_button_start">Começar Partilhar</string>
+    <string name="share_button_start">Começe a Partilhar</string>
     <string name="share_button_starting">A iniciar… toque para cancelar</string>
     <string name="share_button_stop">Parar Partilha</string>
     <string name="share_button_stopping">A parar… aguarde até parar</string>
