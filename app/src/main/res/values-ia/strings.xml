@@ -25,4 +25,5 @@
     <string name="clipboard_onion_service_copied">Adresse de OnionShare copiate al area de transferentia.</string>
     <string name="starting_notification_title">Files in publication…</string>
     <string name="share_empty_state">Nihil hic ancora. Adde files pro comenciar a compartir.</string>
+    <string name="back">Retro</string>
 </resources>
