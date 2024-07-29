@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OnionShare (alfa)</string>
+    <string name="app_name">OnionShare (béite)</string>
     <string name="back">Ar Ais</string>
     <string name="menu">Roghchlár</string>
     <string name="cancel">Cealaigh</string>
@@ -11,7 +11,7 @@
     <string name="add_files_not_supported">Ní féidir comhaid a chur leis an ngléas seo</string>
     <string name="unknown">anaithnid</string>
     <string name="remove">Bain</string>
-    <string name="share_empty_state">Níl faic anseo fós.</string>
+    <string name="share_empty_state">Ní dhéanfaidh aon ní anseo fós. Cuir comhaid leis chun tús a chur le roinnt.</string>
     <string name="warning_no_files_added">Níl aon chomhad roghnaithe.</string>
     <string name="clear_all">Glan Uile</string>
     <string name="share_files_add">Cuir comhaid leis</string>
@@ -74,4 +74,14 @@
     <string name="settings_tor_bridges_title">Droichid Saincheaptha</string>
     <string name="settings_tor_bridges_none">Gan droichead</string>
     <string name="settings_tor_my_bridges_title">Mo Chuid Droichead</string>
+    <string name="notification_channel_name_error">Earráid</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Beartas Príobháideachais</string>
+    <string name="share_state_starting_text">⏱️ D’fhéadfadh go dtógfadh sé seo tamall. Thig leat an app a fhágáil. Cuirfimid in iúl duit nuair a bheidh sé réidh.</string>
+    <string name="notification_error_title">Tháinig OnionShare ar cheist</string>
+    <string name="notification_error_text">Tapáil chun sonraí a fheiceáil.</string>
+    <string name="share_error_not_allowed">Ní féidir comhaid nua a roinnt ach amháin nuair nach bhfuiltear á roinnt cheana féin.</string>
+    <string name="share_state_error_tor_text">Níorbh fhéidir ceangal le Tor. Seans go mbeidh ort droichid shaincheaptha a chur leis sna socruithe.</string>
+    <string name="about_links_homepage">Leathanach baile</string>
+    <string name="about_links_title">Naisc</string>
 </resources>
