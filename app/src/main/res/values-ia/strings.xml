@@ -20,4 +20,9 @@
     <string name="clipboard_onion_service_label">Adresse de OnionShare</string>
     <string name="notification_channel_name_error">Error</string>
     <string name="notification_sharing_title">OnionShare es disponibile</string>
+    <string name="share_state_transfer_complete">Transferentia complete</string>
+    <string name="share_button_error">Tenta de novo</string>
+    <string name="clipboard_onion_service_copied">Adresse de OnionShare copiate al area de transferentia.</string>
+    <string name="starting_notification_title">Files in publication…</string>
+    <string name="share_empty_state">Nihil hic ancora. Adde files pro comenciar a compartir.</string>
 </resources>
