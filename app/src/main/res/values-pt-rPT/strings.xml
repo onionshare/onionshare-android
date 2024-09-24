@@ -17,7 +17,7 @@
     <string name="warning_no_files_added">Nenhum ficheiro selecionado.</string>
     <string name="clear_all">Limpar Tudo</string>
     <string name="share_files_add">Adicionar ficheiros</string>
-    <string name="share_state_ready">Preparar</string>
+    <string name="share_state_ready">Pronto</string>
     <string name="share_state_starting">A iniciar…</string>
     <string name="share_state_sharing">A partilhar</string>
     <string name="share_state_transfer_complete">Transferência completa</string>
