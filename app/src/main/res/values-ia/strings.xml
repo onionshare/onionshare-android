@@ -26,4 +26,28 @@
     <string name="starting_notification_title">Files in publication…</string>
     <string name="share_empty_state">Nihil hic ancora. Adde files pro comenciar a compartir.</string>
     <string name="back">Retro</string>
+    <string name="share_error_file_snackbar_text">Non poteva aperir %s. Removite.</string>
+    <string name="share_error_snackbar_action">Tentar de novo</string>
+    <string name="app_name">OnionShare (beta)</string>
+    <string name="notification_error_text">Tocca pro vider le detalios.</string>
+    <string name="share_error_snackbar_text">Non poteva initiar OnionShare</string>
+    <string name="about_title">A proposito de</string>
+    <string name="about_app_version">Version del application %s</string>
+    <string name="about_contributors">Contributores</string>
+    <string name="about_contributor_creator">%s, Creator</string>
+    <string name="about_contributor_pm">%s, Gestor de projecto</string>
+    <string name="about_links_title">Ligamines</string>
+    <string name="about_links_homepage">Pagina principal</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_privacy_policy">Politica de confidentialitate</string>
+    <string name="settings_title">Parametros</string>
+    <string name="settings_tor_title">Connection a Tor</string>
+    <string name="settings_tor_automatic">Automatic basate in le location</string>
+    <string name="settings_tor_bridges_title">Pontes personalisate</string>
+    <string name="settings_tor_bridges_none">Necun addite</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%d ponte addite</item>
+        <item quantity="other">%d pontes addite</item>
+    </plurals>
+    <string name="settings_tor_my_bridges_title">Mi pontes</string>
 </resources>
