@@ -42,4 +42,5 @@
     <string name="notification_sharing_title">OnionShare 사용 가능</string>
     <string name="notification_sharing_text">파일을 공유할 주소에 접근하려면 탭하세요.</string>
     <string name="starting_notification_title">파일 출판 중…</string>
+    <string name="starting_notification_text">시간이 좀 걸릴 수 있습니다…</string>
 </resources>
