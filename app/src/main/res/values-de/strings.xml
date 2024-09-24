@@ -38,7 +38,7 @@
     <string name="about_contributor_pm">%s, Projektmanager</string>
     <string name="about_contributor_design">%s, Produktdesigner</string>
     <string name="about_contributing_orgs">Mitwirkende Organisationen</string>
-    <string name="settings_tor_intro">Eine Brücke ist eine spezielle unzensierte Route ins Tor-Netzwerk. Auch wenn Automatisch ausgewählt ist, kann OnionShare versuchen, sich über Brücken zu verbinden.</string>
+    <string name="settings_tor_intro">Eine Brücke ist eine spezielle unzensierte Route ins Tor-Netzwerk. Auch wenn „Automatisch“ ausgewählt ist, kann OnionShare versuchen, sich über Brücken zu verbinden.</string>
     <string name="settings_tor_bridges_title">Benutzerdefinierte Brücken</string>
     <string name="settings_tor_bridges_none">Keine hinzugefügt</string>
     <plurals name="settings_tor_bridges_number">
@@ -57,7 +57,7 @@
     <string name="about_text">OnionShare wurde von Micah Lee, et al. entwickelt und ist Open Source, veröffentlicht unter GPLv3.
 \n
 \nWie jede Software kann auch OnionShare Fehler oder Schwachstellen enthalten.</string>
-    <string name="share_onion_intro"><b>Jeder</b> mit dieser OnionShare-Adresse kann deine Dateien mit <b>Tor Browser</b> <b>herunterladen</b>:</string>
+    <string name="share_onion_intro"><b>Jeder</b> mit dieser OnionShare-Adresse kann deine Dateien mit dem <b>Tor-Browser</b> <b>herunterladen</b>:</string>
     <string name="share_button_error">Erneut versuchen</string>
     <string name="clipboard_onion_service_copied">OnionShare-Adresse in die Zwischenablage kopiert.</string>
     <string name="share_state_error_text">Ein unerwartetes Problem ist aufgetreten.</string>
@@ -65,11 +65,11 @@
     <string name="notification_channel_name_sharing">Adresse zum Teilen verfügbar</string>
     <string name="notification_sharing_title">OnionShare verfügbar</string>
     <string name="settings_title">Einstellungen</string>
-    <string name="settings_tor_title">Verbindung zu Tor</string>
+    <string name="settings_tor_title">Verbindung mit Tor</string>
     <string name="settings_tor_automatic">Automatisch je nach Standort</string>
     <string name="clipboard_onion_service_label">OnionShare-Adresse</string>
     <string name="share_state_starting_text">⏱️ Das kann eine Weile dauern. Du kannst die App gerne verlassen. Wir werden dich benachrichtigen, wenn es soweit ist.</string>
-    <string name="share_state_error_tor_text">Es konnte keine Verbindung zu Tor hergestellt werden. Möglicherweise musst du benutzerdefinierte Brücken in den Einstellungen hinzufügen.</string>
+    <string name="share_state_error_tor_text">Es konnte keine Verbindung mit Tor hergestellt werden. Möglicherweise musst du benutzerdefinierte Brücken in den Einstellungen hinzufügen.</string>
     <string name="notification_channel_name_error">Fehler</string>
     <string name="notification_error_title">OnionShare ist auf ein Problem gestoßen</string>
     <string name="notification_error_text">Antippen, um Details anzuzeigen.</string>
