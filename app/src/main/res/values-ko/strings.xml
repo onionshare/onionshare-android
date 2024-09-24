@@ -42,5 +42,38 @@
     <string name="notification_sharing_title">OnionShare 사용 가능</string>
     <string name="notification_sharing_text">파일을 공유할 주소에 접근하려면 탭하세요.</string>
     <string name="starting_notification_title">파일 출판 중…</string>
-    <string name="starting_notification_text">시간이 좀 걸릴 수 있습니다…</string>
+    <string name="starting_notification_text">시간이 걸릴 수도 있어요.</string>
+    <string name="about_app_version">앱 버전 %s</string>
+    <string name="about_text">OnionShare는 Micah Lee 등이 개발했으며 오픈 소스이므로 GPLv3 하에 배포되고 있어요.
+\n
+\n다른 소프트웨어와 마찬가지로 OnionShare에는 버그나 취약점이 있을 수 있어요.</string>
+    <string name="sharing_notification_title">현재 공유 중인 파일</string>
+    <string name="notification_error_title">OnionShare 문제 발생</string>
+    <string name="notification_error_text">탭하여 세부 정보 보기.</string>
+    <string name="share_error_snackbar_text">OnionShare 시작 불가</string>
+    <string name="share_error_file_snackbar_text">%s을 열지 못함. 제거됨.</string>
+    <string name="share_error_snackbar_action">다시 시도</string>
+    <string name="share_error_not_allowed">새 파일 공유는 이미 공유하지 않을 때만 가능해요.</string>
+    <string name="about_title">정보</string>
+    <string name="about_contributors">기여자</string>
+    <string name="about_contributor_creator">%s, 개발자</string>
+    <string name="about_contributor_android">%s, 안드로이드 엔지니어</string>
+    <string name="about_contributor_pm">%s, 프로젝트 관리자</string>
+    <string name="about_contributor_design">%s, 제품 디자이너</string>
+    <string name="about_contributing_orgs">기여 단체</string>
+    <string name="about_links_title">링크</string>
+    <string name="about_links_github">GitHub</string>
+    <string name="about_links_homepage">홈페이지</string>
+    <string name="about_links_privacy_policy">개인정보처리방침</string>
+    <string name="settings_title">설정</string>
+    <string name="settings_tor_title">Tor에 접속하기</string>
+    <string name="settings_tor_automatic">위치 기반 자동</string>
+    <string name="settings_tor_intro">브리지는 Tor 네트워크로의 검열되지 않은 전용 경로예요. \'자동\'을 선택하더라도 OnionShare가 브리지를 사용하여 접속을 시도할 수 있어요.</string>
+    <string name="settings_tor_bridges_title">커스텀 브리지</string>
+    <string name="settings_tor_bridges_none">아무것도 추가되지 않음</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="other">%d개 브리지 추가됨</item>
+    </plurals>
+    <string name="settings_tor_bridges_intro">아래 링크를 탭하여 브리지를 얻으세요. 그 다음에 하나 이상의 브리지 라인을 아래 필드에 붙여넣으세요.</string>
+    <string name="settings_tor_my_bridges_title">내 브리지</string>
 </resources>
