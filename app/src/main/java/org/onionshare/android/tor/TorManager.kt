@@ -261,8 +261,8 @@ class TorManager(
 
     private fun getBridgesFromMoat(): List<String> {
         val moat = moatApiFactory.createMoatApi(
-            obfs4Executable = tor.obfs4ExecutableFile,
-            obfs4Dir = app.getDir("state", MODE_PRIVATE)
+            lyrebirdExecutable = tor.lyrebirdExecutableFile,
+            lyrebirdDir = app.getDir("state", MODE_PRIVATE)
         )
         val bridges = moat.get().let {
             // if response was empty, try it again with what we think the country should be
