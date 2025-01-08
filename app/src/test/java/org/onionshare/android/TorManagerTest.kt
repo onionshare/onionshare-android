@@ -36,7 +36,7 @@ class TorManagerTest {
 
     private val torManager: TorManager
 
-    private val obfs4ExecutableFile = File("/usr/bin/echo")
+    private val lyrebirdExecutableFile = File("/usr/bin/echo")
     private val stateDir = File("/tmp")
     private val moatApi: MoatApi = mockk()
 
@@ -106,9 +106,9 @@ class TorManagerTest {
         every { tor.enableNetwork(true) } just Runs
 
         // moat doesn't return bridges
-        every { tor.obfs4ExecutableFile } returns obfs4ExecutableFile
+        every { tor.lyrebirdExecutableFile } returns lyrebirdExecutableFile
         every { app.getDir("state", 0) } returns stateDir
-        every { moatApiFactory.createMoatApi(obfs4ExecutableFile, stateDir) } returns moatApi
+        every { moatApiFactory.createMoatApi(lyrebirdExecutableFile, stateDir) } returns moatApi
         every { moatApi.get() } returns emptyList()
         every { locationUtils.currentCountry } returns "br"
         every { moatApi.getWithCountry("br") } returns emptyList()

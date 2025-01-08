@@ -4,14 +4,14 @@ import org.briarproject.moat.MoatApi
 import java.io.File
 
 fun interface MoatApiFactory {
-    fun createMoatApi(obfs4Executable: File, obfs4Dir: File): MoatApi
+    fun createMoatApi(lyrebirdExecutable: File, lyrebirdDir: File): MoatApi
 }
 
 object DefaultMoatApiFactory : MoatApiFactory {
-    private const val MOAT_URL = "https://onion.azureedge.net/"
-    private const val MOAT_FRONT = "ajax.aspnetcdn.com"
+    private const val MOAT_URL = "https://1723079976.rsc.cdn77.org/"
+    private const val MOAT_FRONT = "www.phpmyadmin.net"
 
-    override fun createMoatApi(obfs4Executable: File, obfs4Dir: File): MoatApi {
-        return MoatApi(obfs4Executable, obfs4Dir, MOAT_URL, MOAT_FRONT)
+    override fun createMoatApi(lyrebirdExecutable: File, lyrebirdDir: File): MoatApi {
+        return MoatApi(lyrebirdExecutable, lyrebirdDir, MOAT_URL, MOAT_FRONT)
     }
 }
