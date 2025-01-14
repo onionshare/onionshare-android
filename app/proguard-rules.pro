@@ -31,8 +31,10 @@
 -keep public class ch.qos.logback.** { *; }
 
 # Keep Netty classes that are loaded via reflection
--keep class io.netty.util.ReferenceCountUtil { *; }
+-keep class io.netty.channel.** { *; }
 -keep class io.netty.buffer.WrappedByteBuf { *; }
+-keep class io.netty.util.ReferenceCountUtil { *; }
+-keep class io.netty.handler.codec.MessageToMessageEncoder { *; }
 
 -dontwarn com.fasterxml.jackson.databind.ext.Java7SupportImpl
 -dontwarn io.netty.internal.tcnative.*
