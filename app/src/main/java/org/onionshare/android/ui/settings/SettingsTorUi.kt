@@ -14,19 +14,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentPaste
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -65,10 +66,12 @@ fun SettingsTorUi(
 ) {
     val context = LocalContext.current
     val settingsManager = viewModel.settingsManager
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
-        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             AboutActionBar(navController, R.string.settings_tor_title)
         }
@@ -82,7 +85,7 @@ fun SettingsTorUi(
             onBridgesAdded = {
                 val numBridgesAdded = settingsManager.addCustomBridges(it)
                 coroutineScope.launch {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = getBridgeNumberString(context, numBridgesAdded),
                         duration = SnackbarDuration.Short,
                     )
@@ -104,14 +107,15 @@ fun SettingsTorUiContent(
     modifier: Modifier = Modifier,
 ) {
     val scrollableState = rememberScrollState()
-    Column(modifier = modifier.verticalScroll(scrollableState)
+    Column(
+        modifier = modifier.verticalScroll(scrollableState)
     ) {
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 8.dp),
             text = stringResource(R.string.settings_tor_intro),
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.bodySmall,
         )
         RadioPreference(
             title = stringResource(R.string.settings_tor_automatic),
@@ -150,7 +154,7 @@ fun CustomBridgesUi(
         modifier = Modifier
             .padding(horizontal = 16.dp),
         text = stringResource(R.string.settings_tor_bridges_intro),
-        style = MaterialTheme.typography.body2,
+        style = MaterialTheme.typography.bodySmall,
     )
     Row(
         modifier = Modifier
@@ -171,7 +175,7 @@ fun CustomBridgesUi(
                 .padding(top = 8.dp, bottom = 8.dp, end = 8.dp),
             text = BRIDGE_DB,
             fontFamily = FontFamily.Monospace,
-            color = MaterialTheme.colors.OnionBlue,
+            color = MaterialTheme.colorScheme.OnionBlue,
         )
         ShareButton(BRIDGE_DB)
     }
@@ -201,7 +205,7 @@ fun CustomBridgesUi(
             Icon(
                 imageVector = Icons.Filled.ContentPaste,
                 contentDescription = stringResource(R.string.paste),
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.65f),
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.65f),
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -251,11 +255,11 @@ fun RadioPreference(
         Column(Modifier.padding(start = 8.dp)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
             )
             Text(
                 text = summary,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.alpha(0.65f)
             )
         }
@@ -273,7 +277,7 @@ fun getBridgeNumberString(context: Context, num: Int): String {
 @Preview(showBackground = true)
 @Composable
 fun SettingsTorPreview() = OnionshareTheme {
-    Surface(color = MaterialTheme.colors.background) {
+    Surface(color = MaterialTheme.colorScheme.background) {
         SettingsTorUiContent(
             country = "United States",
             automaticBridges = false,

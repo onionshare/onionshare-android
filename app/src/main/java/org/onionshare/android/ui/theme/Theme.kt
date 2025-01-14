@@ -1,34 +1,34 @@
 package org.onionshare.android.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette = darkColorScheme(
     primary = PurpleOnionLight,
-    primaryVariant = PurpleOnionLight,
     secondary = PurpleOnionVariant,
     background = Color.Black,
     onPrimary = Color.White,
     error = Error,
 )
-private val LightColorPalette = lightColors(
+private val LightColorPalette = lightColorScheme(
     primary = PurpleOnionDark,
-    primaryVariant = PurpleOnionDark,
     secondary = BlueLight,
     onPrimary = Color.White,
     error = Error,
 )
 
-val Colors.OnionBlue: Color get() = if (isLight) BlueLight else BlueDark
-val Colors.OnionRed: Color get() = if (isLight) RedLight else RedDark
-val Colors.OnionAccent: Color get() = if (isLight) PurpleOnionDark else onBackground
-val Colors.topBar: Color get() = if (isLight) primary else Color.Black
-val Colors.Fab: Color get() = if (isLight) surface else Grey
+val ColorScheme.OnionBlue: Color get() = if (isLight) BlueLight else BlueDark
+val ColorScheme.OnionRed: Color get() = if (isLight) RedLight else RedDark
+val ColorScheme.OnionAccent: Color get() = if (isLight) PurpleOnionDark else onBackground
+val ColorScheme.topBar: Color get() = if (isLight) primary else Color.Black
+val ColorScheme.Fab: Color get() = if (isLight) surface else Grey
+
+val ColorScheme.isLight: Boolean get() = primary == PurpleOnionDark
 
 @Composable
 fun OnionshareTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
@@ -37,9 +37,8 @@ fun OnionshareTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compos
     } else {
         LightColorPalette
     }
-
     MaterialTheme(
-        colors = colors,
+        colorScheme = colors,
         typography = Typography,
         shapes = Shapes,
         content = content,

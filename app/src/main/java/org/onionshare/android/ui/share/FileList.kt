@@ -11,22 +11,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Slideshow
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -39,6 +38,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.onionshare.android.R
@@ -78,7 +78,7 @@ fun FileList(
                     TextButton(onClick = onRemoveAll, Modifier.padding(end = 8.dp)) {
                         Text(
                             text = stringResource(R.string.clear_all),
-                            color = MaterialTheme.colors.OnionAccent,
+                            color = MaterialTheme.colorScheme.OnionAccent,
                         )
                     }
                 }
@@ -93,7 +93,7 @@ fun FileList(
 @Composable
 fun FileRow(file: SendFile, editAllowed: Boolean, onFileRemove: (SendFile) -> Unit) {
     Row(modifier = Modifier.padding(8.dp)) {
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant) {
             Icon(
                 imageVector = getIconFromMimeType(file.mimeType),
                 contentDescription = "test",
@@ -109,16 +109,15 @@ fun FileRow(file: SendFile, editAllowed: Boolean, onFileRemove: (SendFile) -> Un
         ) {
             Text(
                 text = file.basename,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(all = 2.dp),
             )
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(
-                    text = file.size_human,
-                    style = MaterialTheme.typography.body2,
-                    modifier = Modifier.padding(all = 2.dp)
-                )
-            }
+            Text(
+                text = file.size_human,
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(all = 2.dp)
+            )
         }
         if (editAllowed) {
             var expanded by remember { mutableStateOf(false) }
@@ -140,10 +139,9 @@ fun FileRow(file: SendFile, editAllowed: Boolean, onFileRemove: (SendFile) -> Un
                         onClick = {
                             onFileRemove(file)
                             expanded = false
-                        }
-                    ) {
-                        Text(stringResource(R.string.remove))
-                    }
+                        },
+                        text = { Text(stringResource(R.string.remove)) }
+                    )
                 }
             }
         }
@@ -162,7 +160,7 @@ private fun getIconFromMimeType(mimeType: String?): ImageVector = when {
 @Composable
 fun FileRowPreview(editAllowed: Boolean = true) {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             FileRow(
                 SendFile("foo", "1 KiB", 1, Uri.parse("/foo"), null),
                 editAllowed,

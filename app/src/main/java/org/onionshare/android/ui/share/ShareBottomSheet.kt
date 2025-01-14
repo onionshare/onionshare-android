@@ -4,40 +4,40 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProgressIndicatorDefaults
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Circle
-import androidx.compose.material.icons.filled.DragHandle
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily.Companion.Monospace
 import androidx.compose.ui.text.font.FontStyle.Companion.Italic
@@ -106,21 +106,13 @@ private fun getBottomSheetUi(state: ShareUiState) = when (state) {
 @Composable
 fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
     val sheetUi = getBottomSheetUi(state)
-    Column {
-        if (state.collapsableSheet) Image(
-            imageVector = Icons.Filled.DragHandle,
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(Color.Gray),
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(24.dp, 14.dp)
-                .padding(top = 4.dp)
-                .align(CenterHorizontally),
-        )
-        val topPadding = if (state.collapsableSheet) 0.dp else 16.dp
+    val bottomPadding = with(LocalDensity.current) {
+        WindowInsets.safeDrawing.getBottom(this).toDp()
+    }
+    Column(modifier = Modifier.padding(bottom = bottomPadding)) {
         Row(
             verticalAlignment = CenterVertically,
-            modifier = Modifier.padding(start = 16.dp, top = topPadding, bottom = 16.dp),
+            modifier = Modifier.padding(16.dp),
         ) {
             Icon(
                 imageVector = sheetUi.indicatorIcon,
@@ -130,38 +122,41 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
             )
             Text(
                 text = stringResource(sheetUi.stateText),
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(start = 16.dp),
             )
         }
         ProgressDivider(state)
-        val colorControlNormal = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+        val colorControlNormal = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
         @Suppress("CascadeIf") // not in the mood for 'when' right now
         if (state is ShareUiState.Starting) {
             Text(
                 text = stringResource(R.string.share_state_starting_text),
                 modifier = Modifier.padding(16.dp),
             )
-            Divider(thickness = 2.dp)
+            HorizontalDivider(thickness = 2.dp)
         } else if (state is ShareUiState.Sharing) {
             StyledLegacyText(
                 id = R.string.share_onion_intro,
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp),
             )
-            Row(modifier = Modifier.padding(16.dp), verticalAlignment = CenterVertically) {
-                SelectionContainer(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
-                ) {
-                    Text(state.onionAddress, fontFamily = Monospace)
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = CenterVertically,
+                horizontalArrangement = spacedBy(8.dp),
+            ) {
+                // Box is workaround for https://issuetracker.google.com/issues/372053402
+                Box(modifier = Modifier.weight(1f, fill = false)) {
+                    SelectionContainer {
+                        Text(state.onionAddress, fontFamily = Monospace)
+                    }
                 }
                 CopyButton(
                     toCopy = state.onionAddress,
                     clipBoardLabel = stringResource(R.string.clipboard_onion_service_label),
                 )
             }
-            Divider(thickness = 2.dp)
+            HorizontalDivider(thickness = 2.dp)
         } else if (state is ShareUiState.ErrorStarting) {
             val textRes =
                 if (state.torFailedToConnect) R.string.share_state_error_tor_text else R.string.share_state_error_text
@@ -173,7 +168,7 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 },
                 modifier = Modifier.padding(16.dp),
             )
-            Divider(thickness = 2.dp)
+            HorizontalDivider(thickness = 2.dp)
         }
         var buttonEnabled by remember(state) { mutableStateOf(state !is ShareUiState.Stopping) }
         Button(
@@ -182,14 +177,16 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
                 onSheetButtonClicked()
             },
             colors = if (state is ShareUiState.Sharing) {
-                ButtonDefaults.buttonColors(contentColor = MaterialTheme.colors.OnionRed,
-                    backgroundColor = MaterialTheme.colors.surface)
+                ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.OnionRed,
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
             } else ButtonDefaults.buttonColors(),
             border = if (state is ShareUiState.Sharing) {
                 BorderStroke(1.dp, colorControlNormal)
             } else null,
             shape = RoundedCornerShape(32.dp),
-            elevation = ButtonDefaults.elevation(
+            elevation = ButtonDefaults.buttonElevation(
                 defaultElevation = 0.dp,
             ),
             enabled = buttonEnabled,
@@ -215,12 +212,16 @@ fun ProgressDivider(state: ShareUiState) {
             animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
         )
         LinearProgressIndicator(
-            progress = animatedProgress,
+            progress = { animatedProgress },
+            color = MaterialTheme.colorScheme.primary,
+            gapSize = 0.dp,
+            drawStopIndicator = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .height(2.dp))
+                .height(2.dp)
+        )
     } else {
-        Divider(thickness = 2.dp)
+        HorizontalDivider(thickness = 2.dp)
     }
 }
 
@@ -228,7 +229,7 @@ fun ProgressDivider(state: ShareUiState) {
 @Composable
 fun ShareBottomSheetReadyPreview() {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(
                 state = ShareUiState.AddingFiles,
                 onSheetButtonClicked = {},
@@ -241,7 +242,7 @@ fun ShareBottomSheetReadyPreview() {
 @Composable
 fun ShareBottomSheetStartingPreview() {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(
                 state = ShareUiState.Starting(25, 50),
                 onSheetButtonClicked = {},
@@ -254,7 +255,7 @@ fun ShareBottomSheetStartingPreview() {
 @Composable
 fun ShareBottomSheetSharingPreview() {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(
                 state = ShareUiState.Sharing(
                     "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/eW91IGFyZSBhIG5lcmQ7KQ",
@@ -275,7 +276,7 @@ fun ShareBottomSheetSharingPreviewNight() {
 @Composable
 fun ShareBottomSheetCompletePreview() {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(
                 state = ShareUiState.Complete,
                 onSheetButtonClicked = {},
@@ -288,7 +289,7 @@ fun ShareBottomSheetCompletePreview() {
 @Composable
 fun ShareBottomSheetStoppingPreview() {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(
                 state = ShareUiState.Stopping,
                 onSheetButtonClicked = {},
@@ -301,7 +302,7 @@ fun ShareBottomSheetStoppingPreview() {
 @Composable
 fun ShareBottomSheetErrorPreview() {
     OnionshareTheme {
-        Surface(color = MaterialTheme.colors.background) {
+        Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(
                 state = ShareUiState.ErrorStarting(Random.nextBoolean()),
                 onSheetButtonClicked = {},
