@@ -32,8 +32,8 @@ class MainActivity : ComponentActivity() {
         onNewIntent(intent)
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        when (intent?.action) {
+    override fun onNewIntent(intent: Intent) {
+        when (intent.action) {
             Intent.ACTION_SEND -> {
                 handleSend(intent.getParcelableExtra<Parcelable>(EXTRA_STREAM) as? Uri)
             }

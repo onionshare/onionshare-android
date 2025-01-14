@@ -64,7 +64,6 @@ private fun isEmptyState(shareState: ShareUiState, filesState: FilesState): Bool
 }
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
 fun ShareUi(
     navController: NavHostController,
     shareState: ShareUiState,
@@ -140,7 +139,6 @@ fun ShareUi(
 }
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
 private fun getOffsetInDp(bottomSheetState: BottomSheetState): Dp {
     if (!bottomSheetState.isExpanded) return 0.dp
     val offset = try {
@@ -193,7 +191,6 @@ fun ActionBar(
 }
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
 fun Fab(scaffoldState: BottomSheetState, onFabClicked: () -> Unit) {
     val color = if (scaffoldState.isCollapsed) {
         MaterialTheme.colors.primary

@@ -22,8 +22,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Slideshow
@@ -151,11 +151,11 @@ fun FileRow(file: SendFile, editAllowed: Boolean, onFileRemove: (SendFile) -> Un
 }
 
 private fun getIconFromMimeType(mimeType: String?): ImageVector = when {
-    mimeType == null -> Icons.Filled.InsertDriveFile
+    mimeType == null -> Icons.AutoMirrored.Filled.InsertDriveFile
     mimeType.startsWith("image") -> Icons.Filled.Image
     mimeType.startsWith("video") -> Icons.Filled.Slideshow
     mimeType.startsWith("audio") -> Icons.Filled.MusicNote
-    else -> Icons.Filled.InsertDriveFile
+    else -> Icons.AutoMirrored.Filled.InsertDriveFile
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
