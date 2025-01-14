@@ -20,7 +20,7 @@ class ShareService : Service() {
     internal lateinit var nm: OnionNotificationManager
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        LOG.debug("onStartCommand $intent")
+        LOG.debug("onStartCommand {}", intent)
         startForeground(NOTIFICATION_ID_FOREGROUND, nm.getForegroundNotification())
         super.onStartCommand(intent, flags, startId)
         return START_NOT_STICKY
