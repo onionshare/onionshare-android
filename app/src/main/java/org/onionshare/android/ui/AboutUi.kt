@@ -9,15 +9,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +52,7 @@ fun AboutUi(navController: NavHostController) {
             AboutHeader(modifier = Modifier.padding(top = 32.dp))
             Text(
                 text = stringResource(R.string.about_text),
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(top = 24.dp),
             )
             TextList(
@@ -75,28 +77,28 @@ fun AboutUi(navController: NavHostController) {
                 Text(
                     text = stringResource(R.string.about_links_title),
                     fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
                 Text(
                     text = stringResource(R.string.about_links_homepage),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.secondary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .clickable { uriHandler.openUri("https://onionshare.org") }
                 )
                 Text(
                     text = stringResource(R.string.about_links_github),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.secondary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .clickable { uriHandler.openUri("https://github.com/onionshare") }
                 )
                 Text(
                     text = stringResource(R.string.about_links_privacy_policy),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.secondary,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier
                         .padding(top = 4.dp, bottom = 8.dp)
                         .clickable { uriHandler.openUri("https://onionshare.org/privacy") }
@@ -107,11 +109,17 @@ fun AboutUi(navController: NavHostController) {
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun AboutActionBar(
     navController: NavHostController,
     @StringRes res: Int,
 ) = TopAppBar(
-    backgroundColor = MaterialTheme.colors.topBar,
+    colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.topBar,
+        navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+        titleContentColor = MaterialTheme.colorScheme.onPrimary,
+        actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+    ),
     navigationIcon = {
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(
@@ -135,7 +143,7 @@ fun AboutHeader(modifier: Modifier = Modifier) {
         )
         Text(
             text = stringResource(R.string.about_app_version, VERSION_NAME),
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .padding(top = 16.dp)
                 .alpha(0.75f)
@@ -149,12 +157,12 @@ fun TextList(headline: String, items: List<String>) {
         Text(
             text = headline,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
         )
         items.iterator().forEach { text ->
             Text(
                 text = text,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
@@ -164,7 +172,7 @@ fun TextList(headline: String, items: List<String>) {
 @Preview(showBackground = true)
 @Composable
 fun AboutPreview() = OnionshareTheme {
-    Surface(color = MaterialTheme.colors.background) {
+    Surface(color = MaterialTheme.colorScheme.background) {
         AboutUi(rememberNavController())
     }
 }

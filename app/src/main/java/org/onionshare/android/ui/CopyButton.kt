@@ -8,12 +8,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +25,7 @@ import org.onionshare.android.ui.theme.OnionBlue
 fun CopyButton(toCopy: String, clipBoardLabel: String) {
     val ctx = LocalContext.current
     val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    val colorControlNormal = MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
+    val colorControlNormal = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
     Button(
         onClick = {
             val clip = ClipData.newPlainText(clipBoardLabel, toCopy)
@@ -33,13 +33,13 @@ fun CopyButton(toCopy: String, clipBoardLabel: String) {
             Toast.makeText(ctx, R.string.clipboard_onion_service_copied, Toast.LENGTH_SHORT)
                 .show()
         },
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.surface,
-            contentColor = MaterialTheme.colors.OnionBlue,
+        colors = ButtonDefaults.buttonColors().copy(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.OnionBlue,
         ),
         border = BorderStroke(1.dp, colorControlNormal),
         shape = RoundedCornerShape(32.dp),
-        elevation = ButtonDefaults.elevation(
+        elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 0.dp,
         ),
         modifier = Modifier

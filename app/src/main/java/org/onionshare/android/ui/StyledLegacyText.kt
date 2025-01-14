@@ -2,7 +2,7 @@ package org.onionshare.android.ui
 
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -15,7 +15,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 fun StyledLegacyText(@StringRes id: Int, modifier: Modifier = Modifier) {
     val text = LocalContext.current.resources.getText(id)
-    val color = MaterialTheme.colors.onSurface.toArgb()
+    val color = MaterialTheme.colorScheme.onSurface.toArgb()
     AndroidView(
         modifier = modifier,
         factory = { context -> TextView(context) },

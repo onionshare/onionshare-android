@@ -5,37 +5,44 @@ import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement.Center
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.BottomSheetState
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.rememberBottomSheetScaffoldState
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -45,6 +52,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
@@ -64,6 +72,7 @@ private fun isEmptyState(shareState: ShareUiState, filesState: FilesState): Bool
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 fun ShareUi(
     navController: NavHostController,
     shareState: ShareUiState,
@@ -75,30 +84,25 @@ fun ShareUi(
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val offset = getOffsetInDp(scaffoldState.bottomSheetState)
-    val snackbarHostState: SnackbarHostState
+    val snackbarHostState = remember { SnackbarHostState() }
     if (isEmptyState(shareState, filesState)) {
-        val normalScaffoldState = rememberScaffoldState()
-        snackbarHostState = normalScaffoldState.snackbarHostState
         Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
             topBar = { ActionBar(navController, R.string.app_name, shareState.allowsModifyingFiles) },
-            scaffoldState = normalScaffoldState,
             floatingActionButton = {
-                Fab(scaffoldState.bottomSheetState, onFabClicked)
+                Fab(false, onFabClicked)
             },
         ) { innerPadding ->
             MainContent(shareState, filesState, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
         }
-        LaunchedEffect("hideSheet") {
-            // This ensures the FAB color can animate back when we transition to NoFiles state
-            scaffoldState.bottomSheetState.collapse()
-        }
     } else {
-        snackbarHostState = scaffoldState.snackbarHostState
         LaunchedEffect("showSheet") {
             delay(750)
             scaffoldState.bottomSheetState.expand()
         }
-        if (!shareState.collapsableSheet && scaffoldState.bottomSheetState.isCollapsed) {
+        if (!shareState.collapsableSheet && !scaffoldState.bottomSheetState.isVisible) {
             // ensure the bottom sheet is visible
             LaunchedEffect(shareState) {
                 scaffoldState.bottomSheetState.expand()
@@ -106,17 +110,31 @@ fun ShareUi(
         }
         BottomSheetScaffold(
             topBar = { ActionBar(navController, R.string.app_name, shareState.allowsModifyingFiles) },
-            floatingActionButton = if (shareState.allowsModifyingFiles) {
-                { Fab(scaffoldState.bottomSheetState, onFabClicked) }
-            } else null,
-            sheetGesturesEnabled = shareState.collapsableSheet,
+            sheetSwipeEnabled = shareState.collapsableSheet,
             sheetPeekHeight = bottomSheetPeekHeight,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             scaffoldState = scaffoldState,
-            sheetElevation = 16.dp,
+            sheetShadowElevation = 16.dp,
+            sheetDragHandle = if (shareState.collapsableSheet) ({ BottomSheetDefaults.DragHandle() }) else null,
             sheetContent = { BottomSheet(shareState, onSheetButtonClicked) }
         ) { innerPadding ->
-            MainContent(shareState, filesState, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(innerPadding)
+            ) {
+                MainContent(shareState, filesState, offset, onFileRemove, onRemoveAll, Modifier.padding(innerPadding))
+                if (shareState.allowsModifyingFiles) {
+                    Fab(
+                        hasFilesAdded = true,
+                        onFabClicked = onFabClicked,
+                        modifier = Modifier
+                            .align(BottomEnd)
+                            .offset(y = -offset - bottomSheetPeekHeight)
+                            .padding(16.dp),
+                    )
+                }
+            }
         }
     }
     if (shareState is ShareUiState.ErrorAddingFile) {
@@ -139,8 +157,9 @@ fun ShareUi(
 }
 
 @Composable
-private fun getOffsetInDp(bottomSheetState: BottomSheetState): Dp {
-    if (!bottomSheetState.isExpanded) return 0.dp
+@OptIn(ExperimentalMaterial3Api::class)
+private fun getOffsetInDp(bottomSheetState: SheetState): Dp {
+    if (!bottomSheetState.isVisible) return 0.dp
     val offset = try {
         bottomSheetState.requireOffset()
     } catch (e: IllegalStateException) {
@@ -150,10 +169,12 @@ private fun getOffsetInDp(bottomSheetState: BottomSheetState): Dp {
     val configuration = LocalConfiguration.current
     val screenHeight = with(LocalDensity.current) { configuration.screenHeightDp.dp.toPx() }
     return with(LocalDensity.current) {
-        (screenHeight - offset).toDp()
+        val o = (screenHeight - offset).toDp()
+        max(0.dp, o - bottomSheetPeekHeight)
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActionBar(
     navController: NavHostController,
@@ -162,7 +183,11 @@ fun ActionBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
-        backgroundColor = MaterialTheme.colors.topBar,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.topBar,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
         title = { Text(stringResource(res)) },
         actions = {
             if (showOverflowMenu) {
@@ -177,13 +202,12 @@ fun ActionBar(
                     onDismissRequest = { showMenu = false }
                 ) {
 
-                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }) {
+                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_SETTINGS) }, text = {
                         Text(stringResource(R.string.settings_title))
-
-                    }
-                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }) {
+                    })
+                    DropdownMenuItem(onClick = { navController.navigate(ROUTE_ABOUT) }, text = {
                         Text(stringResource(R.string.about_title))
-                    }
+                    })
                 }
             }
         },
@@ -191,15 +215,16 @@ fun ActionBar(
 }
 
 @Composable
-fun Fab(scaffoldState: BottomSheetState, onFabClicked: () -> Unit) {
-    val color = if (scaffoldState.isCollapsed) {
-        MaterialTheme.colors.primary
+fun Fab(hasFilesAdded: Boolean, onFabClicked: () -> Unit, modifier: Modifier = Modifier) {
+    val color = if (hasFilesAdded) {
+        MaterialTheme.colorScheme.Fab
     } else {
-        MaterialTheme.colors.Fab
+        MaterialTheme.colorScheme.primary
     }
     FloatingActionButton(
         onClick = onFabClicked,
-        backgroundColor = color,
+        containerColor = color,
+        modifier = modifier,
     ) {
         Icon(
             imageVector = Icons.Filled.Add,

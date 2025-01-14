@@ -12,15 +12,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -64,7 +64,7 @@ fun MyBridgesUiContent(
         Text(
             modifier = Modifier.align(Center),
             text = stringResource(R.string.settings_tor_bridges_none),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.headlineSmall,
         )
     } else {
         val scrollState = rememberLazyListState()
@@ -97,7 +97,7 @@ fun BridgeLineUi(bridge: String, onDelete: () -> Unit) {
             Text(
                 modifier = Modifier.weight(1f),
                 text = bridge,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 fontFamily = FontFamily.Monospace,
             )
             Column(
@@ -111,7 +111,7 @@ fun BridgeLineUi(bridge: String, onDelete: () -> Unit) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = stringResource(R.string.delete),
-                        tint = MaterialTheme.colors.onSurface.copy(alpha = 0.65f)
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.65f)
                     )
                 }
             }
@@ -122,7 +122,7 @@ fun BridgeLineUi(bridge: String, onDelete: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun MyBridgesPreview() = OnionshareTheme {
-    Surface(color = MaterialTheme.colors.background) {
+    Surface(color = MaterialTheme.colorScheme.background) {
         MyBridgesUiContent(
             bridges = listOf(
                 "obfs4 178.238.237.63:1443 2818B19A83611C927F3D1A054432A730763D571D " +
