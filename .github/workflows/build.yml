@@ -26,3 +26,9 @@ jobs:
           java-version: 17
       - name: Build
         run: ./gradlew check assemble compileStableDebugAndroidTestSources
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: onionshare-${{ github.sha }}-apk
+          path: |
+            app/build/outputs/apk/stable/debug/app-stable-debug.apk
