@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -257,7 +258,16 @@ fun MainContent(
             )
         }
     } else {
-        FileList(modifier.padding(bottom = offset), shareState, filesState, onFileRemove, onRemoveAll)
+        FileList(
+            modifier = modifier
+                .padding(bottom = offset)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+            state = shareState,
+            filesState = filesState,
+            onFileRemove = onFileRemove,
+            onRemoveAll = onRemoveAll,
+        )
     }
 }
 
