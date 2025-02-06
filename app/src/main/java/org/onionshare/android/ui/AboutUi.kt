@@ -5,8 +5,12 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -45,8 +49,8 @@ fun AboutUi(navController: NavHostController) {
         val scrollableState = rememberScrollState()
         Column(
             modifier = Modifier
-                .padding(innerPadding)
                 .padding(horizontal = 16.dp)
+                .padding(top = innerPadding.calculateTopPadding())
                 .verticalScroll(scrollableState)
         ) {
             AboutHeader(modifier = Modifier.padding(top = 32.dp))
@@ -72,7 +76,7 @@ fun AboutUi(navController: NavHostController) {
                     "Briar Project",
                 )
             )
-            Column(modifier = Modifier.padding(top = 24.dp)) {
+            Column(modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)) {
                 val uriHandler = LocalUriHandler.current
                 Text(
                     text = stringResource(R.string.about_links_title),
@@ -104,6 +108,7 @@ fun AboutUi(navController: NavHostController) {
                         .clickable { uriHandler.openUri("https://onionshare.org/privacy") }
                 )
             }
+            Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
         }
     }
 }
