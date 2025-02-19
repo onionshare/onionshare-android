@@ -70,6 +70,8 @@ platform :android do
         track: 'beta',
         skip_upload_images: 'true',
         skip_upload_screenshots: 'true',
+        skip_upload_changelogs: 'true',
+        skip_upload_metadata: 'true',
         skip_upload_apk: 'true', # This is an app bundle, so APK is not possible
         validate_only: 'false'
     )
