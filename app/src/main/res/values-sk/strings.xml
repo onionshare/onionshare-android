@@ -36,7 +36,7 @@
     </plurals>
     <string name="settings_tor_bridges_intro">Klepnutím na odkaz nižšie získate mosty. Potom prilepte jednu alebo viac riadkov mostov do poľa nižšie.</string>
     <string name="settings_tor_my_bridges_title">Moje Mosty</string>
-    <string name="about_contributor_android">"%s,  Android Engineer"</string>
+    <string name="about_contributor_android">%s, Android Engineer</string>
     <string name="notification_channel_name_foreground">Stav zdieľania súborov</string>
     <string name="share_state_sharing">Zdieľanie</string>
     <string name="share_state_stopping">Ukončovanie…</string>
