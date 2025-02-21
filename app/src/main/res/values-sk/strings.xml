@@ -36,7 +36,7 @@
     </plurals>
     <string name="settings_tor_bridges_intro">Klepnutím na odkaz nižšie získate mosty. Potom prilepte jednu alebo viac riadkov mostov do poľa nižšie.</string>
     <string name="settings_tor_my_bridges_title">Moje Mosty</string>
-    <string name="about_contributor_android">%s, Android Engineer</string>
+    <string name="about_contributor_android">"%s,  Android Engineer"</string>
     <string name="notification_channel_name_foreground">Stav zdieľania súborov</string>
     <string name="share_state_sharing">Zdieľanie</string>
     <string name="share_state_stopping">Ukončovanie…</string>
@@ -72,8 +72,8 @@
     <string name="settings_tor_bridges_none">Žiadne neboli pridané</string>
     <string name="share_error_not_allowed">Zdieľanie nových súborov je možné len vtedy, keď už zdieľanie.</string>
     <string name="about_links_title">Linky</string>
-    <string name="about_links_homepage">Úvodná stránka</string>
-    <string name="about_links_privacy_policy">Ochrana súkromia</string>
+    <string name="about_links_homepage">Domovská stránka</string>
+    <string name="about_links_privacy_policy">Zásady ochrany osobných údajov</string>
     <string name="about_links_github">GitHub</string>
     <plurals name="share_file_list_summary">
         <item quantity="one">%1$d položka, %2$s</item>
