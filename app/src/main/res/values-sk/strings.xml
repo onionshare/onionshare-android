@@ -7,10 +7,10 @@
     <string name="share">Zdieľať</string>
     <string name="paste">Vloziť</string>
     <string name="remove">Odstrániť</string>
-    <string name="share_empty_state">Zatiaľ tu nič nie je.</string>
+    <string name="share_empty_state">Nič tu. Pridajte súbory na začiatok zdieľania.</string>
     <string name="warning_no_files_added">Nie sú vybraté žiadne súbory.</string>
     <string name="clear_all">Vymazať všetko</string>
-    <string name="app_name">OnionShare (Alfa)</string>
+    <string name="app_name">OnionShare (beta)</string>
     <string name="share_files_add">Pridať súbory</string>
     <string name="delete">Vymazať</string>
     <string name="share_state_starting_text">⏱️ Môže to chvíľu trvať. Pokojne aplikáciu opustite. Keď bude pripravená, budeme vás informovať.</string>
@@ -20,7 +20,7 @@
     <string name="share_state_starting">Začína…</string>
     <string name="share_state_transfer_complete">Prenos dokončený</string>
     <string name="clipboard_onion_service_label">OnionShare adresa</string>
-    <string name="clipboard_onion_service_copied">OnionShare adresa bola skopírovaná do schránky</string>
+    <string name="clipboard_onion_service_copied">OnionShare adresa bola skopírovaná do schránky.</string>
     <string name="about_contributor_pm">%s, Projektový manažér</string>
     <string name="sharing_notification_title">Aktuálne zdieľate súbory</string>
     <string name="notification_error_title">OnionShare narazil na problém</string>
@@ -70,4 +70,14 @@
     <string name="settings_tor_intro">Most je vyhradená necenzurovaná cesta do siete Tor. Aj keď je vybratá možnosť Automatic, OnionShare sa môže pokúsiť použiť mosty na pripojenie.</string>
     <string name="settings_tor_bridges_title">Vlastné mosty</string>
     <string name="settings_tor_bridges_none">Žiadne neboli pridané</string>
+    <string name="share_error_not_allowed">Zdieľanie nových súborov je možné len vtedy, keď už zdieľanie.</string>
+    <string name="about_links_title">Linky</string>
+    <string name="about_links_homepage">Úvodná stránka</string>
+    <string name="about_links_privacy_policy">Ochrana súkromia</string>
+    <string name="about_links_github">GitHub</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d položka, %2$s</item>
+        <item quantity="few">%1$d položky, %2$s</item>
+        <item quantity="other">%1$d položiek, %2$s</item>
+    </plurals>
 </resources>
