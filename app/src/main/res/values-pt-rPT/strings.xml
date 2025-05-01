@@ -23,7 +23,7 @@
     <string name="share_state_transfer_complete">Transferência completa</string>
     <string name="share_state_error">Erro</string>
     <string name="share_state_error_text">Ocorreu um problema inesperado.</string>
-    <string name="share_button_start">Começe a Partilhar</string>
+    <string name="share_button_start">Começar a Partilhar</string>
     <string name="share_button_starting">A iniciar… toque para cancelar</string>
     <string name="share_button_stop">Parar Partilha</string>
     <string name="share_button_stopping">A parar… aguarde até parar</string>
@@ -74,7 +74,7 @@
     <string name="notification_channel_name_error">Erro</string>
     <string name="notification_error_title">O OnionShare encontrou um problema</string>
     <string name="notification_error_text">Toque para ver os detalhes.</string>
-    <string name="share_button_complete">Começar Partilhar Novamente</string>
+    <string name="share_button_complete">Começar a Partilhar Novamente</string>
     <string name="share_error_not_allowed">Só é possível partilhar novos ficheiros quando já não estiver a partilhar.</string>
     <string name="about_links_title">Hiperligações</string>
     <string name="about_links_homepage">Página Inicial</string>
