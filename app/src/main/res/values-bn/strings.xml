@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="paste">পেস্ট</string>
-    <string name="share_empty_state">এখনও কিছুই নেই।</string>
-    <string name="app_name">অনিয়নশেয়ার (আলফা)</string>
+    <string name="share_empty_state">এখনও কিছুই নেই। ফাইল শেয়ার শুরু করো।</string>
+    <string name="app_name">অনিয়নশেয়ার (বেটা)</string>
     <string name="menu">মেনু</string>
     <string name="cancel">বাতিল</string>
     <string name="add">যোগ</string>
@@ -41,4 +41,39 @@
     <string name="notification_channel_name_sharing">শেয়ার করার ঠিকানা ব্যবহার যোগ্য</string>
     <string name="notification_channel_name_error">ভুল</string>
     <string name="notification_sharing_title">OnionShare পাওয়া যাবে</string>
+    <string name="share_error_snackbar_action">আবার চেষ্টা</string>
+    <string name="about_contributor_android">%s, অ্যান্ড্রয়েড প্রকৌশলী</string>
+    <string name="about_contributing_orgs">অবদানকারী প্রতিষ্ঠানসমূহ</string>
+    <string name="settings_tor_bridges_title">বিশেষায়িত সেহু</string>
+    <string name="settings_tor_bridges_none">কিছু যোগ করা হয়নি</string>
+    <string name="settings_tor_bridges_intro">সেতু পেতে নিচের লিঙ্কে টিপ দাও। তারপর এক বা একাধিক সেতু লেখা নিচের জায়গায় লেপন করো।</string>
+    <string name="about_links_privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="share_error_snackbar_text">অনিয়নশেয়ার শুরু করা যায়নি</string>
+    <string name="settings_title">পছন্দসমূহ</string>
+    <string name="settings_tor_title">টরে যুক্তরত</string>
+    <string name="about_contributors">অবদানকারী</string>
+    <string name="about_app_version">অ্যাপ সংস্করণ %s</string>
+    <string name="notification_error_title">অনিয়নশেয়ারে একটা সমস্যা হয়েছে</string>
+    <string name="about_contributor_pm">%s, প্রকল্প ব্যবস্থাপক</string>
+    <string name="about_links_title">লিঙ্ক</string>
+    <string name="about_contributor_creator">%s, তৈরিকারক</string>
+    <string name="share_error_not_allowed">নতুন ফাইল শেয়ার করা তখনই সম্ভব যখন শেয়ার চালুরত অবস্থায় থাকবে না।</string>
+    <plurals name="share_file_list_summary">
+        <item quantity="one">%1$d ভুক্তি, %2$s</item>
+        <item quantity="other">%1$d ভুক্তি, %2$s</item>
+    </plurals>
+    <string name="about_title">সম্পর্কে</string>
+    <string name="notification_error_text">বিস্তারিত দেখতে টিপ দাও।</string>
+    <string name="about_text">অনিয়নশেয়ার তৈরি করেছে মিকাহ লি ও অন্যান্য। এটি মুক্ত উৎস, জিপিএল সং৩ এ প্রকাশিত\n\nসব সফটওয়্যারের মতো, অনিয়নশেয়ারে ত্রুটি বা দুর্বলতা থাকতে পারে।</string>
+    <string name="settings_tor_intro">সেতু বা ব্রিজ হচ্ছে টর নেটওয়ার্কে যেতে একটি বিশেষায়িত রাস্তা। স্বয়ংক্রিয়ভাবে নির্বাচিত হলেও, অনিয়নশেয়ার সংযুক্ত হতে সেতুতে যোগ দেওয়ার চেষ্টা করতে পারে।</string>
+    <string name="about_links_github">গিটহাব</string>
+    <plurals name="settings_tor_bridges_number">
+        <item quantity="one">%dটি সেতু যুক্ত</item>
+        <item quantity="other">%dটি সেতু যুক্ত</item>
+    </plurals>
+    <string name="share_error_file_snackbar_text">%s খুলা যায়নি। অপসারিত।</string>
+    <string name="settings_tor_automatic">অবস্থানের উপর নির্ভর করে স্বয়ংক্রিয়ভাবে</string>
+    <string name="settings_tor_my_bridges_title">আমার সেতু</string>
+    <string name="about_links_homepage">মূলপাতা</string>
+    <string name="about_contributor_design">%s, পণ্য নকশাকারক</string>
 </resources>
