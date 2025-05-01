@@ -33,13 +33,13 @@
     <plurals name="settings_tor_bridges_number">
         <item quantity="other">%d個のブリッジを追加しました</item>
     </plurals>
-    <string name="settings_tor_bridges_intro">ブリッジを入手するには、以下のリンクをタップしてください。入手後、下の入力欄にブリッジの行を貼り付けてください。</string>
+    <string name="settings_tor_bridges_intro">ブリッジを入手するには、以下のリンクをタップしてください。入手後、下の入力欄にブリッジラインを貼り付けてください。</string>
     <string name="unknown">不明</string>
     <string name="menu">メニュー</string>
     <string name="cancel">キャンセル</string>
     <string name="add_files_not_supported">このデバイスはファイルの追加に対応していません</string>
     <string name="back">戻る</string>
-    <string name="app_name">OnionShare（ベータ版）</string>
+    <string name="app_name">OnionShare (ベータ版)</string>
     <string name="add">追加</string>
     <string name="paste">貼り付け</string>
     <string name="warning_no_files_added">選択されたファイルはありません。</string>
@@ -63,7 +63,7 @@
     <string name="settings_title">設定</string>
     <string name="settings_tor_title">Tor に接続</string>
     <string name="settings_tor_automatic">位置データに基づき自動接続</string>
-    <string name="settings_tor_bridges_title">カスタムのブリッジ</string>
+    <string name="settings_tor_bridges_title">カスタムブリッジ</string>
     <string name="settings_tor_bridges_none">何も追加されていません</string>
     <string name="settings_tor_my_bridges_title">自分のブリッジ</string>
     <string name="notification_channel_name_error">エラー</string>
