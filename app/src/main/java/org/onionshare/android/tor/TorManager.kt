@@ -273,7 +273,7 @@ class TorManager(
             bridge.bridgeStrings.map { line ->
                 "Bridge $line"
             }
-        }
+        }.distinct()
     }
 
     @Throws(IOException::class)
