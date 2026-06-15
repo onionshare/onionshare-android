@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Circle
@@ -109,7 +111,9 @@ fun BottomSheet(state: ShareUiState, onSheetButtonClicked: () -> Unit) {
     val bottomPadding = with(LocalDensity.current) {
         WindowInsets.safeDrawing.getBottom(this).toDp()
     }
-    Column(modifier = Modifier.padding(bottom = bottomPadding)) {
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(bottom = bottomPadding)) {
         Row(
             verticalAlignment = CenterVertically,
             modifier = Modifier.padding(16.dp),
@@ -254,6 +258,21 @@ fun ShareBottomSheetStartingPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ShareBottomSheetSharingPreview() {
+    OnionshareTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            BottomSheet(
+                state = ShareUiState.Sharing(
+                    "http://openpravyvc6spbd4flzn4g2iqu4sxzsizbtb5aqec25t76dnoo5w7yd.onion/eW91IGFyZSBhIG5lcmQ7KQ",
+                ),
+                onSheetButtonClicked = {},
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, fontScale = 3.0f)
+@Composable
+fun ShareBottomSheetSharingLargeFontPreview() {
     OnionshareTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             BottomSheet(

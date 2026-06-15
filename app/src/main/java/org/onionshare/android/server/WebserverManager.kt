@@ -12,15 +12,15 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStarted
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.ApplicationStopping
-import io.ktor.server.application.call
 import io.ktor.server.application.install
-import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.EmbeddedServer
+import io.ktor.server.engine.connector
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.netty.Netty
 import io.ktor.server.pebble.Pebble
 import io.ktor.server.pebble.PebbleContent
-import io.ktor.server.plugins.callloging.CallLogging
+import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.header
 import io.ktor.server.response.respond
@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.onionshare.android.BuildConfig.DEBUG
 import org.slf4j.LoggerFactory
+import java.net.ServerSocket
 import java.security.SecureRandom
 import java.util.concurrent.RejectedExecutionException
 import javax.inject.Inject
@@ -51,28 +52,32 @@ sealed class WebServerState {
 class WebserverManager @Inject constructor() {
 
     private val secureRandom = SecureRandom()
-    private var server: ApplicationEngine? = null
+    private var server: EmbeddedServer<*, *>? = null
     private val _state = MutableStateFlow<WebServerState>(WebServerState.Stopped(false))
     val state = _state.asStateFlow()
+
     @Volatile
     var contentPath = ""
         private set
 
-    suspend fun start(sendPage: SendPage): Int {
+    fun start(sendPage: SendPage): Int {
         _state.value = WebServerState.Starting
         contentPath = getRandomPath()
         val staticPath = getStaticPath()
         val pathMap = mapOf("static_url_path" to staticPath, "content_path" to contentPath)
+        val port = findFreePort()
         TrafficStats.setThreadStatsTag(0x42)
         val server = embeddedServer(
             factory = Netty,
-            host = "127.0.0.1",
-            port = 0, // will be chosen randomly
-            watchPaths = emptyList(),
             configure = {
+                connector {
+                    host = "127.0.0.1"
+                    this.port = port
+                }
                 // disable response timeout
                 responseWriteTimeoutSeconds = 0
-            }) {
+            }
+        ) {
             if (DEBUG) install(CallLogging)
             install(Pebble) {
                 loader(ClasspathLoader().apply { prefix = "assets/templates" })
@@ -85,7 +90,7 @@ class WebserverManager @Inject constructor() {
             }
         }.also { it.start() }
         this.server = server
-        return server.resolvedConnectors().first().port
+        return port
     }
 
     fun stop(isFinishingDownloading: Boolean = false) {
@@ -103,6 +108,8 @@ class WebserverManager @Inject constructor() {
         }
     }
 
+    private fun findFreePort(): Int = ServerSocket(0).use { it.localPort }
+
     private fun getRandomPath(): String {
         val randomBytes = ByteArray(16).apply { secureRandom.nextBytes(this) }
         return Base64.encodeToString(randomBytes, NO_PADDING or URL_SAFE).trimEnd()
@@ -113,14 +120,14 @@ class WebserverManager @Inject constructor() {
     }
 
     private fun Application.addListener() {
-        environment.monitor.subscribe(ApplicationStarted) {
+        monitor.subscribe(ApplicationStarted) {
             _state.value = WebServerState.Started
         }
-        environment.monitor.subscribe(ApplicationStopping) {
+        monitor.subscribe(ApplicationStopping) {
             // only update if we are not already stopping
             if (state.value !is WebServerState.Stopping) _state.value = WebServerState.Stopping()
         }
-        environment.monitor.subscribe(ApplicationStopped) {
+        monitor.subscribe(ApplicationStopped) {
             LOG.info("Stopped")
             val downloadComplete = (state.value as? WebServerState.Stopping)?.downloadComplete ?: false
             _state.value = WebServerState.Stopped(downloadComplete)

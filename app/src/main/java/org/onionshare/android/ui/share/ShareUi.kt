@@ -1,7 +1,5 @@
 package org.onionshare.android.ui.share
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,9 +49,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
+import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
@@ -271,11 +271,11 @@ fun MainContent(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+@PreviewLightDark
+private fun DefaultPreview() {
     val files = listOf(
-        SendFile("foo", "23 KiB", 1337L, Uri.parse(""), null)
+        SendFile("foo", "23 KiB", 1337L, "".toUri(), null)
     )
     OnionshareTheme {
         ShareUi(
@@ -289,9 +289,9 @@ fun DefaultPreview() {
     }
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true)
 @Composable
-fun NightModePreview() {
+private fun PreviewLargeFont() {
     OnionshareTheme {
         ShareUi(
             navController = rememberNavController(),

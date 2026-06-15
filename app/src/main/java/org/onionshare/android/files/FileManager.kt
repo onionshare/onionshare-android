@@ -69,19 +69,35 @@ class FileManager @Inject constructor(
 
     private fun addFiles(uris: List<Uri>) {
         val existingFiles = filesState.value.files
+        val existingNames = existingFiles.map { it.basename }.toMutableSet()
         val files = uris.mapNotNull { uri ->
             // continue if we already have that file
             if (existingFiles.any { it.uri == uri }) return@mapNotNull null
 
             val documentFile = DocumentFile.fromSingleUri(ctx, uri) ?: error("Only API < 19")
-            val name = documentFile.name ?: uri.getFallBackName() ?: error("Uri has no path $uri")
+            val preliminaryName = documentFile.name ?: uri.getFallBackName() ?: error("Uri has no path $uri")
             val size = documentFile.length()
             val sizeHuman = if (size == 0L) ctx.getString(R.string.unknown) else {
                 formatShortFileSize(ctx, size)
             }
-            SendFile(name, sizeHuman, size, uri, documentFile.type)
+            val name = getName(existingNames, preliminaryName)
+            existingNames.add(name)
+            SendFile(
+                basename = name,
+                size_human = sizeHuman,
+                size = size,
+                uri = uri,
+                mimeType = documentFile.type,
+            )
         }
         _filesState.value = FilesState(existingFiles + files)
+    }
+
+    private fun getName(existingNames: Set<String>, name: String): String {
+        return if (name in existingNames) getName(
+            existingNames = existingNames,
+            name = "${name.substringBeforeLast(".")}-1.${name.substringAfterLast(".")}"
+        ) else name
     }
 
     fun removeFile(file: SendFile) {
@@ -140,7 +156,7 @@ class FileManager @Inject constructor(
                             LOG.warn("Error while opening file: ", e)
                             throw FileErrorException(file)
                         } catch (e: SecurityException) {
-                            LOG.warn("Error while opening file: SecurityException")
+                            LOG.warn("Error while opening file: ", e)
                             throw FileErrorException(file)
                         }
                     }

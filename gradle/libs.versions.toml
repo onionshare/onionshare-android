@@ -1,0 +1,99 @@
+[versions]
+agp = "9.2.1"
+kotlin = "2.3.21"
+hilt = "2.59.2"
+ksp = "2.3.7"
+ktlint-plugin = "10.2.1"
+
+compose-bom = "2026.05.01"
+compose-ui-test-junit4 = "1.11.2"
+
+androidx-core-ktx = "1.19.0"
+androidx-appcompat = "1.7.1"
+androidx-activity-compose = "1.13.0"
+androidx-lifecycle-runtime-ktx = "2.10.0"
+androidx-documentfile = "1.1.0"
+androidx-navigation-compose = "2.9.8"
+androidx-hilt-navigation-compose = "1.3.0"
+androidx-profileinstaller = "1.4.1"
+androidx-security-crypto = "1.1.0"
+androidx-test-ext-junit = "1.3.0"
+androidx-test-espresso-core = "3.7.0"
+
+material = "1.14.0"
+desugar-jdk-libs = "2.1.5"
+
+onionwrapper = "0.1.4"
+tor-android = "0.4.9.9"
+lyrebird-android = "0.6.2"
+moat-api = "0.4"
+
+okhttp = "4.12.0"
+ktor = "3.4.3"
+slf4j = "2.0.18"
+logback-android = "3.0.0"
+
+junit4 = "4.13.2"
+mockk = "1.14.11"
+turbine = "1.2.1"
+kotlinx-coroutines-test = "1.11.0"
+screengrab = "2.1.1"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-plugin" }
+
+[libraries]
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
+androidx-documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "androidx-documentfile" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation-compose" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
+androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "androidx-profileinstaller" }
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "androidx-security-crypto" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-test-espresso-core" }
+
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
+
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-ui-test-junit4" }
+
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+
+briar-onionwrapper-android = { group = "org.briarproject", name = "onionwrapper-android", version.ref = "onionwrapper" }
+briar-tor-android = { group = "org.briarproject", name = "tor-android", version.ref = "tor-android" }
+briar-lyrebird-android = { group = "org.briarproject", name = "lyrebird-android", version.ref = "lyrebird-android" }
+briar-moat-api = { group = "org.briarproject", name = "moat-api", version.ref = "moat-api" }
+
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
+ktor-server-pebble = { group = "io.ktor", name = "ktor-server-pebble", version.ref = "ktor" }
+ktor-server-status-pages = { group = "io.ktor", name = "ktor-server-status-pages", version.ref = "ktor" }
+ktor-server-call-logging = { group = "io.ktor", name = "ktor-server-call-logging", version.ref = "ktor" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+slf4j-jul-to-slf4j = { group = "org.slf4j", name = "jul-to-slf4j", version.ref = "slf4j" }
+slf4j-jdk14 = { group = "org.slf4j", name = "slf4j-jdk14", version.ref = "slf4j" }
+logback-android = { group = "com.github.tony19", name = "logback-android", version.ref = "logback-android" }
+
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+screengrab = { group = "tools.fastlane", name = "screengrab", version.ref = "screengrab" }

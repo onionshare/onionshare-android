@@ -20,6 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-dontoptimize
 -dontobfuscate
 -keepattributes SourceFile, LineNumberTable, *Annotation*, Signature, InnerClasses, EnclosingMethod
 
@@ -32,7 +33,8 @@
 
 # Keep Netty classes that are loaded via reflection
 -keep class io.netty.channel.** { *; }
--keep class io.netty.buffer.WrappedByteBuf { *; }
+-keep class io.netty.buffer.** { *; }
+-keep class io.netty.util.concurrent.** { *; }
 -keep class io.netty.util.ReferenceCountUtil { *; }
 -keep class io.netty.handler.codec.MessageToMessageEncoder { *; }
 
@@ -46,3 +48,14 @@
 -dontwarn org.jetbrains.annotations.*
 -dontwarn reactor.blockhound.integration.BlockHoundIntegration
 -dontwarn javax.mail.**
+-dontwarn javax.naming.ldap.LdapName
+-dontwarn javax.naming.ldap.Rdn
+-dontwarn jdk.jfr.Category
+-dontwarn jdk.jfr.DataAmount
+-dontwarn jdk.jfr.Description
+-dontwarn jdk.jfr.Enabled
+-dontwarn jdk.jfr.Event
+-dontwarn jdk.jfr.FlightRecorder
+-dontwarn jdk.jfr.Label
+-dontwarn jdk.jfr.MemoryAddress
+-dontwarn jdk.jfr.Name

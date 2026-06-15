@@ -69,10 +69,10 @@ private fun onFabClicked(
 ) {
     try {
         contentLauncher.launch(arrayOf("*/*"))
-    } catch (e: ActivityNotFoundException) {
+    } catch (_: ActivityNotFoundException) {
         try {
             contentFallbackLauncher.launch("*/*")
-        } catch (e: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             Toast.makeText(context, R.string.add_files_not_supported, Toast.LENGTH_SHORT).show()
         }
     }
@@ -86,7 +86,7 @@ private fun onSheetButtonClicked(
     if (viewModel.shareState.value is ShareUiState.AddingFiles && viewModel.needsDozeWhitelisting) {
         try {
             batteryLauncher.launch(getDozeWhitelistingIntent(context))
-        } catch (e: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             // this is really unusual (happened once on a Samsung Galaxy A5 with SDK 23), just pray and proceed
             viewModel.onSheetButtonClicked()
         }
