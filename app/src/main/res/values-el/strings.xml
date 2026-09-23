@@ -47,7 +47,7 @@
     <string name="about_contributor_pm">%s, επικεφαλής έργου</string>
     <string name="about_contributing_orgs">Συνεισφέροντες Οργανισμοί</string>
     <string name="settings_title">Ρυθμίσεις</string>
-    <string name="settings_tor_title">Σύνδεση στο Tor</string>
+    <string name="settings_tor_title">Συνδέοντας στο Tor</string>
     <string name="settings_tor_automatic">Αυτόματη επιλογή τοποθεσίας</string>
     <string name="settings_tor_bridges_title">Προσαρμοσμένες γέφυρες</string>
     <string name="settings_tor_bridges_none">Καμία δεν προστέθηκε</string>

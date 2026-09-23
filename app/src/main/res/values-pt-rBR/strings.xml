@@ -28,7 +28,7 @@
     <string name="share_files_add">Adicionar arquivos</string>
     <string name="delete">Excluir</string>
     <string name="warning_no_files_added">Nenhum arquivo selecionado.</string>
-    <string name="clear_all">Apagar Tudo</string>
+    <string name="clear_all">Limpar Tudo</string>
     <string name="share_state_ready">Pronto</string>
     <string name="share_state_sharing">Compartilhando</string>
     <string name="share_state_transfer_complete">Transferência completa</string>

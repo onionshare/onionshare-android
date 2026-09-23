@@ -48,11 +48,11 @@
     <string name="share_button_starting">起動しています…タップするとキャンセルします</string>
     <string name="share_button_stop">共有を停止</string>
     <string name="clipboard_onion_service_label">OnionShare のアドレス</string>
-    <string name="share_onion_intro">この OnionShare アドレスを知っている人であれば<b>誰でも</b>、<b>Tor Browser</b> であなたのファイルを<b>ダウンロード</b>できます：</string>
+    <string name="share_onion_intro">この OnionShare アドレスを知っている人であれば<b>誰でも</b>、<b>Tor Browser</b> であなたのファイルを<b>ダウンロード</b>できます:</string>
     <string name="notification_channel_name_foreground">ファイル共有の状態</string>
     <string name="notification_sharing_text">タップするとファイル共有用のアドレスにアクセスできます。</string>
     <plurals name="share_file_list_summary">
-        <item quantity="other">%1$d個のファイル、 %2$s</item>
+        <item quantity="other">%1$d 個のファイル、 %2$s</item>
     </plurals>
     <string name="notification_sharing_title">OnionShare は利用可能です</string>
     <string name="about_text">OnionShare は Micah Lee らによって開発されました。オープンソースであり、GPLv3 でリリースされています。

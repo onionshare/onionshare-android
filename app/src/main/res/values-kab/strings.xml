@@ -26,7 +26,7 @@
     <string name="about_links_homepage">Asebter agejdan</string>
     <string name="about_links_github">GitHub</string>
     <string name="about_links_privacy_policy">Tasertit n tbaḍnit</string>
-    <string name="settings_title">Iɣewwaṛen</string>
+    <string name="settings_title">Iɣewwaren</string>
     <string name="settings_tor_title">Tuqqna ɣer Tor</string>
     <string name="settings_tor_automatic">Tawurmant, tebna ɣef wadeg</string>
     <string name="settings_tor_bridges_title">Tiqenṭyar timagdanin</string>
@@ -52,4 +52,5 @@
     <string name="notification_error_title">OnionShare yemlal-d yiwen n wugur</string>
     <string name="share_error_snackbar_text">Ur yezmir ara ad yessenker OnionShare</string>
     <string name="about_app_version">Lqem n usnas %s</string>
+    <string name="share_state_stopping">Aseḥbes…</string>
 </resources>

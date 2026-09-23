@@ -26,7 +26,7 @@
     <string name="share_state_starting">S\'està iniciant…</string>
     <string name="clear_all">Esborra-ho tot</string>
     <string name="clipboard_onion_service_copied">S\'ha copiat l\'adreça al porta-retalls.</string>
-    <string name="share_onion_intro"><b>Qualsevol</b> amb aquesta adreça de l\'OnionShare pot <b>baixar</b>els vostres fitxers utilitzant el <b>Navegador Tor</b>:</string>
+    <string name="share_onion_intro"><b>Qualsevol</b> amb aquesta adreça de l\'OnionShare pot <b>baixar</b> els vostres fitxers utilitzant el <b>Navegador Tor</b>:</string>
     <string name="notification_channel_name_foreground">Estat de la compartició de fitxers</string>
     <string name="share_state_starting_text">⏱️ Això podria trigar una estona. Podeu sortir de l\'aplicació. Us notificarem quan estigui a punt.</string>
     <string name="share_state_stopping">S\'està aturant…</string>
